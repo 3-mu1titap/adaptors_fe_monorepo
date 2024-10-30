@@ -1,5 +1,6 @@
 import { RefObject } from 'react';
 import { ChatMessage } from './Chatting';
+import FitImage from '../../../../ui/image/fit-image';
 
 function ChatView({
   handleDrop,
@@ -19,12 +20,48 @@ function ChatView({
       {messages.map((message, index) => (
         <div
           key={index}
-          className={`mb-2 text-sm ${message.senderId === 'currentUser' ? 'text-right' : 'text-left'}`}
+          className={`mb-2 flex ${message.senderName === 'currentUser' ? 'justify-end' : 'justify-start'}`}
         >
+          {message.senderName !== 'currentUser' && (
+            <div className="flex-shrink-0 w-8 h-8 mr-2">
+              <FitImage
+                className="rounded-full border-4 border-[#F5F5F5]"
+                src={message.profile}
+                alt="Profile"
+              />
+            </div>
+          )}
+
           <div
-            className={`inline-block py-[2px] px-2 rounded-full ${message.senderId === 'currentUser' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}
+            className={`flex flex-col ${message.senderName === 'currentUser' ? 'items-end' : 'items-start'}`}
           >
-            {message.message}
+            {message.senderName !== 'currentUser' && (
+              <div
+                className={`text-xs ${message.senderName === 'currentUser' ? 'text-blue-500' : 'text-gray-600'}`}
+              >
+                {message.senderName}
+              </div>
+            )}
+            <div
+              className={`text-xs text-gray-500 order-1 ${message.senderName === 'currentUser' ? 'mr-auto' : 'ml-auto'}`}
+            >
+              {message.time}
+            </div>
+            {message.messageType === 'file' ? (
+              <a
+                href={message.fileUrl}
+                download={message.message}
+                className={`inline-block py-[2px] px-2 mt-1 rounded-full border-2 border-dashed ${message.senderName === 'currentUser' ? 'bg-blue-500 text-white border-blue-500' : 'bg-gray-300 text-gray-800 border-gray-300'}`}
+              >
+                📁 {message.message}
+              </a>
+            ) : (
+              <div
+                className={`inline-block py-[2px] px-2 rounded-full ${message.senderName === 'currentUser' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}
+              >
+                {message.message}
+              </div>
+            )}
           </div>
         </div>
       ))}

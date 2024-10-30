@@ -1,22 +1,26 @@
 import { Dispatch, RefObject, SetStateAction } from 'react';
-import ImageIcon from '../../../../assets/icons/ImageIcon';
-import FileIcon from '../../../../assets/icons/FileIcon';
+import ImageIcon from '../../../../assets/icons/FileIcon';
+import FileIcon from '../../../../assets/icons/ImageIcon';
 import SendIcon from '../../../../assets/icons/SendIcon';
 
 function ChatSender({
   handleSendMessage,
   fileInputRef,
+  imageInputRef,
   selectedFile,
   newMessage,
   setNewMessage,
   handleFileSelect,
+  handleImageSelect,
 }: {
   handleSendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
   fileInputRef: RefObject<HTMLInputElement>;
+  imageInputRef: RefObject<HTMLInputElement>;
   selectedFile: File | null;
   newMessage: string;
   setNewMessage: Dispatch<SetStateAction<string>>;
   handleFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleImageSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <>
@@ -24,7 +28,7 @@ function ChatSender({
         <button
           type="button"
           className="p-2 rounded-full hover:bg-gray-200 transition-colors"
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => imageInputRef.current?.click()}
         >
           <ImageIcon size="20" color="#ACACAC" />
         </button>
@@ -61,7 +65,15 @@ function ChatSender({
       </form>
       <input
         type="file"
+        accept="image/*"
         ref={fileInputRef}
+        onChange={handleImageSelect}
+        className="hidden"
+      />
+      <input
+        type="file"
+        accept="*/*"
+        ref={imageInputRef}
         onChange={handleFileSelect}
         className="hidden"
       />
