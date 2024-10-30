@@ -2,7 +2,7 @@ message="$(cat $1)"
 requiredPattern="^(init|feat|test|fix|docs|style|refactor|perf|build|ci|chore|revert|Merge): .+$"
 
 # Use grep with Perl-compatible regex for emoji support
-if ! echo "$message" | grep -Pq "$requiredPattern"; then
+if ! echo "$message" | grep -Eq "$requiredPattern"; then
   echo "=========================================================================="
   echo "======================   🚨 WRONG COMMIT MESSAGE!   ======================"
   echo "=========================================================================="
