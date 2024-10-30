@@ -53,7 +53,7 @@ export default function LoginForm() {
 
       <button
         type="submit"
-        className="w-full mt-6 bg-zinc-700 h-10 text-white rounded-lg font-bold"
+        className="w-full my-6 bg-zinc-700 h-14 text-white rounded-lg font-bold"
       >
         로그인하기
       </button>

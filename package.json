@@ -29,5 +29,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "next-auth": "^4.24.10",
+    "zod": "^3.23.8"
   }
 }
