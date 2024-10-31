@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import MeetingRoomNav from '../../../../aside/metting-room/MeetingRoomNav';
 import Funnel from '../../../../common/Funnel/Funnel';
 import useFunnel from '../../../../common/Funnel/useFunnel';
@@ -22,10 +24,36 @@ function MeetingRoomLayOut({
   participants: participantType[];
 }) {
   const { level, step, onSelectStep } = useFunnel({ steps });
+  const [navVisible, setNavVisible] = useState(true);
+
+  const toggleNav = () => {
+    setNavVisible((prev) => !prev);
+  };
+
   return (
     <main className="grid grid-cols-7 w-full h-screen min-w-[1024px]">
-      <MeetingRoomNav level={level} onSelectStep={onSelectStep} />
-      <div className="col-span-6">
+      <motion.div
+        initial={{ x: 0 }}
+        animate={{
+          x: navVisible ? 0 : -250,
+        }}
+        exit={{ x: 250 }}
+        transition={{ duration: 0.4 }}
+        className={`${!navVisible && 'hidden'}`}
+      >
+        {navVisible && (
+          <MeetingRoomNav level={level} onSelectStep={onSelectStep} />
+        )}
+      </motion.div>
+      <button
+        className={`absolute z-10 w-6 h-[78px] bg-gray-300 rounded-full transition-all duration-300 transform -left-3 top-[calc((100vh-78px)/2)] flex items-center justify-center`}
+        onClick={toggleNav}
+      >
+        <span className={`text-xl text-white ml-3`}>
+          {navVisible ? '<' : '>'}
+        </span>
+      </button>
+      <div className={`col-span-${navVisible ? '6' : '7'} relative`}>
         <Funnel step={step}>
           <Funnel.Step name="Overview">
             <div>1</div>
