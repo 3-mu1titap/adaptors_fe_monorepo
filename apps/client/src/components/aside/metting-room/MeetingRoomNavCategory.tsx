@@ -16,7 +16,7 @@ function MeetingRoomNavCategory({
   return (
     <li
       onClick={onClick}
-      className={`w-full grid grid-cols-6 gap-x-7 text-lg items-center hover:border-2 hover:border-adaptorsBlue py-4 px-2 ${isActive ? 'text-adaptorsBlue border-l-4 border-adaptorsBlue' : 'text-adaptorsGray'}`}
+      className={`w-full cursor-pointer grid grid-cols-6 gap-x-7 text-lg items-center border-2 border-white hover:border-adaptorsBlue py-4 px-2 ${isActive ? 'text-adaptorsBlue border-l-4 border-adaptorsBlue' : 'text-adaptorsGray'}`}
     >
       <span></span>
       {React.cloneElement(icon)}

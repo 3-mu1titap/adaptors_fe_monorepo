@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatSender from './ChatSender';
 import ChatView from './ChatView';
-import { participantType } from '../../../../types/main/meeting/meetingTypes';
+import { participantType } from '../../../types/main/meeting/meetingTypes';
 
 export interface ChatMessage {
   messageType: string;
@@ -52,7 +52,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
     if (newMessage.trim() || selectedFile) {
       if (selectedFile) {
         const fileChatMessage: ChatMessage = {
-          messageType: 'notice',
+          messageType: 'file',
           message: selectedFile.name,
           senderName: 'currentUser',
           profile: '/assets/images/dummy.jpg',

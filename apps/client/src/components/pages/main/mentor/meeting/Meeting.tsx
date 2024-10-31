@@ -1,8 +1,8 @@
 import React from 'react';
-import Chatting from '../../chatting/Chatting';
 import MeetingHeader from './MeetingHeader';
-import Participants from '../participants/Participants';
-import { participantType } from '../../../../../types/main/meeting/meetingTypes';
+import Participants from './participants/Participants';
+import { participantType } from '../../../../types/main/meeting/meetingTypes';
+import Chatting from '../../chatting/Chatting';
 
 function Meeting({ participants }: { participants: participantType[] }) {
   return (

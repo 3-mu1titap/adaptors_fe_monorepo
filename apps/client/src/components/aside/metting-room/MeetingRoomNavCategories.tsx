@@ -1,3 +1,4 @@
+import CalendarIcon from '../../assets/icons/Calendar';
 import HelpIcon from '../../assets/icons/Help';
 import LogOutIcon from '../../assets/icons/LogOut';
 import MeetingIcon from '../../assets/icons/Meeting';
@@ -10,11 +11,12 @@ import MeetingRoomNavCategory from './MeetingRoomNavCategory';
 const categoryItems = [
   { id: 0, Icon: OverviewIcon, label: 'Overview' },
   { id: 1, Icon: MeetingIcon, label: 'Meeting' },
-  { id: 2, Icon: MessagesIcon, label: 'Messages' },
-  { id: 3, Icon: MyCourseIcon, label: 'My Course' },
-  { id: 4, Icon: SettingIcon, label: 'Setting' },
-  { id: 5, Icon: HelpIcon, label: 'Help' },
-  { id: 6, Icon: LogOutIcon, label: 'Log Out' },
+  { id: 2, Icon: CalendarIcon, label: 'Calendar' },
+  { id: 3, Icon: MessagesIcon, label: 'Messages' },
+  { id: 4, Icon: MyCourseIcon, label: 'My Course' },
+  { id: 5, Icon: SettingIcon, label: 'Setting' },
+  { id: 6, Icon: HelpIcon, label: 'Help' },
+  { id: 7, Icon: LogOutIcon, label: 'Log Out' },
 ];
 
 function MeetingRoomNavCategories({
@@ -32,7 +34,7 @@ function MeetingRoomNavCategories({
             key={id}
             isActive={level === id}
             onClick={() => onSelectStep(id)}
-            icon={<Icon color={level === id ? '#0060FF' : '#ACACAC'} />} // color prop 전달
+            icon={<Icon color={level === id ? '#0060FF' : '#ACACAC'} />}
             label={label}
           />
         ))}
