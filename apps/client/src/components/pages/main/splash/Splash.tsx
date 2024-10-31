@@ -2,9 +2,15 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import AdaptorsLogoIcon from '../../../assets/icons/AdaptorsLogo';
+import { useRouter } from 'next/navigation';
 
-function Landing() {
+function Splash() {
+  const router = useRouter();
   const [showButton, setShowButton] = useState(false);
+
+  const handleStart = () => {
+    router.replace('/login');
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,7 +28,7 @@ function Landing() {
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 2 }}
       >
-        <AdaptorsLogoIcon className="h-[100px]" />
+        <AdaptorsLogoIcon className="h-[140px]" />
       </motion.div>
       {showButton ? (
         <motion.button
@@ -30,6 +36,7 @@ function Landing() {
           initial={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 1 }}
+          onClick={handleStart}
         >
           시작하기
         </motion.button>
@@ -40,4 +47,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+export default Splash;

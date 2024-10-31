@@ -6,9 +6,9 @@ import { participantType } from '../../../../../types/main/meeting/meetingTypes'
 
 function Meeting({ participants }: { participants: participantType[] }) {
   return (
-    <div>
+    <div className="w-full">
       <MeetingHeader participants={participants} />
-      <div className="grid grid-cols-7 col-span-2 h-[calc(100vh-78px)]">
+      <div className="grid grid-cols-7 h-[calc(100vh-78px)]">
         <div className="col-span-5 bg-[#FAFAFE]">여기에 영상</div>
         <div className="flex flex-col col-span-2 h-full max-h-[calc(100vh-78px)]">
           <div className="h-2/5">

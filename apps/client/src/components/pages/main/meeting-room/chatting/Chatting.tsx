@@ -52,7 +52,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
     if (newMessage.trim() || selectedFile) {
       if (selectedFile) {
         const fileChatMessage: ChatMessage = {
-          messageType: 'file',
+          messageType: 'notice',
           message: selectedFile.name,
           senderName: 'currentUser',
           profile: '/assets/images/dummy.jpg',

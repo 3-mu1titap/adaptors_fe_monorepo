@@ -1,4 +1,4 @@
-import { Dispatch, RefObject, SetStateAction } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
 import ImageIcon from '../../../../assets/icons/FileIcon';
 import FileIcon from '../../../../assets/icons/ImageIcon';
 import SendIcon from '../../../../assets/icons/SendIcon';
@@ -22,6 +22,30 @@ function ChatSender({
   handleFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleImageSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && e.shiftKey) {
+      e.preventDefault();
+      setNewMessage((prev) => prev + '\n');
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSendMessage(e as any);
+    }
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewMessage(e.target.value);
+  };
+
+  useEffect(() => {
+    const textarea = document.getElementById(
+      'message-textarea'
+    ) as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [newMessage]);
+
   return (
     <>
       <form onSubmit={handleSendMessage} className="p-1 w-full bg-white">
@@ -45,14 +69,15 @@ function ChatSender({
               Selected file: {selectedFile.name}
             </div>
           ) : (
-            <input
-              type="text"
+            <textarea
+              id="message-textarea"
               placeholder="메시지를 입력하세요..."
               value={newMessage}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setNewMessage(e.target.value)
-              }
-              className="flex-grow p-1 ml-2 bg-[#F5F5F5] border-none rounded-md focus:outline-none focus:ring-2"
+              onChange={handleInput}
+              onKeyDown={handleKeyDown}
+              className="flex-grow p-1 ml-2 bg-[#F5F5F5] border-none rounded-md focus:outline-none focus:ring-2 resize-none max-h-24"
+              style={{ overflow: 'hidden' }}
+              rows={1}
             />
           )}
           <button
