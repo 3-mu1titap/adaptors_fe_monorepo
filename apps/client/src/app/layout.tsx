@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     template: '%s | MULTITAP App',
   },
   description: 'Mentoring Platform',
-  icons: { icon: '/assets/images/icons/icon.png' },
+  icons: { icon: '/assets/images/icons/icon.svg' },
   metadataBase: new URL('https://adaptors.com'),
   openGraph: {
     url: 'https://adaptors.com',
     title: 'ADAPTORS',
     description: 'Mentoring Platform',
-    images: [{ url: '/assets/images/og/og_image.png' }],
+    images: [{ url: '/assets/images/icons.icon.svg' }],
   },
 };
 

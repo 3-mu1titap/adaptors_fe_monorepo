@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import { ChatMessage } from './Chatting';
-import FitImage from '../../../../ui/image/fit-image';
+import FitImage from '../../../ui/image/fit-image';
 
 function ChatView({
   handleDrop,

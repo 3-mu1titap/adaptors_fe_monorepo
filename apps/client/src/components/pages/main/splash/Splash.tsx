@@ -15,7 +15,7 @@ function Splash() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowButton(true);
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -26,7 +26,7 @@ function Splash() {
         className="relative z-10 flex items-center justify-center"
         initial={{ opacity: 0, translateY: -50 }}
         animate={{ opacity: 1, translateY: 0 }}
-        transition={{ duration: 2 }}
+        transition={{ duration: 1.5 }}
       >
         <AdaptorsLogoIcon className="h-[140px]" />
       </motion.div>
