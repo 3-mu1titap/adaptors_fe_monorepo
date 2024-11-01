@@ -43,21 +43,24 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ profile, user, account }) {
+    async signIn({ account, email, profile }) {
       if (account?.provider === 'kakao') {
         try {
+          console.log('kakao login', profile);
           const result = await fetch(
             `${process.env.BACKEND_URL}/api/v1/auth/oauth-sign-in`,
             {
               method: 'POST',
               body: JSON.stringify({
                 provider: account.provider,
-                providerAccountId: account.providerAccountId,
+                providerId: account.provider,
+                providerEmail: profile?.kakao_account?.email,
               }),
               headers: { 'Content-Type': 'application/json' },
             }
           );
 
+          console.log(result);
           if (result.ok) {
             const data = await result.json();
             return true;
@@ -69,7 +72,7 @@ export const options: NextAuthOptions = {
             return `/login?provider=${provider}&providerAccountId=${providerAccountId}`;
           }
 
-          throw new Error('Kakao 로그인 중 오류 발생');
+          // throw new Error('Kakao 로그인 중 오류 발생');
         } catch (error) {
           console.error('Kakao sign-in error:', error);
           return false;
@@ -98,6 +101,6 @@ export const options: NextAuthOptions = {
   },
   pages: {
     signIn: '/login',
-    error: '/error',
+    error: '/login',
   },
 };
