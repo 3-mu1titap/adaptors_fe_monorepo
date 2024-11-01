@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CalendarIcon({ color }: { color: string }) {
+export default function CalendarIcon({ color }: { color?: boolean }) {
   return (
     <svg
       width="28"
@@ -15,31 +15,31 @@ export default function CalendarIcon({ color }: { color: string }) {
         width="20"
         height="21.1765"
         rx="2"
-        stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.4445 2V6.70588"
-        stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.55556 2V6.70588"
-        stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4 11.4118H24"
-        stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
