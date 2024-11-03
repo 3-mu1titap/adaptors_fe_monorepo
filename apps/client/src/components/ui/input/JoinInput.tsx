@@ -4,36 +4,47 @@ import { SignInInputType } from '../../types/auth/authType';
 export default function JoinInput({
   signInInput,
 }: {
-  signInInput: SignInInputType & { disabled?: boolean; required?: boolean };
+  signInInput: SignInInputType & {
+    disabled?: boolean;
+    required?: boolean;
+    verify?: string;
+  };
 }) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <span className="relative w-full mb-4 items-center">
       <label className="my-2">{signInInput.text}</label>
-      <div
-        className={`border-[1px] ${isFocused ? ' border-black' : ''} px-3 py-1 w-full my-2 relative`}
-      >
-        <input
-          type={signInInput.name}
-          required={signInInput.required !== false}
-          autoComplete="off"
-          value={signInInput.value}
-          name={signInInput.name}
-          onChange={(e) => signInInput.setValue(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          disabled={signInInput.disabled || false}
-          className="focus:outline-none w-full pr-5 min-h-[35px]"
-        />
-        {signInInput.value && (
-          <button
-            type="button"
-            onClick={signInInput.clearValue}
-            className="absolute right-3 h-full top-0"
-            tabIndex={-1}
-          >
-            &times;
+      <div className="flex gap-3 items-center">
+        <div
+          className={`border-[1px] ${isFocused ? ' border-black' : ''} px-3 py-1 w-[100%] my-2 relative`}
+        >
+          <input
+            type={signInInput.name}
+            required={signInInput.required !== false}
+            autoComplete="off"
+            value={signInInput.value}
+            name={signInInput.name}
+            onChange={(e) => signInInput.setValue(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            disabled={signInInput.disabled || false}
+            className="focus:outline-none w-full pr-5 min-h-[35px]"
+          />
+          {signInInput.value && (
+            <button
+              type="button"
+              onClick={signInInput.clearValue}
+              className="absolute right-3 h-full top-0"
+              tabIndex={-1}
+            >
+              &times;
+            </button>
+          )}
+        </div>
+        {signInInput.verify && (
+          <button className="min-w-[100px] border-[1px] border-[#F6D84C] px-1 py-2 bg-[#F6D84C] text-[#373A3A]">
+            {signInInput.verify}
           </button>
         )}
       </div>
