@@ -28,6 +28,8 @@ export const options: NextAuthOptions = {
 
           if (res.ok) {
             const user = await res.json();
+
+            // accessToken, refreshToken, uuid 추가
             return user.data;
           }
           return null;
@@ -43,26 +45,28 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ account, email, profile }) {
+    async signIn({ account, profile, user }) {
       if (account?.provider === 'kakao') {
         try {
-          console.log('kakao login', profile);
           const result = await fetch(
             `${process.env.BACKEND_URL}/api/v1/auth/oauth-sign-in`,
             {
               method: 'POST',
               body: JSON.stringify({
                 provider: account.provider,
-                providerId: account.provider,
+                providerId: account.providerAccountId,
                 providerEmail: profile?.kakao_account?.email,
               }),
               headers: { 'Content-Type': 'application/json' },
             }
           );
-
-          console.log(result);
           if (result.ok) {
             const data = await result.json();
+            console.log('role...', data.result);
+            user.role = data.result.role;
+            user.accessToken = data.result.accessToken;
+            user.refreshToken = data.result.refreshToken;
+            user.uuid = data.result.uuid;
             return true;
           }
 
@@ -71,8 +75,6 @@ export const options: NextAuthOptions = {
             const providerAccountId = account.providerAccountId;
             return `/login?provider=${provider}&providerAccountId=${providerAccountId}`;
           }
-
-          // throw new Error('Kakao 로그인 중 오류 발생');
         } catch (error) {
           console.error('Kakao sign-in error:', error);
           return false;
@@ -81,11 +83,13 @@ export const options: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user, account }) {
-      if (user && account) {
+    async jwt({ token, user }) {
+      if (user) {
+        // console.log('여기', user);
         token.accessToken = user.accessToken;
-        token.name = user.name;
-        token.id = user.id;
+        token.refreshToken = user.refreshToken;
+        token.uuid = user.uuid;
+        token.role = user.role;
       }
       return token;
     },
@@ -93,14 +97,16 @@ export const options: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.accessToken = token.accessToken;
+        session.user.refreshToken = token.refreshToken;
+        session.user.uuid = token.uuid;
         session.user.name = token.name;
-        session.user.id = token.id;
+        session.user.role = token.role;
       }
       return session;
     },
   },
   pages: {
     signIn: '/login',
-    error: '/login',
+    error: '/logi?error=loginError',
   },
 };
