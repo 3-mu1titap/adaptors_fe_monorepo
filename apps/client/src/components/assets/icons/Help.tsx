@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function HelpIcon({ color }: { color: string }) {
+export default function HelpIcon({ color }: { color?: boolean }) {
   return (
     <svg
       width="28"
@@ -11,21 +11,21 @@ export default function HelpIcon({ color }: { color: string }) {
     >
       <path
         d="M14 25.6667C20.4433 25.6667 25.6666 20.4433 25.6666 14C25.6666 7.55668 20.4433 2.33333 14 2.33333C7.55666 2.33333 2.33331 7.55668 2.33331 14C2.33331 20.4433 7.55666 25.6667 14 25.6667Z"
-        stroke={color}
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M14 18.6667V14"
-        stroke={color}
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M14 9.33333H14.0117"
-        stroke={color}
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

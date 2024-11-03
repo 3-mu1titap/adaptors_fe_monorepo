@@ -1,7 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
-import ImageIcon from '../../../../assets/icons/FileIcon';
-import FileIcon from '../../../../assets/icons/ImageIcon';
-import SendIcon from '../../../../assets/icons/SendIcon';
+import ImageIcon from '../../../assets/icons/ImageIcon';
+import FileIcon from '../../../assets/icons/FileIcon';
+import SendIcon from '../../../assets/icons/SendIcon';
 
 function ChatSender({
   handleSendMessage,
