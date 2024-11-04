@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function LogOutIcon({ color }: { color?: boolean }) {
+export default function CalendarIcon({ color }: { color?: boolean }) {
   return (
     <svg
       width="28"
@@ -9,22 +9,33 @@ export default function LogOutIcon({ color }: { color?: boolean }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M17.5 3.5H22.1667C22.7855 3.5 23.379 3.74583 23.8166 4.18342C24.2542 4.621 24.5 5.21449 24.5 5.83333V22.1667C24.5 22.7855 24.2542 23.379 23.8166 23.8166C23.379 24.2542 22.7855 24.5 22.1667 24.5H17.5"
+      <rect
+        x="4"
+        y="4.35294"
+        width="20"
+        height="21.1765"
+        rx="2"
         stroke={`${color ? '#0060FF' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M11.6667 19.8333L17.5 14L11.6667 8.16667"
+        d="M18.4445 2V6.70588"
         stroke={`${color ? '#0060FF' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M17.5 14H3.5"
+        d="M9.55556 2V6.70588"
+        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4 11.4118H24"
         stroke={`${color ? '#0060FF' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"

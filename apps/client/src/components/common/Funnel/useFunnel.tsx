@@ -29,7 +29,11 @@ const useFunnel = ({ steps }: UseFunnelProps) => {
   }, []);
 
   const onSelectStep = useCallback((num: number) => {
-    setStepLevel(num);
+    if (num === 9999) {
+      alert('로그아웃 하시겠습니까?');
+    } else {
+      setStepLevel(num);
+    }
   }, []);
 
   return {
