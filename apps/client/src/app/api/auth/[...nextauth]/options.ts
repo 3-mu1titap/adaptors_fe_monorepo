@@ -26,22 +26,26 @@ export const options: NextAuthOptions = {
         if (!credentials?.loginId || !credentials?.password) {
           return null;
         }
-
+        const payload = {
+          accountId: credentials.loginId,
+          password: credentials.password,
+        };
         try {
           const res = await fetch(
             `${process.env.BACKEND_URL}/api/v1/auth/sign-in`,
             {
               method: 'POST',
-              body: JSON.stringify(credentials),
+              body: JSON.stringify(payload),
               headers: { 'Content-Type': 'application/json' },
             }
           );
-
+          console.log('서버 응답 상태:', res.status);
           if (res.ok) {
             const user = await res.json();
-            return user.data;
+            console.log('여기서 user찍힘', user.result);
+            return user.result;
           }
-          return null;
+          //  return null;
         } catch (error) {
           console.error('Authorization error:', error);
           return null;
@@ -57,6 +61,7 @@ export const options: NextAuthOptions = {
     async signIn({ account, profile, user }) {
       if (account?.provider === 'kakao') {
         try {
+          console.log('kakao');
           const kakaoProfile = profile as KakaoProfile;
           const result = await fetch(
             `${process.env.BACKEND_URL}/api/v1/auth/oauth-sign-in`,
@@ -70,10 +75,8 @@ export const options: NextAuthOptions = {
               headers: { 'Content-Type': 'application/json' },
             }
           );
-
           if (result.ok) {
             const data = await result.json();
-            console.log('role...', data.result);
             user.role = data.result.role;
             user.accessToken = data.result.accessToken;
             user.refreshToken = data.result.refreshToken;
@@ -117,6 +120,6 @@ export const options: NextAuthOptions = {
   },
   pages: {
     signIn: '/login',
-    error: '/logi?error=loginError',
+    error: '/login?error=loginError',
   },
 };

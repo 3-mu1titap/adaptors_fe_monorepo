@@ -13,7 +13,7 @@ export default function LoginForm() {
 
     try {
       const result = await signIn('credentials', {
-        accountId: id,
+        loginId: id,
         password: pw,
         redirect: false,
       });
@@ -45,7 +45,7 @@ export default function LoginForm() {
         signInInput={{
           text: '비밀번호',
           value: pw,
-          name: 'pw',
+          name: 'password',
           setValue: setPw,
           clearValue: clearId,
         }}
