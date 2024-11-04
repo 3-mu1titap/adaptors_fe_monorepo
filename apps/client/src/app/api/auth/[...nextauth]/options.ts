@@ -2,6 +2,17 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
 
+// Kakao 프로필 타입 정의
+interface KakaoProfile {
+  kakao_account?: {
+    email?: string;
+    profile?: {
+      nickname?: string;
+      profile_image_url?: string;
+    };
+  };
+}
+
 export const options: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -18,7 +29,7 @@ export const options: NextAuthOptions = {
 
         try {
           const res = await fetch(
-            `${process.env.BACKEND_URL}/api/v1/auth/oauth-sign-in`,
+            `${process.env.BACKEND_URL}/api/v1/auth/sign-in`,
             {
               method: 'POST',
               body: JSON.stringify(credentials),
@@ -28,8 +39,6 @@ export const options: NextAuthOptions = {
 
           if (res.ok) {
             const user = await res.json();
-
-            // accessToken, refreshToken, uuid 추가
             return user.data;
           }
           return null;
@@ -48,6 +57,7 @@ export const options: NextAuthOptions = {
     async signIn({ account, profile, user }) {
       if (account?.provider === 'kakao') {
         try {
+          const kakaoProfile = profile as KakaoProfile;
           const result = await fetch(
             `${process.env.BACKEND_URL}/api/v1/auth/oauth-sign-in`,
             {
@@ -55,11 +65,12 @@ export const options: NextAuthOptions = {
               body: JSON.stringify({
                 provider: account.provider,
                 providerId: account.providerAccountId,
-                providerEmail: profile?.kakao_account?.email,
+                providerEmail: kakaoProfile?.kakao_account?.email,
               }),
               headers: { 'Content-Type': 'application/json' },
             }
           );
+
           if (result.ok) {
             const data = await result.json();
             console.log('role...', data.result);
@@ -85,7 +96,6 @@ export const options: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        // console.log('여기', user);
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.uuid = user.uuid;
