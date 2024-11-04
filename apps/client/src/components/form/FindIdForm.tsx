@@ -6,16 +6,23 @@ export default function FindIdForm() {
   const [id, setId] = useState('');
   const [code, setCode] = useState('');
   const clearId = () => setId('');
+  const verifyEmail = () => {
+    //이메일 인증번호 요청 로직
+  };
+  const getUserIdByEmail = () => {
+    //인증하고 아이디 찾기
+  };
   return (
-    <form className=" max-w-[400px] mx-auto">
+    <div className=" max-w-[400px] mx-auto  mt-5">
       <JoinInput
         signInInput={{
-          text: '아이디',
+          text: '이메일 인증하기',
           value: id,
           name: 'id',
           setValue: setId,
           clearValue: clearId,
           verify: '인증번호 요청',
+          onClickVerifyButton: verifyEmail,
         }}
       />
       <JoinInput
@@ -26,8 +33,9 @@ export default function FindIdForm() {
           setValue: setCode,
           clearValue: clearId,
           verify: '인증하기',
+          onClickVerifyButton: getUserIdByEmail,
         }}
       />
-    </form>
+    </div>
   );
 }

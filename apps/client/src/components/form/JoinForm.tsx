@@ -5,7 +5,6 @@ import { SignInInputType } from '../types/auth/authType';
 import SubmitButton from '../ui/Button/SubmitButton';
 import JoinInput from '../ui/input/JoinInput';
 
-// 유효성 검사 스키마 정의
 const signUpSchema = z.object({
   name: z.string().nonempty({ message: '이름을 입력해주세요.' }),
   nickname: z.string().nonempty({ message: '닉네임을 입력해주세요.' }),
@@ -41,7 +40,6 @@ export default function JoinForm() {
     Partial<Record<keyof SignUpFormData, string>>
   >({});
 
-  // 개별 필드 유효성 검사 함수
   const validateField = (fieldName: keyof SignUpFormData, value: string) => {
     try {
       signUpSchema.shape[fieldName].parse(value);
@@ -56,24 +54,41 @@ export default function JoinForm() {
     }
   };
 
-  // 전화번호 형식을 지정하는 함수
   const formatPhoneNumber = (value: string) => {
-    const cleaned = value.replace(/\D/g, ''); // 숫자만 남기기
+    const cleaned = value.replace(/\D/g, '');
     if (cleaned.length <= 3) return cleaned;
     if (cleaned.length <= 7)
       return `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
     return `${cleaned.slice(0, 3)}-${cleaned.slice(3, 7)}-${cleaned.slice(7, 11)}`;
   };
 
-  // 입력 변경 처리 함수
   const handleChange = (fieldName: keyof SignUpFormData) => (value: string) => {
     let formattedValue = value;
-    // phone_number 필드의 경우 하이픈 추가
     if (fieldName === 'phone_number') {
       formattedValue = formatPhoneNumber(value);
     }
     setFormData((prevData) => ({ ...prevData, [fieldName]: formattedValue }));
     validateField(fieldName, formattedValue);
+  };
+
+  // 중복 검사 함수
+  const checkDuplicate = async (field: 'id' | 'email') => {
+    try {
+      const response = await fetch(
+        `/api/check-duplicate?field=${field}&value=${formData[field]}`
+      );
+      const result = await response.json();
+      if (!result.isUnique) {
+        setErrors((prev) => ({
+          ...prev,
+          [field]: `해당 아이디가 이미 사용중입니다.`,
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
+    } catch (error) {
+      console.error('중복 검사 오류:', error);
+    }
   };
 
   const fields: Array<
@@ -82,6 +97,8 @@ export default function JoinForm() {
       text: string;
       name: keyof SignUpFormData;
       required: boolean;
+      verify?: string;
+      onClickVerifyButton?: () => void;
     }
   > = [
     {
@@ -107,6 +124,8 @@ export default function JoinForm() {
       setValue: handleChange('id'),
       required: true,
       clearValue: () => setFormData((prev) => ({ ...prev, id: '' })),
+      verify: '중복검사',
+      onClickVerifyButton: () => checkDuplicate('id'),
     },
     {
       name: 'password',
@@ -143,32 +162,8 @@ export default function JoinForm() {
     },
   ];
 
-  // 중복 검사 함수
-  const checkDuplicate = async (field: keyof SignUpFormData) => {
-    try {
-      // API 요청 예시: 해당 API는 구현해야 함
-      const response = await fetch(
-        `/api/check-duplicate?field=${field}&value=${formData[field]}`
-      );
-      const result = await response.json();
-      if (!result.isUnique) {
-        setErrors((prev) => ({
-          ...prev,
-          [field]: `${field}가 중복되었습니다.`,
-        }));
-      } else {
-        setErrors((prev) => ({ ...prev, [field]: undefined }));
-      }
-    } catch (error) {
-      console.error('중복 검사 오류:', error);
-    }
-  };
-
-  // 폼 제출 함수
   const handleSubmit = (e: React.FormEvent) => {
-    console.log('제출됨');
     e.preventDefault();
-
     try {
       signUpSchema.parse(formData);
       setErrors({});
@@ -194,28 +189,8 @@ export default function JoinForm() {
       {fields.map((field) => (
         <div key={field.name} className="mt-4">
           <JoinInput signInInput={field} />
-          {errors[field.name as keyof SignUpFormData] && (
-            <p className="text-red-500">
-              {errors[field.name as keyof SignUpFormData]}
-            </p>
-          )}
-          {field.name === 'id' && (
-            <button
-              type="button"
-              onClick={() => checkDuplicate('id')}
-              className="text-blue-500"
-            >
-              아이디 중복 검사
-            </button>
-          )}
-          {field.name === 'email' && (
-            <button
-              type="button"
-              onClick={() => checkDuplicate('email')}
-              className="text-blue-500"
-            >
-              이메일 중복 검사
-            </button>
+          {errors[field.name] && (
+            <p className="text-red-500">{errors[field.name]}</p>
           )}
         </div>
       ))}
@@ -245,7 +220,7 @@ export default function JoinForm() {
                 setFormData((prev) => ({ ...prev, role: 'Mentee' }));
                 validateField('role', 'Mentee');
               }}
-              className="mr-2 "
+              className="mr-2"
             />
             Mentee
           </label>

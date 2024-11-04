@@ -15,7 +15,7 @@ export default function Links({ currentPage }: { currentPage: string }) {
           currentPage !== link.href && (
             <span key={link.href}>
               <Link href={link.href}>{link.label}</Link>
-              {index < links.length - 1 && <span className="mx-3">|</span>}
+              {index <= links.length - 2 && <span className="mx-3">|</span>}
             </span>
           )
       )}

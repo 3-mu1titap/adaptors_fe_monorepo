@@ -1,6 +1,6 @@
 'use client';
+import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
-import { postLogin } from '../../actions/auth/auth';
 import JoinInput from '../ui/input/JoinInput';
 
 export default function LoginForm() {
@@ -10,14 +10,15 @@ export default function LoginForm() {
   const clearId = () => setId('');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const requestBody = {
-      accountId: id,
-      password: pw,
-    };
 
     try {
-      const result = await postLogin(requestBody);
-      if (!result.result) {
+      const result = await signIn('credentials', {
+        accountId: id,
+        password: pw,
+        redirect: false,
+      });
+
+      if (result?.error) {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
       } else {
         setLoginError(null);
@@ -53,7 +54,7 @@ export default function LoginForm() {
 
       <button
         type="submit"
-        className="w-full my-6 bg-zinc-700 h-14 text-white rounded-lg font-bold"
+        className="w-full mt-6 mb-3 bg-zinc-700 h-14 text-white rounded-lg font-bold"
       >
         로그인하기
       </button>
