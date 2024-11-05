@@ -24,10 +24,10 @@ function SidebarCategories() {
         href: `${basePath}`,
       },
       {
-        icon: <CalendarIcon color={pathname === `${basePath}/calendar`} />,
-        label: 'Calendar',
-        isActive: pathname === `${basePath}/calendar`,
-        href: `${basePath}/calendar`,
+        icon: <CalendarIcon color={pathname === '${basePath}/schedule' && true} />,
+        label: 'Schedule',
+        isActive: pathname === '/mentor/schedule',
+        href: '/mentor/schedule',
       },
       {
         icon: <VoltIcon color={pathname === `${basePath}/volt`} />,

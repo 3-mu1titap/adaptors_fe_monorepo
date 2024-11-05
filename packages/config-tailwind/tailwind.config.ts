@@ -34,6 +34,7 @@ const config: Omit<Config, 'content'> = {
     },
     extend: {
       colors: {
+        adaptorsYellow: '#F6D84C',
         adaptorsBlue: '#0060FF',
         adaptorsGray: '#ACACAC',
         primary: {
