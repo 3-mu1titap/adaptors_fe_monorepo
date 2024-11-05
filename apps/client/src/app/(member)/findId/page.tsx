@@ -1,6 +1,6 @@
 import FindIdForm from '../../../components/form/FindIdForm';
-import AuthFrame from '../../../components/pages/auth/AuthFrame';
-import Links from '../../../components/pages/auth/Links';
+import AuthFrame from '../../../components/pages/member/AuthFrame';
+import Links from '../../../components/pages/member/Links';
 
 export default function page() {
   return (

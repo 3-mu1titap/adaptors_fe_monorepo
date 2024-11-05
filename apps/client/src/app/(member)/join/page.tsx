@@ -1,5 +1,5 @@
 import JoinForm from '../../../components/form/JoinForm';
-import AuthFrame from '../../../components/pages/auth/AuthFrame';
+import AuthFrame from '../../../components/pages/member/AuthFrame';
 
 export default function page() {
   return (

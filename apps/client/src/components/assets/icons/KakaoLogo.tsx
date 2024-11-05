@@ -6,7 +6,7 @@ export default function KakaoLogo() {
       viewBox="0 0 36 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-6 h-6"
+      className="w-4 h-4"
     >
       <g clipPath="url(#clip0_655_195)">
         <path
