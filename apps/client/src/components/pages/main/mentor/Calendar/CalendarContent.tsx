@@ -106,8 +106,9 @@ const CalendarContent = () => {
       customClass: {
         title: 'text-lg font-semibold text-gray-800 text-center',
         confirmButton:
-          'bg-adaptorsBlue text-white py-2 px-4 rounded hover:bg-blue-800',
-        denyButton: 'bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600',
+          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-blue-800',
+        denyButton:
+          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
         actions: 'flex justify-end',
       },
     }).then((result) => {
@@ -195,8 +196,9 @@ const CalendarContent = () => {
         input:
           'flex justify-center text-center mt-4 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
         confirmButton:
-          'bg-adaptorsBlue text-white py-2 px-4 rounded hover:bg-blue-800',
-        denyButton: 'bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600',
+          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
+        cancelButton:
+          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
         actions: 'flex justify-end',
       },
       preConfirm: (date) => {
@@ -412,7 +414,7 @@ const CalendarContent = () => {
                 <button
                   type="button"
                   onClick={saveEvent}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsBlue text-base font-medium text-white hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsYellow text-base font-medium text-white hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   {params.id ? '예약수정' : '예약하기'}
                 </button>
