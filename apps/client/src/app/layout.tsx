@@ -1,6 +1,9 @@
-import './globals.css';
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { Inter } from 'next/font/google';
+import { options } from './api/auth/[...nextauth]/options';
+import './globals.css';
+import AuthContextProvider from './provider/AuthContextProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,14 +30,19 @@ export const viewport = {
   userScalable: 'no',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): Promise<JSX.Element> {
+  const session = await getServerSession(options);
+  const isAuth = session?.user ? true : false;
+
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
+      <body className={`${inter.className}`}>
+        <AuthContextProvider isAuth={isAuth}>{children}</AuthContextProvider>
+      </body>
     </html>
   );
 }

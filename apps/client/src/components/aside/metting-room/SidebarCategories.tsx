@@ -24,7 +24,9 @@ function SidebarCategories() {
         href: `${basePath}`,
       },
       {
-        icon: <CalendarIcon color={pathname === '${basePath}/schedule' && true} />,
+        icon: (
+          <CalendarIcon color={pathname === '${basePath}/schedule' && true} />
+        ),
         label: 'Schedule',
         isActive: pathname === '/mentor/schedule',
         href: '/mentor/schedule',
