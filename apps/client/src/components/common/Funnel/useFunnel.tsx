@@ -12,7 +12,7 @@ const useFunnel = ({ steps }: UseFunnelProps) => {
 
   //히스토리 쌓기
   useEffect(() => {
-    router.push(`menti/?path=${steps[level]}`);
+    router.push(`mentee/?path=${steps[level]}`);
   }, [level, pathname, router]);
 
   //뒤로가기, 앞으로 가기 누를 시 인덱스 상태관리
