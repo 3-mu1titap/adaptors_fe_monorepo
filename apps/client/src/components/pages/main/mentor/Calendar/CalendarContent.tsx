@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -80,7 +80,7 @@ const CalendarContent = () => {
 
   const saveEvent = () => {
     if (!params.title || !params.start || !params.end) {
-      showMessage('Please fill all required fields.', 'error');
+      showMessage('비어있는 곳을 채워주세요', 'error');
       return;
     }
 
@@ -95,7 +95,30 @@ const CalendarContent = () => {
     }
 
     setEvents(updatedEvents);
-    showMessage('Event has been saved successfully.');
+    Swal.fire({
+      toast: true,
+      icon: 'question',
+      title: '스케쥴을 생성하시겠습니까?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '저장',
+      denyButtonText: '취소',
+      customClass: {
+        title: 'text-lg font-semibold text-gray-800 text-center',
+        confirmButton:
+          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-blue-800',
+        denyButton:
+          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
+        actions: 'flex justify-end',
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        showMessage('스케쥴이 생성되었습니다.');
+      } else if (result.isDenied) {
+        showMessage('스케쥴 생성을 취소하였습니다.', 'info');
+      }
+    });
+
     setIsAddEventModal(false);
   };
 
@@ -118,7 +141,10 @@ const CalendarContent = () => {
     setParams({ ...params, [id]: value });
   };
 
-  const showMessage = (msg: string, type: 'success' | 'error' = 'success') => {
+  const showMessage = (
+    msg: string,
+    type: 'success' | 'error' | 'info' = 'success'
+  ) => {
     Swal.fire({
       toast: true,
       position: 'top',
@@ -130,22 +156,123 @@ const CalendarContent = () => {
     });
   };
 
+  const calendarRef = useRef<FullCalendar>(null);
+  const [selectedView, setSelectedView] = useState<string>('timeGridWeek');
+  const [currentTitle, setCurrentTitle] = useState<string>('');
+
+  const handlePrev = () => {
+    calendarRef.current?.getApi().prev();
+  };
+
+  const handleToday = () => {
+    calendarRef.current?.getApi().today();
+  };
+
+  const handleNext = () => {
+    calendarRef.current?.getApi().next();
+  };
+
+  const handleViewChange = (view: string) => {
+    setSelectedView(view);
+    calendarRef.current?.getApi().changeView(view);
+  };
+
+  const handleDatesSet = (dateInfo: any) => {
+    setCurrentTitle(dateInfo.view.title);
+  };
+
+  const handleTitleClick = () => {
+    Swal.fire({
+      title: '날짜 선택',
+      input: 'date',
+      inputAttributes: {
+        min: today.toISOString().split('T')[0],
+      },
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+      customClass: {
+        title: 'text-lg font-semibold text-gray-800 text-center',
+        input:
+          'flex justify-center text-center mt-4 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
+        confirmButton:
+          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
+        cancelButton:
+          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
+        actions: 'flex justify-end',
+      },
+      preConfirm: (date) => {
+        if (!date) {
+          Swal.showValidationMessage('날짜를 선택해 주세요.');
+        } else {
+          const selectedDate = new Date(date);
+          calendarRef.current?.getApi().gotoDate(selectedDate);
+        }
+      },
+    });
+  };
+
   return (
     <section className="pt-3">
       <div className="panel mb-5">
         <div className="calendar-wrapper">
+          <div className="grid grid-cols-10 items-center justify-items-center text-xl">
+            <div
+              className="col-span-2 cursor-pointer"
+              onClick={handleTitleClick}
+            >
+              {currentTitle}
+            </div>
+            <div className="col-span-5 flex flex-row gap-x-2">
+              <button
+                className="p-2 hover:bg-adaptorsBlue hover:text-white rounded"
+                onClick={handlePrev}
+              >
+                &lt;
+              </button>
+              <button
+                className="p-2 hover:bg-adaptorsBlue hover:text-white rounded"
+                onClick={handleToday}
+              >
+                Today
+              </button>
+              <button
+                className="p-2 hover:bg-adaptorsBlue hover:text-white rounded"
+                onClick={handleNext}
+              >
+                &gt;
+              </button>
+            </div>
+            <div className="col-span-3 flex flex-row gap-x-2">
+              <button
+                className={`px-4 py-2 rounded text-adaptorsBlue ${selectedView === 'dayGridMonth' ? 'bg-transparent border-b-2 shadow-sm' : 'hover:bg-adaptorsBlue hover:text-white'}`}
+                onClick={() => handleViewChange('dayGridMonth')}
+              >
+                Month
+              </button>
+              <button
+                className={`px-4 py-2 rounded text-adaptorsBlue ${selectedView === 'timeGridWeek' ? 'bg-transparent border-b-2 shadow-sm' : 'hover:bg-adaptorsBlue hover:text-white'}`}
+                onClick={() => handleViewChange('timeGridWeek')}
+              >
+                Week
+              </button>
+              <button
+                className={`px-4 py-2 rounded text-adaptorsBlue ${selectedView === 'timeGridDay' ? 'bg-transparent border-b-2 shadow-sm' : 'hover:bg-adaptorsBlue hover:text-white'}`}
+                onClick={() => handleViewChange('timeGridDay')}
+              >
+                Day
+              </button>
+            </div>
+          </div>
           <FullCalendar
+            ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            headerToolbar={{ left: '', center: '', right: '' }}
             initialView="timeGridWeek"
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay',
-            }}
             height={'auto'}
             editable={true}
             dayMaxEvents={true}
-            locale={koLocale}
+            // locale={koLocale}
             timeZone="local"
             selectable={true}
             selectConstraint={{
@@ -185,6 +312,20 @@ const CalendarContent = () => {
             slotLabelContent={(arg) => {
               const hour = arg.date.getHours();
               return hour.toString().padStart(2, '0') + ':00';
+            }}
+            datesSet={handleDatesSet}
+            dayHeaderContent={(arg) => {
+              const weekday = arg.date.toLocaleDateString('en-us', {
+                weekday: 'long',
+              });
+              const day = arg.date.getDate();
+              const month = arg.date.getMonth() + 1;
+
+              if (arg.view.type === 'dayGridMonth') {
+                return <div>{weekday}</div>;
+              } else {
+                return <div>{`${weekday}, ${month}.${day}`}</div>;
+              }
             }}
           />
         </div>
@@ -273,14 +414,14 @@ const CalendarContent = () => {
                 <button
                   type="button"
                   onClick={saveEvent}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsBlue text-base font-medium text-white hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsYellow text-base font-medium text-white hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   {params.id ? '예약수정' : '예약하기'}
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsAddEventModal(false)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   취소
                 </button>

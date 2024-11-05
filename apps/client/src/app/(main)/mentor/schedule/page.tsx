@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import CalendarContent from '../../../../components/pages/main/mentor/Calendar/CalendarContent';
 import CalendarHeader from '../../../../components/pages/main/mentor/Calendar/CalendarHeader';
+
+export const metadata: Metadata = {
+  title: `Schedule`,
+};
 
 export default async function Page() {
   return (
