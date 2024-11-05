@@ -196,8 +196,10 @@ export default function JoinForm() {
       }
     }
   };
+
   const steps = ['step1', 'step2'];
   const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
+
   return (
     <form className="max-w-[400px] mx-auto" onSubmit={handleSubmit}>
       <Funnel step={step}>
@@ -212,8 +214,8 @@ export default function JoinForm() {
           ))}
           <button
             type="button"
-            onClick={() => onNextStep(1)}
-            className="bg-[#F6D84C]
+            onClick={() => onNextStep()}
+            className="bg-adaptorsYellow text-white
             px-3 py-1"
           >
             다음 단계
@@ -262,8 +264,8 @@ export default function JoinForm() {
             {errors.role && <p className="text-red-500">{errors.role}</p>}
           </div>
           <button
-            onClick={onPrevStep}
-            className="bg-[#F6D84C]
+            onClick={() => onPrevStep()}
+            className="bg-adaptorsYellow text-white
                       px-3 py-1"
           >
             이전 단계
