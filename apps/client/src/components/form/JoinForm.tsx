@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { z } from 'zod';
+import Funnel from '../common/Funnel/Funnel';
+import useFunnel from '../common/Funnel/useFunnel';
 import { SignInInputType } from '../types/auth/authType';
 import SubmitButton from '../ui/Button/SubmitButton';
 import JoinInput from '../ui/input/JoinInput';
@@ -91,7 +93,7 @@ export default function JoinForm() {
     }
   };
 
-  const fields: Array<
+  const fields1: Array<
     SignInInputType & {
       clearValue: () => void;
       text: string;
@@ -101,22 +103,6 @@ export default function JoinForm() {
       onClickVerifyButton?: () => void;
     }
   > = [
-    {
-      name: 'name',
-      text: '이름',
-      value: formData.name,
-      setValue: handleChange('name'),
-      required: true,
-      clearValue: () => setFormData((prev) => ({ ...prev, name: '' })),
-    },
-    {
-      name: 'nickname',
-      text: '닉네임',
-      value: formData.nickname,
-      setValue: handleChange('nickname'),
-      required: true,
-      clearValue: () => setFormData((prev) => ({ ...prev, nickname: '' })),
-    },
     {
       name: 'id',
       text: '아이디',
@@ -145,20 +131,47 @@ export default function JoinForm() {
         setFormData((prev) => ({ ...prev, confirmPassword: '' })),
     },
     {
-      name: 'phone_number',
-      text: '전화번호',
-      value: formData.phone_number,
-      setValue: handleChange('phone_number'),
-      required: true,
-      clearValue: () => setFormData((prev) => ({ ...prev, phone_number: '' })),
-    },
-    {
       name: 'email',
       text: '이메일',
       value: formData.email,
       setValue: handleChange('email'),
       required: true,
       clearValue: () => setFormData((prev) => ({ ...prev, email: '' })),
+    },
+  ];
+  const fields2: Array<
+    SignInInputType & {
+      clearValue: () => void;
+      text: string;
+      name: keyof SignUpFormData;
+      required: boolean;
+      verify?: string;
+      onClickVerifyButton?: () => void;
+    }
+  > = [
+    {
+      name: 'name',
+      text: '이름',
+      value: formData.name,
+      setValue: handleChange('name'),
+      required: true,
+      clearValue: () => setFormData((prev) => ({ ...prev, name: '' })),
+    },
+    {
+      name: 'nickname',
+      text: '닉네임',
+      value: formData.nickname,
+      setValue: handleChange('nickname'),
+      required: true,
+      clearValue: () => setFormData((prev) => ({ ...prev, nickname: '' })),
+    },
+    {
+      name: 'phone_number',
+      text: '전화번호',
+      value: formData.phone_number,
+      setValue: handleChange('phone_number'),
+      required: true,
+      clearValue: () => setFormData((prev) => ({ ...prev, phone_number: '' })),
     },
   ];
 
@@ -183,52 +196,81 @@ export default function JoinForm() {
       }
     }
   };
-
+  const steps = ['step1', 'step2'];
+  const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
   return (
     <form className="max-w-[400px] mx-auto" onSubmit={handleSubmit}>
-      {fields.map((field) => (
-        <div key={field.name} className="mt-4">
-          <JoinInput signInInput={field} />
-          {errors[field.name] && (
-            <p className="text-red-500">{errors[field.name]}</p>
-          )}
-        </div>
-      ))}
+      <Funnel step={step}>
+        <Funnel.Step name="step1">
+          {fields1.map((field) => (
+            <div key={field.name} className="mt-4">
+              <JoinInput signInInput={field} />
+              {errors[field.name] && (
+                <p className="text-red-500">{errors[field.name]}</p>
+              )}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => onNextStep(1)}
+            className="bg-[#F6D84C]
+            px-3 py-1"
+          >
+            다음 단계
+          </button>
+        </Funnel.Step>
 
-      <div className="my-4">
-        <label className="my-4">역할</label>
-        <div className="flex gap-8 mt-2">
-          <label>
-            <input
-              type="radio"
-              value="Mentor"
-              checked={formData.role === 'Mentor'}
-              onChange={() => {
-                setFormData((prev) => ({ ...prev, role: 'Mentor' }));
-                validateField('role', 'Mentor');
-              }}
-              className="mr-2"
-            />
-            Mentor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Mentee"
-              checked={formData.role === 'Mentee'}
-              onChange={() => {
-                setFormData((prev) => ({ ...prev, role: 'Mentee' }));
-                validateField('role', 'Mentee');
-              }}
-              className="mr-2"
-            />
-            Mentee
-          </label>
-        </div>
-        {errors.role && <p className="text-red-500">{errors.role}</p>}
-      </div>
-
-      <SubmitButton title="회원가입" />
+        <Funnel.Step name="step2">
+          {fields2.map((field) => (
+            <div key={field.name} className="mt-4">
+              <JoinInput signInInput={field} />
+              {errors[field.name] && (
+                <p className="text-red-500">{errors[field.name]}</p>
+              )}
+            </div>
+          ))}
+          <div className="my-4">
+            <label className="my-4">역할</label>
+            <div className="flex gap-8 mt-2">
+              <label>
+                <input
+                  type="radio"
+                  value="Mentor"
+                  checked={formData.role === 'Mentor'}
+                  onChange={() => {
+                    setFormData((prev) => ({ ...prev, role: 'Mentor' }));
+                    validateField('role', 'Mentor');
+                  }}
+                  className="mr-2"
+                />
+                Mentor
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Mentee"
+                  checked={formData.role === 'Mentee'}
+                  onChange={() => {
+                    setFormData((prev) => ({ ...prev, role: 'Mentee' }));
+                    validateField('role', 'Mentee');
+                  }}
+                  className="mr-2"
+                />
+                Mentee
+              </label>
+            </div>
+            {errors.role && <p className="text-red-500">{errors.role}</p>}
+          </div>
+          <button
+            onClick={onPrevStep}
+            className="bg-[#F6D84C]
+                      px-3 py-1"
+          >
+            이전 단계
+          </button>
+          <SubmitButton title="회원가입" />
+        </Funnel.Step>
+      </Funnel>
     </form>
   );
 }
