@@ -1,7 +1,7 @@
 import React from 'react';
-import NavbarLayout from '../../../components/pages/sidebar/NavbarLayout';
+import NavbarLayout from '../../../components/pages/main/sidebar/NavbarLayout';
 function page() {
-  return <NavbarLayout />;
+  return <>agag</>;
 }
 
 export default page;
