@@ -212,8 +212,8 @@ export default function JoinForm() {
           ))}
           <button
             type="button"
-            onClick={() => onNextStep(1)}
-            className="bg-[#F6D84C]
+            onClick={onNextStep}
+            className="bg-adaptorsYellow text-white
             px-3 py-1"
           >
             다음 단계
@@ -263,7 +263,7 @@ export default function JoinForm() {
           </div>
           <button
             onClick={onPrevStep}
-            className="bg-[#F6D84C]
+            className="bg-adaptorsYellow text-white
                       px-3 py-1"
           >
             이전 단계
