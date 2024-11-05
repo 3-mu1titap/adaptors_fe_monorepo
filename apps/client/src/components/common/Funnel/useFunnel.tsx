@@ -11,43 +11,47 @@ const useFunnel = ({ steps }: UseFunnelProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // useEffect(() => {
-  //   router.push(`${pathname}?path=${steps[level]}`);
-  // }, [level, steps, router, pathname]);
+  useEffect(() => {
+    router.push(`${pathname}?path=${steps[level]}`);
+  }, [level]);
 
   useEffect(() => {
     const prePathname = searchParams.get('path');
     if (prePathname) {
       const index = steps.findIndex((s) => s === prePathname);
       if (index !== -1) {
-        console.log('여기');
-        console.log(level, index);
         setStepLevel(index);
       }
     }
-  }, [searchParams, steps]);
+  }, [searchParams]);
 
   const onNextStep = useCallback(() => {
-    if (level < steps.length - 1) {
-      router.push(`${pathname}?path=${steps[level + 1]}`);
-    }
-    // setStepLevel((prev) => Math.min(prev + 1, steps.length - 1));
-  }, [steps]);
+    setStepLevel((prevLevel) => {
+      if (prevLevel < steps.length - 1) {
+        const nextLevel = prevLevel + 1;
+        return nextLevel;
+      }
+      return prevLevel;
+    });
+  }, [steps, pathname, router]);
 
   const onPrevStep = useCallback(() => {
-    if (level > 0) {
-      router.push(`${pathname}?path=${steps[level - 1]}`);
-    }
-    // setStepLevel((prev) => Math.max(prev - 1, 0));
-  }, []);
+    setStepLevel((prevLevel) => {
+      if (prevLevel > 0) {
+        const prevStep = prevLevel - 1;
+        return prevStep;
+      }
+      return prevLevel;
+    });
+  }, [steps, pathname, router]);
 
   const onSelectStep = useCallback(
     (num: number) => {
       if (num >= 0 && num < steps.length) {
-        router.push(`${pathname}?path=${steps[num]}`);
+        setStepLevel(num);
       }
     },
-    [steps]
+    [steps, pathname, router]
   );
 
   return {
