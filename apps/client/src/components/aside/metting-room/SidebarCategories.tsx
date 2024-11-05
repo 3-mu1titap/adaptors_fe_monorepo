@@ -14,49 +14,49 @@ import { SidebarType } from '../../types/navigation/navigationTypes';
 
 function SidebarCategories() {
   const pathname = usePathname();
-
+  const basePath = pathname.startsWith('/mentor') ? '/mentor' : '/mentee';
   const routes: SidebarType[] = useMemo(() => {
     return [
       {
-        icon: <OverviewIcon color={pathname === '/mentor' && true} />,
+        icon: <OverviewIcon color={pathname === `${basePath}`} />,
         label: 'Home',
-        isActive: pathname === '/mentor',
-        href: '/mentor',
+        isActive: pathname === `${basePath}`,
+        href: `${basePath}`,
       },
       {
-        icon: <CalendarIcon color={pathname === '/mentor/calendar' && true} />,
+        icon: <CalendarIcon color={pathname === `${basePath}/calendar`} />,
         label: 'Calendar',
-        isActive: pathname === '/mentor/calendar',
-        href: '/mentor/calendar',
+        isActive: pathname === `${basePath}/calendar`,
+        href: `${basePath}/calendar`,
       },
       {
-        icon: <VoltIcon color={pathname === '/mentor/volt' && true} />,
+        icon: <VoltIcon color={pathname === `${basePath}/volt`} />,
         label: 'Volt',
-        isActive: pathname === '/mentor/volt',
-        href: '/mentor/volt',
+        isActive: pathname === `${basePath}/volt`,
+        href: `${basePath}/volt`,
       },
       {
-        icon: <MeetingIcon color={pathname === '/mentor/meeting' && true} />,
+        icon: <MeetingIcon color={pathname === `${basePath}/meeting`} />,
         label: 'Meeting',
-        isActive: pathname === '/mentor/meeting',
-        href: '/mentor/meeting',
+        isActive: pathname === `${basePath}/meeting`,
+        href: `${basePath}/meeting`,
       },
       {
-        icon: <MessagesIcon color={pathname === '/mentor/message' && true} />,
+        icon: <MessagesIcon color={pathname === `${basePath}/message`} />,
         label: 'Message',
-        isActive: pathname === '/mentor/message',
-        href: '/mentor/message',
+        isActive: pathname === `${basePath}/message`,
+        href: `${basePath}/message`,
       },
       {
-        icon: <MyCourseIcon color={pathname === '/mentor/mypage' && true} />,
+        icon: <MyCourseIcon color={pathname === `${basePath}/mypage`} />,
         label: 'My page',
-        isActive: pathname === '/mentor/mypage',
-        href: '/mentor/mypage',
+        isActive: pathname === `${basePath}/mypage`,
+        href: `${basePath}/mypage`,
       },
       {
-        icon: <LogOutIcon color={pathname === '/mentor/logout' && true} />,
+        icon: <LogOutIcon color={pathname === `${basePath}/logout`} />,
         label: 'Log Out',
-        isActive: pathname === '/mentor/logout',
+        isActive: pathname === `${basePath}/logout`,
         href: '#',
       },
     ];
