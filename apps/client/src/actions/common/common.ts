@@ -15,7 +15,7 @@ interface FetchOptions {
 }
 
 // 토큰이 필요없는 API 요청
-export const fetchPublicData = async <T>({
+export const fetchData = async <T>({
   method,
   apiUrl,
   body,
