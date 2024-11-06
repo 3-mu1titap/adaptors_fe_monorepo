@@ -14,22 +14,23 @@ import { SidebarType } from '../../types/navigation/navigationTypes';
 
 function SidebarCategories() {
   const pathname = usePathname();
+  console.log(pathname, 'pathnameTest');
   const basePath = pathname.startsWith('/mentor') ? '/mentor' : '/mentee';
   const routes: SidebarType[] = useMemo(() => {
     return [
       {
-        icon: <OverviewIcon color={pathname === `${basePath}`} />,
+        icon: <OverviewIcon color={pathname === `${basePath}` && true} />,
         label: 'Home',
         isActive: pathname === `${basePath}`,
         href: `${basePath}`,
       },
       {
         icon: (
-          <CalendarIcon color={pathname === '${basePath}/schedule' && true} />
+          <CalendarIcon color={pathname === `${basePath}/schedule` && true} />
         ),
         label: 'Schedule',
-        isActive: pathname === '/mentor/schedule',
-        href: '/mentor/schedule',
+        isActive: pathname === `${basePath}/schedule`,
+        href: `${basePath}/schedule`,
       },
       {
         icon: <VoltIcon color={pathname === `${basePath}/volt`} />,
