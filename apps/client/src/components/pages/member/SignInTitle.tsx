@@ -4,8 +4,8 @@ export default function SignInTitle() {
     <div className="space-y-2">
       <h1 className="text-2xl font-bold tracking-tight">SIGN IN</h1>
       <p className="text-sm text-gray-600">
-        계정을 가지고 있지 않으신가요?{' '}
-        <Link href="/signup" className="text-blue-600 hover:underline">
+        계정을 가지고 있지 않으신가요?
+        <Link href="/join" className="text-blue-600 hover:underline">
           Sign Up
         </Link>
       </p>
