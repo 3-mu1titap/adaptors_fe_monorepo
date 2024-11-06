@@ -5,7 +5,7 @@ import KakaoLogo from '../../assets/icons/KakaoLogo';
 export default function KakaoLogin() {
   return (
     <button
-      className="max-w-[400px] w-full h-14 mx-auto bg-[#FFE300] font-bold flex items-center justify-center gap-2"
+      className="flex items-center justify-center px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors gap-2                      "
       onClick={() =>
         signIn('kakao', {
           redirect: true,
@@ -14,7 +14,7 @@ export default function KakaoLogin() {
       }
     >
       <KakaoLogo />
-      카카오로 시작
+      Kakao
     </button>
   );
 }

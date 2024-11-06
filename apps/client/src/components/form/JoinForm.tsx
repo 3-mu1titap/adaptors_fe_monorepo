@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { z } from 'zod';
+import { postUserData } from '../../actions/auth/auth';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import { SignInInputType } from '../types/auth/authType';
@@ -175,12 +176,26 @@ export default function JoinForm() {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       signUpSchema.parse(formData);
       setErrors({});
-      console.log('폼 데이터:', formData);
+
+      // `formData`를 `postUserData`에 맞는 타입으로 변환합니다.
+      const transformedData = {
+        name: formData.name,
+        nickName: formData.nickname, // `nickname`을 `nickName`으로 변환
+        email: formData.email,
+        accountId: formData.id, // `id`를 `accountId`로 변환
+        password: formData.password,
+        phoneNumber: formData.phone_number.replace(/-/g, ''), // 하이픈 제거
+        role: formData.role.toUpperCase(), // 역할을 대문자로 변환
+      };
+
+      // 데이터 전송
+      const data = await postUserData(transformedData);
+      console.log('회원가입 요청 응답:', data.result);
     } catch (validationError) {
       if (validationError instanceof z.ZodError) {
         const errorMessages = validationError.errors.reduce(

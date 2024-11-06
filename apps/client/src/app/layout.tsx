@@ -37,11 +37,13 @@ export default async function RootLayout({
 }): Promise<JSX.Element> {
   const session = await getServerSession(options);
   const isAuth = session?.user ? true : false;
-
+  const role = session?.user?.role ?? null;
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <AuthContextProvider isAuth={isAuth}>{children}</AuthContextProvider>
+        <AuthContextProvider isAuth={isAuth} role={role}>
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );
