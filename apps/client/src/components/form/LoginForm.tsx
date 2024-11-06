@@ -1,15 +1,13 @@
 'use client';
 import { Eye, EyeOff } from 'lucide-react';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { useSession } from '../../app/context/SessionContext';
 
 export default function LoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const session = useSession();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,9 +26,11 @@ export default function LoginForm() {
       if (result?.error) {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
       } else {
-        setLoginError(null);
-        if (session) {
-          const { role } = session;
+        const updatedSession = await getSession();
+        if (updatedSession) {
+          const role = updatedSession.user?.role;
+
+          // role에 따라 페이지 라우팅
           if (role === 'MENTEE') {
             router.push('/mentee');
           } else if (role === 'MENTOR') {
