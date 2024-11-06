@@ -106,10 +106,10 @@ const CalendarContent = () => {
       customClass: {
         title: 'text-lg font-semibold text-gray-800 text-center',
         confirmButton:
-          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-blue-800',
+          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
         denyButton:
           'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
-        actions: 'flex justify-end',
+        actions: '!grid !grid-cols-2 !justify-center',
       },
     }).then((result) => {
       if (result.isConfirmed) {
@@ -349,7 +349,7 @@ const CalendarContent = () => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-                  {params.id ? '예약 수정하기' : '예약하기'}
+                  {params.id ? '일정 변경' : '일정 추가'}
                 </h3>
                 <form className="space-y-4">
                   <div>
@@ -357,11 +357,11 @@ const CalendarContent = () => {
                       id="title"
                       type="text"
                       name="title"
-                      placeholder="멘토링 제목"
+                      placeholder="제목"
                       value={params.title}
                       onChange={changeValue}
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
                   </div>
                   <div className="flex flex-col sm:flex-row justify-between gap-4">
@@ -370,7 +370,7 @@ const CalendarContent = () => {
                         id="start"
                         type="datetime-local"
                         name="start"
-                        placeholder="멘토링 예약 시작"
+                        placeholder="시작 시간"
                         value={dateFormat(params.start)}
                         min={minStartDate}
                         onChange={startDateChange}
@@ -383,7 +383,7 @@ const CalendarContent = () => {
                         id="end"
                         type="datetime-local"
                         name="end"
-                        placeholder="멘토링 예약 종료"
+                        placeholder="종료 시간"
                         value={dateFormat(params.end)}
                         min={minEndDate}
                         onChange={(e) =>
@@ -401,10 +401,10 @@ const CalendarContent = () => {
                     <textarea
                       id="description"
                       name="description"
-                      placeholder="멘토링 상세 내용"
+                      placeholder="내용"
                       value={params.description}
                       onChange={changeValue}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                       rows={4}
                     ></textarea>
                   </div>
@@ -416,7 +416,7 @@ const CalendarContent = () => {
                   onClick={saveEvent}
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsYellow text-base font-medium text-white hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  {params.id ? '예약수정' : '예약하기'}
+                  {params.id ? '수정' : '추가'}
                 </button>
                 <button
                   type="button"

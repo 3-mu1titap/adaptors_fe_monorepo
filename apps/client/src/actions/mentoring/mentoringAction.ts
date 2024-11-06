@@ -3,16 +3,70 @@
 import {
   MentoringDataType,
   MentoringSessionDataType,
+  MiddleCategoryDataType,
+  TopCategoryDataType,
 } from '../../components/types/main/mentor/mentoringTypes';
 import { commonResListType } from '../../components/types/ResponseTypes';
 
 const memberUuid = '491a572d-1cd1-4ecb-90f4-e37399724f7f';
 
+// 멘토링 대 카테고리 리스트 조회
+export async function GetTopCategoryList() {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.CATEGORY_URL}/api/v1/category/top-categories`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const result = (await res.json()) as commonResListType<TopCategoryDataType>;
+    return result.result;
+  } catch (error) {
+    console.error('대 카테고리 리스트 조회 : ', error);
+    return [];
+  }
+}
+
+// 멘토링 중 카테고리 리스트 조회
+export async function GetMiddleCategoryList({
+  topCategoryCode,
+}: {
+  topCategoryCode: string;
+}) {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.CATEGORY_URL}/api/v1/category/middle-categories${topCategoryCode}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const result =
+      (await res.json()) as commonResListType<MiddleCategoryDataType>;
+    return result.result;
+  } catch (error) {
+    console.error('중 카테고리 리스트 조회 : ', error);
+    return [];
+  }
+}
+
+// 멘토의 멘토링 리스트 조회
 export async function GetMentoringList() {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.API_BASE_URL}/api/v1/mentoring-read/mentoring-list/${memberUuid}`,
+      `${process.env.LOCAL_URL}/api/v1/mentoring-read/mentoring-list/${memberUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -30,6 +84,7 @@ export async function GetMentoringList() {
   }
 }
 
+// 멘토링의 세션리스트 조희
 export async function GetMentoringSessionList({
   mentoringUuid,
 }: {
@@ -38,7 +93,7 @@ export async function GetMentoringSessionList({
   'use server';
   try {
     const res = await fetch(
-      `${process.env.API_BASE_URL}/api/v1/mentoring-read/session-list/${mentoringUuid}`,
+      `${process.env.LOCAL_URL}/api/v1/mentoring-read/session-list/${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -56,3 +111,5 @@ export async function GetMentoringSessionList({
     return [];
   }
 }
+
+//
