@@ -17,6 +17,27 @@ export const postUserData = async (userData: {
     apiUrl: `/api/v1/auth/sign-up`,
     body: userData,
   });
-  console.log(data);
+  return data;
+};
+
+export const findId = async (email: string): Promise<any> => {
+  const data = await fetchData<commonResType<any>>({
+    method: 'POST',
+    apiUrl: `/api/v1/auth/find-id`,
+    body: {
+      email: email,
+    },
+  });
+  return data;
+};
+
+export const resetPassword = async (accountId: string): Promise<any> => {
+  const data = await fetchData<commonResType<any>>({
+    method: 'POST',
+    apiUrl: `/api/v1/auth/reset-password`,
+    body: {
+      accountId: accountId,
+    },
+  });
   return data;
 };
