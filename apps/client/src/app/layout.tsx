@@ -41,7 +41,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <AuthContextProvider isAuth={isAuth}>{children}</AuthContextProvider>
+        <AuthContextProvider isAuth={isAuth} role={session?.user?.role}>
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );

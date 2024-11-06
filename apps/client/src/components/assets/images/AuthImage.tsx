@@ -367,7 +367,7 @@ export default function AuthImage({ className }: { className: string }) {
         rx="35"
         ry="24.5"
         fill="#BFC2C4"
-        fill-opacity="0.32"
+        fillOpacity="0.32"
       />
       <ellipse
         cx="194.5"
@@ -375,7 +375,7 @@ export default function AuthImage({ className }: { className: string }) {
         rx="31.5"
         ry="23"
         fill="#BFC2C4"
-        fill-opacity="0.32"
+        fillOpacity="0.32"
       />
       <ellipse
         cx="260"
@@ -383,7 +383,7 @@ export default function AuthImage({ className }: { className: string }) {
         rx="5"
         ry="3.5"
         fill="#BFC2C4"
-        fill-opacity="0.32"
+        fillOpacity="0.32"
       />
       <ellipse
         cx="264"
@@ -391,7 +391,7 @@ export default function AuthImage({ className }: { className: string }) {
         rx="39"
         ry="25"
         fill="#BFC2C4"
-        fill-opacity="0.32"
+        fillOpacity="0.32"
       />
       <path
         d="M133.563 565.47C133.563 567.723 133.3 570.457 135.6 570.457C137.616 570.457 139.377 566.256 140.787 560.76V560.776C141.159 562.593 142 564.121 142 565.898C142 568.139 135.625 579.76 131.97 579.76C130.142 579.76 129 578.309 129 576.773C129 574.414 131.602 571.517 133.563 565.173V565.47Z"

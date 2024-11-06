@@ -2,11 +2,15 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { useSession } from '../../app/context/SessionContext';
 
 export default function LoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const session = useSession();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +29,14 @@ export default function LoginForm() {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
       } else {
         setLoginError(null);
-        window.location.href = '/';
+        if (session) {
+          const { role } = session;
+          if (role === 'MENTEE') {
+            router.push('/mentee');
+          } else if (role === 'MENTOR') {
+            router.push('/mentor');
+          }
+        }
       }
     } catch (error) {
       console.error(error);
@@ -63,17 +74,21 @@ export default function LoginForm() {
           <span className="sr-only">Toggle password visibility</span>
         </button>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end items-center">
+        <Link href="/findId" className="text-md text-gray-600 hover:underline">
+          아이디 찾기
+        </Link>
+        <span className="text-sm mx-1">|</span>
         <Link
-          href="/forgot-password"
+          href="/findPassword"
           className="text-md text-gray-600 hover:underline"
         >
-          패스워드가 기억나지 않나요?
+          비밀번호 찾기
         </Link>
       </div>
       {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
       <button
-        className="w-full bg-[#FFD43B] text-black font-semibold py-2.5 rounded-lg hover:bg-[#FFC93B] transition-colors"
+        className="w-full bg-adaptorsYellow text-black font-semibold py-2.5 rounded-lg hover:bg-[#ffc635] transition-colors"
         type="submit"
       >
         SIGN IN
