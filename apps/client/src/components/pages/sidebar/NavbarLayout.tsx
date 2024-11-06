@@ -3,7 +3,7 @@
 import NavbarCategoryies from './NavbarCategoryies';
 import Funnel from '../../common/Funnel/Funnel';
 import useFunnel from '../../common/Funnel/useFunnel';
-import HomeLayout from '../main/home';
+import HomePage from '../main/home/HomePage';
 const steps = ['Home', 'Category', 'MentoringPush', 'Feedback', 'Search'];
 function NavbarLayout() {
   const { level, step, onSelectStep } = useFunnel({ steps });
@@ -13,7 +13,7 @@ function NavbarLayout() {
       <div className="flex flex-col">
         <Funnel step={step}>
           <Funnel.Step name="Home">
-            <HomeLayout />
+            <HomePage />
           </Funnel.Step>
           <Funnel.Step name="Category">
             <div>3</div>
