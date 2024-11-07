@@ -15,14 +15,14 @@ export default function JoinInput({
 
   return (
     <span className="w-full items-center">
-      <label className="mt-5 mb-2">{signInInput.text}</label>
+      <label className="mt-5 mb-2 text-[0.85rem]">{signInInput.text}</label>
       <div className="flex gap-3 items-center">
         <div
-          className={`border-[1px] ${isFocused ? ' border-black' : ''} px-3 py-1 w-[100%] my-2 relative`}
+          className={`border-[1px] ${isFocused ? ' border-yellow-400 border-3' : ''} px-3 py-1 w-[100%] my-2 relative`}
         >
           <input
             type={signInInput.name}
-            required={signInInput.required !== false}
+            required={false}
             autoComplete="off"
             value={signInInput.value}
             name={signInInput.name}
@@ -30,7 +30,7 @@ export default function JoinInput({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             disabled={signInInput.disabled || false}
-            className="focus:outline-none w-full pr-5 min-h-[35px]"
+            className="focus:outline-none w-full pr-5 min-h-[28px]"
           />
           {signInInput.value && (
             <button

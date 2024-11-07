@@ -1,11 +1,9 @@
-import React from 'react';
 import NavbarLayout from '../../../components/pages/sidebar/NavbarLayout';
-function layout({ children }: Readonly<{ children: React.ReactNode }>) {
+
+export default function layout() {
   return (
     <main>
       <NavbarLayout />
     </main>
   );
 }
-
-export default layout;

@@ -41,3 +41,14 @@ export const resetPassword = async (accountId: string): Promise<any> => {
   });
   return data;
 };
+
+export const checkAccountId = async (accountId: string): Promise<any> => {
+  const data = await fetchData<commonResType<any>>({
+    method: 'POST',
+    apiUrl: `/api/v1/auth/cheak-accountId`,
+    body: {
+      accountId: accountId,
+    },
+  });
+  return data.code;
+};
