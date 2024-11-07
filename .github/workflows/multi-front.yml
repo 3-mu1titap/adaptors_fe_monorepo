@@ -7,9 +7,9 @@ on:
       - dev # dev 브랜치에 푸시될 때 실행
 
 env:
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}  # ECR 리포지토리 이름
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME2 }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD2 }}
+  DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}  # ECR 리포지토리 이름(url)
 
 jobs:
   build-and-push:
