@@ -19,7 +19,7 @@ RUN npm install
 # Copy the rest of your application code
 COPY . .
 
-Run npm run build
+RUN npm run build
 
 # Expose the port that your app runs on
 EXPOSE 3001 3002 3003

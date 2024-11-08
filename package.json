@@ -13,7 +13,8 @@
     "type-check": "turbo type-check",
     "clean": "turbo clean",
     "format": "prettier --cache --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "turbo start" 
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss,md}": [
