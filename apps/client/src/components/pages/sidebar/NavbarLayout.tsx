@@ -10,6 +10,8 @@ function NavbarLayout() {
   return (
     <main className="flex-col w-full h-[78px]">
       <NavbarCategoryies level={level} onSelectStep={onSelectStep} />
+
+      {/* 페이지 */}
       <div className="flex flex-col">
         <Funnel step={step}>
           <Funnel.Step name="Home">
