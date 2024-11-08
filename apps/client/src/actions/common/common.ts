@@ -45,10 +45,6 @@ export const fetchData = async <T>({
 
   const res = await fetch(`${process.env.BACKEND_URL}${apiUrl}`, fetchOptions);
 
-  if (!res.ok) {
-    throw new Error(`${res.status}`);
-  }
-
   return res.json();
 };
 

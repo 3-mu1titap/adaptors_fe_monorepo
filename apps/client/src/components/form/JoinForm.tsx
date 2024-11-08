@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { z } from 'zod';
-import { postUserData } from '../../actions/auth/auth';
+import { checkAccountId, postUserData } from '../../actions/auth/auth';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import { SignInInputType } from '../types/auth/authType';
@@ -76,12 +76,12 @@ export default function JoinForm() {
 
   // 중복 검사 함수
   const checkDuplicate = async (field: 'id' | 'email') => {
+    const data = await checkAccountId(formData.id);
+    console.log(data);
     try {
-      const response = await fetch(
-        `/api/check-duplicate?field=${field}&value=${formData[field]}`
-      );
-      const result = await response.json();
-      if (!result.isUnique) {
+      const data = await checkAccountId(formData.id);
+      console.log(data);
+      if (data == 2011) {
         setErrors((prev) => ({
           ...prev,
           [field]: `해당 아이디가 이미 사용중입니다.`,
@@ -216,25 +216,28 @@ export default function JoinForm() {
   const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
 
   return (
-    <form className="max-w-[400px] mx-auto" onSubmit={handleSubmit}>
+    <form className="max-w-[400px] mx-auto">
       <Funnel step={step}>
         <Funnel.Step name="step1">
           {fields1.map((field) => (
             <div key={field.name} className="mt-4">
               <JoinInput signInInput={field} />
               {errors[field.name] && (
-                <p className="text-red-500">{errors[field.name]}</p>
+                <p className="text-red-500 text-md">{errors[field.name]}</p>
               )}
             </div>
           ))}
-          <button
-            type="button"
-            onClick={() => onNextStep()}
-            className="bg-adaptorsYellow text-white
-            px-3 py-1"
-          >
-            다음 단계
-          </button>
+          <span className="flex justify-end pt-3">
+            <button
+              type="button"
+              onClick={() => onNextStep()}
+              className="bg-adaptorsYellow text-zinc-700
+            px-8 py-1
+            font-bold"
+            >
+              다음 단계
+            </button>
+          </span>
         </Funnel.Step>
 
         <Funnel.Step name="step2">
@@ -242,7 +245,7 @@ export default function JoinForm() {
             <div key={field.name} className="mt-4">
               <JoinInput signInInput={field} />
               {errors[field.name] && (
-                <p className="text-red-500">{errors[field.name]}</p>
+                <p className="text-red-500 text-md">{errors[field.name]}</p>
               )}
             </div>
           ))}
@@ -278,14 +281,18 @@ export default function JoinForm() {
             </div>
             {errors.role && <p className="text-red-500">{errors.role}</p>}
           </div>
-          <button
-            onClick={() => onPrevStep()}
-            className="bg-adaptorsYellow text-white
-                      px-3 py-1"
-          >
-            이전 단계
-          </button>
-          <SubmitButton title="회원가입" />
+          <span className="flex justify-between pt-3">
+            <button
+              onClick={() => onPrevStep()}
+              className="bg-adaptorsYellow text-zinc-700
+                        px-8 py-1
+                        font-bold
+                        "
+            >
+              이전 단계
+            </button>
+            <SubmitButton title="회원가입" />
+          </span>
         </Funnel.Step>
       </Funnel>
     </form>
