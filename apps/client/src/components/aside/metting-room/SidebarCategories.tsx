@@ -14,7 +14,6 @@ import { SidebarType } from '../../types/navigation/navigationTypes';
 
 function SidebarCategories() {
   const pathname = usePathname();
-  console.log(pathname, 'pathnameTest');
   const basePath = pathname.startsWith('/mentor') ? '/mentor' : '/mentee';
   const routes: SidebarType[] = useMemo(() => {
     return [

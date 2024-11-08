@@ -17,6 +17,8 @@
     "@fullcalendar/react": "^6.1.4",
     "@fullcalendar/timegrid": "^6.1.1",
     "@repo/ui": "*",
+    "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
+    "@toast-ui/react-editor": "^3.2.3",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.10",
     "next": "^14.2.6",

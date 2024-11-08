@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { MentoringDataType } from '../../../types/main/mentor/mentoringTypes';
 
 function MentoringListCard({ mentoring }: { mentoring: MentoringDataType }) {
-  console.log(mentoring.mentoringCategoryList);
+  console.log(mentoring);
   return (
     <div className="rounded w-full min-w-[320px] min-h-[368px] md:w-[48%] lg:w-[48%] xl:w-[32%] 2xl:w-[24%] bg-white mb-4 border border-[#E5E5E5] hover:shadow-xl transition duration-300 hover:border-adaptorsBlue relative">
       <div className="w-full h-[200px] overflow-hidden rounded-t-lg">
@@ -24,12 +24,12 @@ function MentoringListCard({ mentoring }: { mentoring: MentoringDataType }) {
         <div className="flex justify-between items-end mt-4">
           <ul className="flex flex-wrap justify-start items-center gap-1">
             {mentoring.mentoringCategoryList[0].topCategoryName && (
-              <li className="text-[0.5rem] text-black px-2 py-1 rounded-md">
+              <li className="text-xs text-black px-2 py-1 rounded-md">
                 {mentoring.mentoringCategoryList[0].topCategoryName}
               </li>
             )}
             {mentoring.mentoringCategoryList[0].middleCategoryName && (
-              <li className="text-[0.5rem] text-black px-2 py-1 rounded-md">
+              <li className="text-xs text-black px-2 py-1 rounded-md">
                 {mentoring.mentoringCategoryList[0].middleCategoryName}
               </li>
             )}

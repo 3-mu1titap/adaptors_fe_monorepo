@@ -1,18 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TopCategoryDataType } from '../types/main/mentor/mentoringTypes';
-import { GetTopCategoryList } from '../../actions/mentoring/mentoringAction';
+import {
+  GetTopCategoryList,
+  PostMentoring,
+} from '../../actions/mentoring/mentoringAction';
 import { ko } from 'date-fns/locale';
+import { uploadFileToS3 } from '../../actions/common/awsMediaUploader';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/toastui-editor.css';
+import color from '@toast-ui/editor-plugin-color-syntax';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 
-interface Category {
+export interface MentoringCategory {
   topCategoryName: string;
-  middleCategoryName: string;
+  topCategoryCode: string;
 }
 
-interface Session {
+export interface MentoringSession {
   startDate: Date;
   endDate: Date;
   startTime: string;
@@ -23,13 +32,14 @@ interface Session {
   price: number;
 }
 
-interface FormData {
+export interface MentoringAddForm {
   name: string;
   detail: string;
+  mentorUuid: string;
   isReusable: boolean;
   thumbnailUrl: string;
-  sessionList: Session[];
-  categoryList: Category[];
+  sessionList: MentoringSession[];
+  categoryList: MentoringCategory[];
 }
 
 export default function MentoringForm({
@@ -37,21 +47,23 @@ export default function MentoringForm({
 }: {
   topCategories: TopCategoryDataType[];
 }) {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<MentoringAddForm>({
     name: '',
     detail: '',
+    mentorUuid: '671a55ae-2346-407f-85e3-9cd39f4e3d10',
     isReusable: false,
     thumbnailUrl: '',
     sessionList: [],
     categoryList: [],
   });
-
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(Date.now() + 24 * 60 * 60 * 1000)
   );
   const [startTime, setStartTime] = useState<string>('00:00');
   const [endTime, setEndTime] = useState<string>('00:00');
   const [deadlineDate, setDeadlineDate] = useState<Date | null>(new Date());
+
+  const editorRef = useRef<Editor | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -64,20 +76,29 @@ export default function MentoringForm({
     }));
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // S3 업로드
-      const uploadedUrl = 'https://example.com/uploaded-image.jpg'; // 임시 URL
-      setFormData((prevData) => ({ ...prevData, thumbnailUrl: uploadedUrl }));
+  const handleMentoringImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { files } = e.target;
+    if (!files || files.length === 0) return;
+    try {
+      const res = await uploadFileToS3(files[0], 'mentoring');
+      console.log('이건 res', res);
+      if (res) {
+        setFormData((prevData) => ({
+          ...prevData,
+          thumbnailUrl: res,
+        }));
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
   };
 
   const handleCategorySelect = (category: TopCategoryDataType) => {
     // 대략적으로 해놓음
-    const newCategory: Category = {
+    const newCategory: MentoringCategory = {
       topCategoryName: category.topCategoryName,
-      middleCategoryName: '',
+      topCategoryCode: category.topCategoryCode,
     };
 
     setFormData((prevData) => {
@@ -98,7 +119,6 @@ export default function MentoringForm({
   const handleSelectedDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      // 세션 날짜의 전날로 마감 날짜 설정
       const deadline = new Date(date);
       deadline.setDate(deadline.getDate() - 1);
       setDeadlineDate(deadline);
@@ -142,7 +162,7 @@ export default function MentoringForm({
 
   const handleSessionAdd = () => {
     if (selectedDate && startTime && endTime && deadlineDate) {
-      const newSession: Session = {
+      const newSession: MentoringSession = {
         startDate: selectedDate,
         endDate: selectedDate,
         startTime,
@@ -162,10 +182,17 @@ export default function MentoringForm({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEditorChange = () => {
+    const description = editorRef.current?.getInstance().getHTML();
+    setFormData((prevData) => ({
+      ...prevData,
+      detail: description || '',
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    // 여기에 폼 제출 로직 구현
+    const res = await PostMentoring(formData);
   };
 
   return (
@@ -230,7 +257,7 @@ export default function MentoringForm({
         <input
           type="file"
           id="thumbnail"
-          onChange={handleFileUpload}
+          onChange={handleMentoringImg}
           className="mt-1 block w-full text-sm text-gray-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
@@ -240,7 +267,7 @@ export default function MentoringForm({
         />
         {formData.thumbnailUrl && (
           <img
-            src={formData.thumbnailUrl}
+            src={`${formData.thumbnailUrl}`}
             alt="Thumbnail"
             className="mt-2 w-32 h-32 object-cover rounded"
           />
@@ -349,21 +376,17 @@ export default function MentoringForm({
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="detail"
-          className="block text-sm font-medium text-gray-700"
-        >
-          상세 설명
-        </label>
-        <textarea
-          id="detail"
-          name="detail"
-          value={formData.detail}
-          onChange={handleInputChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          rows={3}
-          required
-        ></textarea>
+        <Editor
+          ref={editorRef}
+          initialValue="멘토링 내용을 작성해주세요"
+          previewStyle="vertical"
+          height="600px"
+          initialEditType="wysiwyg"
+          useCommandShortcut={false}
+          hideModeSwitch={true}
+          plugins={[color]}
+          onChange={handleEditorChange}
+        />
       </div>
 
       <div className="mb-4">

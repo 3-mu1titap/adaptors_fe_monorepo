@@ -1,5 +1,6 @@
 'use server';
 
+import { MentoringAddForm } from '../../components/form/MentoringAddForm';
 import {
   MentoringDataType,
   MentoringSessionDataType,
@@ -8,7 +9,7 @@ import {
 } from '../../components/types/main/mentor/mentoringTypes';
 import { commonResListType } from '../../components/types/ResponseTypes';
 
-const memberUuid = '491a572d-1cd1-4ecb-90f4-e37399724f7f';
+const memberUuid = '671a55ae-2346-407f-85e3-9cd39f4e3d10';
 
 // 멘토링 대 카테고리 리스트 조회
 export async function GetTopCategoryList() {
@@ -57,6 +58,28 @@ export async function GetMiddleCategoryList({
     return result.result;
   } catch (error) {
     console.error('중 카테고리 리스트 조회 : ', error);
+    return [];
+  }
+}
+
+// 멘토의 멘토링 생성
+export async function PostMentoring(payload: MentoringAddForm) {
+  'use server';
+  try {
+    const res = await fetch(`${process.env.LOCAL_URL2}/api/v1/mentoring`, {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = (await res.json()) as commonResListType<null>;
+    console.log('멘토링 생성 성공', result);
+    return result;
+  } catch (error) {
+    console.error('멘토링 생성 실패 : ', error);
     return [];
   }
 }
