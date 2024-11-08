@@ -23,11 +23,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   const defaultColor = '#e5e7eb';
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 max-w-[140px]">
       {options.map((option, index) => (
         <label
           key={index}
-          className="flex items-center justify-center p-2 max-w-[170px] rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
+          className="flex items-center justify-center p-2  rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
           onClick={() => onChange(option.value)}
         >
           <input
@@ -36,7 +36,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
             value={option.value}
             checked={selectedValue === option.value}
             onChange={() => onChange(option.value)}
-            className="hidden"
+            className="hidden text-sm"
           />
           <div className="flex items-center gap-2">
             <div
@@ -46,7 +46,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
                   selectedValue === option.value ? selectedColor : defaultColor,
               }}
             />
-            <span className="text-[#898989] font-semibold font-sm">
+            <span className="text-[#898989] font-semibold text-md">
               {option.label}
             </span>
           </div>

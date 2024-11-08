@@ -5,7 +5,7 @@ import { checkAccountId, postUserData } from '../../actions/auth/auth';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import { SignInInputType } from '../types/auth/authType';
-import SubmitButton from '../ui/button/SubmitButton';
+import SubmitButton from '../ui/Button/SubmitButton';
 import JoinInput from '../ui/input/JoinInput';
 
 const signUpSchema = z.object({
