@@ -2,43 +2,61 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
+import { formatDate, DateSelectArg, EventApi } from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import koLocale from '@fullcalendar/core/locales/ko';
+import {
+  ScheduleDataType,
+  UserScheduleDataType,
+} from '../../../../types/main/schedule/scheduleTypes';
 
-interface CalendarType {
-  id: number;
+interface CalendarDataType {
+  id: string;
   title: string;
   start: Date;
   end: Date;
-  description: string;
-  memberId: number;
-  memberName: string;
-  departmentName: string;
-  roomId: number;
 }
 
-const CalendarContent = () => {
+const CalendarContent = ({
+  scheduleList,
+}: {
+  scheduleList: UserScheduleDataType;
+}) => {
+  useEffect(() => {
+    if (scheduleList.scheduleLists.length > 0) {
+      const newEvents = scheduleList.scheduleLists.map((schedule) => ({
+        id: schedule.mentoringSessionUuid,
+        title: schedule.mentoringName,
+        start: new Date(`${schedule.startDate}T${schedule.startTime}`),
+        end: new Date(`${schedule.endDate}T${schedule.endTime}`),
+      }));
+
+      setEvents(newEvents);
+    }
+    console.log(scheduleList.scheduleLists);
+  }, []);
+
   const today = new Date();
 
-  const [events, setEvents] = useState<CalendarType[]>([]);
+  const [events, setEvents] = useState<CalendarDataType[]>([]);
   const [isAddEventModal, setIsAddEventModal] = useState(false);
   const [minStartDate, setMinStartDate] = useState<string>('');
   const [minEndDate, setMinEndDate] = useState<string>('');
-  const defaultParams: CalendarType = {
-    id: 0,
-    title: '',
-    start: today,
-    end: today,
-    description: '',
-    memberId: 0,
-    memberName: '',
-    departmentName: '',
-    roomId: 0,
+  const defaultParams: ScheduleDataType = {
+    mentoringSessionUuid: '',
+    mentoringName: '',
+    startDate: today,
+    startTime: today,
+    endDate: today,
+    endTime: today,
+    status: '',
+    createdAt: today,
+    updatedAt: today,
   };
-  const [params, setParams] = useState<CalendarType>(defaultParams);
+  const [params, setParams] = useState<ScheduleDataType>(defaultParams);
 
   const dateFormat = (dt: Date): string => {
     const year = dt.getFullYear();
@@ -53,16 +71,17 @@ const CalendarContent = () => {
     let newParams = { ...defaultParams };
     if (data) {
       const obj = data.event;
+      console.log('-----', obj);
       newParams = {
-        id: obj.id || 0,
-        title: obj.title || '',
-        start: obj.start,
-        end: obj.end,
-        memberName: obj.extendedProps?.memberName || '',
-        departmentName: obj.extendedProps?.departmentName || '',
-        roomId: obj.extendedProps?.roomId || 0,
-        memberId: obj.extendedProps?.memberId || 0,
-        description: obj.extendedProps?.description || '',
+        mentoringSessionUuid: obj.mentoringSessionUuid || 0,
+        mentoringName: obj.mentoringName || '',
+        startDate: obj.startDate || today,
+        startTime: obj.start,
+        endDate: obj.endDate || today,
+        endTime: obj.end,
+        status: obj.status || '',
+        createdAt: obj.createdAt || today,
+        updatedAt: obj.updatedAt || today,
       };
       setMinStartDate(dateFormat(today));
       setMinEndDate(dateFormat(obj.start));
@@ -79,19 +98,21 @@ const CalendarContent = () => {
   };
 
   const saveEvent = () => {
-    if (!params.title || !params.start || !params.end) {
+    if (!params.mentoringName || !params.startDate || !params.endDate) {
       showMessage('비어있는 곳을 채워주세요', 'error');
       return;
     }
 
     let updatedEvents = [...events];
-    if (params.id) {
+    if (params.mentoringSessionUuid) {
       updatedEvents = updatedEvents.map((event) =>
-        event.id === params.id ? { ...event, ...params } : event
+        event.id === params.mentoringSessionUuid
+          ? { ...event, ...params }
+          : event
       );
     } else {
-      const maxId = Math.max(0, ...events.map((e) => e.id));
-      updatedEvents.push({ ...params, id: maxId + 1 });
+      // const maxId = Math.max(0, ...events.map((e) => e.mentoringSessionUuid));
+      // updatedEvents.push({ ...params, mentoringSessionUuid: maxId + 1 });
     }
 
     setEvents(updatedEvents);
@@ -106,10 +127,10 @@ const CalendarContent = () => {
       customClass: {
         title: 'text-lg font-semibold text-gray-800 text-center',
         confirmButton:
-          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-blue-800',
+          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
         denyButton:
           'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
-        actions: 'flex justify-end',
+        actions: '!grid !grid-cols-2 !justify-center',
       },
     }).then((result) => {
       if (result.isConfirmed) {
@@ -128,8 +149,8 @@ const CalendarContent = () => {
       setMinEndDate(dateStr);
       setParams({
         ...params,
-        start: new Date(dateStr),
-        end: new Date(dateStr),
+        startDate: new Date(dateStr),
+        endDate: new Date(dateStr),
       });
     }
   };
@@ -285,19 +306,19 @@ const CalendarContent = () => {
             eventLongPressDelay={500}
             eventClick={(event: any) => editEvent(event)}
             select={(event: any) => editDate(event)}
-            // events={events}
+            events={events}
             eventContent={(eventInfo: any) => (
               <>
                 <div className="fc-content">
                   <div className="fc-time">{eventInfo.timeText}</div>
                   <div className="fc-title">{eventInfo.event.title}</div>
                 </div>
-                <div className="fc-resizer fc-end-resizer">
+                {/* <div className="fc-resizer fc-end-resizer">
                   {eventInfo.event.extendedProps.memberName}
                 </div>
                 <div className="fc-resizer fc-end-resizer">
                   {eventInfo.event.extendedProps.description}
-                </div>
+                </div> */}
               </>
             )}
             nowIndicator={true}
@@ -349,7 +370,7 @@ const CalendarContent = () => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-                  {params.id ? '예약 수정하기' : '예약하기'}
+                  {params.mentoringSessionUuid ? '일정 변경' : '일정 추가'}
                 </h3>
                 <form className="space-y-4">
                   <div>
@@ -357,11 +378,11 @@ const CalendarContent = () => {
                       id="title"
                       type="text"
                       name="title"
-                      placeholder="멘토링 제목"
-                      value={params.title}
+                      placeholder="제목"
+                      value={params.mentoringName}
                       onChange={changeValue}
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
                   </div>
                   <div className="flex flex-col sm:flex-row justify-between gap-4">
@@ -370,8 +391,8 @@ const CalendarContent = () => {
                         id="start"
                         type="datetime-local"
                         name="start"
-                        placeholder="멘토링 예약 시작"
-                        value={dateFormat(params.start)}
+                        placeholder="시작 시간"
+                        value={dateFormat(params.startTime)}
                         min={minStartDate}
                         onChange={startDateChange}
                         required
@@ -383,30 +404,19 @@ const CalendarContent = () => {
                         id="end"
                         type="datetime-local"
                         name="end"
-                        placeholder="멘토링 예약 종료"
-                        value={dateFormat(params.end)}
+                        placeholder="종료 시간"
+                        value={dateFormat(params.endTime)}
                         min={minEndDate}
                         onChange={(e) =>
                           setParams({
                             ...params,
-                            end: new Date(e.target.value),
+                            endDate: new Date(e.target.value),
                           })
                         }
                         required
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                       />
                     </div>
-                  </div>
-                  <div>
-                    <textarea
-                      id="description"
-                      name="description"
-                      placeholder="멘토링 상세 내용"
-                      value={params.description}
-                      onChange={changeValue}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                      rows={4}
-                    ></textarea>
                   </div>
                 </form>
               </div>
@@ -416,7 +426,7 @@ const CalendarContent = () => {
                   onClick={saveEvent}
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsYellow text-base font-medium text-white hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  {params.id ? '예약수정' : '예약하기'}
+                  {params.mentoringSessionUuid ? '수정' : '추가'}
                 </button>
                 <button
                   type="button"

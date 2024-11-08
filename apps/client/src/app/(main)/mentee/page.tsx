@@ -1,9 +1,11 @@
 import NavbarLayout from '../../../components/pages/sidebar/NavbarLayout';
 
-export default function layout() {
+function Page() {
   return (
     <main>
       <NavbarLayout />
     </main>
   );
 }
+
+export default Page;

@@ -1,12 +1,28 @@
+export interface TopCategoryDataType {
+  id: number;
+  topCategoryCode: string;
+  topCategoryName: string;
+}
+
+export interface MiddleCategoryDataType {
+  middleCategoryCode: string;
+  middleCategoryName: string;
+}
+
 export interface MentoringSessionDataType {
   startDate: Date;
   endDate: Date;
   startTime: Date;
   endTime: Date;
-  deadline_datetime: Date;
+  deadlineDatetime: Date;
   minHeadCount: number;
   maxHeadCount: number;
   price: number;
+}
+
+export interface MentoringCategoryDataType {
+  topCategoryName: string;
+  middleCategoryName: string;
 }
 
 export interface MentoringDataType {
@@ -21,4 +37,5 @@ export interface MentoringDataType {
   isDelete: boolean;
   createdAt: Date;
   updatedAt: Date;
+  mentoringCategoryList: MentoringCategoryDataType[];
 }

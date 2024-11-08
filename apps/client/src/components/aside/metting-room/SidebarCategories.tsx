@@ -14,52 +14,68 @@ import { SidebarType } from '../../types/navigation/navigationTypes';
 
 function SidebarCategories() {
   const pathname = usePathname();
-  console.log(pathname, 'pathnameTest');
   const basePath = pathname.startsWith('/mentor') ? '/mentor' : '/mentee';
   const routes: SidebarType[] = useMemo(() => {
     return [
       {
-        icon: <OverviewIcon color={pathname === `${basePath}` && true} />,
+        icon: (
+          <OverviewIcon
+            color={
+              pathname === `${basePath}` ||
+              (pathname.startsWith(`${basePath}/mentoring`) && true)
+            }
+          />
+        ),
         label: 'Home',
-        isActive: pathname === `${basePath}`,
+        isActive:
+          pathname === `${basePath}` ||
+          pathname.startsWith(`${basePath}/mentoring`),
         href: `${basePath}`,
       },
       {
         icon: (
-          <CalendarIcon color={pathname === `${basePath}/schedule` && true} />
+          <CalendarIcon
+            color={pathname.startsWith(`${basePath}/schedule`) && true}
+          />
         ),
         label: 'Schedule',
-        isActive: pathname === `${basePath}/schedule`,
+        isActive: pathname.startsWith(`${basePath}/schedule`),
         href: `${basePath}/schedule`,
       },
       {
-        icon: <VoltIcon color={pathname === `${basePath}/volt`} />,
+        icon: <VoltIcon color={pathname.startsWith(`${basePath}/volt`)} />,
         label: 'Volt',
-        isActive: pathname === `${basePath}/volt`,
+        isActive: pathname.startsWith(`${basePath}/volt`),
         href: `${basePath}/volt`,
       },
       {
-        icon: <MeetingIcon color={pathname === `${basePath}/meeting`} />,
+        icon: (
+          <MeetingIcon color={pathname.startsWith(`${basePath}/meeting`)} />
+        ),
         label: 'Meeting',
-        isActive: pathname === `${basePath}/meeting`,
+        isActive: pathname.startsWith(`${basePath}/meeting`),
         href: `${basePath}/meeting`,
       },
       {
-        icon: <MessagesIcon color={pathname === `${basePath}/message`} />,
+        icon: (
+          <MessagesIcon color={pathname.startsWith(`${basePath}/message`)} />
+        ),
         label: 'Message',
-        isActive: pathname === `${basePath}/message`,
+        isActive: pathname.startsWith(`${basePath}/message`),
         href: `${basePath}/message`,
       },
       {
-        icon: <MyCourseIcon color={pathname === `${basePath}/mypage`} />,
+        icon: (
+          <MyCourseIcon color={pathname.startsWith(`${basePath}/mypage`)} />
+        ),
         label: 'My page',
-        isActive: pathname === `${basePath}/mypage`,
+        isActive: pathname.startsWith(`${basePath}/mypage`),
         href: `${basePath}/mypage`,
       },
       {
-        icon: <LogOutIcon color={pathname === `${basePath}/logout`} />,
+        icon: <LogOutIcon color={pathname.startsWith(`${basePath}/logout`)} />,
         label: 'Log Out',
-        isActive: pathname === `${basePath}/logout`,
+        isActive: pathname.startsWith(`${basePath}/logout`),
         href: '#',
       },
     ];
