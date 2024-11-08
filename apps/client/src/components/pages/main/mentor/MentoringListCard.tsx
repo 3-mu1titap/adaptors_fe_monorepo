@@ -20,7 +20,7 @@ function MentoringListCard({ mentoring }: { mentoring: MentoringDataType }) {
       </div>
       <div className="flex flex-col gap-3 py-4 px-6">
         <h2 className="text-xl font-bold">{mentoring.name}</h2>
-        <div className="text-xs">{mentoring.detail}</div>
+        {/* <div className="text-xs">{mentoring.detail}</div> */}
         <div className="flex justify-between items-end mt-4">
           <ul className="flex flex-wrap justify-start items-center gap-1">
             {mentoring.mentoringCategoryList[0].topCategoryName && (
