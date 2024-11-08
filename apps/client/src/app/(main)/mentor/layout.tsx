@@ -7,7 +7,7 @@ export default function layout({
   return (
     <div className="flex h-full min-h-screen">
       <Sidebar />
-      <main className="pr-[1.25rem] lg:ml-[16rem] lg:pr-[1.5rem] w-full h-[100vh] overflow-y-auto transition-all duration-500">
+      <main className="px-[1.5rem] w-full h-[100vh] overflow-y-auto transition-all duration-300">
         {children}
       </main>
     </div>
