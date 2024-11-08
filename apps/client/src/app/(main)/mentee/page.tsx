@@ -1,6 +1,6 @@
 import React from 'react';
 import NavbarLayout from '../../../components/pages/sidebar/NavbarLayout';
-function layout({ children }: Readonly<{ children: React.ReactNode }>) {
+function Page() {
   return (
     <main>
       <NavbarLayout />
@@ -8,4 +8,4 @@ function layout({ children }: Readonly<{ children: React.ReactNode }>) {
   );
 }
 
-export default layout;
+export default Page;

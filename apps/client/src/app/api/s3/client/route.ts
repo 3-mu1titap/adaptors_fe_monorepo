@@ -1,3 +1,5 @@
+'use server';
+
 import { NextRequest, NextResponse } from 'next/server';
 import {
   S3Client,
@@ -15,12 +17,13 @@ const s3Client = new S3Client({
 
 // POST 요청을 처리하는 함수
 export async function POST(req: NextRequest) {
+  'use server';
   try {
     const { fileName, fileType, fileContent } = await req.json();
 
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME!,
-      Key: `review/${Date.now()}-${fileName}`,
+      Key: `mentoring/${Date.now()}-${fileName}`,
       Body: Buffer.from(fileContent, 'base64'),
       ContentType: fileType,
     };
