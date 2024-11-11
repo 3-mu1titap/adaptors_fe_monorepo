@@ -69,4 +69,4 @@ jobs:
           git config --global user.email ${{ secrets.DG_USER_EMAIL}}
           git add deploy-history.txt
           git commit -m "Record deployment: ${{ steps.tags.outputs.timestamp_tag }}"
-          git push origin ${{ github.ref }}
+          git push origin deploy-history
