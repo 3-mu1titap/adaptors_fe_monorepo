@@ -73,7 +73,7 @@ export default function JoinFunnel() {
   return (
     <div>
       <FunnelLevel level={level} />
-      <form className="max-w-[400px] mx-auto min-h-full">
+      <form className="max-w-[400px] mx-auto h-[100vh] sm:h-[65vh]">
         <Funnel step={step}>
           <Funnel.Step name="joinStep1">
             <JoinField1

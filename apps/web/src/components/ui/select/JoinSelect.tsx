@@ -66,7 +66,7 @@ export default function JoinSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-labelledby="custom-select-label"
-        className="relative w-full bg-white border border-gray-300 shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
+        className="relative w-full bg-white border border-gray-300 shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
       >

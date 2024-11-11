@@ -21,7 +21,6 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   const selectedColor = '#F8D448';
   const defaultColor = '#e5e7eb';
 
-  // Checkbox 상태 변경 처리 (최대 5개만 선택되도록 제한)
   const handleCheckboxChange = (value: string | number) => {
     let newSelectedValues;
 
@@ -41,11 +40,11 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4 mb-5">
+    <div className="flex flex-wrap gap-4 mb-5">
       {options.map((option, index) => (
         <label
           key={index}
-          className="flex items-center justify-center p-2 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
+          className="flex items-center justify-start p-2 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
         >
           <input
             type="checkbox"

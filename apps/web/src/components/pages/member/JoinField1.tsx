@@ -107,110 +107,109 @@ export default function JoinField1({
   };
 
   return (
-    <div className="px-6 py-2 space-y-1 h-full relative">
-      <h2 className="text-2xl font-bold mb-2">Role</h2>
-      <RadioButton
-        name="role"
-        options={[
-          { label: '멘티 + 멘토링 참가', value: 'MENTEE' },
-          { label: '멘토 + 멘토링 운영', value: 'MENTOR' },
-        ]}
-        selectedValue={formData.role}
-        onChange={handleRadioChange}
-      />
-
-      <div className="space-y-1">
-        <h2 className="text-2xl font-bold mt-4 mb-2">Account</h2>
-
-        {/* 아이디 */}
-        <div className="relative flex items-center w-full rounded-xl border border-gray-200 bg-white focus-within:ring-2 focus-within:ring-yellow-300">
-          <input
-            type="text"
-            name="accountId"
-            value={formData.accountId}
-            onChange={handleChange}
-            placeholder="아이디"
-            className="w-full px-3 py-2 rounded-xl focus:outline-none"
-          />
-          <button
-            className="absolute right-2 px-4 py-1.5 bg-[#F8D448] text-white text-md font-medium rounded-md hover:bg-[#e5c340] transition-colors"
-            onClick={() => checkDuplicate('accountId')}
-            type="button"
-          >
-            중복확인
-          </button>
-        </div>
-        <p className={`error ${errors.accountId ? 'visible' : 'invisible'}`}>
-          {errors.accountId}
-        </p>
-
-        {/* 이메일 */}
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="이메일"
-          className="custom-input"
+    <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
+      <span>
+        <h2 className="text-2xl font-bold mb-2">Role</h2>
+        <RadioButton
+          name="role"
+          options={[
+            { label: '멘티 + 멘토링 참가', value: 'MENTEE' },
+            { label: '멘토 + 멘토링 운영', value: 'MENTOR' },
+          ]}
+          selectedValue={formData.role}
+          onChange={handleRadioChange}
         />
-        <p className={`error ${errors.email ? 'visible' : 'invisible'}`}>
-          {errors.email}
-        </p>
-
-        {/* 비밀번호 */}
-        <div className="relative">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-bold mt-4 mb-2">Account</h2>
+          {/* 아이디 */}
+          <div className="relative flex items-center w-full rounded-xl border border-gray-200 bg-white focus-within:ring-2 focus-within:ring-yellow-300">
+            <input
+              type="text"
+              name="accountId"
+              value={formData.accountId}
+              onChange={handleChange}
+              placeholder="아이디"
+              className="w-full px-3 py-2 rounded-xl focus:outline-none"
+            />
+            <button
+              className="absolute right-2 px-4 py-1.5 bg-[#F8D448] text-white text-md font-medium rounded-md hover:bg-[#e5c340] transition-colors"
+              onClick={() => checkDuplicate('accountId')}
+              type="button"
+            >
+              중복확인
+            </button>
+          </div>
+          <p className={`error ${errors.accountId ? 'visible' : 'invisible'}`}>
+            {errors.accountId}
+          </p>
+          {/* 이메일 */}
           <input
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            value={formData.password}
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
-            placeholder="비밀번호"
+            placeholder="이메일"
             className="custom-input"
           />
-          <button
-            type="button"
-            className="absolute right-0 top-0 h-full px-3 text-gray-400 hover:text-black"
-            onClick={togglePasswordVisibility}
+          <p className={`error ${errors.email ? 'visible' : 'invisible'}`}>
+            {errors.email}
+          </p>
+          {/* 비밀번호 */}
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="비밀번호"
+              className="custom-input"
+            />
+            <button
+              type="button"
+              className="absolute right-0 top-0 h-full px-3 text-gray-400 hover:text-black"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+          <p
+            className={`error ${errors.password ? 'visible m-0' : 'invisible'}`}
           >
-            {showPassword ? (
-              <EyeOff className="h-4 w-4" />
-            ) : (
-              <Eye className="h-4 w-4" />
-            )}
-          </button>
-        </div>
-        <p className={`error ${errors.password ? 'visible m-0' : 'invisible'}`}>
-          {errors.password}
-        </p>
-
-        {/* 비밀번호 확인 */}
-        <div className="relative">
-          <input
-            type={showConfirmPassword ? 'text' : 'password'}
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)} // 함수로 감싸기
-            placeholder="비밀번호 확인"
-            className="custom-input"
-          />
-          <button
-            type="button"
-            className="absolute right-0 top-0 h-full px-3 text-gray-400 hover:text-black"
-            onClick={toggleConfirmPasswordVisibility}
+            {errors.password}
+          </p>
+          {/* 비밀번호 확인 */}
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)} // 함수로 감싸기
+              placeholder="비밀번호 확인"
+              className="custom-input"
+            />
+            <button
+              type="button"
+              className="absolute right-0 top-0 h-full px-3 text-gray-400 hover:text-black"
+              onClick={toggleConfirmPasswordVisibility}
+            >
+              {showConfirmPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+          <p
+            className={`error ${confirmPassword !== formData.password ? 'visible m-0' : 'invisible'}`}
           >
-            {showConfirmPassword ? (
-              <EyeOff className="h-4 w-4" />
-            ) : (
-              <Eye className="h-4 w-4" />
-            )}
-          </button>
+            비밀번호가 일치하지 않습니다
+          </p>
         </div>
-        <p
-          className={`error ${confirmPassword !== formData.password ? 'visible m-0' : 'invisible'}`}
-        >
-          비밀번호가 일치하지 않습니다
-        </p>
-      </div>
+      </span>
       <JoinStepButton
         onClick={handleButtton}
         disabled={false} //!validateForm1(formData)
