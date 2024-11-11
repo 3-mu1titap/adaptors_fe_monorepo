@@ -18,12 +18,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   selectedValue,
   onChange,
 }) => {
-  // 기본 색상 설정
   const selectedColor = '#F8D448';
   const defaultColor = '#e5e7eb';
 
   return (
-    <div className="space-y-2 max-w-[140px]">
+    <div className=" flex gap-5">
       {options.map((option, index) => (
         <label
           key={index}
