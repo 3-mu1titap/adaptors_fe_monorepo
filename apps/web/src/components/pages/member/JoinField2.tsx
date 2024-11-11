@@ -1,26 +1,34 @@
 'use client';
-import { SignUpFormData } from '../../form/JoinFunnel';
-import { JoinField1Props } from './JoinField1';
+import { z } from 'zod';
+import { SignUpFormData2, signUpStep2Schema } from '../../form/signUpSchema';
+export interface JoinField2Props {
+  formData: SignUpFormData2;
+  setFormData: React.Dispatch<React.SetStateAction<SignUpFormData2>>;
+  errors: Partial<Record<keyof SignUpFormData2, string>>;
+  setErrors: React.Dispatch<
+    React.SetStateAction<Partial<Record<keyof SignUpFormData2, string>>>
+  >;
+}
 
 export default function JoinField2({
   formData,
   setFormData,
+  setErrors,
   errors,
-  validateField,
-}: JoinField1Props) {
+}: JoinField2Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === 'phoneNumber') {
       const formattedValue = formatPhoneNumber(value);
-      setFormData((prev: SignUpFormData) => ({
+      setFormData((prev: SignUpFormData2) => ({
         ...prev,
         [name]: formattedValue,
       }));
-      validateField(name as keyof SignUpFormData, formattedValue);
+      validateField(name as keyof SignUpFormData2, formattedValue);
     } else {
-      setFormData((prev: SignUpFormData) => ({ ...prev, [name]: value }));
-      validateField(name as keyof SignUpFormData, value);
+      setFormData((prev: SignUpFormData2) => ({ ...prev, [name]: value }));
+      validateField(name as keyof SignUpFormData2, value);
     }
   };
 
@@ -33,6 +41,21 @@ export default function JoinField2({
     if (truncated.length <= 7)
       return `${truncated.slice(0, 3)}-${truncated.slice(3)}`;
     return `${truncated.slice(0, 3)}-${truncated.slice(3, 7)}-${truncated.slice(7, 11)}`;
+  };
+
+  //개별 필드 유효성 검사
+  const validateField = (fieldName: keyof SignUpFormData2, value: string) => {
+    try {
+      signUpStep2Schema.shape[fieldName].parse(value);
+      setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: undefined }));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [fieldName]: error.errors[0].message,
+        }));
+      }
+    }
   };
 
   return (
