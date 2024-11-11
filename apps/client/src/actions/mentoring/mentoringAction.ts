@@ -89,7 +89,7 @@ export async function GetMentoringList() {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL}/api/v1/mentoring-read/mentoring-list/${memberUuid}`,
+      `${process.env.LOCAL_URL}/api/v1/mentoring-query-service/mentoring-list/${memberUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -116,7 +116,7 @@ export async function GetMentoringSessionList({
   'use server';
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL}/api/v1/mentoring-read/session-list/${mentoringUuid}`,
+      `${process.env.LOCAL_URL}/api/v1/mentoring-query-service/session-list/${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
