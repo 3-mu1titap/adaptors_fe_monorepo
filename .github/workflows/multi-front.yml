@@ -72,4 +72,4 @@ jobs:
           curl -X POST -H "Authorization: token $PAT_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$REPO/dispatches \
-            -d '{"event_type": "ci_completed", "client_payload": { "repository": "adaptors_fe_monorepo", "tag": "${{ steps.tags.outputs.tag }}" }}' 
+            -d "{\"event_type\": \"ci_completed\", \"client_payload\": { \"repository\": \"adaptors_fe_monorepo\", \"tag\": \"$TAG\" }}"
