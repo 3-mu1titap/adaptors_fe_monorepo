@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { checkAccountId } from '../../../actions/auth/auth';
 import { SignUpFormData1, signUpStep1Schema } from '../../form/signUpSchema';
+import JoinStepButton from '../../ui/Button/JoinStepButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import './index.css';
 
@@ -19,6 +20,7 @@ export interface JoinField1Props {
   setConfirmId: React.Dispatch<React.SetStateAction<boolean>>;
   confirmPassword: string;
   setConfirmPassword: React.Dispatch<React.SetStateAction<string>>;
+  handleButtton: () => void;
 }
 
 export default function JoinField1({
@@ -30,6 +32,7 @@ export default function JoinField1({
   setConfirmId,
   confirmPassword,
   setConfirmPassword,
+  handleButtton,
 }: JoinField1Props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -104,7 +107,7 @@ export default function JoinField1({
   };
 
   return (
-    <div className="px-6 py-2 space-y-1">
+    <div className="px-6 py-2 space-y-1 h-full relative">
       <h2 className="text-2xl font-bold mb-2">Role</h2>
       <RadioButton
         name="role"
@@ -208,6 +211,10 @@ export default function JoinField1({
           비밀번호가 일치하지 않습니다
         </p>
       </div>
+      <JoinStepButton
+        onClick={handleButtton}
+        disabled={false} //!validateForm1(formData)
+      />
     </div>
   );
 }

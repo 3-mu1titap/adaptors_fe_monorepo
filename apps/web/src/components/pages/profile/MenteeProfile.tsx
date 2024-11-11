@@ -1,9 +1,30 @@
 'use client';
 
 import { useState } from 'react';
+import JoinStepButton from '../../ui/Button/JoinStepButton';
 import RadioButton from '../../ui/radio/RadioButton';
+import JoinSelect from '../../ui/select/JoinSelect';
+import '../member/index.css';
 
-export default function MenteeProfile() {
+const occupationStatus = [
+  { value: '취준생', label: '취준생' },
+  { value: '재직중', label: '재직중' },
+  { value: '퇴직', label: '퇴직' },
+];
+
+const educationLevelOptions = [
+  { value: '초졸', label: '초졸' },
+  { value: '중졸', label: '중졸' },
+  { value: '고졸', label: '고졸' },
+  { value: '대졸', label: '대졸' },
+  { value: '대학원졸', label: '대학원졸' },
+];
+
+export default function MenteeProfile({
+  handleButton,
+}: {
+  handleButton: () => void;
+}) {
   const [gender, setGender] = useState('MALE');
   const handleRadioChange = (value: string) => {
     setGender(value);
@@ -20,14 +41,11 @@ export default function MenteeProfile() {
         >
           취업 상태
         </label>
-        <select
-          id="occupationStatus"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="취준생">취준생</option>
-          <option value="재직중">재직중</option>
-          <option value="퇴직">퇴직</option>
-        </select>
+        <JoinSelect
+          options={educationLevelOptions}
+          defaultValue="취준생"
+          onChange={(value) => console.log(value)}
+        />
       </div>
 
       <span className="flex gap-2">
@@ -38,16 +56,11 @@ export default function MenteeProfile() {
           >
             최종 학력
           </label>
-          <select
-            id="educationLevel"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="초졸">초졸</option>
-            <option value="중졸">중졸</option>
-            <option value="고졸">고졸</option>
-            <option value="대졸">대졸</option>
-            <option value="대학원졸">대학원졸</option>
-          </select>
+          <JoinSelect
+            options={occupationStatus}
+            defaultValue="대졸"
+            onChange={(value) => console.log(value)}
+          />
         </div>
         {/* Age */}
         <div className="space-y-2 flex-1">
@@ -60,8 +73,8 @@ export default function MenteeProfile() {
           <input
             id="age"
             type="number"
-            placeholder="나이를 입력하세요"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="ex) 20"
+            className="custom-div"
           />
         </div>
       </span>
@@ -96,8 +109,8 @@ export default function MenteeProfile() {
           <input
             id="jobType"
             type="text"
-            placeholder="직종을 입력하세요 (예: IT)"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="ex) IT"
+            className="custom-div"
           />
         </div>
         <div className="space-y-2">
@@ -110,8 +123,8 @@ export default function MenteeProfile() {
           <input
             id="jobExperience"
             type="text"
-            placeholder="경력을 입력하세요 (예: 3년)"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="ex) 3년"
+            className="custom-div"
           />
         </div>
       </span>
@@ -128,9 +141,10 @@ export default function MenteeProfile() {
           id="jobApplicationCount"
           type="number"
           placeholder="지원 횟수를 입력하세요"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="custom-div"
         />
       </div>
+      <JoinStepButton onClick={handleButton} />
     </div>
   );
 }

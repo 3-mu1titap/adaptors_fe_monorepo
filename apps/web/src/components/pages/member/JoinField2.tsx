@@ -1,6 +1,7 @@
 'use client';
 import { z } from 'zod';
 import { SignUpFormData2, signUpStep2Schema } from '../../form/signUpSchema';
+import JoinStepButton from '../../ui/Button/JoinStepButton';
 export interface JoinField2Props {
   formData: SignUpFormData2;
   setFormData: React.Dispatch<React.SetStateAction<SignUpFormData2>>;
@@ -8,6 +9,7 @@ export interface JoinField2Props {
   setErrors: React.Dispatch<
     React.SetStateAction<Partial<Record<keyof SignUpFormData2, string>>>
   >;
+  handleButtton: () => void;
 }
 
 export default function JoinField2({
@@ -15,6 +17,7 @@ export default function JoinField2({
   setFormData,
   setErrors,
   errors,
+  handleButtton,
 }: JoinField2Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -59,7 +62,7 @@ export default function JoinField2({
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 h-full relative">
       <h2 className="text-2xl font-bold ">Personal Information</h2>
 
       <div className="space-y-2">
@@ -133,6 +136,10 @@ export default function JoinField2({
           </p>
         </div>
       </div>
+      <JoinStepButton
+        onClick={handleButtton}
+        disabled={false} //!validateForm2(formData)
+      />
     </div>
   );
 }

@@ -5,9 +5,15 @@ import {
   MentoProfile,
   postMentorProfile,
 } from '../../../actions/profile/profile';
+import JoinStepButton from '../../ui/Button/JoinStepButton';
 import RadioButton from '../../ui/radio/RadioButton';
+import '../member/index.css';
 
-export default function MentorProfile() {
+export default function MentorProfile({
+  handleButtton,
+}: {
+  handleButtton: () => void;
+}) {
   const [mentoringField, setMentoringField] = useState('');
   const [gender, setGender] = useState<string>('MALE');
   const [age, setAge] = useState<number>(20);
@@ -29,6 +35,7 @@ export default function MentorProfile() {
     console.log(mentorProfile);
     const data = await postMentorProfile(mentorProfile);
     console.log(data);
+    handleButtton();
   };
 
   return (
@@ -71,8 +78,8 @@ export default function MentorProfile() {
           type="number"
           value={age}
           onChange={(e) => setAge(Number(e.target.value))}
-          placeholder="나이를 입력하세요"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="ex) 20"
+          className="custom-div"
         />
       </div>
 
@@ -109,19 +116,13 @@ export default function MentorProfile() {
           type="text"
           value={jobExperience}
           onChange={(e) => setJobExperience(e.target.value)}
-          placeholder="경력을 입력하세요 (예: 3년)"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="(예: 3년)"
+          className="custom-div"
         />
       </div>
 
       {/* Save Button */}
-      <button
-        onClick={handleSave}
-        type="button"
-        className="w-full px-4 py-2 bg-[#F8D448] text-black rounded-md hover:bg-[#e5c340] focus:outline-none focus:ring-2 focus:ring-[#F8D448]"
-      >
-        저장
-      </button>
+      <JoinStepButton onClick={handleSave} />
     </div>
   );
 }
