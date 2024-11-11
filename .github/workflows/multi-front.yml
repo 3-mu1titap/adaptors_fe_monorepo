@@ -61,8 +61,8 @@ jobs:
       - name: Record Deployment Tag
         run: |
           echo "${{ steps.tags.outputs.timestamp_tag }}" >> deploy-history.txt
-          git config user.name ${{ secrets.USERNAME}}
-          git config user.email ${{ secrets.USER_EMAIL}}
+          git config user.name ${{ secrets.DG_USER_NAME}}
+          git config user.email ${{ secrets.DG_USER_EMAIL}}
           git add deploy-history.txt
           git commit -m "Record deployment: ${{ steps.tags.outputs.timestamp_tag }}"
           git push
