@@ -30,6 +30,7 @@ export interface MentoringDataType {
   mentoringId: string;
   mentoringUuid: string;
   name: string;
+  description: string;
   detail: string;
   mentorUuid: string;
   thumbnailUrl: string;

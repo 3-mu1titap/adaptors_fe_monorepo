@@ -15,6 +15,7 @@ import '@toast-ui/editor/toastui-editor.css';
 import color from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import Nouislider from '@x1mrdonut1x/nouislider-react';
 
 export interface MentoringCategory {
   topCategoryName: string;
@@ -34,6 +35,7 @@ export interface MentoringSession {
 
 export interface MentoringAddForm {
   name: string;
+  description: string;
   detail: string;
   mentorUuid: string;
   isReusable: boolean;
@@ -49,6 +51,7 @@ export default function MentoringForm({
 }) {
   const [formData, setFormData] = useState<MentoringAddForm>({
     name: '',
+    description: '',
     detail: '',
     mentorUuid: '671a55ae-2346-407f-85e3-9cd39f4e3d10',
     isReusable: false,
@@ -62,6 +65,7 @@ export default function MentoringForm({
   const [startTime, setStartTime] = useState<string>('00:00');
   const [endTime, setEndTime] = useState<string>('00:00');
   const [deadlineDate, setDeadlineDate] = useState<Date | null>(new Date());
+  const [price, setPrice] = useState<number>(10);
 
   const editorRef = useRef<Editor | null>(null);
 
@@ -170,7 +174,7 @@ export default function MentoringForm({
         deadlineDate: deadlineDate,
         minHeadCount: 2,
         maxHeadCount: 5,
-        price: 100,
+        price: price,
       };
       setFormData((prevData) => ({
         ...prevData,
@@ -275,11 +279,29 @@ export default function MentoringForm({
       </div>
 
       <div className="mb-4">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700"
+        >
+          멘토링 설명
+        </label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          required
+        />
+      </div>
+
+      <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
           세션 선택
         </label>
         <div className="flex mt-2">
-          <div className="w-1/2 pr-2">
+          <div className="w-1/2">
             <DatePicker
               locale={ko}
               selected={selectedDate}
@@ -350,7 +372,22 @@ export default function MentoringForm({
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
             </div>
-
+            <div>
+              <div className="font-bold flex gap-x-2 items-center">
+                <span className="inline-block py-1 px-2 rounded text-primary border border-white-light dark:border-dark">
+                  {price}
+                </span>
+                <span>Volt</span>
+              </div>
+              <input
+                type="range"
+                className="w-full py-2.5"
+                value={price}
+                min={10}
+                max={1000}
+                onChange={(e) => setPrice(parseInt(e.target.value))}
+              />
+            </div>
             <button
               type="button"
               onClick={handleSessionAdd}

@@ -1,23 +1,26 @@
 'use client';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
+import { z } from 'zod';
 import { checkAccountId } from '../../../actions/auth/auth';
-import { SignUpFormData } from '../../form/JoinFunnel';
+import { SignUpFormData1, signUpStep1Schema } from '../../form/signUpSchema';
+import JoinStepButton from '../../ui/Button/JoinStepButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import './index.css';
 
 export interface JoinField1Props {
-  formData: SignUpFormData;
-  setFormData: React.Dispatch<React.SetStateAction<SignUpFormData>>;
-  errors: Partial<Record<keyof SignUpFormData, string>>;
+  formData: SignUpFormData1;
+  setFormData: React.Dispatch<React.SetStateAction<SignUpFormData1>>;
+  errors: Partial<Record<keyof SignUpFormData1, string>>;
   setErrors: React.Dispatch<
-    React.SetStateAction<Partial<Record<keyof SignUpFormData, string>>>
+    React.SetStateAction<Partial<Record<keyof SignUpFormData1, string>>>
   >;
-  validateField: (fieldName: keyof SignUpFormData, value: string) => void;
-  confirmId?: string;
-  setConfirmId?: React.Dispatch<React.SetStateAction<string>>;
-  confirmPassword?: string;
-  setConfirmPassword?: React.Dispatch<React.SetStateAction<string>>;
+  validateField?: (fieldName: keyof SignUpFormData1, value: string) => void;
+  confirmId: boolean;
+  setConfirmId: React.Dispatch<React.SetStateAction<boolean>>;
+  confirmPassword: string;
+  setConfirmPassword: React.Dispatch<React.SetStateAction<string>>;
+  handleButtton: () => void;
 }
 
 export default function JoinField1({
@@ -25,20 +28,31 @@ export default function JoinField1({
   setFormData,
   errors,
   setErrors,
-  validateField,
   confirmId,
   setConfirmId,
+  confirmPassword,
   setConfirmPassword,
+  handleButtton,
 }: JoinField1Props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    // 업데이트된 입력값을 반영하고 confirmId를 false로 설정
     setFormData((prev) => ({ ...prev, [name]: value }));
-    validateField(name as keyof SignUpFormData, value); // Validate field on change
-    if (name === 'confirmPassword') {
-      setConfirmPassword?.(value);
+
+    // 유효성 검사 수행
+    validateField(name as keyof SignUpFormData1, value);
+
+    // accountId가 변경될 경우 confirmId와 오류 메시지를 관리
+    if (name === 'accountId' && formData.accountId.length >= 5) {
+      setConfirmId(false);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        accountId: '아이디 중복 검사가 필요합니다',
+      }));
     }
   };
 
@@ -49,10 +63,13 @@ export default function JoinField1({
     }));
   };
 
-  const checkDuplicate = async (field: 'id' | 'email') => {
-    if (errors.accountId == undefined || errors.accountId === '') {
+  const checkDuplicate = async (field: 'accountId' | 'email') => {
+    if (
+      errors.accountId === '아이디 중복 검사가 필요합니다' ||
+      errors.accountId === ''
+    ) {
+      console.log('d아이디검사함');
       try {
-        console.log('1');
         const data = await checkAccountId(formData.accountId);
         if (data === 2011) {
           setErrors((prev) => ({
@@ -60,10 +77,9 @@ export default function JoinField1({
             [field]: `해당 아이디가 이미 사용중입니다.`,
           }));
         } else if (data === 200) {
-          console.log('중복확인 성공');
-          setConfirmId?.('sdflaksjd');
-        } else {
-          setErrors((prev) => ({ ...prev, [field]: '' }));
+          console.log('중복안됨');
+          setConfirmId(true);
+          setErrors((prev) => ({ ...prev, accountId: '' }));
         }
       } catch (error) {
         console.error('중복 검사 오류:', error);
@@ -75,8 +91,23 @@ export default function JoinField1({
   const toggleConfirmPasswordVisibility = () =>
     setShowConfirmPassword((prev) => !prev);
 
+  //개별 필드 유효성 검사
+  const validateField = (fieldName: keyof SignUpFormData1, value: string) => {
+    try {
+      signUpStep1Schema.shape[fieldName].parse(value);
+      setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: undefined }));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [fieldName]: error.errors[0].message,
+        }));
+      }
+    }
+  };
+
   return (
-    <div className="px-6 py-2 space-y-1">
+    <div className="px-6 py-2 space-y-1 h-full relative">
       <h2 className="text-2xl font-bold mb-2">Role</h2>
       <RadioButton
         name="role"
@@ -103,20 +134,14 @@ export default function JoinField1({
           />
           <button
             className="absolute right-2 px-4 py-1.5 bg-[#F8D448] text-white text-md font-medium rounded-md hover:bg-[#e5c340] transition-colors"
-            onClick={() => checkDuplicate('id')}
+            onClick={() => checkDuplicate('accountId')}
             type="button"
           >
             중복확인
           </button>
         </div>
-        <p
-          className={`error ${errors.accountId || !confirmId ? 'visible' : 'invisible'}`}
-        >
-          {errors.accountId
-            ? errors.accountId
-            : !confirmId
-              ? confirmId
-              : '중복확인필요'}
+        <p className={`error ${errors.accountId ? 'visible' : 'invisible'}`}>
+          {errors.accountId}
         </p>
 
         {/* 이메일 */}
@@ -163,8 +188,8 @@ export default function JoinField1({
           <input
             type={showConfirmPassword ? 'text' : 'password'}
             name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)} // 함수로 감싸기
             placeholder="비밀번호 확인"
             className="custom-input"
           />
@@ -181,11 +206,15 @@ export default function JoinField1({
           </button>
         </div>
         <p
-          className={`error ${formData.confirmPassword !== formData.password ? 'visible m-0' : 'invisible'}`}
+          className={`error ${confirmPassword !== formData.password ? 'visible m-0' : 'invisible'}`}
         >
           비밀번호가 일치하지 않습니다
         </p>
       </div>
+      <JoinStepButton
+        onClick={handleButtton}
+        disabled={false} //!validateForm1(formData)
+      />
     </div>
   );
 }

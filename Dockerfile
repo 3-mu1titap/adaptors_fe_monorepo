@@ -14,7 +14,7 @@ WORKDIR /usr/src/app
 COPY ./ ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of your application code
 COPY . .

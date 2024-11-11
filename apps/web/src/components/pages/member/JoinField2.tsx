@@ -1,26 +1,37 @@
 'use client';
-import { SignUpFormData } from '../../form/JoinFunnel';
-import { JoinField1Props } from './JoinField1';
+import { z } from 'zod';
+import { SignUpFormData2, signUpStep2Schema } from '../../form/signUpSchema';
+import JoinStepButton from '../../ui/Button/JoinStepButton';
+export interface JoinField2Props {
+  formData: SignUpFormData2;
+  setFormData: React.Dispatch<React.SetStateAction<SignUpFormData2>>;
+  errors: Partial<Record<keyof SignUpFormData2, string>>;
+  setErrors: React.Dispatch<
+    React.SetStateAction<Partial<Record<keyof SignUpFormData2, string>>>
+  >;
+  handleButtton: () => void;
+}
 
 export default function JoinField2({
   formData,
   setFormData,
+  setErrors,
   errors,
-  validateField,
-}: JoinField1Props) {
+  handleButtton,
+}: JoinField2Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === 'phoneNumber') {
       const formattedValue = formatPhoneNumber(value);
-      setFormData((prev: SignUpFormData) => ({
+      setFormData((prev: SignUpFormData2) => ({
         ...prev,
         [name]: formattedValue,
       }));
-      validateField(name as keyof SignUpFormData, formattedValue);
+      validateField(name as keyof SignUpFormData2, formattedValue);
     } else {
-      setFormData((prev: SignUpFormData) => ({ ...prev, [name]: value }));
-      validateField(name as keyof SignUpFormData, value);
+      setFormData((prev: SignUpFormData2) => ({ ...prev, [name]: value }));
+      validateField(name as keyof SignUpFormData2, value);
     }
   };
 
@@ -35,8 +46,23 @@ export default function JoinField2({
     return `${truncated.slice(0, 3)}-${truncated.slice(3, 7)}-${truncated.slice(7, 11)}`;
   };
 
+  //개별 필드 유효성 검사
+  const validateField = (fieldName: keyof SignUpFormData2, value: string) => {
+    try {
+      signUpStep2Schema.shape[fieldName].parse(value);
+      setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: undefined }));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [fieldName]: error.errors[0].message,
+        }));
+      }
+    }
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 h-full relative">
       <h2 className="text-2xl font-bold ">Personal Information</h2>
 
       <div className="space-y-2">
@@ -110,6 +136,10 @@ export default function JoinField2({
           </p>
         </div>
       </div>
+      <JoinStepButton
+        onClick={handleButtton}
+        disabled={false} //!validateForm2(formData)
+      />
     </div>
   );
 }
