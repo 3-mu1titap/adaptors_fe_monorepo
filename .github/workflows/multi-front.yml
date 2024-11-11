@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - dev
-      
+    paths-ignore:
+      - deploy-history.txt  
 permissions:
   contents: write
 
@@ -39,16 +40,7 @@ jobs:
           echo "timestamp_tag=${TAG}" >> $GITHUB_OUTPUT
           echo "Generated tag: ${TAG}"
           
-      - name: Trigger ToArgoCD Workflow
-        if: success()
-        env:
-          REPO: "mu1titap/argocd-manifests"  # ArgoCD가 설정된 레포지토리 이름
-          PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-        run: |
-          curl -X POST -H "Authorization: token $PAT_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/$REPO/dispatches \
-            -d '{"event_type": "ci_completed", "client_payload": { "repository": "adaptors_fe_monorepo", "tag": "${{ steps.tags.outputs.tag }}" }}'
+      
 
       - name: Log in to Amazon ECR
         env:
@@ -70,14 +62,14 @@ jobs:
           
           # 태그 정보 출력 (디버깅용)
           echo "Pushed tags: latest, ${{ steps.tags.outputs.timestamp_tag }}"
-
-      #- name: Trigger ToArgoCD Workflow
-      #  if: success()
-      #  env:
-      #    REPO: "mu1titap/argocd-manifests"  # ArgoCD 쪽 레포지토리 지정
-      #    PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-      #  run: |
-      #    curl -X POST -H "Authorization: token $PAT_TOKEN" \
-      #      -H "Accept: application/vnd.github.v3+json" \
-      #      https://api.github.com/repos/$REPO/dispatches \
-      #      -d '{"event_type": "ci_completed", "client_payload": { "branch": "dev" }}'
+          
+      - name: Trigger ToArgoCD Workflow
+        if: success()
+        env:
+          REPO: "mu1titap/argocd-manifests"  # ArgoCD가 설정된 레포지토리 이름
+          PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        run: |
+          curl -X POST -H "Authorization: token $PAT_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$REPO/dispatches \
+            -d '{"event_type": "ci_completed", "client_payload": { "repository": "adaptors_fe_monorepo", "tag": "${{ steps.tags.outputs.tag }}" }}' 
