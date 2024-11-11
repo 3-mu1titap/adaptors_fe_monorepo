@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const mentoringListData: MentoringDataType[] = await GetMentoringList();
+  console.log(mentoringListData);
   return (
     <>
       <header className="flex flex-row justify-between items-center ml-4 text-[0.7rem] text-slate-600 py-4 pl-1 ">

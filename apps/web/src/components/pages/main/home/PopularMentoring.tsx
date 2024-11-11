@@ -59,7 +59,7 @@ export default function PopularMentoring() {
   };
 
   return (
-    <section className="bg-[#FFF9E7] px-4 py-12">
+    <section className="bg-gradient-to-br from-[#FFF1AE] via-[#FFF9E7] to-[#FFF9E7] px-4 py-12">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-8">
           <span className="text-sm text-gray-600 uppercase tracking-wider">
