@@ -30,12 +30,12 @@ jobs:
       - name: Generate Tags
         id: tags
         run: |
-          # 타임스탬프 태그 생성 (예: 20240310-153022)
-          TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
-          # git 커밋 SHA 짧은 버전 (예: a1b2c3d)
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          # 최종 태그 (예: 20240310-153022-a1b2c3d)
-          TAG="${TIMESTAMP}-${SHORT_SHA}"
+          # 타임스탬프 태그 생성 (예: 20240310)
+          TIMESTAMP=$(date '+%Y%m%d')
+          # GitHub Run Number 사용 (예: 20240310-1, 20240310-2, ...)
+          RUN_NUMBER="${{ github.run_number }}"
+          # 최종 태그 (예: 20240310-1)
+          TAG="${TIMESTAMP}-${RUN_NUMBER}"
           
           echo "timestamp_tag=${TAG}" >> $GITHUB_OUTPUT
           echo "Generated tag: ${TAG}"
