@@ -39,6 +39,8 @@ jobs:
           
           echo "timestamp_tag=${TAG}" >> $GITHUB_OUTPUT
           echo "Generated tag: ${TAG}"
+          
+      
 
       - name: Log in to Amazon ECR
         env:
@@ -60,24 +62,14 @@ jobs:
           
           # 태그 정보 출력 (디버깅용)
           echo "Pushed tags: latest, ${{ steps.tags.outputs.timestamp_tag }}"
-
-      # 태그 정보 기록 (선택사항)
-      - name: Record Deployment Tag
-        run: |
-          echo "${{ steps.tags.outputs.timestamp_tag }}" >> deploy-history.txt
-          git config --global user.name ${{ secrets.DG_USER_NAME}}
-          git config --global user.email ${{ secrets.DG_USER_EMAIL}}
-
-          # deploy-history 브랜치 생성 또는 체크아웃
-          if git ls-remote --heads origin deploy-history | grep -q 'deploy-history'; then
-            # 브랜치가 이미 존재하면 체크아웃
-            git fetch origin deploy-history
-            git checkout deploy-history
-          else
-            # 브랜치가 없으면 새로 생성
-            git checkout -b deploy-history
-          fi
           
-          git add deploy-history.txt
-          git commit -m "Record deployment: ${{ steps.tags.outputs.timestamp_tag }}"
-          git push origin deploy-history
+      - name: Trigger ToArgoCD Workflow
+        if: success()
+        env:
+          REPO: "mu1titap/argocd-manifests"  # ArgoCD가 설정된 레포지토리 이름
+          PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        run: |
+          curl -X POST -H "Authorization: token $PAT_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$REPO/dispatches \
+            -d "{\"event_type\": \"ci_completed\", \"client_payload\": { \"repository\": \"adaptors_fe_monorepo\", \"tag\": \"$TAG\" }}"

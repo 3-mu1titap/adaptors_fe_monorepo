@@ -1,3 +1,3 @@
 export default function page() {
-  return <div>Test Page ###########12</div>;
+  return <div>성공 기원 102만번째 </div>;
 }
