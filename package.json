@@ -14,7 +14,7 @@
     "clean": "turbo clean",
     "format": "prettier --cache --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
-    "start": "turbo start" 
+    "start": "turbo start"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss,md}": [
@@ -30,5 +30,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "zustand": "^5.0.1"
   }
 }
