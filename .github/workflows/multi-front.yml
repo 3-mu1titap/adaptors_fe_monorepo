@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - dev
+    paths-ignore:
+      - deploy-history.txt  
 permissions:
   contents: write
 
