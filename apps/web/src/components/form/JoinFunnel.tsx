@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { postUserData } from '../../actions/auth/auth';
+import useUserStore from '../../store/uuidStore';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import FunnelLevel from '../pages/member/FunnelLevel';
@@ -28,7 +29,7 @@ export default function JoinFunnel() {
   const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
   const [confirmId, setConfirmId] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const setUuid = useUserStore((state) => state.setUuid);
   const [formData1, setFormData1] = useState<SignUpFormData1>({
     accountId: '',
     password: '',
@@ -56,7 +57,10 @@ export default function JoinFunnel() {
         ...formData2,
       };
       const data = await postUserData(combinedFormData);
-      console.log('회원가입 요청 응답:', data.result);
+      setUuid(data);
+      if (data) {
+        onNextStep();
+      }
     }
   };
 

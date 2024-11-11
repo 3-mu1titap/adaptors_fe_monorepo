@@ -68,15 +68,16 @@ export default function JoinField1({
       errors.accountId === '아이디 중복 검사가 필요합니다' ||
       errors.accountId === ''
     ) {
-      console.log('d아이디검사함');
       try {
         const data = await checkAccountId(formData.accountId);
+        console.log(data);
         if (data === 2011) {
           setErrors((prev) => ({
             ...prev,
             [field]: `해당 아이디가 이미 사용중입니다.`,
           }));
         } else if (data === 200) {
+          console.log('');
           console.log('중복안됨');
           setConfirmId(true);
           setErrors((prev) => ({ ...prev, accountId: '' }));

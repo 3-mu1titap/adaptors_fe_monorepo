@@ -12,7 +12,7 @@ export default function HashTag({
   return (
     <section className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
       <span>
-        <h2 className="text-2xl font-bold">hashTag</h2>
+        <h2 className="text-2xl font-bold">HashTag</h2>
         <h3 className="text-slate-500 text-lg mt-1 mb-8">최대 5개 선택</h3>
         <CheckboxButton
           name="hobbies"

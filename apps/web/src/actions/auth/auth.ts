@@ -1,5 +1,6 @@
 'use server';
 
+import { JoinResult } from '../../components/types/auth/responseTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 import { fetchData } from '../common/common';
 
@@ -11,13 +12,13 @@ export const postUserData = async (userData: {
   password: string;
   phoneNumber: string;
   role: string;
-}): Promise<any> => {
-  const data = await fetchData<commonResType<any>>({
+}): Promise<string> => {
+  const data = await fetchData<commonResType<JoinResult>>({
     method: 'POST',
     apiUrl: `/api/v1/auth/sign-up`,
     body: userData,
   });
-  return data;
+  return data.result.uuid;
 };
 
 export const findId = async (email: string): Promise<any> => {

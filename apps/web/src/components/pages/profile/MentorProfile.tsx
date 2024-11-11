@@ -40,7 +40,7 @@ export default function MentorProfile({
   return (
     <div className="px-6 py-2 h-full flex flex-col justify-between">
       <span className="space-y-2">
-        <h2 className="text-2xl font-bold">profile</h2>
+        <h2 className="text-2xl font-bold">Profile</h2>
         {/* Mentoring Field */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">

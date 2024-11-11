@@ -32,7 +32,7 @@ export default function MenteeProfile({
   return (
     <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
       <div className="space-y-2 ">
-        <h2 className="text-2xl font-bold">profile</h2>
+        <h2 className="text-2xl font-bold">Profile</h2>
         <span className="flex gap-2 ">
           <div className="space-y-2 flex-1">
             <label
