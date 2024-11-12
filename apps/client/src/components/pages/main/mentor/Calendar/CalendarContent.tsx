@@ -2,7 +2,12 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
-import { formatDate, DateSelectArg, EventApi } from '@fullcalendar/core';
+import {
+  formatDate,
+  DateSelectArg,
+  EventApi,
+  EventContentArg,
+} from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -12,6 +17,8 @@ import {
   ScheduleDataType,
   UserScheduleDataType,
 } from '../../../../types/main/schedule/scheduleTypes';
+
+import './CalendarContent.css';
 
 interface CalendarDataType {
   id: string;
@@ -32,6 +39,9 @@ const CalendarContent = ({
         title: schedule.mentoringName,
         start: new Date(`${schedule.startDate}T${schedule.startTime}`),
         end: new Date(`${schedule.endDate}T${schedule.endTime}`),
+        backgroundColor: '#F6D84C',
+        borderColor: '#F6D84C',
+        textColor: 'white',
       }));
 
       setEvents(newEvents);
@@ -39,7 +49,7 @@ const CalendarContent = ({
     console.log(scheduleList.scheduleLists);
   }, []);
 
-  const today = new Date();
+  const now = new Date();
 
   const [events, setEvents] = useState<CalendarDataType[]>([]);
   const [isAddEventModal, setIsAddEventModal] = useState(false);
@@ -48,13 +58,13 @@ const CalendarContent = ({
   const defaultParams: ScheduleDataType = {
     mentoringSessionUuid: '',
     mentoringName: '',
-    startDate: today,
-    startTime: today,
-    endDate: today,
-    endTime: today,
+    startDate: now,
+    startTime: now,
+    endDate: now,
+    endTime: now,
     status: '',
-    createdAt: today,
-    updatedAt: today,
+    createdAt: now,
+    updatedAt: now,
   };
   const [params, setParams] = useState<ScheduleDataType>(defaultParams);
 
@@ -75,19 +85,19 @@ const CalendarContent = ({
       newParams = {
         mentoringSessionUuid: obj.mentoringSessionUuid || 0,
         mentoringName: obj.mentoringName || '',
-        startDate: obj.startDate || today,
+        startDate: obj.startDate || now,
         startTime: obj.start,
-        endDate: obj.endDate || today,
+        endDate: obj.endDate || now,
         endTime: obj.end,
         status: obj.status || '',
-        createdAt: obj.createdAt || today,
-        updatedAt: obj.updatedAt || today,
+        createdAt: obj.createdAt || now,
+        updatedAt: obj.updatedAt || now,
       };
-      setMinStartDate(dateFormat(today));
+      setMinStartDate(dateFormat(now));
       setMinEndDate(dateFormat(obj.start));
     } else {
-      setMinStartDate(dateFormat(today));
-      setMinEndDate(dateFormat(today));
+      setMinStartDate(dateFormat(now));
+      setMinEndDate(dateFormat(now));
     }
     setParams(newParams);
     setIsAddEventModal(true);
@@ -207,7 +217,7 @@ const CalendarContent = ({
       title: '날짜 선택',
       input: 'date',
       inputAttributes: {
-        min: today.toISOString().split('T')[0],
+        min: now.toISOString().split('T')[0],
       },
       showCancelButton: true,
       confirmButtonText: '확인',
@@ -290,14 +300,13 @@ const CalendarContent = ({
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{ left: '', center: '', right: '' }}
             initialView="timeGridWeek"
-            height={'auto'}
             editable={true}
             dayMaxEvents={true}
             // locale={koLocale}
             timeZone="local"
             selectable={true}
             selectConstraint={{
-              start: today,
+              start: now,
               end: '2100-01-01',
             }}
             droppable={true}
@@ -307,20 +316,6 @@ const CalendarContent = ({
             eventClick={(event: any) => editEvent(event)}
             select={(event: any) => editDate(event)}
             events={events}
-            eventContent={(eventInfo: any) => (
-              <>
-                <div className="fc-content">
-                  <div className="fc-time">{eventInfo.timeText}</div>
-                  <div className="fc-title">{eventInfo.event.title}</div>
-                </div>
-                {/* <div className="fc-resizer fc-end-resizer">
-                  {eventInfo.event.extendedProps.memberName}
-                </div>
-                <div className="fc-resizer fc-end-resizer">
-                  {eventInfo.event.extendedProps.description}
-                </div> */}
-              </>
-            )}
             nowIndicator={true}
             allDaySlot={false}
             slotDuration={'00:30:00'}
