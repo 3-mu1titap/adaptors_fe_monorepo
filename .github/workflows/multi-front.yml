@@ -67,6 +67,6 @@ jobs:
               \"client_payload\": {
                 \"repository\": \"$ECR_REPOSITORY\",
                 \"tag\": \"${{ steps.tags.outputs.image_tag }}\",
-                \"service\": \"adaptors_fe_monorepo\"
+                \"service_name\": \"adaptors_fe_monorepo\"
               }
             }"
