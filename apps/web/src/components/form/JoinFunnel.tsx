@@ -77,7 +77,7 @@ export default function JoinFunnel() {
   return (
     <div>
       <FunnelLevel level={level} />
-      <form className="max-w-[400px] mx-auto h-[100vh] sm:h-[65vh]">
+      <section className="max-w-[400px] mx-auto h-[100vh] sm:h-[65vh]">
         <Funnel step={step}>
           <Funnel.Step name="joinStep1">
             <JoinField1
@@ -98,7 +98,7 @@ export default function JoinFunnel() {
               setFormData={setFormData2}
               errors={errors}
               setErrors={setErrors}
-              handleButtton={onNextStep} //handleSubmit
+              handleButtton={handleSubmit} //handleSubmit
             />
           </Funnel.Step>
           <Funnel.Step name="profileImage">
@@ -115,7 +115,7 @@ export default function JoinFunnel() {
             <HashTag handleButton={onNextStep} />
           </Funnel.Step>
         </Funnel>
-      </form>
+      </section>
     </div>
   );
 }

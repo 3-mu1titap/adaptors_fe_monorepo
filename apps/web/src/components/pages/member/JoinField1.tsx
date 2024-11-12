@@ -77,8 +77,6 @@ export default function JoinField1({
             [field]: `해당 아이디가 이미 사용중입니다.`,
           }));
         } else if (data === 200) {
-          console.log('');
-          console.log('중복안됨');
           setConfirmId(true);
           setErrors((prev) => ({ ...prev, accountId: '' }));
         }

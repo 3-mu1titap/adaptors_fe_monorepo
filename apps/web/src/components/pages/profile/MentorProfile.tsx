@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  MentoProfile,
-  postMentorProfile,
-} from '../../../actions/profile/profile';
+import { postMentorProfile } from '../../../actions/profile/profile';
+import useUserStore from '../../../store/uuidStore';
+import { MentorProfileRequestType } from '../../types/profile/RequestType';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import '../member/index.css';
@@ -18,7 +17,8 @@ export default function MentorProfile({
   const [gender, setGender] = useState<string>('MALE');
   const [age, setAge] = useState<number>(20);
   const [jobExperience, setJobExperience] = useState('');
-
+  const { uuid } = useUserStore();
+  console.log(uuid);
   // 멘토링 분야 라디오 버튼 클릭 처리
   const handleRadioChange = (value: string) => {
     setGender(value);
@@ -26,13 +26,13 @@ export default function MentorProfile({
 
   // 멘토 프로필 저장 처리
   const handleSave = async () => {
-    const mentorProfile: MentoProfile = {
+    const mentorProfile: MentorProfileRequestType = {
       mentoringField,
       gender,
       age,
       jobExperience,
     };
-    const data = await postMentorProfile(mentorProfile);
+    const data = await postMentorProfile({ profile: mentorProfile, uuid });
     console.log(data);
     handleButtton();
   };

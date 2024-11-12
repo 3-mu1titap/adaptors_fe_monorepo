@@ -12,12 +12,14 @@ interface JoinSelectProps {
   options: Option[];
   defaultValue?: string;
   onChange?: (value: string) => void;
+  name?: string; // name 추가
 }
 
 export default function JoinSelect({
   options,
   defaultValue,
   onChange,
+  name,
 }: JoinSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(
@@ -102,13 +104,22 @@ export default function JoinSelect({
               onClick={() => handleSelect(option)}
             >
               <span
-                className={`block truncate text-lg ${selectedOption?.value === option.value ? 'font-semibold' : 'font-normal'}`}
+                className={`block truncate text-lg ${
+                  selectedOption?.value === option.value
+                    ? 'font-semibold'
+                    : 'font-normal'
+                }`}
               >
                 {option.label}
               </span>
             </li>
           ))}
         </ul>
+      )}
+
+      {/* hidden input field to handle form submission */}
+      {name && selectedOption && (
+        <input type="hidden" name={name} value={selectedOption.value} />
       )}
     </div>
   );
