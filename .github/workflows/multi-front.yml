@@ -1,16 +1,14 @@
 name: CI Pipeline
-
 on:
   push:
     branches:
-      - dev 
+      - dev
 permissions:
   contents: write
-
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME2 }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD2 }}
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }} #ECR
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
 
 jobs:
   build-and-push:
@@ -19,21 +17,20 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1  # 최신 커밋만 가져오기
+          fetch-depth: 1
           token: ${{ secrets.MY_GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
       - name: Generate Tags
         id: tags
         run: |
-          # GitHub Run Number를 사용하여 번호 증가 (1, 2, 3, ...)
-          TAG="${{ github.run_number }}"
-          
-          # 태그를 출력 및 GitHub Actions의 출력 변수로 설정
-          echo "timestamp_tag=${TAG}" >> $GITHUB_OUTPUT
+          # front-빌드번호 형식으로 태그 생성
+          TAG="front-${{ github.run_number }}"
+          echo "image_tag=${TAG}" >> $GITHUB_OUTPUT
           echo "Generated tag: ${TAG}"
-          
+
       - name: Log in to Amazon ECR
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -42,26 +39,34 @@ jobs:
         run: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY
 
-      # 도커 이미지 빌드 및 푸시 (latest와 타임스탬프 태그 모두 사용)
       - name: Build and Push Docker Image
         run: |
-          # 이미지 빌드
-          docker build -t $ECR_REPOSITORY:latest -t $ECR_REPOSITORY:${{ steps.tags.outputs.timestamp_tag }} .
+          # 이미지 빌드 (front- prefix 추가된 태그)
+          docker build -t $ECR_REPOSITORY:${{ steps.tags.outputs.image_tag }} .
+          
+          # latest 태그 추가
+          docker tag $ECR_REPOSITORY:${{ steps.tags.outputs.image_tag }} $ECR_REPOSITORY:latest
           
           # 두 태그 모두 푸시
+          docker push $ECR_REPOSITORY:${{ steps.tags.outputs.image_tag }}
           docker push $ECR_REPOSITORY:latest
-          docker push $ECR_REPOSITORY:${{ steps.tags.outputs.timestamp_tag }}
           
-          # 태그 정보 출력 (디버깅용)
-          echo "Pushed tags: latest, ${{ steps.tags.outputs.timestamp_tag }}"
-          
+          echo "Pushed tags: latest, ${{ steps.tags.outputs.image_tag }}"
+
       - name: Trigger ToArgoCD Workflow
         if: success()
         env:
-          REPO: "mu1titap/argocd-manifests"  # ArgoCD가 설정된 레포지토리 이름
+          REPO: "mu1titap/argocd-manifests"
           PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         run: |
           curl -X POST -H "Authorization: token $PAT_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$REPO/dispatches \
-            -d "{\"event_type\": \"ci_completed\", \"client_payload\": { \"repository\": \"adaptors_fe_monorepo\", \"tag\": \"${{ steps.tags.outputs.timestamp_tag }}\" }}"
+            -d "{
+              \"event_type\": \"ci_completed\",
+              \"client_payload\": {
+                \"repository\": \"$ECR_REPOSITORY\",
+                \"tag\": \"${{ steps.tags.outputs.image_tag }}\",
+                \"service\": \"adaptors_fe_monorepo\"
+              }
+            }"
