@@ -1,15 +1,11 @@
 import React from 'react';
-
-interface Option {
-  label: string;
-  value: string | number;
-}
+import { Tag } from '../../../actions/profile/hashtagData';
 
 interface CheckboxButtonProps {
-  options: Option[];
+  options: Tag[];
   name: string;
-  selectedValues: (string | number)[];
-  onChange: (values: (string | number)[]) => void;
+  selectedValues: number[];
+  onChange: (values: number[]) => void;
 }
 
 const CheckboxButton: React.FC<CheckboxButtonProps> = ({
@@ -21,7 +17,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   const selectedColor = '#F8D448';
   const defaultColor = '#e5e7eb';
 
-  const handleCheckboxChange = (value: string | number) => {
+  const handleCheckboxChange = (value: number) => {
     let newSelectedValues;
 
     if (selectedValues.includes(value)) {
@@ -40,31 +36,31 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap gap-4 mb-5">
-      {options.map((option, index) => (
+    <div className="flex flex-wrap gap-4">
+      {options?.map((option) => (
         <label
-          key={index}
+          key={option?.hashtagId} // hashtagId를 key로 사용
           className="flex items-center justify-start p-2 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
         >
           <input
             type="checkbox"
             name={name}
-            value={option.value}
-            checked={selectedValues.includes(option.value)}
-            onChange={() => handleCheckboxChange(option.value)}
+            value={option.hashtagId} // value를 hashtagId로 설정
+            checked={selectedValues.includes(option.hashtagId)} // selectedValues 배열에서 해당 값이 있는지 확인
+            onChange={() => handleCheckboxChange(option.hashtagId)} // checkbox 클릭 시 처리
             className="hidden text-sm"
           />
           <div className="flex items-center gap-2">
             <div
               className="w-4 h-4 rounded"
               style={{
-                backgroundColor: selectedValues.includes(option.value)
+                backgroundColor: selectedValues.includes(option.hashtagId)
                   ? selectedColor
                   : defaultColor,
               }}
             />
             <span className="text-[#898989] font-semibold text-md">
-              {option.label}
+              {option.name} {/* name을 label로 표시 */}
             </span>
           </div>
         </label>

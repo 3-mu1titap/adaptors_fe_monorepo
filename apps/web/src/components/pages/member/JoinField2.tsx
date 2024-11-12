@@ -1,6 +1,11 @@
 'use client';
+import { useState } from 'react';
 import { z } from 'zod';
-import { SignUpFormData2, signUpStep2Schema } from '../../form/signUpSchema';
+import {
+  SignUpFormData2,
+  signUpStep2Schema,
+  validateForm2,
+} from '../../form/signUpSchema';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
 export interface JoinField2Props {
   formData: SignUpFormData2;
@@ -19,6 +24,7 @@ export default function JoinField2({
   errors,
   handleButtton,
 }: JoinField2Props) {
+  const [showErrorMessege, setShowErrorMessege] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -59,6 +65,13 @@ export default function JoinField2({
         }));
       }
     }
+  };
+
+  const onClickNextButton = () => {
+    console.log(validateForm2(formData));
+    console.log('tlfgodsehl');
+    handleButtton();
+    setShowErrorMessege(true);
   };
 
   return (
@@ -134,10 +147,15 @@ export default function JoinField2({
             </p>
           </div>
         </div>
+        <p
+          className={`error ${!validateForm2(formData) && showErrorMessege ? 'visible mt-3' : 'invisible'}`}
+        >
+          입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
+        </p>
       </span>
       <JoinStepButton
-        onClick={handleButtton}
-        disabled={false} //!validateForm2(formData)
+        onClick={onClickNextButton}
+        disabled={validateForm2(formData)}
       />
     </div>
   );

@@ -51,6 +51,5 @@ export const checkAccountId = async (accountId: string): Promise<any> => {
       accountId: accountId,
     },
   });
-  console.log(data);
   return data.code;
 };

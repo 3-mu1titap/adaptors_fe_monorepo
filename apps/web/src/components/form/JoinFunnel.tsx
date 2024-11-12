@@ -48,9 +48,9 @@ export default function JoinFunnel() {
 
   //폼 제출 (회원가입 api 요청)
   const handleSubmit = async () => {
-    // event.preventDefault();
     const disable =
       signUpStep1Schema.parse(formData1) && signUpStep2Schema.parse(formData2);
+    console.log(disable);
     if (disable) {
       const combinedFormData = {
         ...formData1,
@@ -58,6 +58,7 @@ export default function JoinFunnel() {
       };
       const data = await postUserData(combinedFormData);
       setUuid(data);
+      console.log(data);
       if (data) {
         onNextStep();
       }
@@ -85,11 +86,10 @@ export default function JoinFunnel() {
               setFormData={setFormData1}
               errors={errors}
               setErrors={setErrors}
-              confirmId={confirmId}
               setConfirmId={setConfirmId}
               setConfirmPassword={setConfirmPassword}
               confirmPassword={confirmPassword}
-              handleButtton={onNextStep} //onClickNext
+              handleButtton={onClickNext} //onClickNext
             />
           </Funnel.Step>
           <Funnel.Step name="joinStep2">

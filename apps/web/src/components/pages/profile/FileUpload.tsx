@@ -122,10 +122,13 @@ export default function FileUpload({
             </div>
           )}
         </div>
+        <JoinStepButton onClick={handleButton} text="프로필 이미지 등록" />
       </span>
       <JoinStepButton
-        onClick={handleButton} //파일 업로드 + onNextStep으로 수정
-        disabled={false} //!validateForm2(formData)
+        onClick={handleButton}
+        disabled={false}
+        text="next"
+        className="bg-white border-2 border-adaptorsYellow text-adaptorsYellow hover:text-white"
       />
     </div>
   );

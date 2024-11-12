@@ -54,7 +54,6 @@ export const postMenteeProfile = async ({
       body: JSON.stringify(profile), // profile을 JSON 형식으로 변환해서 보냄
     }
   );
-  console.log(profile, uuid);
   // 서버 응답 처리
   if (!response.ok) {
     const errorData = await response.json();

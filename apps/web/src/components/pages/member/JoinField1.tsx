@@ -15,8 +15,6 @@ export interface JoinField1Props {
   setErrors: React.Dispatch<
     React.SetStateAction<Partial<Record<keyof SignUpFormData1, string>>>
   >;
-  validateField?: (fieldName: keyof SignUpFormData1, value: string) => void;
-  confirmId: boolean;
   setConfirmId: React.Dispatch<React.SetStateAction<boolean>>;
   confirmPassword: string;
   setConfirmPassword: React.Dispatch<React.SetStateAction<string>>;
@@ -28,7 +26,6 @@ export default function JoinField1({
   setFormData,
   errors,
   setErrors,
-  confirmId,
   setConfirmId,
   confirmPassword,
   setConfirmPassword,
@@ -101,6 +98,26 @@ export default function JoinField1({
           ...prevErrors,
           [fieldName]: error.errors[0].message,
         }));
+      }
+    }
+  };
+  const onClickNextButton = () => {
+    try {
+      signUpStep1Schema.parse(formData);
+
+      handleButtton();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.errors.reduce(
+          (acc, curr) => {
+            const fieldName = curr.path[0] as keyof SignUpFormData1;
+            acc[fieldName] = curr.message;
+            return acc;
+          },
+          {} as Partial<Record<keyof SignUpFormData1, string>>
+        );
+
+        setErrors(formattedErrors);
       }
     }
   };
@@ -210,7 +227,7 @@ export default function JoinField1({
         </div>
       </span>
       <JoinStepButton
-        onClick={handleButtton}
+        onClick={onClickNextButton}
         disabled={false} //!validateForm1(formData)
       />
     </div>

@@ -63,7 +63,6 @@ export default function MentorProfile({
             ))}
           </div>
         </div>
-        {/* Age Input */}
         <div className="space-y-2">
           <label
             htmlFor="age"
@@ -80,7 +79,6 @@ export default function MentorProfile({
             className="custom-div"
           />
         </div>
-        {/* Gender Radio Buttons */}
         <div className="space-y-2">
           <label
             htmlFor="gender"
