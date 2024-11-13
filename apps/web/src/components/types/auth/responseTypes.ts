@@ -3,3 +3,6 @@ export interface LoginResult {
   refreshToken: string;
   uuid: string;
 }
+export interface JoinResult {
+  uuid: string;
+}

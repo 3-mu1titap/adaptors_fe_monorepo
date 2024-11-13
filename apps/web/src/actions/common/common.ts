@@ -29,6 +29,7 @@ export const fetchData = async <T>({
       'Content-Type': 'application/json',
     },
     cache,
+    mode: 'no-cors',
   };
 
   if (body) {
@@ -44,6 +45,39 @@ export const fetchData = async <T>({
   }
 
   const res = await fetch(`${process.env.BACKEND_URL}${apiUrl}`, fetchOptions);
+
+  return res.json();
+};
+
+export const URLfetch = async <T>({
+  method,
+  apiUrl,
+  body,
+  cache = 'default',
+  tags,
+  revalidate,
+}: FetchOptions): Promise<T> => {
+  const fetchOptions: RequestInit = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache,
+  };
+
+  if (body) {
+    fetchOptions.body = JSON.stringify(body);
+  }
+
+  if (tags) {
+    fetchOptions.next = { tags };
+  }
+
+  if (revalidate !== undefined) {
+    fetchOptions.next = { ...fetchOptions.next, revalidate };
+  }
+
+  const res = await fetch(`${apiUrl}`, fetchOptions);
 
   return res.json();
 };
