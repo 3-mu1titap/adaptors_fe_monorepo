@@ -1,37 +1,18 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { EventSourcePolyfill } from 'event-source-polyfill';
 import ChatHeader from './ChatHeader';
 import ChatSender from './ChatSender';
 import ChatView from './ChatView';
 import { participantType } from '../../../types/main/meeting/meetingTypes';
+import { chatDataType } from '../../../types/main/chatting/chattingTypes';
+import { postChat } from '../../../../actions/chatting/chattingAction';
 
-export interface ChatMessage {
-  messageType: string;
-  message: string;
-  senderName: string;
-  profile: string;
-  time: string;
-  fileUrl?: string;
-}
+const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
 function Chatting({ participants }: { participants: participantType[] }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      messageType: 'text',
-      message: '안녕하세요!',
-      senderName: 'user1',
-      profile: '/assets/images/dummy.jpg',
-      time: '오전 10:11',
-    },
-    {
-      messageType: 'text',
-      message: '채팅방에 오신 것을 환영합니다.',
-      senderName: 'user2',
-      profile: '/assets/images/dummy.jpg',
-      time: '오전 10:22',
-    },
-  ]);
+  const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -44,24 +25,16 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
   useEffect(scrollToBottom, [messages]);
 
-  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const currentTime = new Date().toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
 
     if (newMessage.trim() || selectedFile) {
       if (selectedFile) {
-        const fileChatMessage: ChatMessage = {
-          messageType: 'file',
+        await postChat({
           message: selectedFile.name,
-          senderName: 'currentUser',
-          profile: '/assets/images/dummy.jpg',
-          time: currentTime,
-          fileUrl: URL.createObjectURL(selectedFile),
-        };
-        setMessages([...messages, fileChatMessage]);
+          messageType: 'MEDIA',
+          mediaUrl: URL.createObjectURL(selectedFile),
+        });
         setSelectedFile(null);
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
@@ -69,14 +42,11 @@ function Chatting({ participants }: { participants: participantType[] }) {
       }
 
       if (newMessage.trim()) {
-        const textChatMessage: ChatMessage = {
-          messageType: 'text',
+        await postChat({
           message: newMessage,
-          senderName: 'currentUser',
-          profile: '/assets/images/dummy.jpg',
-          time: currentTime,
-        };
-        setMessages([...messages, textChatMessage]);
+          messageType: 'TEXT',
+          mediaUrl: '',
+        });
       }
 
       setNewMessage('');
@@ -104,6 +74,34 @@ function Chatting({ participants }: { participants: participantType[] }) {
       setSelectedFile(file);
     }
   };
+
+  useEffect(() => {
+    // const chatServiceUrl = `http://3.35.228.51:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    const chatServiceUrl = `http://10.10.10.149:64496/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    console.log(`Connecting to: ${chatServiceUrl}`);
+
+    const eventSource = new EventSourcePolyfill(chatServiceUrl, {
+      heartbeatTimeout: 86400000,
+    });
+
+    eventSource.onopen = () => {
+      console.log('SSE 연결이 성공적으로 열렸습니다.');
+    };
+
+    eventSource.onmessage = (event: any) => {
+      const newMessage: chatDataType = JSON.parse(event.data);
+      setMessages((prevData) => [...prevData, newMessage]);
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('EventSource 오류:', error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [mentoringSessionUuid]);
 
   return (
     <div className="flex flex-col w-full h-full">
