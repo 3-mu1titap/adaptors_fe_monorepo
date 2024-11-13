@@ -96,7 +96,11 @@ export default function HashTag({
           다음 &#8594;
         </button>
       </div>
-
+      <p
+        className={`error text-center ${selectedValues.length == 0 ? 'visible mt-3' : 'invisible'}`}
+      >
+        해시태그를 1개 이상 선택해 주세요
+      </p>
       <JoinStepButton onClick={postHashtag} text="완료하기" />
     </section>
   );

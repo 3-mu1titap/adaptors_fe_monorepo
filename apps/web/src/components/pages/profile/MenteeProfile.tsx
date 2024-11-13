@@ -37,19 +37,32 @@ export default function MenteeProfile({
   const [jobApplicationCount, setJobApplicationCount] = useState<number | ''>(
     ''
   );
-
+  const [error, setError] = useState(false);
   const { uuid } = useUserStore();
 
   const handleSubmit = async () => {
+    if (
+      occupationStatus === '' ||
+      educationLevel === '' ||
+      age === '' ||
+      jobExperience === '' ||
+      jobType === '' ||
+      jobApplicationCount === ''
+    ) {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+
     const menteeProfile: MenteeProfileRequestType = {
       occupationStatus,
       educationLevel,
-      age: age !== '' ? Number(age) : 0,
+      age: Number(age),
       gender,
       jobExperience,
       jobType,
-      jobApplicationCount:
-        jobApplicationCount !== '' ? Number(jobApplicationCount) : 0,
+      jobApplicationCount: Number(jobApplicationCount),
     };
 
     try {
@@ -166,6 +179,9 @@ export default function MenteeProfile({
           </div>
         </span>
       </div>
+      <p className={`error ${error ? 'visible mt-3' : 'invisible'}`}>
+        입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
+      </p>
       <JoinStepButton onClick={handleSubmit} />
     </form>
   );

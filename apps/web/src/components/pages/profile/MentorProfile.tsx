@@ -18,6 +18,7 @@ export default function MentorProfile({
   const [age, setAge] = useState<number>(20);
   const [jobExperience, setJobExperience] = useState('');
   const { uuid } = useUserStore();
+  const [error, setError] = useState(false);
   // 멘토링 분야 라디오 버튼 클릭 처리
   const handleRadioChange = (value: string) => {
     setGender(value);
@@ -25,6 +26,10 @@ export default function MentorProfile({
 
   // 멘토 프로필 저장 처리
   const handleSave = async () => {
+    if (mentoringField === '' || gender === '' || jobExperience === '') {
+      setError(true);
+      return;
+    }
     const mentorProfile: MentorProfileRequestType = {
       mentoringField,
       gender,
@@ -32,7 +37,6 @@ export default function MentorProfile({
       jobExperience,
     };
     const data = await postMentorProfile({ profile: mentorProfile, uuid });
-    console.log(data);
     handleButtton();
   };
 
@@ -114,7 +118,9 @@ export default function MentorProfile({
           />
         </div>
       </span>
-
+      <p className={`error ${error ? 'visible mt-3' : 'invisible'}`}>
+        입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
+      </p>
       {/* Save Button */}
       <JoinStepButton onClick={handleSave} />
     </div>
