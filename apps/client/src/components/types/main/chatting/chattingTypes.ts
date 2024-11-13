@@ -6,7 +6,7 @@ export interface chatDataType {
   message: string;
   messageType: 'TEXT' | 'MEDIA' | 'FILE' | 'NOTICE';
   mediaUrl: string;
-  createdAt: Date;
+  createdAt: number[];
   deleted: boolean;
 }
 
