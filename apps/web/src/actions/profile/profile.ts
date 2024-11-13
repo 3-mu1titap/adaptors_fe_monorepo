@@ -3,8 +3,6 @@ import {
   MenteeProfileRequestType,
   MentorProfileRequestType,
 } from '../../components/types/profile/RequestType';
-import { commonResType } from '../../components/types/ResponseTypes';
-import { fetchData } from '../common/common';
 
 export const postMentorProfile = async ({
   profile,
@@ -65,17 +63,31 @@ export const postMenteeProfile = async ({
   return data;
 };
 
-export const profileImg = async (profileImageUrl: string): Promise<any> => {
-  const data = await fetchData<commonResType<any>>({
-    method: 'POST',
-    apiUrl: `/api/v1/member/mentee/profile`,
-    body: {
-      profileImageUrl: profileImageUrl,
-      thumbChecked: true,
-      mediaType: 'IMAGE',
-      mediaKind: 'PROFILE',
-      mediaSeq: 1,
-    },
-  });
+export const uploadProfileIamge = async ({
+  profileImage,
+  uuid,
+}: {
+  profileImage: string;
+  uuid: string;
+}): Promise<any> => {
+  const response = await fetch(
+    `http://10.10.10.47:8081/api/v1/memberInfo/profileImage`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Uuid': 'd5c0e498-ccc5-4480-919d-833411bd0a91',
+      },
+      body: JSON.stringify(profileImage), // profile을 JSON 형식으로 변환해서 보냄
+    }
+  );
+  // 서버 응답 처리
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to post profile image');
+  }
+
+  // 서버에서 받은 데이터 반환
+  const data = await response.json();
   return data;
 };

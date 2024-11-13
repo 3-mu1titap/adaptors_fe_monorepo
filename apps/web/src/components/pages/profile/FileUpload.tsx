@@ -1,7 +1,8 @@
-'use client';
-
 import { ImageIcon, X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { uploadFileToS3 } from '../../../actions/common/awsMediaUploader';
+import { uploadProfileIamge } from '../../../actions/profile/profile';
+import useUserStore from '../../../store/uuidStore';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
 
 export default function FileUpload({
@@ -12,6 +13,8 @@ export default function FileUpload({
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>();
+  const { uuid } = useUserStore();
 
   useEffect(() => {
     if (file) {
@@ -55,23 +58,26 @@ export default function FileUpload({
     setPreview(null);
   };
 
-  // const handleMentoringImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   const { files } = e.target;
-  //   if (!files || files.length === 0) return;
-  //   try {
-  //     const res = await uploadFileToS3(files[0], 'mentoring');
-  //     console.log('이건 res', res);
-  //     if (res) {
-  //       setFormData((prevData) => ({
-  //         ...prevData,
-  //         thumbnailUrl: res,
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.error('Error uploading image:', error);
-  //   }
-  // };
+  const handleMentoringImg = async () => {
+    if (!file) return;
+    try {
+      const res = await uploadFileToS3(file, 'profile');
+      if (res) {
+        setThumbnailUrl(res);
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+  const handleNextButton = async () => {
+    if (thumbnailUrl) {
+      uploadProfileIamge({
+        uuid,
+        profileImage: thumbnailUrl,
+      });
+    }
+    handleButton();
+  };
 
   return (
     <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
@@ -122,10 +128,13 @@ export default function FileUpload({
             </div>
           )}
         </div>
-        <JoinStepButton onClick={handleButton} text="프로필 이미지 등록" />
+        <JoinStepButton
+          onClick={handleMentoringImg}
+          text="프로필 이미지 등록"
+        />
       </span>
       <JoinStepButton
-        onClick={handleButton}
+        onClick={handleNextButton}
         disabled={false}
         text="next"
         className="bg-white border-2 border-adaptorsYellow text-adaptorsYellow hover:text-white"

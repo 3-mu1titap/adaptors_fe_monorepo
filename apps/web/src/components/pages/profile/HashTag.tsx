@@ -52,13 +52,10 @@ export default function HashTag({
       hashtagId,
     }));
 
-    console.log('여기!!', selectedTags); // 확인
-
-    const data = await addTagList(
-      '3b7f5919-8b04-437c-b0fc-0d38515fec2a',
-      selectedTags
-    );
-    console.log(data); // 서버 응답 처리
+    const data = await addTagList(uuid, selectedTags);
+    if (data) {
+      handleButton();
+    }
   };
 
   return (

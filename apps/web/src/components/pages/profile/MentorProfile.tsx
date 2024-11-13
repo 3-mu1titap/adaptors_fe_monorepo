@@ -18,7 +18,6 @@ export default function MentorProfile({
   const [age, setAge] = useState<number>(20);
   const [jobExperience, setJobExperience] = useState('');
   const { uuid } = useUserStore();
-  console.log(uuid);
   // 멘토링 분야 라디오 버튼 클릭 처리
   const handleRadioChange = (value: string) => {
     setGender(value);

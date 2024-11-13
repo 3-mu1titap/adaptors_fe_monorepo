@@ -39,7 +39,6 @@ export default function MenteeProfile({
   );
 
   const { uuid } = useUserStore();
-  console.log(uuid);
 
   const handleSubmit = async () => {
     const menteeProfile: MenteeProfileRequestType = {
