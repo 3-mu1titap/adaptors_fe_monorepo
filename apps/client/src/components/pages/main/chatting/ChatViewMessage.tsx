@@ -10,7 +10,6 @@ import { getChatProfile } from '../../../../actions/chatting/chattingAction';
 function ChatViewMessage({ message }: { message: chatDataType }) {
   const { memberUuid } = useUserStore();
   const [profileInfo, setProfileInfo] = useState<chatMemberDataType>();
-  console.log(message);
 
   const getProfileImage = async () => {
     try {
@@ -26,6 +25,25 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
   useEffect(() => {
     getProfileImage();
   }, []);
+
+  const formatDate = (dateArray: number[]) => {
+    const [year, month, day, hour, minute, second, millisecond] = dateArray;
+
+    // Date 객체 생성 (month는 0부터 시작하므로 1을 빼줌)
+    const date = new Date(
+      Date.UTC(year, month - 1, day, hour, minute, second, millisecond)
+    );
+
+    // 원하는 형식으로 변환
+    return date.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+  };
 
   return (
     <>
@@ -60,7 +78,7 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
             <div
               className={`text-xs text-gray-500 order-1 ${message.memberUuid === memberUuid ? 'mr-auto' : 'ml-auto'}`}
             >
-              시간
+              {formatDate(message.createdAt)}
             </div>
             {message.messageType === 'MEDIA' ? (
               <a

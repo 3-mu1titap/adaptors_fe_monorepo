@@ -77,7 +77,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
   useEffect(() => {
     // const chatServiceUrl = `http://3.35.228.51:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
-    const chatServiceUrl = `http://10.10.10.149:64496/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    const chatServiceUrl = `http://10.10.10.149:51471/api/v1/chat/real-time/${mentoringSessionUuid}`;
     console.log(`Connecting to: ${chatServiceUrl}`);
 
     const eventSource = new EventSourcePolyfill(chatServiceUrl, {
