@@ -36,7 +36,7 @@ export default function RecommendMentoring() {
         {articles.map((article, index) => (
           <article key={index} className="group cursor-pointer">
             <div className="relative mb-4">
-              <div className="aspect-[16/9] bg-gray-200 rounded-lg overflow-hidden" />
+              <div className="aspect-[16/9] bg-gray-200 rounded-t-xl overflow-hidden" />
             </div>
             <div className="space-y-2">
               <div className="text-sm text-gray-600">{article.author}</div>
