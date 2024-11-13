@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { postUserData } from '../../actions/auth/auth';
+import useUserStore from '../../store/uuidStore';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import FunnelLevel from '../pages/member/FunnelLevel';
@@ -28,7 +29,7 @@ export default function JoinFunnel() {
   const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
   const [confirmId, setConfirmId] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const setUuid = useUserStore((state) => state.setUuid);
   const [formData1, setFormData1] = useState<SignUpFormData1>({
     accountId: '',
     password: '',
@@ -47,16 +48,20 @@ export default function JoinFunnel() {
 
   //폼 제출 (회원가입 api 요청)
   const handleSubmit = async () => {
-    // event.preventDefault();
     const disable =
       signUpStep1Schema.parse(formData1) && signUpStep2Schema.parse(formData2);
+    console.log(disable);
     if (disable) {
       const combinedFormData = {
         ...formData1,
         ...formData2,
       };
       const data = await postUserData(combinedFormData);
-      console.log('회원가입 요청 응답:', data.result);
+      setUuid(data);
+      console.log(data);
+      if (data) {
+        onNextStep();
+      }
     }
   };
 
@@ -73,7 +78,7 @@ export default function JoinFunnel() {
   return (
     <div>
       <FunnelLevel level={level} />
-      <form className="max-w-[400px] mx-auto min-h-full">
+      <section className="max-w-[400px] mx-auto h-[100vh] sm:h-[65vh]">
         <Funnel step={step}>
           <Funnel.Step name="joinStep1">
             <JoinField1
@@ -81,11 +86,10 @@ export default function JoinFunnel() {
               setFormData={setFormData1}
               errors={errors}
               setErrors={setErrors}
-              confirmId={confirmId}
               setConfirmId={setConfirmId}
               setConfirmPassword={setConfirmPassword}
               confirmPassword={confirmPassword}
-              handleButtton={onNextStep} //onClickNext
+              handleButtton={onClickNext} //onClickNext
             />
           </Funnel.Step>
           <Funnel.Step name="joinStep2">
@@ -94,7 +98,7 @@ export default function JoinFunnel() {
               setFormData={setFormData2}
               errors={errors}
               setErrors={setErrors}
-              handleButtton={onNextStep} //handleSubmit
+              handleButtton={handleSubmit} //handleSubmit
             />
           </Funnel.Step>
           <Funnel.Step name="profileImage">
@@ -111,7 +115,7 @@ export default function JoinFunnel() {
             <HashTag handleButton={onNextStep} />
           </Funnel.Step>
         </Funnel>
-      </form>
+      </section>
     </div>
   );
 }
