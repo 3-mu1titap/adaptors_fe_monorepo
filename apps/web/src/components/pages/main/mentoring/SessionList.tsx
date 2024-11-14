@@ -1,11 +1,14 @@
 'use client';
 import { useState } from 'react';
 import { MentoringSessionDataType } from '../../../types/mentoring/mentoringTypes';
+import MentoringRequestButton from '../../../ui/Button/MentoringRequestButton';
 
 export default function SessionList({
   mentoringSessionList,
+  mentoringName,
 }: {
   mentoringSessionList: MentoringSessionDataType[];
+  mentoringName?: string;
 }) {
   const [showAllSessions, setShowAllSessions] = useState(false);
 
@@ -62,15 +65,17 @@ export default function SessionList({
                   <div className="flex items-center gap-2 font-semibold">
                     {session.price}V
                   </div>
-                  <button
-                    className={`px-4 py-2 rounded-xl text-xl font-medium ${
-                      session.isClosed
-                        ? 'bg-gray-200 text-gray-600'
-                        : 'bg-adaptorsYellow text-white'
-                    }`}
-                  >
-                    {session.isClosed ? '마감' : '참가하기'}
-                  </button>
+                  {session.isParticipating ? (
+                    <div className="px-4 py-2 rounded-xl text-xl font-medium bg-gray-200 text-gray-600">
+                      신청완료
+                    </div>
+                  ) : (
+                    <MentoringRequestButton
+                      isClosed={session.isClosed}
+                      sessionUuid={session.sessionUuid}
+                      mentoringName={mentoringName ? mentoringName : ''}
+                    />
+                  )}
                 </div>
               </div>
             ))}

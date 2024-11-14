@@ -1,23 +1,27 @@
 'use server';
 
+import { getServerSession } from 'next-auth';
+import { options } from '../../app/api/auth/[...nextauth]/options';
 import {
   MentoringDataType,
   MentoringSessionDataType,
+  SessionRequestType,
 } from '../../components/types/mentoring/mentoringTypes';
 import {
   commonResListType,
   commonResType,
 } from '../../components/types/ResponseTypes';
 
-const memberUuid = '671a55ae-2346-407f-85e3-9cd39f4e3d10';
-const mentoringUuid = 'aed360d3-bd29-45cf-8895-efe801135746';
-
 // 멘토링의 정보 및 세션리스트 정보 조회
-export async function GetMentoringSessionList() {
+export async function GetMentoringSessionList(mentoringUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const menteeUuid = session?.user.uuid;
+  const fetchURI = !menteeUuid ? `` : `&userUuid=${menteeUuid}`;
+
   try {
     const res = await fetch(
-      `http://10.10.10.158:9001/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
+      `http://10.10.10.158:9001/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}${fetchURI}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -28,14 +32,15 @@ export async function GetMentoringSessionList() {
     );
     const result =
       (await res.json()) as commonResListType<MentoringSessionDataType>;
-    console.log(result.result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);
     return [];
   }
 }
-export async function GetMentoringInfo() {
+
+//멘토링 overview 정보 가져오기
+export async function GetMentoringInfo(mentoringUuid: string) {
   'use server';
   try {
     const res = await fetch(
@@ -52,6 +57,33 @@ export async function GetMentoringInfo() {
     return result.result;
   } catch (error) {
     console.error('멘토링 정보조회 : ', error);
+    return null;
+  }
+}
+export async function SessionRequest(request: SessionRequestType) {
+  'use server';
+  const session = await getServerSession(options);
+  const menteeUuid = session?.user.uuid;
+  try {
+    const res = await fetch(
+      `http://10.10.10.158:9004/api/v1/session-request-service`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionUuid: request.sessionUuid,
+          menteeUuid: menteeUuid,
+          mentoringName: request.mentoringName,
+        }),
+      }
+    );
+    const result = (await res.json()) as commonResType<any>;
+    return result.result;
+  } catch (error) {
+    console.error('멘토링 신청하기: ', error);
     return null;
   }
 }

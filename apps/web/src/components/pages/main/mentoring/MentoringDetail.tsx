@@ -1,5 +1,8 @@
-import { GetMentoringSessionList } from '../../../../actions/mentoring/mentoringAction';
-import { MentoringSessionDataType } from '../../../types/mentoring/mentoringTypes';
+import {
+  GetMentoringInfo,
+  GetMentoringSessionList,
+} from '../../../../actions/mentoring/mentoringAction';
+import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
 import Calendar from './Calendar';
 import MentoProfile from './MentoProfile';
 import MentoringOverview from './MentoringOverview';
@@ -19,14 +22,6 @@ interface MentoringSession {
   buttonStyle: 'yellow' | 'gray' | 'dark';
 }
 
-interface CalendarDay {
-  date: number;
-  month: number;
-  year: number;
-  isCurrentMonth: boolean;
-  hasSession: boolean;
-  isSelected: boolean;
-}
 export const sessions: MentoringSession[] = [
   {
     id: 1,
@@ -98,28 +93,21 @@ const getCurrentTime = () => {
 export default async function MentoringCalendar({
   mentoringDate,
 }: {
-  mentoringSessionList: MentoringSessionDataType[];
   mentoringDate: string;
 }) {
-  // const [currentTime, setCurrentTime] = useState<string>(getCurrentTime());
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentTime(getCurrentTime());
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-  const mentoringSessionList = await GetMentoringSessionList();
+  const mentoringSessionList = await GetMentoringSessionList(
+    '80c7567f-6c83-42dd-b9bd-da09bdeadb0d'
+  );
+  const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
+    '80c7567f-6c83-42dd-b9bd-da09bdeadb0d'
+  );
   return (
     <div className="flex min-h-screen w-full bg-gray-50">
       {/* Left Section */}
       <section className="w-[400px] p-6 bg-white border-r border-gray-200">
         <div className="space-y-6">
           <MentoProfile />
-          {/* Date Display */}
           <NowDate />
-          {/* Calendar */}
           <Calendar />
         </div>
       </section>
@@ -127,8 +115,13 @@ export default async function MentoringCalendar({
       {/* Right Section */}
       <section className="flex-1 p-6">
         <div className="max-w-3xl mx-auto space-y-6">
-          <MentoringOverview />
-          <SessionList mentoringSessionList={mentoringSessionList} />
+          {MentoringInfoData && (
+            <MentoringOverview MentoringInfoData={MentoringInfoData} />
+          )}
+          <SessionList
+            mentoringSessionList={mentoringSessionList}
+            mentoringName={MentoringInfoData?.name}
+          />
         </div>
       </section>
     </div>

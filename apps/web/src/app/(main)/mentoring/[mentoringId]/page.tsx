@@ -1,4 +1,3 @@
-import { GetMentoringSessionList } from '../../../../actions/mentoring/mentoringAction';
 import MentoringDetail from '../../../../components/pages/main/mentoring/MentoringDetail';
 
 function formatDate(date: Date): string {
@@ -12,16 +11,12 @@ async function Page({
 }: {
   searchParams: { mentoringDate: string };
 }) {
-  const mentoringSessionList = await GetMentoringSessionList();
   const mentoringDate = searchParams.mentoringDate || formatDate(new Date());
 
   return (
     <main className="my-2 py-2 px-4">
       <div className="container flex min-h-screen bg-gray-50">
-        <MentoringDetail
-          mentoringSessionList={mentoringSessionList}
-          mentoringDate={mentoringDate}
-        />
+        <MentoringDetail mentoringDate={mentoringDate} />
       </div>
     </main>
   );
