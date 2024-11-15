@@ -1,7 +1,8 @@
 import Share from '../../../assets/icons/Share';
 import FitImage from '../../../ui/image/fit-image';
-export default function MentoProfile() {
+export default function MentoProfile({ mentorUuid }: { mentorUuid: string }) {
   //멘토 프로필 요청하기
+  const mentorprofile = 1;
   return (
     <div className="space-y-4">
       <div className="relative w-full aspect-square rounded-lg overflow-hidden">

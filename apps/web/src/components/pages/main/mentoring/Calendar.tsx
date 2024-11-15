@@ -1,6 +1,8 @@
 'use client';
-import { useState } from 'react';
-import { sessions } from './MentoringDetail';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import { MentoringSessionDataType } from '../../../types/mentoring/mentoringTypes';
+
 interface CalendarDay {
   date: number;
   month: number;
@@ -10,13 +12,43 @@ interface CalendarDay {
   isSelected: boolean;
 }
 
-export default function Calendar() {
-  const [selectedDate, setSelectedDate] = useState<string>('2024.11.12');
+export default function Calendar({
+  mentoringSessionList,
+}: {
+  mentoringSessionList: MentoringSessionDataType[];
+}) {
+  // Find the nearest future session date
+  const today = new Date();
+  const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+  const nearestFutureSession = useMemo(() => {
+    const futureSessions = mentoringSessionList
+      .filter((session) => session.startDate >= formattedToday)
+      .sort(
+        (a, b) =>
+          new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+      );
+
+    return futureSessions[0]?.startDate || formattedToday;
+  }, [mentoringSessionList, formattedToday]);
+
+  const [selectedDate, setSelectedDate] =
+    useState<string>(nearestFutureSession);
+  const router = useRouter();
+  const mentoringUuid = '1';
+
+  // Create a Set of dates with sessions for faster lookups
+  const sessionDates = useMemo(
+    () => new Set(mentoringSessionList.map((session) => session.startDate)),
+    [mentoringSessionList]
+  );
+
   const generateCalendarDays = (year: number, month: number): CalendarDay[] => {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const days: CalendarDay[] = [];
 
+    // Days from the previous month
     for (let i = 0; i < firstDay.getDay(); i++) {
       const date = new Date(year, month, -i);
       days.unshift({
@@ -29,29 +61,37 @@ export default function Calendar() {
       });
     }
 
+    // Days in the current month
     for (let i = 1; i <= lastDay.getDate(); i++) {
-      const currentDate = `${year}.${String(month + 1).padStart(2, '0')}.${String(i).padStart(2, '0')}`;
+      const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
       days.push({
         date: i,
         month: month,
         year: year,
         isCurrentMonth: true,
-        hasSession: sessions.some((session) => session.date === currentDate),
+        hasSession: sessionDates.has(currentDate),
         isSelected: currentDate === selectedDate,
       });
     }
 
     return days;
   };
+
+  const handleDateClick = (year: number, month: number, date: number) => {
+    const selected = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+    setSelectedDate(selected);
+    router.push(`/mentoring/${mentoringUuid}?selectedDate=${selected}`);
+  };
+
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const now = new Date();
+
   return (
     <>
       {[0, 1].map((offset) => {
         const month = now.getMonth() + offset;
-        const year = month > 11 ? now.getFullYear() + 1 : now.getFullYear();
+        const year = now.getFullYear() + Math.floor(month / 12);
         const displayMonth = month % 12;
-
         const monthName = new Date(year, displayMonth).toLocaleString('en-US', {
           month: 'long',
         });
@@ -78,18 +118,16 @@ export default function Calendar() {
                     key={i}
                     onClick={() => {
                       if (day.isCurrentMonth && day.hasSession) {
-                        setSelectedDate(
-                          `${day.year}.${String(day.month + 1).padStart(2, '0')}.${String(day.date).padStart(2, '0')}`
-                        );
+                        handleDateClick(day.year, day.month, day.date);
                       }
                     }}
                     className={`
-                aspect-square flex items-center justify-center rounded-full text-md
-                ${day.isCurrentMonth ? (isSaturday ? 'text-blue-500' : isSunday ? 'text-red-500' : 'text-black') : 'text-gray-300'}
-                ${day.isSelected ? 'bg-yellow-400' : ''}
-                ${day.hasSession && !day.isSelected ? 'bg-gray-200' : ''}
-                ${!day.isCurrentMonth ? 'cursor-default' : 'cursor-pointer'}
-              `}
+                      aspect-square flex items-center justify-center rounded-full text-md
+                      ${day.isCurrentMonth ? (isSaturday ? 'text-blue-500' : isSunday ? 'text-red-500' : 'text-black') : 'text-gray-300'}
+                      ${day.isSelected ? 'bg-yellow-400 text-black' : ''}
+                      ${day.hasSession && !day.isSelected ? 'bg-gray-200 text-black' : ''}
+                      ${!day.isCurrentMonth ? 'cursor-default' : 'cursor-pointer'}
+                    `}
                   >
                     {day.date}
                   </button>

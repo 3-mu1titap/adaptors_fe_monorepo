@@ -9,14 +9,14 @@ function formatDate(date: Date): string {
 async function Page({
   searchParams,
 }: {
-  searchParams: { mentoringDate: string };
+  searchParams: { selectedDate: string };
 }) {
-  const mentoringDate = searchParams.mentoringDate || formatDate(new Date());
+  const selectedDate = searchParams.selectedDate || '';
 
   return (
-    <main className="my-2 py-2 px-4">
-      <div className="container flex min-h-screen bg-gray-50">
-        <MentoringDetail mentoringDate={mentoringDate} />
+    <main className="my-2 py-2 px-4 min-h-screen bg-gray-50">
+      <div className="container flex ">
+        <MentoringDetail mentoringDate={selectedDate} />
       </div>
     </main>
   );

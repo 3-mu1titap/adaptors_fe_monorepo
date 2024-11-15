@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { SessionRequest } from '../../../actions/mentoring/mentoringAction';
 
 export default function MentoringRequestButton({
@@ -11,12 +13,30 @@ export default function MentoringRequestButton({
   sessionUuid: string;
   mentoringName: string;
 }) {
-  const onClickButton = () => {
-    SessionRequest({
+  const [isModaltOpen, setIsModalOpen] = useState(false);
+
+  const onClickButton = async () => {
+    const status = await SessionRequest({
       sessionUuid: sessionUuid,
       mentoringName: mentoringName,
     });
+    console.log(status);
+    if (status == 200) {
+      setIsModalOpen(true);
+      Swal.fire({
+        toast: true,
+        icon: 'success',
+        title: '신청완료되었습니다',
+        showConfirmButton: false,
+        customClass: {
+          title: 'text-lg font-semibold text-gray-800 text-center',
+          actions: '!grid !grid-cols-2 !justify-center',
+        },
+        timer: 2000,
+      });
+    }
   };
+
   return (
     <button
       onClick={onClickButton}

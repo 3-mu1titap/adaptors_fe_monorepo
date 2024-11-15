@@ -1,6 +1,7 @@
 'use server';
 
 import { getServerSession } from 'next-auth';
+import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
 import {
   MentoringDataType,
@@ -28,6 +29,7 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
         headers: {
           'Content-Type': 'application/json',
         },
+        next: { tags: ['mentoring-sessions-list'] },
       }
     );
     const result =
@@ -60,10 +62,14 @@ export async function GetMentoringInfo(mentoringUuid: string) {
     return null;
   }
 }
+
+//멘토링 참가신청
 export async function SessionRequest(request: SessionRequestType) {
   'use server';
   const session = await getServerSession(options);
-  const menteeUuid = session?.user.uuid;
+  // const menteeUuid = session?.user.uuid;
+  const menteeUuid = '123';
+
   try {
     const res = await fetch(
       `http://10.10.10.158:9004/api/v1/session-request-service`,
@@ -81,7 +87,10 @@ export async function SessionRequest(request: SessionRequestType) {
       }
     );
     const result = (await res.json()) as commonResType<any>;
-    return result.result;
+    if (result.HttpStatus == '200') {
+      revalidateTag('session-request');
+    }
+    return result.code;
   } catch (error) {
     console.error('멘토링 신청하기: ', error);
     return null;
