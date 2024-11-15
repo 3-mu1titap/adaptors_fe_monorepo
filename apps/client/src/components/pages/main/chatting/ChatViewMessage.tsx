@@ -29,12 +29,10 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
   const formatDate = (dateArray: number[]) => {
     const [year, month, day, hour, minute, second, millisecond] = dateArray;
 
-    // Date 객체 생성 (month는 0부터 시작하므로 1을 빼줌)
     const date = new Date(
       Date.UTC(year, month - 1, day, hour, minute, second, millisecond)
     );
 
-    // 원하는 형식으로 변환
     return date.toLocaleString('ko-KR', {
       year: 'numeric',
       month: '2-digit',

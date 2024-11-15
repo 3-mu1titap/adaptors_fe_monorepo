@@ -9,22 +9,43 @@ export interface MiddleCategoryDataType {
   middleCategoryName: string;
 }
 
-export interface MentoringSessionDataType {
-  startDate: Date;
-  endDate: Date;
-  startTime: Date;
-  endTime: Date;
-  deadlineDatetime: Date;
+// 멘토링 세션 시간 정보
+export interface SessionTimeDataType {
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+}
+
+// 멘토링 세션 시간 RESPONSE DATA 타입
+export interface SessionTimeResType {
+  startDate: string[];
+  endDate: string[];
+  startTime: string[];
+  endTime: string[];
+}
+
+// 멘토링 세션 시간 검증 정보
+export interface SessionTimeValidationType {
+  isPossible: boolean;
+  timeDuplicateResponse: SessionTimeResType | null;
+}
+
+// 멘토링 세션 정보
+export interface MentoringSessionDataType extends SessionTimeDataType {
+  deadlinestringtime: Date;
   minHeadCount: number;
   maxHeadCount: number;
   price: number;
 }
 
+// 멘토링 카테고리 정보
 export interface MentoringCategoryDataType {
   topCategoryName: string;
   middleCategoryName: string;
 }
 
+// 멘토링 정보
 export interface MentoringDataType {
   id: string;
   mentoringId: string;
