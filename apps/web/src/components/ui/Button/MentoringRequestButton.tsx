@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { SessionRequest } from '../../../actions/mentoring/mentoringAction';
 
@@ -13,8 +12,6 @@ export default function MentoringRequestButton({
   sessionUuid: string;
   mentoringName: string;
 }) {
-  const [isModaltOpen, setIsModalOpen] = useState(false);
-
   const onClickButton = async () => {
     const status = await SessionRequest({
       sessionUuid: sessionUuid,
@@ -22,7 +19,6 @@ export default function MentoringRequestButton({
     });
     console.log(status);
     if (status == 200) {
-      setIsModalOpen(true);
       Swal.fire({
         toast: true,
         icon: 'success',
