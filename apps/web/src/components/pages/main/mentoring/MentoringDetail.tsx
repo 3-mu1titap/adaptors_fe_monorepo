@@ -23,7 +23,7 @@ export default async function MentoringCalendar({
   return (
     <div className="flex min-h-screen w-full bg-gray-50">
       {/* Left Section */}
-      <section className="w-[300px] p-6 bg-white border-r border-gray-200">
+      <section className="w-[350px] p-6 bg-white border-r border-gray-200">
         <div className="space-y-6">
           <MentoProfile
             mentorUuid={
