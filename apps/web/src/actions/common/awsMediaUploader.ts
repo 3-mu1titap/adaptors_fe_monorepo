@@ -33,6 +33,7 @@ async function uploadFileToS3(file: File, folder: string) {
   }
 
   const data = await res.json();
+  console.log(data);
   return data.imageUrl; // S3에 업로드된 파일의 URL 반환
 }
 
@@ -54,4 +55,4 @@ async function deleteFileFromS3(fileUrl: string) {
   return true;
 }
 
-export { uploadFileToS3, deleteFileFromS3 };
+export { deleteFileFromS3, uploadFileToS3 };

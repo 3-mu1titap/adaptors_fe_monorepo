@@ -12,12 +12,14 @@ interface JoinSelectProps {
   options: Option[];
   defaultValue?: string;
   onChange?: (value: string) => void;
+  name?: string; // name 추가
 }
 
 export default function JoinSelect({
   options,
   defaultValue,
   onChange,
+  name,
 }: JoinSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(
@@ -66,7 +68,7 @@ export default function JoinSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-labelledby="custom-select-label"
-        className="relative w-full bg-white border border-gray-300 shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
+        className="relative w-full bg-white border border-gray-300 shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
       >
@@ -102,13 +104,22 @@ export default function JoinSelect({
               onClick={() => handleSelect(option)}
             >
               <span
-                className={`block truncate text-lg ${selectedOption?.value === option.value ? 'font-semibold' : 'font-normal'}`}
+                className={`block truncate text-lg ${
+                  selectedOption?.value === option.value
+                    ? 'font-semibold'
+                    : 'font-normal'
+                }`}
               >
                 {option.label}
               </span>
             </li>
           ))}
         </ul>
+      )}
+
+      {/* hidden input field to handle form submission */}
+      {name && selectedOption && (
+        <input type="hidden" name={name} value={selectedOption.value} />
       )}
     </div>
   );

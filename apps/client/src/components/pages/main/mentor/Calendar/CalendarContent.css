@@ -1,0 +1,22 @@
+.fc-day-sun a {
+  color: red;
+}
+
+.fc-day-sat a {
+  color: blue;
+}
+
+.fc-event {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  min-height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fc-event:hover {
+  background-color: #ffd84d !important;
+  border-color: #ffd84d !important;
+}

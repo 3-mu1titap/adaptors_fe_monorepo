@@ -1,6 +1,11 @@
 'use client';
+import { useState } from 'react';
 import { z } from 'zod';
-import { SignUpFormData2, signUpStep2Schema } from '../../form/signUpSchema';
+import {
+  SignUpFormData2,
+  signUpStep2Schema,
+  validateForm2,
+} from '../../form/signUpSchema';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
 export interface JoinField2Props {
   formData: SignUpFormData2;
@@ -19,6 +24,7 @@ export default function JoinField2({
   errors,
   handleButtton,
 }: JoinField2Props) {
+  const [showErrorMessege, setShowErrorMessege] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -61,84 +67,95 @@ export default function JoinField2({
     }
   };
 
+  const onClickNextButton = () => {
+    console.log(validateForm2(formData));
+    console.log('tlfgodsehl');
+    handleButtton();
+    setShowErrorMessege(true);
+  };
+
   return (
-    <div className="p-6 space-y-6 h-full relative">
-      <h2 className="text-2xl font-bold ">Personal Information</h2>
-
-      <div className="space-y-2">
-        {/* Name Field */}
-        <div className="space-y-1">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            이름
-          </label>
-          <input
-            value={formData.name}
-            id="name"
-            name="name"
-            type="text"
-            placeholder="이름을 입력하세요"
-            className="custom-input "
-            onChange={handleChange}
-          />
-          <p className={`error ${errors.name ? 'visible m-0' : 'invisible'}`}>
-            {errors.name}
-          </p>
+    <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
+      <span>
+        <h2 className="text-2xl font-bold ">Personal Information</h2>
+        <div className="space-y-2">
+          {/* Name Field */}
+          <div className="space-y-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              이름
+            </label>
+            <input
+              value={formData.name}
+              id="name"
+              name="name"
+              type="text"
+              placeholder="이름을 입력하세요"
+              className="custom-input "
+              onChange={handleChange}
+            />
+            <p className={`error ${errors.name ? 'visible m-0' : 'invisible'}`}>
+              {errors.name}
+            </p>
+          </div>
+          {/* NickName Field */}
+          <div className="space-y-1">
+            <label
+              htmlFor="nickName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              닉네임
+            </label>
+            <input
+              name="nickName"
+              id="nickName"
+              value={formData.nickName}
+              type="text"
+              placeholder="닉네임을 입력하세요"
+              className="custom-input "
+              onChange={handleChange}
+            />
+            <p
+              className={`error ${errors.nickName ? 'visible m-0' : 'invisible'}`}
+            >
+              {errors.nickName}
+            </p>
+          </div>
+          {/* Phone Number Field */}
+          <div className="space-y-1">
+            <label
+              htmlFor="phoneNumber"
+              className="block text-sm font-medium text-gray-700"
+            >
+              전화번호
+            </label>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              type="tel"
+              placeholder="전화번호를 입력하세요"
+              className="custom-input "
+              onChange={handleChange}
+            />
+            <p
+              className={`error ${errors.phoneNumber ? 'visible m-0' : 'invisible'}`}
+            >
+              {errors.phoneNumber}
+            </p>
+          </div>
         </div>
-
-        {/* NickName Field */}
-        <div className="space-y-1">
-          <label
-            htmlFor="nickName"
-            className="block text-sm font-medium text-gray-700"
-          >
-            닉네임
-          </label>
-          <input
-            name="nickName"
-            id="nickName"
-            value={formData.nickName}
-            type="text"
-            placeholder="닉네임을 입력하세요"
-            className="custom-input "
-            onChange={handleChange}
-          />
-          <p
-            className={`error ${errors.nickName ? 'visible m-0' : 'invisible'}`}
-          >
-            {errors.nickName}
-          </p>
-        </div>
-
-        {/* Phone Number Field */}
-        <div className="space-y-1">
-          <label
-            htmlFor="phoneNumber"
-            className="block text-sm font-medium text-gray-700"
-          >
-            전화번호
-          </label>
-          <input
-            id="phoneNumber"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            type="tel"
-            placeholder="전화번호를 입력하세요"
-            className="custom-input "
-            onChange={handleChange}
-          />
-          <p
-            className={`error ${errors.phoneNumber ? 'visible m-0' : 'invisible'}`}
-          >
-            {errors.phoneNumber}
-          </p>
-        </div>
-      </div>
+        <p
+          className={`error ${!validateForm2(formData) && showErrorMessege ? 'visible mt-3' : 'invisible'}`}
+        >
+          입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
+        </p>
+      </span>
       <JoinStepButton
-        onClick={handleButtton}
-        disabled={false} //!validateForm2(formData)
+        onClick={onClickNextButton}
+        disabled={validateForm2(formData)}
       />
     </div>
   );
