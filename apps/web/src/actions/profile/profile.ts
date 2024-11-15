@@ -3,6 +3,7 @@ import {
   MenteeProfileRequestType,
   MentorProfileRequestType,
 } from '../../components/types/profile/RequestType';
+import { commonResType } from '../../components/types/ResponseTypes';
 
 export const postMentorProfile = async ({
   profile,
@@ -91,3 +92,24 @@ export const uploadProfileIamge = async ({
   const data = await response.json();
   return data;
 };
+
+export async function SessionRequest() {
+  'use server';
+  try {
+    const res = await fetch(
+      `http://10.10.10.158:9004/api/v1/session-request-service`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<any>;
+    return result.result;
+  } catch (error) {
+    console.error('멘토링 신청하기: ', error);
+    return null;
+  }
+}
