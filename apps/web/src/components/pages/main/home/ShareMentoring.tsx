@@ -3,7 +3,7 @@ import FitImage from '../../../ui/image/fit-image';
 
 export default function ShareMentoring() {
   return (
-    <section className="container mx-auto px-4 py-16 max-w-xl">
+    <section className="container mx-auto px-4 py-12 max-w-xl">
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="space-y-4 text-center md:text-left">
           <p className="text-gray-600">모두가 멘토가 될 수 있습니다.</p>
@@ -21,7 +21,7 @@ export default function ShareMentoring() {
               alt="Footer Image"
               className="absolute"
             />
-            <button className="absolute top-2/3 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 bg-[#FFD84D] text-black px-6 py-3 rounded-full font-medium hover:bg-[#FFD84D]/90">
+            <button className="absolute top-2/3 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 bg-[#FFD84D] text-black px-20 rounded-full py-2 text-md font-medium hover:bg-[#FFD84D] whitespace-nowrap">
               Get Started Now
               <ArrowRightIcon />
             </button>
