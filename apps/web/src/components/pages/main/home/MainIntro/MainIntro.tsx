@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SwiperItemLayout from './SwiperItem';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper/types';
+import SwiperIndex from './SwiperIndex';
 import 'swiper/css';
 
 export default function MainIntro() {
@@ -73,12 +74,7 @@ export default function MainIntro() {
 
       <div className="flex justify-center mt-4">
         {SwiperItem.map((_, index) => (
-          <span
-            key={index}
-            className={`rounded-full w-4 h-4 mx-1 ${
-              SlideIndex === index ? 'bg-yellow-500' : 'bg-gray-700'
-            }`}
-          />
+          <SwiperIndex slideIndex={SlideIndex} index={index} />
         ))}
       </div>
     </section>

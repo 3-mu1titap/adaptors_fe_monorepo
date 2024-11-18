@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchIcon from '../../../assets/icons/Search';
+import SearchIcon from '../../../../assets/icons/Search';
 
 function MainSearchTag() {
   return (

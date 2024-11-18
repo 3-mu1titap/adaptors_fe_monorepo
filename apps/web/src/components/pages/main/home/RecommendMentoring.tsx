@@ -1,4 +1,5 @@
 import RecommendMentoringItem from './RecommendMentoringItem';
+import RecommendTitle from './RecommendTitle';
 export default function RecommendMentoring() {
   const articles = [
     {
@@ -34,12 +35,7 @@ export default function RecommendMentoring() {
 
   return (
     <section className="container mx-auto px-16 py-12 max-w-full">
-      <div className="text-center mb-8">
-        <span className="text-sm text-gray-600 uppercase tracking-wider">
-          POPULAR COURSES
-        </span>
-        <h2 className="text-2xl font-bold mt-2">추천멘토링</h2>
-      </div>
+      <RecommendTitle />
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mx-48 rounded-xl">
         {articles.map((article, index) => (

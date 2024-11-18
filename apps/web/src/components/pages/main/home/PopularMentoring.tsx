@@ -166,11 +166,11 @@ export default function PopularMentoring() {
   return (
     <section className="bg-[#FFF9E7] px-36 py-20">
       <div className="container mx-auto max-w-full">
-        <div className="text-center mb-10">
-          <span className="text-sm text-gray-600 uppercase tracking-wider font-bold">
+        <div className="text-center mb-8">
+          <span className="text-sm text-gray-600 uppercase tracking-wider">
             POPULAR COURSES
           </span>
-          <h2 className="text-4xl font-bold">인기멘토링</h2>
+          <h2 className="text-2xl font-bold mt-2">인기멘토링</h2>
         </div>
 
         <div className="relative mb-6">

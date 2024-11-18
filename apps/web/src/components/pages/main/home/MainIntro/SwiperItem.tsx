@@ -1,6 +1,6 @@
 import React from 'react';
-import FitImage from '../../../ui/image/fit-image';
-import { SwiperItemType } from '../../../types/swiper/SwiperType';
+import FitImage from '../../../../ui/image/fit-image';
+import { SwiperItemType } from '../../../../types/swiper/SwiperType';
 function SwiperItemLayout({ item }: { item: SwiperItemType }) {
   return (
     <li className="grid md:grid-cols-2 gap-12">
