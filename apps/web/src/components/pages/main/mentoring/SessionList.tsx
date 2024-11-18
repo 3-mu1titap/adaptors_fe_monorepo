@@ -94,15 +94,17 @@ export default function SessionList({
                     <div className="flex items-center gap-2 font-semibold">
                       {session.price}V
                     </div>
-                    {session.isParticipating ? (
+                    {session.isClosed ? (
                       <div className="px-4 py-2 rounded-xl text-xl font-medium bg-gray-200 text-gray-600">
-                        신청완료
+                        마감된 세션
                       </div>
                     ) : (
                       <MentoringRequestButton
                         isClosed={session.isClosed}
+                        isParticipating={session.isParticipating}
                         sessionUuid={session.sessionUuid}
                         mentoringName={mentoringName ? mentoringName : ''}
+                        deadlineDate={session.deadlineDate}
                       />
                     )}
                   </div>
