@@ -2,34 +2,101 @@
 
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useState } from 'react';
-
+import PopularCategory from './PopularCategory';
+import PopularCategoryMentoring from './PopularCategoryMentoring';
 export default function PopularMentoring() {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [SelectId, setSelectId] = useState(0);
 
   const categories = [
-    { icon: '💻', name: 'Web Development', courses: '206 Courses' },
-    { icon: '📱', name: 'Digital Marketing', courses: '206 Courses' },
-    { icon: '🎨', name: 'UI/UX Design', courses: '206 Courses' },
-    { icon: '📊', name: 'UI/UX Design', courses: '206 Courses' },
-    { icon: '📈', name: 'Graph', courses: '206 Courses' },
+    { id: 0, icon: '💻', name: 'Web Development', courses: '206 Courses' },
+    { id: 1, icon: '📱', name: 'Digital Marketing', courses: '206 Courses' },
+    { id: 2, icon: '🎨', name: 'UI/UX Design', courses: '206 Courses' },
+    { id: 3, icon: '📊', name: 'FrontEnd Development', courses: '206 Courses' },
+    { id: 4, icon: '📈', name: 'Graph', courses: '206 Courses' },
+    { id: 5, icon: '📊', name: 'Android Development', courses: '206 Courses' },
+    { id: 6, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+    { id: 7, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+    { id: 8, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+    { id: 9, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+    { id: 10, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
   ];
 
   const courses = [
     {
+      id: 0,
       title: 'Education Software and PHP and JS System Script',
       duration: '55 WEEKS',
       rating: 4.5,
       reviews: 142,
       instructor: 'Max Alexis',
     },
+
     {
+      id: 0,
+      title: 'Education Software and PHP and JS System Script',
+      duration: '55 WEEKS',
+      rating: 4.5,
+      reviews: 142,
+      instructor: 'Max Alexis',
+    },
+
+    {
+      id: 0,
+      title: 'Education Software and PHP and JS System Script',
+      duration: '55 WEEKS',
+      rating: 4.5,
+      reviews: 142,
+      instructor: 'Max Alexis',
+    },
+
+    {
+      id: 0,
+      title: 'Education Software and PHP and JS System Script',
+      duration: '55 WEEKS',
+      rating: 4.5,
+      reviews: 142,
+      instructor: 'Max Alexis',
+    },
+
+    {
+      id: 1,
       title: 'Learn Figma — UI/UX Design Essential Training',
       duration: '55 WEEKS',
       rating: 4.8,
       reviews: 171,
       instructor: 'Max Alexis',
     },
+
     {
+      id: 1,
+      title: 'Learn Figma — UI/UX Design Essential Training',
+      duration: '55 WEEKS',
+      rating: 4.8,
+      reviews: 171,
+      instructor: 'Max Alexis',
+    },
+
+    {
+      id: 1,
+      title: 'Learn Figma — UI/UX Design Essential Training',
+      duration: '55 WEEKS',
+      rating: 4.8,
+      reviews: 171,
+      instructor: 'Max Alexis',
+    },
+
+    {
+      id: 1,
+      title: 'Learn Figma — UI/UX Design Essential Training',
+      duration: '55 WEEKS',
+      rating: 4.8,
+      reviews: 171,
+      instructor: 'Max Alexis',
+    },
+
+    {
+      id: 2,
       title: 'Advanced Android 12 & Kotlin Development Course',
       duration: '55 WEEKS',
       rating: 4.6,
@@ -37,6 +104,31 @@ export default function PopularMentoring() {
       instructor: 'Max Alexis',
     },
     {
+      id: 3,
+      title: 'IT Statistics Data Science and Business Analysis',
+      duration: '55 WEEKS',
+      rating: 4.7,
+      reviews: 157,
+      instructor: 'Max Alexis',
+    },
+    {
+      id: 4,
+      title: 'IT Statistics Data Science and Business Analysis',
+      duration: '55 WEEKS',
+      rating: 4.7,
+      reviews: 157,
+      instructor: 'Max Alexis',
+    },
+    {
+      id: 5,
+      title: 'IT Statistics Data Science and Business Analysis',
+      duration: '55 WEEKS',
+      rating: 4.7,
+      reviews: 157,
+      instructor: 'Max Alexis',
+    },
+    {
+      id: 6,
       title: 'IT Statistics Data Science and Business Analysis',
       duration: '55 WEEKS',
       rating: 4.7,
@@ -48,19 +140,32 @@ export default function PopularMentoring() {
   const scroll = (direction: 'left' | 'right') => {
     const container = document.getElementById('category-scroll');
     if (container) {
-      const scrollAmount = 200;
-      const newPosition =
-        direction === 'left'
-          ? scrollPosition - scrollAmount
-          : scrollPosition + scrollAmount;
-      container.scrollTo({ left: newPosition, behavior: 'smooth' });
-      setScrollPosition(newPosition);
+      const scrollAmount = 400;
+      let newPosition = scrollPosition;
+      const maxScrollPosition = container.scrollWidth - container.clientWidth;
+
+      if (direction === 'left') {
+        newPosition = Math.max(scrollPosition - scrollAmount, 0); // 왼쪽 끝을 넘지 않도록
+      } else if (direction === 'right') {
+        newPosition = Math.min(
+          scrollPosition + scrollAmount,
+          maxScrollPosition
+        ); // 오른쪽 끝을 넘지 않도록
+      }
+
+      // 스크롤 위치가 변경된 경우에만 스크롤 및 상태 업데이트 수행
+      if (newPosition !== scrollPosition) {
+        container.scrollTo({ left: newPosition, behavior: 'smooth' });
+        setScrollPosition(newPosition);
+      }
     }
   };
 
+  const filteredCourses = courses.filter((course) => course.id === SelectId);
+
   return (
-    <section className="bg-gradient-to-br from-[#FFF1AE] via-[#FFF9E7] to-[#FFF9E7] px-4 py-12">
-      <div className="container mx-auto max-w-6xl">
+    <section className="bg-[#FFF9E7] px-36 py-20">
+      <div className="container mx-auto max-w-full">
         <div className="text-center mb-8">
           <span className="text-sm text-gray-600 uppercase tracking-wider">
             POPULAR COURSES
@@ -68,7 +173,7 @@ export default function PopularMentoring() {
           <h2 className="text-2xl font-bold mt-2">인기멘토링</h2>
         </div>
 
-        <div className="relative mb-12">
+        <div className="relative mb-6">
           <button
             onClick={() => scroll('left')}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg"
@@ -78,23 +183,20 @@ export default function PopularMentoring() {
           </button>
           <div
             id="category-scroll"
-            className="flex gap-4 overflow-hidden snap-x mx-12"
+            className="flex gap-4 overflow-hidden snap-x mx-16"
             style={{ scrollBehavior: 'smooth' }}
           >
-            {categories.map((category, index) => (
-              <div
-                key={index}
-                className="flex-none snap-start bg-white rounded-xl p-4 min-w-[200px] hover:shadow-md transition-shadow m-1"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{category.icon}</span>
-                  <div>
-                    <p className="font-medium">{category.name}</p>
-                    <p className="text-sm text-gray-500">{category.courses}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <ul className={`flex gap-4`}>
+              {categories.map((category, index) => (
+                <li
+                  key={index}
+                  className={`flex-none snap-start rounded-xl min-w-[247px] ${category.id === SelectId ? 'bg-black text-white' : 'bg-white text-black'}`}
+                  onClick={() => setSelectId(category.id)}
+                >
+                  <PopularCategory item={category} />
+                </li>
+              ))}
+            </ul>
           </div>
           <button
             onClick={() => scroll('right')}
@@ -105,49 +207,14 @@ export default function PopularMentoring() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-12">
-          {courses.map((course, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="relative">
-                <div className="aspect-video bg-gray-200" />
-                <span className="absolute top-3 left-3 bg-yellow-400 text-xs font-medium px-2 py-1 rounded-full">
-                  {course.duration}
-                </span>
-              </div>
-              <div className="p-4">
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-4 w-4 ${i < Math.floor(course.rating) ? 'text-yellow-400' : 'text-gray-200'}`}
-                      fill={
-                        i < Math.floor(course.rating) ? 'currentColor' : 'none'
-                      }
-                    />
-                  ))}
-                  <span className="text-sm text-gray-500 ml-1">
-                    ({course.reviews})
-                  </span>
-                </div>
-                <h3 className="font-medium mb-4 line-clamp-2">
-                  {course.title}
-                </h3>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gray-200 rounded-full" />
-                  <span className="text-sm text-gray-600">
-                    {course.instructor}
-                  </span>
-                </div>
-              </div>
-            </div>
+        <ul className="grid grid-cols-1 md:grid-cols-4 mx-16 gap-4">
+          {filteredCourses.map((course, index) => (
+            <PopularCategoryMentoring key={index} item={course} />
           ))}
-        </div>
+        </ul>
 
         <div className="text-center mt-12">
-          <button className="bg-white px-6 py-2 rounded-full text-sm font-medium hover:shadow-md transition-shadow">
+          <button className="bg-[#FFD84D] text-white px-6 py-4 rounded-xl text-2xl font-medium hover:shadow-md transition-shadow">
             전체 멘토링 보기
           </button>
         </div>

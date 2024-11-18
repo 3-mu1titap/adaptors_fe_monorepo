@@ -23,7 +23,7 @@ function MentoringSessionCard({
     });
   };
 
-  const formatTime = (time: Date) => {
+  const formatTime = (time: Date | string) => {
     return time.toString().slice(0, 5);
   };
 
@@ -42,7 +42,7 @@ function MentoringSessionCard({
           </p>
           <p>
             <span className="font-semibold">신청 마감:</span>{' '}
-            {formatDate(session.deadlineDatetime, 'yes')}
+            {formatDate(session.deadlinestringtime, '')}
           </p>
           <p>
             <span className="font-semibold">인원:</span> {session.minHeadCount}{' '}

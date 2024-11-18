@@ -1,5 +1,4 @@
 'use client';
-
 import { usePathname } from 'next/navigation';
 import CalendarIcon from '../../assets/icons/Calendar';
 import LogOutIcon from '../../assets/icons/LogOut';
