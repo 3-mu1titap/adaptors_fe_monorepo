@@ -4,6 +4,7 @@ import { uploadFileToS3 } from '../../../actions/common/awsMediaUploader';
 import { uploadProfileIamge } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
+import FitImage from '../../ui/image/fit-image';
 
 export default function FileUpload({
   handleButton,
@@ -45,11 +46,41 @@ export default function FileUpload({
     }
   }, []);
 
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   const files = e.target.files;
+  //   if (files && files[0]) {
+  //     setFile(files[0]);
+  //   }
+  // };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const files = e.target.files;
     if (files && files[0]) {
-      setFile(files[0]);
+      const file = files[0];
+
+      // FileReader를 사용해 이미지 파일 읽기
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+
+        img.onload = () => {
+          const { naturalWidth, naturalHeight } = img;
+          const maxWidth = 500;
+          const maxHeight = 500;
+
+          if (naturalWidth > maxWidth || naturalHeight > maxHeight) {
+            alert(
+              `이미지 해상도는 최대 ${maxWidth}x${maxHeight} 이하만 가능합니다.`
+            );
+            return;
+          }
+          setFile(file);
+        };
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -80,59 +111,47 @@ export default function FileUpload({
   };
 
   return (
-    <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
-      <span>
-        <h2 className="text-2xl font-bold mb-2">Profile Image</h2>
-        <div className="w-full max-w-md mx-auto py-4 relative">
-          {!preview ? (
-            <label
-              htmlFor="file-upload"
-              className={`relative flex flex-col items-center justify-center w-full min-h-72 border-2 border-dashed rounded-lg cursor-pointer bg-[#fffcf3] transition-colors
+    <div className="py-2 h-full flex flex-col justify-between w-full max-w-md mx-auto relative">
+      {!preview ? (
+        <label
+          htmlFor="file-upload"
+          className={`relative flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer bg-[#FFF9DF] transition-colors
                 ${isDragging ? 'border-gray-500' : 'border-gray-300'}
                 hover:bg-[#fff9e6]`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-            >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <div className="bg-gray-800 rounded-full p-3 mb-4">
-                  <ImageIcon className="w-6 h-6 text-white" />
-                </div>
-                <p className="mb-2 text-xl text-gray-700">
-                  사진을 등록해주세요
-                </p>
-                <p className="text-lg text-gray-500">Drag and drop here</p>
-              </div>
-              <input
-                id="file-upload"
-                type="file"
-                className="hidden"
-                onChange={handleChange}
-                accept="image/*"
-              />
-            </label>
-          ) : (
-            <div className="relative">
-              <img
-                src={preview}
-                alt="Preview"
-                className="w-full h-80 object-cover rounded-lg"
-              />
-              <button
-                onClick={handleRemove}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 p-2 bg-gray-900/80 rounded-full hover:bg-gray-900 transition-colors"
-              >
-                <X className="w-5 h-5 text-white" />
-              </button>
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <div className="bg-gray-800 rounded-full p-3 mb-4">
+              <ImageIcon className="w-6 h-6 text-white" />
             </div>
-          )}
+            <p className="mb-2 text-xl text-gray-700">사진을 등록해주세요</p>
+            <p className="text-lg text-gray-500">Drag and drop here</p>
+          </div>
+          <input
+            id="file-upload"
+            type="file"
+            className="hidden"
+            onChange={handleChange}
+            accept="image/*"
+          />
+        </label>
+      ) : (
+        <div className="relative h-full">
+          <div className="max-h-[320px] overflow-hidden ">
+            <FitImage src={preview} alt="Preview" className="m-auto" />
+          </div>
+          <button
+            onClick={handleRemove}
+            className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 p-2 bg-gray-900/80 rounded-full hover:bg-gray-900 transition-colors"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
         </div>
-        <JoinStepButton
-          onClick={handleMentoringImg}
-          text="프로필 이미지 등록"
-        />
-      </span>
+      )}
+      <JoinStepButton onClick={handleMentoringImg} text="프로필 이미지 등록" />
       <JoinStepButton
         onClick={handleNextButton}
         disabled={false}

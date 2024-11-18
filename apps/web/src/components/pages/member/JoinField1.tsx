@@ -123,7 +123,7 @@ export default function JoinField1({
   };
 
   return (
-    <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
+    <div className=" py-2 space-y-1 h-full flex flex-col justify-between">
       <span>
         <h2 className="text-2xl font-bold mb-2">Role</h2>
         <RadioButton
@@ -134,8 +134,9 @@ export default function JoinField1({
           ]}
           selectedValue={formData.role}
           onChange={handleRadioChange}
+          classname="flex-col"
         />
-        <div className="space-y-1">
+        <div className="">
           <h2 className="text-2xl font-bold mt-4 mb-2">Account</h2>
           {/* 아이디 */}
           <div className="relative flex items-center w-full rounded-xl border border-gray-200 bg-white focus-within:ring-2 focus-within:ring-yellow-300">
@@ -148,7 +149,7 @@ export default function JoinField1({
               className="w-full px-3 py-2 rounded-xl focus:outline-none"
             />
             <button
-              className="absolute right-2 px-4 py-1.5 bg-[#F8D448] text-white text-md font-medium rounded-md hover:bg-[#e5c340] transition-colors"
+              className="absolute right-2 px-2 py-1 bg-[#F8D448] text-white text-[11px] font-medium rounded-[0.5rem] hover:bg-[#e5c340] transition-colors"
               onClick={() => checkDuplicate('accountId')}
               type="button"
             >

@@ -79,7 +79,7 @@ export default function MenteeProfile({
         e.preventDefault();
         handleSubmit();
       }}
-      className="px-6 py-2 space-y-1 h-full flex flex-col justify-between"
+      className="py-2 space-y-1 h-full flex flex-col justify-between"
     >
       <div className="space-y-2 ">
         <h2 className="text-2xl font-bold">Profile</h2>
@@ -105,7 +105,7 @@ export default function MenteeProfile({
               value={jobApplicationCount}
               onChange={(e) => setJobApplicationCount(Number(e.target.value))}
               placeholder="ex) 5"
-              className="custom-div"
+              className="custom-div number"
             />
           </div>
         </span>
@@ -123,7 +123,7 @@ export default function MenteeProfile({
           </div>
           <div className="space-y-2 flex-1">
             <label className="block text-sm font-medium text-gray-700">
-              나이
+              출생년도
             </label>
             <input
               name="age"
@@ -131,7 +131,7 @@ export default function MenteeProfile({
               value={age}
               onChange={(e) => setAge(Number(e.target.value))}
               placeholder="ex) 20"
-              className="custom-div"
+              className="custom-div number"
             />
           </div>
         </span>

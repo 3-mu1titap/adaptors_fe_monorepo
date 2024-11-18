@@ -41,7 +41,7 @@ export default function MentorProfile({
   };
 
   return (
-    <div className="px-6 py-2 h-full flex flex-col justify-between">
+    <div className="py-2 h-full flex flex-col justify-between">
       <span className="space-y-2">
         <h2 className="text-2xl font-bold">Profile</h2>
         {/* Mentoring Field */}
@@ -71,15 +71,15 @@ export default function MentorProfile({
             htmlFor="age"
             className="block text-sm font-medium text-gray-700"
           >
-            나이
+            출생년도
           </label>
           <input
             id="age"
             type="number"
             value={age}
             onChange={(e) => setAge(Number(e.target.value))}
-            placeholder="ex) 20"
-            className="custom-div"
+            placeholder="출생년도를 입력해주세요"
+            className="custom-div number"
           />
         </div>
         <div className="space-y-2">

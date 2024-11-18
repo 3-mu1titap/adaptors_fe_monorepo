@@ -75,7 +75,7 @@ export default function JoinField2({
   };
 
   return (
-    <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
+    <div className=" py-2 space-y-1 h-full flex flex-col justify-between">
       <span>
         <h2 className="text-2xl font-bold ">Personal Information</h2>
         <div className="space-y-2">

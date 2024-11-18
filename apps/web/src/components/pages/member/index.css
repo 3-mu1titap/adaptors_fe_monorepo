@@ -4,7 +4,7 @@
 
 /* Input 필드 스타일 */
 .custom-input {
-  @apply w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-300;
+  @apply w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-300;
 }
 
 .error {
@@ -13,4 +13,16 @@
 
 .custom-div {
   @apply w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-300;
+}
+
+@layer utilities {
+  .number::-webkit-inner-spin-button,
+  .number::-webkit-outer-spin-button {
+    @apply appearance-none;
+    margin: 0;
+  }
+
+  .number {
+    @apply appearance-none;
+  }
 }

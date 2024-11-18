@@ -58,10 +58,7 @@ export default function JoinFunnel() {
       };
       const data = await postUserData(combinedFormData);
       setUuid(data);
-      console.log(data);
-      if (data) {
-        onNextStep();
-      }
+      onNextStep();
     }
   };
 
@@ -78,7 +75,7 @@ export default function JoinFunnel() {
   return (
     <div>
       <FunnelLevel level={level} />
-      <section className="max-w-[400px] mx-auto h-[100vh] sm:h-[65vh]">
+      <section className="h-[100vh] sm:h-[65vh]">
         <Funnel step={step}>
           <Funnel.Step name="joinStep1">
             <JoinField1
@@ -105,7 +102,7 @@ export default function JoinFunnel() {
             <FileUpload handleButton={onNextStep} />
           </Funnel.Step>
           <Funnel.Step name="profile">
-            {formData1.role === 'MENTOR' ? (
+            {formData1.role == 'MENTOR' ? (
               <MentorProfile handleButtton={onNextStep} />
             ) : (
               <MenteeProfile handleButton={onNextStep} />
