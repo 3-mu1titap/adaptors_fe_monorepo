@@ -16,7 +16,9 @@ export default function IntroCard() {
           <br /> ALL RIGHTS RESERVED.
         </h3>
       </div>
-      <AdaptorcConcentImage className="absolute sm:static left-0 bottom-0 w-[50%] sm:w-[90%] sm:ml-4 sm:mt-20 overflow-clip" />
+      <AdaptorcConcentImage
+        className={`absolute sm:static left-0 bottom-0 w-[50%] sm:w-[90%] sm:ml-4 sm:mt-20 overflow-clip`}
+      />
     </section>
   );
 }

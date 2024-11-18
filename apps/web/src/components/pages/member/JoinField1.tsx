@@ -139,14 +139,14 @@ export default function JoinField1({
         <div className="">
           <h2 className="text-2xl font-bold mt-4 mb-2">Account</h2>
           {/* 아이디 */}
-          <div className="relative flex items-center w-full rounded-xl border border-gray-200 bg-white focus-within:ring-2 focus-within:ring-yellow-300">
+          <div className="relative flex items-center w-full rounded-xl bg-white focus-within:ring-2 focus-within:ring-yellow-300">
             <input
               type="text"
               name="accountId"
               value={formData.accountId}
               onChange={handleChange}
               placeholder="아이디"
-              className="w-full px-3 py-2 rounded-xl focus:outline-none"
+              className=" custom-input"
             />
             <button
               className="absolute right-2 px-2 py-1 bg-[#F8D448] text-white text-[11px] font-medium rounded-[0.5rem] hover:bg-[#e5c340] transition-colors"

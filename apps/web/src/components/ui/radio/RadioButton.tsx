@@ -28,7 +28,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       {options.map((option, index) => (
         <label
           key={index}
-          className="inline-flex items-center justify-center p-2  rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 max-w-[154px]"
+          className="inline-flex items-center justify-center px-2 py-1.5  rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 max-w-[154px]"
           onClick={() => onChange(option.value)}
         >
           <input
@@ -41,7 +41,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           />
           <div className="flex items-center gap-2">
             <div
-              className="w-4 h-4 rounded"
+              className="w-3.5 h-3.5 rounded"
               style={{
                 backgroundColor:
                   selectedValue === option.value ? selectedColor : defaultColor,

@@ -6,7 +6,7 @@ import SocialLogin from './SocialLogin';
 
 export default function Login() {
   return (
-    <div className="space-y-6 flex flex-col justify-center ">
+    <div className="space-y-4 flex flex-col justify-center ">
       <SignInTitle title="SIGN IN" />
       <LoginForm />
       <Separator />
