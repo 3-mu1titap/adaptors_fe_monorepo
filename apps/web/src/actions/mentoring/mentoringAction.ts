@@ -6,6 +6,7 @@ import { options } from '../../app/api/auth/[...nextauth]/options';
 import {
   MentoringDataType,
   MentoringSessionDataType,
+  SessionCancelType,
   SessionRequestType,
 } from '../../components/types/mentoring/mentoringTypes';
 import {
@@ -83,6 +84,38 @@ export async function SessionRequest(request: SessionRequestType) {
           sessionUuid: request.sessionUuid,
           menteeUuid: menteeUuid,
           mentoringName: request.mentoringName,
+        }),
+      }
+    );
+    const result = (await res.json()) as commonResType<any>;
+    if (result.HttpStatus == '200') {
+      revalidateTag('session-request');
+    }
+    return result.code;
+  } catch (error) {
+    console.error('멘토링 신청하기: ', error);
+    return null;
+  }
+}
+//멘토링 참가 취소
+export async function SessionCancel(request: SessionCancelType) {
+  'use server';
+  const session = await getServerSession(options);
+  const menteeUuid = session?.user.uuid;
+
+  try {
+    const res = await fetch(
+      `http://10.10.10.158:9004/api/v1/session-request-service`,
+      {
+        cache: 'no-cache',
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionUuid: request.sessionUuid,
+          menteeUuid: menteeUuid,
+          deadlineDate: request.deadlineDate,
         }),
       }
     );

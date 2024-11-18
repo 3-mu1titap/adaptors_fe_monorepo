@@ -14,7 +14,8 @@
     "clean": "turbo clean",
     "format": "prettier --cache --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
-    "start": "turbo start" 
+    "start": "turbo start",
+    "shadcn": "npm --workspace=@repo/ui run shadcn"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss,md}": [

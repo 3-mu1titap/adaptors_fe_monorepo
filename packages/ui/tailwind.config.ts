@@ -1,16 +1,25 @@
-import type { Config } from 'tailwindcss';
+import { Config } from 'tailwindcss';
 import sharedConfig from '@repo/tailwind-config';
 
-const config: Pick<
-  Config,
-  'darkMode' | 'presets' | 'content' | 'theme' | 'plugins'
-> = {
-  darkMode: ['class'],
-  content: ['./src/**/*.tsx'],
+const config: Pick<Config, 'presets' | 'theme' | 'plugins'> = {
   presets: [sharedConfig],
   theme: {
+    fontSize: {
+      'xs': '0.5rem',
+      'sm': '0.625rem',
+      'md': '0.75rem',
+      'lg': '0.875rem',
+      'xl': '1rem',
+      '2xl': '1.25rem',
+      '3xl': '1.5rem',
+      '4xl': '1.75rem',
+      '5xl': '2rem',
+    },
     extend: {
       colors: {
+        adaptorsYellow: '#F6D84C',
+        adaptorsBlue: '#0060FF',
+        adaptorsGray: '#ACACAC',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -45,17 +54,44 @@ const config: Pick<
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         chart: {
-          '1': 'hsl(var(--chart-1))',
-          '2': 'hsl(var(--chart-2))',
-          '3': 'hsl(var(--chart-3))',
-          '4': 'hsl(var(--chart-4))',
-          '5': 'hsl(var(--chart-5))',
+          1: 'hsl(var(--chart-1))',
+          2: 'hsl(var(--chart-2))',
+          3: 'hsl(var(--chart-3))',
+          4: 'hsl(var(--chart-4))',
+          5: 'hsl(var(--chart-5))',
         },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
+        },
+        'caret-blink': {
+          '0%,70%,100%': { opacity: '1' },
+          '20%,50%': { opacity: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'caret-blink': 'caret-blink 1.25s ease-out infinite',
       },
     },
   },

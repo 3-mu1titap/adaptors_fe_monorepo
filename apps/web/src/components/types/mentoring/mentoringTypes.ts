@@ -48,3 +48,7 @@ export interface SessionRequestType {
   sessionUuid: string;
   mentoringName: string;
 }
+export interface SessionCancelType {
+  sessionUuid: string;
+  deadlineDate: string;
+}
