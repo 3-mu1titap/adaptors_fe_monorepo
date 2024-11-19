@@ -26,7 +26,7 @@ export default function JoinFunnel() {
     'profile',
     'hashTag',
   ];
-  const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
+  const { level, step, onNextStep } = useFunnel({ steps });
   const [confirmId, setConfirmId] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState('');
   const setUuid = useUserStore((state) => state.setUuid);
