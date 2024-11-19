@@ -83,34 +83,32 @@ export default function MenteeProfile({
     >
       <div className="space-y-2 ">
         <h2 className="text-2xl font-bold">Profile</h2>
-        <span className="flex gap-2 ">
-          <div className="space-y-2 flex-1">
-            <label className="block text-sm font-medium text-gray-700">
-              취업 상태
-            </label>
-            <JoinSelect
-              name="occupationStatus"
-              options={occupationStatusOptions}
-              defaultValue="취준생"
-              onChange={(value) => setOccupationStatus(value)}
-            />
-          </div>
-          <div className="space-y-2 flex-1">
-            <label className="block text-sm font-medium text-gray-700">
-              입사 지원 횟수
-            </label>
-            <input
-              name="jobApplicationCount"
-              type="number"
-              value={jobApplicationCount}
-              onChange={(e) => setJobApplicationCount(Number(e.target.value))}
-              placeholder="ex) 5"
-              className="custom-div number"
-            />
-          </div>
-        </span>
-        <span className="flex gap-2">
-          <div className="space-y-2 flex-1">
+        <div className="space-y-2 flex-1">
+          <label className="block text-sm font-medium text-gray-700">
+            취업 상태
+          </label>
+          <JoinSelect
+            name="occupationStatus"
+            options={occupationStatusOptions}
+            defaultValue="취준생"
+            onChange={(value) => setOccupationStatus(value)}
+          />
+        </div>
+        <div className="mt-2 space-y-2 flex-1">
+          <label className="block text-sm font-medium text-gray-700">
+            입사 지원 횟수
+          </label>
+          <input
+            name="jobApplicationCount"
+            type="number"
+            value={jobApplicationCount}
+            onChange={(e) => setJobApplicationCount(Number(e.target.value))}
+            placeholder="ex) 5"
+            className="custom-div number"
+          />
+        </div>
+        <span className="sm:flex gap-2 ">
+          <div className="mt-2 space-y-2 flex-1">
             <label className="block text-sm font-medium text-gray-700">
               최종 학력
             </label>
@@ -121,7 +119,7 @@ export default function MenteeProfile({
               onChange={(value) => setEducationLevel(value)}
             />
           </div>
-          <div className="space-y-2 flex-1">
+          <div className=" mt-2 space-y-2 flex-1">
             <label className="block text-sm font-medium text-gray-700">
               출생년도
             </label>
@@ -135,7 +133,7 @@ export default function MenteeProfile({
             />
           </div>
         </span>
-        <div className="space-y-2">
+        <div className="mt-2 space-y-2">
           <label className="block text-sm font-medium text-gray-700">
             성별
           </label>
@@ -151,7 +149,7 @@ export default function MenteeProfile({
           />
         </div>
         <span className="flex gap-2 ">
-          <div className="space-y-2">
+          <div className="mt-2  space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               직종
             </label>
@@ -164,7 +162,7 @@ export default function MenteeProfile({
               className="custom-div"
             />
           </div>
-          <div className="space-y-2">
+          <div className="mt-2  space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               경력
             </label>

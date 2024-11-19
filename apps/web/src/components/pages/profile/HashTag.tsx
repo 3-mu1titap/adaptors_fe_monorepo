@@ -61,11 +61,11 @@ export default function HashTag({
   return (
     <section className="py-2 space-y-1 h-full flex flex-col justify-between">
       <span>
-        <h2 className="text-2xl font-bold">HashTag</h2>
-        <h3 className="text-slate-500 text-lg mt-1 mb-8">최대 5개 선택</h3>
+        <h2 className="text-2xl font-bold">관심 키워드를 선택해주세요</h2>
+        <h3 className="text-slate-500 text-lg mt-1 mb-8">*최대 5개</h3>
 
         {/* 현재 페이지에 해당하는 태그들을 전달 */}
-        <div className="h-64 mb-4 overflow-y-scroll">
+        <div className="h-72 mb-4 overflow-y-scroll">
           {tagData.length > 0 && (
             <CheckboxButton
               name="hobbies"
