@@ -58,15 +58,14 @@ export async function postChat({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Uuid': `${userUuid}`,
+        'userUuid': `${userUuid}`,
       },
       body: JSON.stringify(payload),
     });
-
-    const result = (await res.json()) as commonResType<null>;
-    return result.result;
+    return;
   } catch (error) {
     console.error('채팅 요청 조회 실패 : ', error);
+    // 에러 message
     return {};
   }
 }
@@ -76,7 +75,7 @@ export async function getChatProfile({ memberUuid }: { memberUuid: string }) {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.PROFILE_URL}/api/v1/memberInfo/profileImage`,
+      `${process.env.PROFILE_URL}/api/v1/memberInfo/profile`,
       {
         method: 'GET',
         headers: {
