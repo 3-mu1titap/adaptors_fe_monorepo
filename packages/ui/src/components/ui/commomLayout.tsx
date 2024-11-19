@@ -6,7 +6,7 @@ import { cn } from '@repo/ui/lib/utils';
 const layoutVariants = cva('', {
   variants: {
     type: {
-      main: 'container',
+      main: '',
       section: '',
       div: '',
     },
