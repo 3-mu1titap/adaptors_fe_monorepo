@@ -3,10 +3,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { TopCategoryDataType } from '../types/main/mentor/mentoringTypes';
+import {
+  SessionTimeDataType,
+  SessionTimeValidationType,
+  TopCategoryDataType,
+} from '../types/main/mentor/mentoringTypes';
 import {
   GetTopCategoryList,
   PostMentoring,
+  PostSessionTimeValidation,
 } from '../../actions/mentoring/mentoringAction';
 import { ko } from 'date-fns/locale';
 import { uploadFileToS3 } from '../../actions/common/awsMediaUploader';
@@ -16,6 +21,7 @@ import color from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import Nouislider from '@x1mrdonut1x/nouislider-react';
+import Swal from 'sweetalert2';
 
 export interface MentoringCategory {
   topCategoryName: string;
@@ -164,7 +170,7 @@ export default function MentoringForm({
     setEndTime(time);
   };
 
-  const handleSessionAdd = () => {
+  const handleSessionAdd = async () => {
     if (selectedDate && startTime && endTime && deadlineDate) {
       const newSession: MentoringSession = {
         startDate: selectedDate,
@@ -176,13 +182,57 @@ export default function MentoringForm({
         maxHeadCount: 5,
         price: price,
       };
-      setFormData((prevData) => ({
-        ...prevData,
-        sessionList: [...prevData.sessionList, newSession],
-      }));
-      setStartTime('');
-      setEndTime('');
-      setDeadlineDate(new Date());
+      const formattedDate = selectedDate.toISOString().split('T')[0];
+      const time: SessionTimeDataType = {
+        startDate: formattedDate,
+        endDate: formattedDate,
+        startTime,
+        endTime,
+      };
+      const sessionValidate: SessionTimeValidationType | null =
+        await PostSessionTimeValidation({ time });
+      if (
+        !sessionValidate?.isPossible &&
+        sessionValidate?.timeDuplicateResponse
+      ) {
+        const { startDate, endDate, startTime, endTime } =
+          sessionValidate?.timeDuplicateResponse;
+        const startDateStr = `${startDate[0]}-${String(startDate[1]).padStart(2, '0')}-${String(startDate[2]).padStart(2, '0')}`;
+        const message = `시간이 겹칩니다!<br/>${startDateStr} ${String(startTime[0]).padStart(2, '0')}:${String(startTime[1]).padStart(2, '0')} - ${String(endTime[0]).padStart(2, '0')}:${String(endTime[1]).padStart(2, '0')}에<br/> 이미 예약된 세션이 있습니다.`;
+
+        Swal.fire({
+          toast: true,
+          icon: 'warning',
+          title: message,
+          customClass: {
+            title: 'text-lg font-semibold text-gray-800 text-center',
+            confirmButton:
+              'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
+            actions: '!grid !grid-cols-1',
+          },
+        });
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          sessionList: [...prevData.sessionList, newSession],
+        }));
+        setStartTime('');
+        setEndTime('');
+        setDeadlineDate(new Date());
+      }
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: 'info',
+        title: '선택하지 않은 값을<br/> 선택해주세요.',
+        confirmButtonText: '확인',
+        customClass: {
+          title: 'text-lg font-semibold text-gray-800 text-center',
+          confirmButton:
+            'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
+          actions: '!grid !grid-cols-1',
+        },
+      });
     }
   };
 
@@ -404,7 +454,7 @@ export default function MentoringForm({
               {formData.sessionList.map((session, index) => (
                 <li key={index} className="py-2">
                   {session.startDate.toLocaleDateString()} {session.startTime} -{' '}
-                  {session.endTime}
+                  {session.endTime} : {session.price}Volt
                 </li>
               ))}
             </ul>

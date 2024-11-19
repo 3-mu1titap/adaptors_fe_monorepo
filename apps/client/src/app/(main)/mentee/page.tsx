@@ -1,11 +1,7 @@
-import NavbarLayout from '../../../components/pages/sidebar/NavbarLayout';
-
-function Page() {
-  return (
-    <main>
-      <NavbarLayout />
-    </main>
-  );
+import React from 'react';
+import NavbarLayout from '../../../components/pages/main/sidebar/NavbarLayout';
+function page() {
+  return <>agag</>;
 }
 
-export default Page;
+export default page;

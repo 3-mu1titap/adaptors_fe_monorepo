@@ -5,9 +5,14 @@ import {
   MentoringDataType,
   MentoringSessionDataType,
   MiddleCategoryDataType,
+  SessionTimeDataType,
+  SessionTimeValidationType,
   TopCategoryDataType,
 } from '../../components/types/main/mentor/mentoringTypes';
-import { commonResListType } from '../../components/types/ResponseTypes';
+import {
+  commonResListType,
+  commonResType,
+} from '../../components/types/ResponseTypes';
 
 const memberUuid = '671a55ae-2346-407f-85e3-9cd39f4e3d10';
 
@@ -135,4 +140,30 @@ export async function GetMentoringSessionList({
   }
 }
 
-//
+// 멘토링 세션 추가 시 시간이 스케쥴과 겹치는지 확인하는 API
+export async function PostSessionTimeValidation({
+  time,
+}: {
+  time: SessionTimeDataType;
+}) {
+  'use server';
+  console.log(time);
+  try {
+    const res = await fetch(
+      `${process.env.LOCAL_URL2}/api/v1/mentoring-service/validate-session-time?startDate=${time.startDate}&endDate=${time.endDate}&startTime=${time.startTime}&endTime=${time.endTime}&mentorUuid=${memberUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result =
+      (await res.json()) as commonResType<SessionTimeValidationType>;
+    return result.result;
+  } catch (error) {
+    console.error('세션 시간 검증 : ', error);
+    return null;
+  }
+}

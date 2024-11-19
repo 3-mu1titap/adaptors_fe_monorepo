@@ -1,9 +1,9 @@
 'use client';
 
 import NavbarCategoryies from './NavbarCategoryies';
-import Funnel from '../../common/Funnel/Funnel';
-import useFunnel from '../../common/Funnel/useFunnel';
-import HomePage from '../main/home/HomePage';
+import Funnel from '../../../common/Funnel/Funnel';
+import useFunnel from '../../../common/Funnel/useFunnel';
+import HomePage from '../home/HomePage';
 const steps = ['Home', 'Category', 'MentoringPush', 'Feedback', 'Search'];
 function NavbarLayout() {
   const { level, step, onSelectStep } = useFunnel({ steps });

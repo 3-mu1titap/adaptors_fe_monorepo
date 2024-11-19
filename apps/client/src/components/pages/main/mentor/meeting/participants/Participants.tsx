@@ -11,20 +11,6 @@ import {
 function Participants({ participants }: { participants: participantType[] }) {
   const [users, setUsers] = useState<userType[]>([]);
 
-  const addParticipant = () => {
-    const newName = prompt('새 참가자의 이름을 입력하세요:');
-    if (newName) {
-      const newParticipant: userType = {
-        id: users.length + 1,
-        username: newName,
-        profile_image_url: '',
-        micOn: true,
-        videoOn: true,
-      };
-      setUsers([...users, newParticipant]);
-    }
-  };
-
   const toggleMic = (id: number) => {
     setUsers(users.map((p) => (p.id === id ? { ...p, micOn: !p.micOn } : p)));
   };
@@ -47,7 +33,7 @@ function Participants({ participants }: { participants: participantType[] }) {
 
   return (
     <div className="py-2 px-4 h-full border overflow-y-auto">
-      <ParticipantsTitle addParticipant={addParticipant} />
+      <ParticipantsTitle />
       <div>
         {users.map((participant) => (
           <ParticipantsContent

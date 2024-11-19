@@ -3,7 +3,7 @@ import FitImage from '../../../ui/image/fit-image';
 
 export default function ShareMentoring() {
   return (
-    <section className="container mx-auto px-4 py-16 max-w-6xl">
+    <section className="container mx-auto px-4 py-16 max-w-xl">
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="space-y-4 text-center md:text-left">
           <p className="text-gray-600">모두가 멘토가 될 수 있습니다.</p>
