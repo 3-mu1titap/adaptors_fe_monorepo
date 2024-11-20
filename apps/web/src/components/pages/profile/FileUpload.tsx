@@ -109,13 +109,13 @@ export default function FileUpload({
           />
         </label>
       ) : (
-        <span className="relative h-full border-x-blue-800 border-black border-2">
-          <div className="max-h-[560px] sm:max-h-[320px] overflow-hidden py-auto">
-            <FitImage src={preview} alt="Preview" className="mt-[50%]" />
+        <span className="relative h-full flex items-center justify-center">
+          <div className="h-[100%] max-h-[560px] sm:max-h-[400px] overflow-hidden py-auto">
+            <FitImage src={preview} alt="Preview" />
           </div>
           <button
             onClick={handleRemove}
-            className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 p-2 bg-gray-900/80 rounded-full hover:bg-gray-900 transition-colors"
+            className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 p-2 bg-gray-900/80 rounded-full hover:bg-gray-900 transition-colors"
           >
             <X className="w-5 h-5 text-white" />
           </button>

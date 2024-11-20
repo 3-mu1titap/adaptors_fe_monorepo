@@ -67,7 +67,6 @@ export default function Account({
     ) {
       try {
         const data = await checkAccountId(formData.accountId);
-        console.log(data);
         if (data === 2011) {
           setErrors((prev) => ({
             ...prev,

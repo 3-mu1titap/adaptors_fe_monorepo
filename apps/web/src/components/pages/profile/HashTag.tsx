@@ -16,7 +16,6 @@ export default function HashTag({
   const [tagData, setTagData] = useState<Tag[]>([]);
   const [selectedValues, setSelectedValues] = useState<number[]>([]);
   const { uuid } = useUserStore();
-  console.log(uuid);
   useEffect(() => {
     const getHashTagData = async () => {
       const data = await getTagList();

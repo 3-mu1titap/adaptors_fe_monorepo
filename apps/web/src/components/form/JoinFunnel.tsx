@@ -45,20 +45,17 @@ export default function JoinFunnel() {
   const [errors, setErrors] = useState<
     Partial<Record<keyof accountFormData | keyof informationFormData, string>>
   >({});
-  console.log(account, information);
-  //폼 제출 (회원가입 api 요청)
   const handleSubmit = async () => {
     const disable =
       accountSchema.parse(account) && informationSchema.parse(information);
-    if (disable) {
-      const combinedFormData = {
-        ...account,
-        ...information,
-      };
-      const data = await postUserData(combinedFormData);
-      setUuid(data);
-      onNextStep();
-    }
+    if (!disable) return;
+    const combinedFormData = {
+      ...account,
+      ...information,
+    };
+    const data = await postUserData(combinedFormData);
+    setUuid(data);
+    onNextStep();
   };
 
   const onClickNext = () => {

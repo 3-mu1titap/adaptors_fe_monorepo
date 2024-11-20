@@ -67,7 +67,6 @@ export default function MenteeProfile({
 
     try {
       const data = await postMenteeProfile({ profile: menteeProfile, uuid });
-      console.log('Profile submission successful:', data);
       handleButton();
     } catch (error) {
       console.error('Profile submission failed:', error);
