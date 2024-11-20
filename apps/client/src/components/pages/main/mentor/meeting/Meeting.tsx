@@ -5,7 +5,7 @@ import { participantType } from '../../../../types/main/meeting/meetingTypes';
 import Chatting from '../../chatting/Chatting';
 import VideoComponent from './AdaptorsVideo';
 
-function Meeting({ participants }: { participants: participantType[] }) {
+async function Meeting({ participants }: { participants: participantType[] }) {
   return (
     <>
       <MeetingHeader participants={participants} />
@@ -13,11 +13,11 @@ function Meeting({ participants }: { participants: participantType[] }) {
         <div className="col-span-5 bg-[#FAFAFE]">
           <VideoComponent />
         </div>
-        <div className="flex flex-col col-span-2">
-          <div className="h-2/5">
+        <div className="flex flex-col col-span-2 h-full">
+          <div className="h-[36vh]">
             <Participants participants={participants} />
           </div>
-          <div className="h-3/5">
+          <div className="h-[54vh]">
             <Chatting participants={participants} />
           </div>
         </div>

@@ -9,10 +9,7 @@ import {
   SessionTimeValidationType,
   TopCategoryDataType,
 } from '../../components/types/main/mentor/mentoringTypes';
-import {
-  commonResListType,
-  commonResType,
-} from '../../components/types/ResponseTypes';
+import { commonResType } from '../../components/types/ResponseTypes';
 
 const memberUuid = '671a55ae-2346-407f-85e3-9cd39f4e3d10';
 
@@ -31,7 +28,7 @@ export async function GetTopCategoryList() {
       }
     );
 
-    const result = (await res.json()) as commonResListType<TopCategoryDataType>;
+    const result = (await res.json()) as commonResType<TopCategoryDataType[]>;
     return result.result;
   } catch (error) {
     console.error('대 카테고리 리스트 조회 : ', error);
@@ -58,8 +55,9 @@ export async function GetMiddleCategoryList({
       }
     );
 
-    const result =
-      (await res.json()) as commonResListType<MiddleCategoryDataType>;
+    const result = (await res.json()) as commonResType<
+      MiddleCategoryDataType[]
+    >;
     return result.result;
   } catch (error) {
     console.error('중 카테고리 리스트 조회 : ', error);
@@ -80,7 +78,7 @@ export async function PostMentoring(payload: MentoringAddForm) {
       body: JSON.stringify(payload),
     });
 
-    const result = (await res.json()) as commonResListType<null>;
+    const result = (await res.json()) as commonResType<null>;
     console.log('멘토링 생성 성공', result);
     return result;
   } catch (error) {
@@ -104,7 +102,7 @@ export async function GetMentoringList() {
       }
     );
 
-    const result = (await res.json()) as commonResListType<MentoringDataType>;
+    const result = (await res.json()) as commonResType<MentoringDataType[]>;
     return result.result;
   } catch (error) {
     console.error('멘토링리스트 정보 조회 : ', error);
@@ -131,8 +129,9 @@ export async function GetMentoringSessionList({
       }
     );
 
-    const result =
-      (await res.json()) as commonResListType<MentoringSessionDataType>;
+    const result = (await res.json()) as commonResType<
+      MentoringSessionDataType[]
+    >;
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 정보 조회 : ', error);

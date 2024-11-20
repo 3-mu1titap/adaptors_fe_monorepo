@@ -2,11 +2,11 @@
 
 import { participantsData } from '../../components/datas/main/meeting/participantsData';
 import { participantType } from '../../components/types/main/meeting/meetingTypes';
-import { commonResListType } from '../../components/types/ResponseTypes';
+import { commonResType } from '../../components/types/ResponseTypes';
 
 export async function getParticipantsData() {
   'use server';
-  const res: commonResListType<participantType> = participantsData;
+  const res: commonResType<participantType[]> = participantsData;
   return res.result;
 }
 

@@ -6,8 +6,14 @@ import ChatHeader from './ChatHeader';
 import ChatSender from './ChatSender';
 import ChatView from './ChatView';
 import { participantType } from '../../../types/main/meeting/meetingTypes';
-import { chatDataType } from '../../../types/main/chatting/chattingTypes';
-import { postChat } from '../../../../actions/chatting/chattingAction';
+import {
+  chatDataType,
+  prevChatResType,
+} from '../../../types/main/chatting/chattingTypes';
+import {
+  getChattingData,
+  postChat,
+} from '../../../../actions/chatting/chattingAction';
 
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
@@ -18,12 +24,9 @@ function Chatting({ participants }: { participants: participantType[] }) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(scrollToBottom, [messages]);
+  const [getPrev, setGetPrev] = useState<boolean>(true);
+  const [isNext, setIsNext] = useState<boolean>(true);
+  const [prevMessagePage, setPrevMessagePage] = useState<number>(1);
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,7 +80,6 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
   useEffect(() => {
     const chatServiceUrl = `http://3.35.228.51:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
-    // const chatServiceUrl = `http://10.10.10.149:51471/api/v1/chat/real-time/${mentoringSessionUuid}`;
     console.log(`Connecting to: ${chatServiceUrl}`);
 
     const eventSource = new EventSourcePolyfill(chatServiceUrl, {
@@ -88,10 +90,13 @@ function Chatting({ participants }: { participants: participantType[] }) {
       console.log('SSE 연결이 성공적으로 열렸습니다.');
     };
 
-    eventSource.onmessage = (event: any) => {
+    const handleNewMessage = (event: any) => {
+      setGetPrev(true);
       const newMessage: chatDataType = JSON.parse(event.data);
       setMessages((prevData) => [...prevData, newMessage]);
     };
+
+    eventSource.onmessage = handleNewMessage;
 
     eventSource.onerror = (error) => {
       console.error('EventSource 오류:', error);
@@ -103,6 +108,44 @@ function Chatting({ participants }: { participants: participantType[] }) {
     };
   }, [mentoringSessionUuid]);
 
+  const getMessageData = async (page: number) => {
+    const prevMessages = (await getChattingData(page)) as prevChatResType;
+    if (!prevMessages.hasNext) {
+      setIsNext(false);
+    }
+    setPrevMessagePage((prev) => prev + 1);
+    const reversedMessages = prevMessages.content.content.reverse();
+    setMessages((prev) => [...reversedMessages, ...prev]);
+  };
+
+  useEffect(() => {
+    setGetPrev(false);
+    getMessageData(0);
+  }, []);
+
+  const scrollToBottom = () => {
+    if (getPrev) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(scrollToBottom, [messages]);
+
+  const handleScroll = async (e: React.UIEvent<HTMLDivElement>) => {
+    setGetPrev(false);
+    const target = e.currentTarget;
+    if (target) {
+      const { scrollTop } = target;
+      if (scrollTop === 0) {
+        console.log(isNext);
+        if (isNext) {
+          await getMessageData(prevMessagePage);
+          target.scrollTop = 400;
+        }
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col w-full h-full">
       <ChatHeader participants={participants} />
@@ -110,6 +153,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
         handleDrop={handleDrop}
         messages={messages}
         messagesEndRef={messagesEndRef}
+        handleScroll={handleScroll} // 스크롤 핸들러 전달
       />
       <ChatSender
         handleSendMessage={handleSendMessage}

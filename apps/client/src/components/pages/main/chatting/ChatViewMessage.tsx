@@ -8,12 +8,12 @@ import FitImage from '../../../ui/image/fit-image';
 import { getChatProfile } from '../../../../actions/chatting/chattingAction';
 
 function ChatViewMessage({ message }: { message: chatDataType }) {
-  const { memberUuid } = useUserStore();
+  const { userUuid } = useUserStore();
   const [profileInfo, setProfileInfo] = useState<chatMemberDataType>();
 
   const getProfileImage = async () => {
     try {
-      const profile = await getChatProfile({ memberUuid });
+      const profile = await getChatProfile({ userUuid });
       if (profile) {
         setProfileInfo(profile);
       }
@@ -27,20 +27,9 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
   }, []);
 
   const formatDate = (dateArray: number[]) => {
-    const [year, month, day, hour, minute, second, millisecond] = dateArray;
-
-    const date = new Date(
-      Date.UTC(year, month - 1, day, hour, minute, second, millisecond)
-    );
-
-    return date.toLocaleString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
+    let [year, month, day, hour, minute, second, millisecond] = dateArray;
+    const padToTwoDigits = (num: number) => String(num).padStart(2, '0');
+    return `${year}. ${padToTwoDigits(month)}. ${padToTwoDigits(day)}. ${padToTwoDigits(hour)}:${padToTwoDigits(minute)}`;
   };
 
   return (
@@ -51,30 +40,28 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
         </div>
       ) : (
         <>
-          <div className="flex-shrink-0 w-8 h-8 mr-2">
-            <FitImage
-              className="rounded-full border-4 border-[#F5F5F5]"
-              src={
-                profileInfo?.profileImageUrl
-                  ? profileInfo.profileImageUrl
-                  : '/assets/images/dummy.jpg'
-              }
-              alt="Profile"
-            />
-          </div>
+          <FitImage
+            className="rounded-full w-10 h-10 mr-1 border-4 border-[#F5F5F5] overflow-hidden"
+            src={
+              profileInfo?.profileImageUrl
+                ? profileInfo.profileImageUrl
+                : '/assets/images/dummy.jpg'
+            }
+            alt="Profile"
+          />
 
           <div
-            className={`flex flex-col ${message.memberUuid === memberUuid ? 'items-end' : 'items-start'}`}
+            className={`flex flex-col ${message.memberUuid === userUuid ? 'items-end' : 'items-start'}`}
           >
-            {message.memberUuid !== memberUuid && (
+            {message.memberUuid !== userUuid && (
               <div
-                className={`text-xs ${message.memberUuid === memberUuid ? 'text-blue-500' : 'text-gray-600'}`}
+                className={`text-xs ${message.memberUuid === userUuid ? 'text-blue-500' : 'text-gray-600'}`}
               >
                 {profileInfo?.nickName}
               </div>
             )}
             <div
-              className={`text-xs text-gray-500 order-1 ${message.memberUuid === memberUuid ? 'mr-auto' : 'ml-auto'}`}
+              className={`text-xs text-gray-500 order-1 ${message.memberUuid === userUuid ? 'mr-auto' : 'ml-auto'}`}
             >
               {formatDate(message.createdAt)}
             </div>
@@ -82,14 +69,14 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
               <a
                 href={message.mediaUrl}
                 download={message.message}
-                className={`inline-block py-[2px] px-2 mt-1 rounded-full border-2 border-dashed ${message.memberUuid === memberUuid ? 'bg-blue-500 text-white border-blue-500' : 'bg-gray-300 text-gray-800 border-gray-300'}`}
+                className={`inline-block py-[2px] px-2 mt-1 rounded-full border-2 border-dashed ${message.memberUuid === userUuid ? 'bg-blue-500 text-white border-blue-500' : 'bg-gray-300 text-gray-800 border-gray-300'}`}
               >
                 📁 {message.message}
               </a>
             ) : (
               <div
                 style={{ whiteSpace: 'pre-wrap' }}
-                className={`inline-block p-2 rounded-xl ${message.memberUuid === memberUuid ? 'bg-blue-500 text-white' : 'bg-gray-100 text-black'}`}
+                className={`inline-block p-2 rounded-xl ${message.memberUuid === userUuid ? 'bg-blue-500 text-white' : 'bg-gray-100 text-black'}`}
               >
                 {message.message}
               </div>
