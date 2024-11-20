@@ -10,9 +10,9 @@ function MainHeaderMenu({ menuItem }: { menuItem: MenuType }) {
   return (
     <Link href={menuItem.href}>
       <li
-        className={`grid grid-cols-6 ${menuItem.href === pathname ? 'text-black' : 'text-[#5C5C5C]'}`}
+        className={`grid sm:grid-cols-1 lg:grid-cols-6 md:grid-cols-2 gap-6 ${menuItem.href === pathname ? 'text-black' : 'text-[#5C5C5C]'}`}
       >
-        <span className="col-span-3 hover:underline underline-offset-4">
+        <span className="col-span-5 md:text-2xl hover:underline underline-offset-4">
           {menuItem.label}
         </span>
       </li>

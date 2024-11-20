@@ -3,8 +3,8 @@ import FitImage from '../../../ui/image/fit-image';
 
 export default function ShareMentoring() {
   return (
-    <section className="container mx-auto px-4 py-12 max-w-xl">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+    <section className="container mx-auto py-12 max-w-5xl">
+      <div className="flex flex-col md:flex-row items-center justify-between ">
         <div className="space-y-4 text-center md:text-left">
           <p className="text-gray-600">모두가 멘토가 될 수 있습니다.</p>
           <h2 className="text-2xl md:text-3xl font-bold leading-tight">
@@ -14,7 +14,7 @@ export default function ShareMentoring() {
           </h2>
         </div>
 
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-2/4">
           <div className="relative aspect-[4/3] max-w-md mx-auto">
             <FitImage
               src="/assets/images/footerImage.svg"

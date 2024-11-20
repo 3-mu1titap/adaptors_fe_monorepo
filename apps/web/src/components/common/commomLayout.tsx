@@ -35,7 +35,7 @@ export interface DivProps
 
 const CommonLayout = React.forwardRef<HTMLDivElement, DivProps>(
   (
-    { className, type = 'main', reative, detail, asChild = false, ...props },
+    { className, type = 'session', reative, detail, asChild = false, ...props },
     ref
   ) => {
     const Component = type as keyof JSX.IntrinsicElements;

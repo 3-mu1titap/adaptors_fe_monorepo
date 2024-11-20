@@ -164,8 +164,8 @@ export default function PopularMentoring() {
   const filteredCourses = courses.filter((course) => course.id === SelectId);
 
   return (
-    <section className="bg-[#FFF9E7] px-36 py-20">
-      <div className="container mx-auto max-w-full">
+    <section className="bg-[#FFF9E7] px-56 py-20">
+      <div className="container mx-auto min-w-6xl">
         <div className="text-center mb-8">
           <span className="text-sm text-gray-600 uppercase tracking-wider">
             POPULAR COURSES
@@ -190,7 +190,7 @@ export default function PopularMentoring() {
               {categories.map((category, index) => (
                 <li
                   key={index}
-                  className={`flex-none snap-start rounded-xl min-w-[247px] ${category.id === SelectId ? 'bg-black text-white' : 'bg-white text-black'}`}
+                  className={`flex-none snap-start rounded-xl min-w-[265px] py-2 ${category.id === SelectId ? 'bg-black text-white' : 'bg-white text-black'}`}
                   onClick={() => setSelectId(category.id)}
                 >
                   <PopularCategory item={category} />
@@ -207,7 +207,7 @@ export default function PopularMentoring() {
           </button>
         </div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-4 mx-16 gap-4">
+        <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 mx-16 gap-5">
           {filteredCourses.map((course, index) => (
             <PopularCategoryMentoring key={index} item={course} />
           ))}

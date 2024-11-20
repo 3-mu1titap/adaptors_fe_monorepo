@@ -10,9 +10,9 @@ function Page() {
     <CommonLayout>
       <MainIntro />
       <MainSearchTag />
-      <PopularMentoring />
+      {/* <PopularMentoring />
       <RecommendMentoring />
-      <ShareMentoring />
+      <ShareMentoring /> */}
     </CommonLayout>
   );
 }
