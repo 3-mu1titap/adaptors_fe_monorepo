@@ -15,13 +15,14 @@ export default async function MentoringCalendar({
   mentoringDate: string;
 }) {
   const mentoringSessionList = await GetMentoringSessionList(
-    'c5724f22-361d-4b84-9dd2-56fafee0043c'
+    '3ec830b8-fade-4103-afef-4c633927c012'
   );
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
-    'c5724f22-361d-4b84-9dd2-56fafee0043c'
+    '3ec830b8-fade-4103-afef-4c633927c012'
   );
+  console.log(mentoringSessionList);
   return (
-    <div className="flex min-h-screen w-full bg-gray-50">
+    <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
       {/* Left Section */}
       <section className="w-[350px] p-6 bg-white border-r border-gray-200">
         <div className="space-y-6">
@@ -36,8 +37,8 @@ export default async function MentoringCalendar({
       </section>
 
       {/* Right Section */}
-      <section className="flex-1 p-6">
-        <div className="max-w-3xl mx-auto space-y-6">
+      <section className="flex-1 mt-6 sm:p-6 w-full">
+        <div className="max-w-4xl mx-auto space-y-6">
           {MentoringInfoData && (
             <MentoringOverview MentoringInfoData={MentoringInfoData} />
           )}

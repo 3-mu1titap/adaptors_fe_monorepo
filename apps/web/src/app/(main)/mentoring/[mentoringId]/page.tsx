@@ -9,15 +9,15 @@ function formatDate(date: Date): string {
 async function Page({
   searchParams,
 }: {
-  searchParams: { selectedDate: string };
+  searchParams: { selectedDate: string; scrollY?: string };
 }) {
   const selectedDate = searchParams.selectedDate || '';
+  const scrollY = searchParams.scrollY || '0';
 
   return (
     <main className="my-2 py-2 px-4 min-h-screen bg-gray-50">
-      <div className="container flex ">
-        <MentoringDetail mentoringDate={selectedDate} />
-      </div>
+      {/* <ScrollHandler scrollY={scrollY} selectedDate={selectedDate} /> */}
+      <MentoringDetail mentoringDate={selectedDate} />
     </main>
   );
 }
