@@ -11,8 +11,9 @@ export const getTagList = async (): Promise<Tag[]> => {
   'use server';
   const data = await URLfetch<commonResType<Tag[]>>({
     method: 'GET',
-    apiUrl: `http://10.10.10.47:8080/api/v1/admin/hashtag`,
+    apiUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/hashtag-service/api/v1/admin/hashtag`,
   });
+  console.log(data.result);
   return data.result;
 };
 
@@ -27,8 +28,6 @@ export const addTagList = async (
   hashtags: HashtagArray // 배열로 받음
 ): Promise<any> => {
   'use server';
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
-  console.log('hashtags', hashtags);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/hashtag`,
     {

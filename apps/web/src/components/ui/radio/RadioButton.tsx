@@ -10,6 +10,7 @@ interface RadioButtonProps {
   name: string;
   selectedValue: string;
   onChange: (value: string) => void;
+  classname?: string;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -17,16 +18,17 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   name,
   selectedValue,
   onChange,
+  classname = '',
 }) => {
   const selectedColor = '#F8D448';
   const defaultColor = '#e5e7eb';
 
   return (
-    <div className=" flex gap-5">
+    <div className={`flex gap-2 ${classname}`}>
       {options.map((option, index) => (
         <label
           key={index}
-          className="flex items-center justify-center p-2  rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50"
+          className="inline-flex items-center justify-center px-2 py-1.5  rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50 max-w-[154px]"
           onClick={() => onChange(option.value)}
         >
           <input
@@ -39,13 +41,13 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           />
           <div className="flex items-center gap-2">
             <div
-              className="w-4 h-4 rounded"
+              className="w-3.5 h-3.5 rounded"
               style={{
                 backgroundColor:
                   selectedValue === option.value ? selectedColor : defaultColor,
               }}
             />
-            <span className="text-[#898989] font-semibold text-md">
+            <span className="text-[#898989] font-semibold text-lg">
               {option.label}
             </span>
           </div>

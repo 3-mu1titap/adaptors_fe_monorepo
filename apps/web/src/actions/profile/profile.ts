@@ -43,7 +43,7 @@ export const postMenteeProfile = async ({
   uuid: string;
 }): Promise<any> => {
   const response = await fetch(
-    `${process.env.BACKEND_URL}/member-service/api/v1/member/mentee/profile`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/mentee/profile`,
     {
       method: 'POST',
       headers: {
@@ -72,12 +72,12 @@ export const uploadProfileIamge = async ({
   uuid: string;
 }): Promise<any> => {
   const response = await fetch(
-    `http://10.10.10.47:8081/api/v1/memberInfo/profileImage`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-query-service/api/v1/memberInfo/profileImage`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Uuid': 'd5c0e498-ccc5-4480-919d-833411bd0a91',
+        'Uuid': uuid,
       },
       body: JSON.stringify(profileImage), // profile을 JSON 형식으로 변환해서 보냄
     }
@@ -97,7 +97,7 @@ export async function SessionRequest() {
   'use server';
   try {
     const res = await fetch(
-      `http://10.10.10.158:9004/api/v1/session-request-service`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
       {
         cache: 'no-cache',
         method: 'POST',

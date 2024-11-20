@@ -39,10 +39,8 @@ export const options: NextAuthOptions = {
               headers: { 'Content-Type': 'application/json' },
             }
           );
-          console.log('서버 응답 상태:', res.status);
           if (res.ok) {
             const user = await res.json();
-            console.log('여기서 user찍힘', user.result);
             return user.result;
           }
           //  return null;

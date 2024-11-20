@@ -15,7 +15,8 @@
     "./components/*": [
       "./src/components/*.tsx",
       "./src/components/*.ts"
-    ]
+    ],
+    "./hooks/*": "./src/hooks/*"
   },
   "license": "MIT",
   "scripts": {

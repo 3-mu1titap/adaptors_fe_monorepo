@@ -4,7 +4,7 @@ export default function SocialLogin() {
   return (
     <div className="grid grid-cols-2 gap-4">
       <button
-        className="flex items-center justify-center px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
+        className="flex items-center justify-center px-4 py-2 border rounded-lg bg-white hover:bg-gray-50 transition-colors"
         type="button"
       >
         <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
