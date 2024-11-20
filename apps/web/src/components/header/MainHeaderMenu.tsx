@@ -1,8 +1,7 @@
 'use client';
-import { usePathname } from 'next/navigation';
-import React from 'react';
-import { MenuType } from '../types/menu/menuType';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { MenuType } from '../types/menu/menuType';
 
 function MainHeaderMenu({ menuItem }: { menuItem: MenuType }) {
   const pathname = usePathname();

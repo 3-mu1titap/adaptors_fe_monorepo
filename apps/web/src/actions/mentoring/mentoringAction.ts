@@ -20,10 +20,11 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const fetchURI = !menteeUuid ? `` : `&userUuid=${menteeUuid}`;
+  console.log('실행됨');
 
   try {
     const res = await fetch(
-      `http://10.10.10.158:9001/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}${fetchURI}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}${fetchURI}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -47,7 +48,7 @@ export async function GetMentoringInfo(mentoringUuid: string) {
   'use server';
   try {
     const res = await fetch(
-      `http://10.10.10.158:9001/api/v1/mentoring-query-service/mentoring/${mentoringUuid}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring/${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -105,7 +106,7 @@ export async function SessionCancel(request: SessionCancelType) {
 
   try {
     const res = await fetch(
-      `http://10.10.10.158:9004/api/v1/session-request-service`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
       {
         cache: 'no-cache',
         method: 'PUT',

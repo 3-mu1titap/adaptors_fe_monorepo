@@ -5,7 +5,7 @@ export default function MentoProfile({ mentorUuid }: { mentorUuid: string }) {
   const mentorprofile = 1;
   return (
     <div className="space-y-4">
-      <div className="relative w-full aspect-square rounded-lg overflow-hidden">
+      <div className="hidden sm:block relative w-full aspect-square rounded-lg overflow-hidden">
         <FitImage
           src="/assets/images/intro1.svg"
           alt="Profile"
@@ -20,7 +20,7 @@ export default function MentoProfile({ mentorUuid }: { mentorUuid: string }) {
           <span className="text-red-500">♥ 213K is Good</span>
         </div>
       </div>
-      <button className="w-full px-4 py-4 bg-gray-100 rounded-lg text-lg font-semibold flex gap-1 items-center justify-center">
+      <button className="w-full px-4 py-3 sm:py-4 bg-gray-100 rounded-lg text-lg font-semibold flex gap-1 items-center justify-center">
         <Share />
         SHARE THIS MENTOR
       </button>

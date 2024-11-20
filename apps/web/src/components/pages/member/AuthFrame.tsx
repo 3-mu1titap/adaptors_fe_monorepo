@@ -1,18 +1,23 @@
 import React from 'react';
-import AuthImage from '../../assets/images/AuthImage';
+import IntroCard from './IntroCard';
 
 interface AuthFrameProps {
   children: React.ReactNode;
   style?: string;
+  introCard?: boolean;
 }
 
-export default function AuthFrame({ children, style = '' }: AuthFrameProps) {
+export default function AuthFrame({
+  children,
+  style = '',
+  introCard = true,
+}: AuthFrameProps) {
   return (
     <main
-      className={`w-full flex absolute justify-center items-center px-6 gap-4 lg:gap-10   top-[50%] translate-y-[-50%] ${style}`}
+      className={`h-[100vh] flex flex-col sm:flex sm:flex-row sm:justify-center items-center px-6 gap-4 lg:gap-10 sm:my-auto my-0 sm:py-auto ${style} bg-[#F9F9F9]`}
     >
-      <AuthImage className="h-0 w-0 sm:h-[60vh] sm:max-w-[400px] sm:w-full lg:max-w-[500px] lg:h-[70vh]" />
-      <section className="w-[100%] tablet:max-w-[100px] md:max-w-[418px] p-8 bg-white rounded-[5%]">
+      {introCard && <IntroCard />}
+      <section className="w-[90%] mt-[130px] sm:my-auto sm:max-w-[418px] sm:px-8 sm:py-10 sm:bg-white rounded-[5%] z-10">
         {children}
       </section>
     </main>

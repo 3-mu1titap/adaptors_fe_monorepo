@@ -2,22 +2,22 @@
 import { useState } from 'react';
 import { z } from 'zod';
 import {
-  SignUpFormData2,
-  signUpStep2Schema,
-  validateForm2,
+  informationFormData,
+  informationSchema,
+  validateForm,
 } from '../../form/signUpSchema';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
 export interface JoinField2Props {
-  formData: SignUpFormData2;
-  setFormData: React.Dispatch<React.SetStateAction<SignUpFormData2>>;
-  errors: Partial<Record<keyof SignUpFormData2, string>>;
+  formData: informationFormData;
+  setFormData: React.Dispatch<React.SetStateAction<informationFormData>>;
+  errors: Partial<Record<keyof informationFormData, string>>;
   setErrors: React.Dispatch<
-    React.SetStateAction<Partial<Record<keyof SignUpFormData2, string>>>
+    React.SetStateAction<Partial<Record<keyof informationFormData, string>>>
   >;
   handleButtton: () => void;
 }
 
-export default function JoinField2({
+export default function Information({
   formData,
   setFormData,
   setErrors,
@@ -30,14 +30,14 @@ export default function JoinField2({
 
     if (name === 'phoneNumber') {
       const formattedValue = formatPhoneNumber(value);
-      setFormData((prev: SignUpFormData2) => ({
+      setFormData((prev: informationFormData) => ({
         ...prev,
         [name]: formattedValue,
       }));
-      validateField(name as keyof SignUpFormData2, formattedValue);
+      validateField(name as keyof informationFormData, formattedValue);
     } else {
-      setFormData((prev: SignUpFormData2) => ({ ...prev, [name]: value }));
-      validateField(name as keyof SignUpFormData2, value);
+      setFormData((prev: informationFormData) => ({ ...prev, [name]: value }));
+      validateField(name as keyof informationFormData, value);
     }
   };
 
@@ -53,9 +53,12 @@ export default function JoinField2({
   };
 
   //개별 필드 유효성 검사
-  const validateField = (fieldName: keyof SignUpFormData2, value: string) => {
+  const validateField = (
+    fieldName: keyof informationFormData,
+    value: string
+  ) => {
     try {
-      signUpStep2Schema.shape[fieldName].parse(value);
+      informationSchema.shape[fieldName].parse(value);
       setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: undefined }));
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -66,16 +69,13 @@ export default function JoinField2({
       }
     }
   };
-
   const onClickNextButton = () => {
-    console.log(validateForm2(formData));
-    console.log('tlfgodsehl');
     handleButtton();
-    setShowErrorMessege(true);
+    setShowErrorMessege(false);
   };
 
   return (
-    <div className="px-6 py-2 space-y-1 h-full flex flex-col justify-between">
+    <div className=" py-2 space-y-1 h-full flex flex-col justify-between">
       <span>
         <h2 className="text-2xl font-bold ">Personal Information</h2>
         <div className="space-y-2">
@@ -148,14 +148,14 @@ export default function JoinField2({
           </div>
         </div>
         <p
-          className={`error ${!validateForm2(formData) && showErrorMessege ? 'visible mt-3' : 'invisible'}`}
+          className={`error ${validateForm(formData, informationSchema) && showErrorMessege ? 'visible mt-3' : 'invisible'}`}
         >
           입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
         </p>
       </span>
       <JoinStepButton
         onClick={onClickNextButton}
-        disabled={validateForm2(formData)}
+        disabled={!validateForm(formData, informationSchema)}
       />
     </div>
   );
