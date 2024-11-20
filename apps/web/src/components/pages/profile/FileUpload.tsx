@@ -46,41 +46,11 @@ export default function FileUpload({
     }
   }, []);
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   const files = e.target.files;
-  //   if (files && files[0]) {
-  //     setFile(files[0]);
-  //   }
-  // };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const files = e.target.files;
     if (files && files[0]) {
-      const file = files[0];
-
-      // FileReader를 사용해 이미지 파일 읽기
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target?.result as string;
-
-        img.onload = () => {
-          const { naturalWidth, naturalHeight } = img;
-          const maxWidth = 500;
-          const maxHeight = 500;
-
-          if (naturalWidth > maxWidth || naturalHeight > maxHeight) {
-            alert(
-              `이미지 해상도는 최대 ${maxWidth}x${maxHeight} 이하만 가능합니다.`
-            );
-            return;
-          }
-          setFile(file);
-        };
-      };
-
-      reader.readAsDataURL(file);
+      setFile(files[0]);
     }
   };
 
@@ -139,9 +109,9 @@ export default function FileUpload({
           />
         </label>
       ) : (
-        <div className="relative h-full">
-          <div className="max-h-[320px] overflow-hidden ">
-            <FitImage src={preview} alt="Preview" className="m-auto" />
+        <span className="relative h-full border-x-blue-800 border-black border-2">
+          <div className="max-h-[560px] sm:max-h-[320px] overflow-hidden py-auto">
+            <FitImage src={preview} alt="Preview" className="mt-[50%]" />
           </div>
           <button
             onClick={handleRemove}
@@ -149,7 +119,7 @@ export default function FileUpload({
           >
             <X className="w-5 h-5 text-white" />
           </button>
-        </div>
+        </span>
       )}
       <JoinStepButton onClick={handleMentoringImg} text="프로필 이미지 등록" />
       <JoinStepButton

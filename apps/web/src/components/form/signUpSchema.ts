@@ -1,7 +1,16 @@
-import { z } from 'zod';
+import { z, ZodSchema } from 'zod';
+
+export const validateForm = <T>(formData: T, schema: ZodSchema<T>): boolean => {
+  try {
+    schema.parse(formData);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
 
 const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]+/;
-export const signUpStep1Schema = z.object({
+export const accountSchema = z.object({
   accountId: z
     .string()
     .min(5, { message: '아이디는 최소 5자 이상이어야 합니다.' }),
@@ -13,7 +22,7 @@ export const signUpStep1Schema = z.object({
   role: z.enum(['MENTOR', 'MENTEE'], { message: '역할을 선택해주세요.' }),
 });
 
-export const signUpStep2Schema = z.object({
+export const informationSchema = z.object({
   name: z.string().nonempty({ message: '이름을 입력해주세요.' }),
   nickName: z.string().nonempty({ message: '닉네임을 입력해주세요.' }),
   phoneNumber: z.string().regex(/^\d{3}-\d{3,4}-\d{4}$/, {
@@ -21,22 +30,22 @@ export const signUpStep2Schema = z.object({
   }),
 });
 
-export const validateForm1 = (formData1: SignUpFormData1) => {
-  try {
-    signUpStep1Schema.parse(formData1);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
-export const validateForm2 = (formData2: SignUpFormData2) => {
-  try {
-    signUpStep1Schema.parse(formData2);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
+// const validateForm1 = (account: accountFormData) => {
+//   try {
+//     accountSchema.parse(account);
+//     return true;
+//   } catch (error) {
+//     return false;
+//   }
+// };
+// export const validateForm2 = (information: informationFormData) => {
+//   try {
+//     informationSchema.parse(information);
+//     return true;
+//   } catch (error) {
+//     return false;
+//   }
+// };
 
-export type SignUpFormData1 = z.infer<typeof signUpStep1Schema>;
-export type SignUpFormData2 = z.infer<typeof signUpStep2Schema>;
+export type accountFormData = z.infer<typeof accountSchema>;
+export type informationFormData = z.infer<typeof informationSchema>;

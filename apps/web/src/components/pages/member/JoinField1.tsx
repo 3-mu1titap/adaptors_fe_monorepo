@@ -3,17 +3,17 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { z } from 'zod';
 import { checkAccountId } from '../../../actions/auth/auth';
-import { SignUpFormData1, signUpStep1Schema } from '../../form/signUpSchema';
+import { accountFormData, accountSchema } from '../../form/signUpSchema';
 import JoinStepButton from '../../ui/Button/JoinStepButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import './index.css';
 
 export interface JoinField1Props {
-  formData: SignUpFormData1;
-  setFormData: React.Dispatch<React.SetStateAction<SignUpFormData1>>;
-  errors: Partial<Record<keyof SignUpFormData1, string>>;
+  formData: accountFormData;
+  setFormData: React.Dispatch<React.SetStateAction<accountFormData>>;
+  errors: Partial<Record<keyof accountFormData, string>>;
   setErrors: React.Dispatch<
-    React.SetStateAction<Partial<Record<keyof SignUpFormData1, string>>>
+    React.SetStateAction<Partial<Record<keyof accountFormData, string>>>
   >;
   setConfirmId: React.Dispatch<React.SetStateAction<boolean>>;
   confirmPassword: string;
@@ -21,7 +21,7 @@ export interface JoinField1Props {
   handleButtton: () => void;
 }
 
-export default function JoinField1({
+export default function Account({
   formData,
   setFormData,
   errors,
@@ -41,7 +41,7 @@ export default function JoinField1({
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     // 유효성 검사 수행
-    validateField(name as keyof SignUpFormData1, value);
+    validateField(name as keyof accountFormData, value);
 
     // accountId가 변경될 경우 confirmId와 오류 메시지를 관리
     if (name === 'accountId' && formData.accountId.length >= 5) {
@@ -88,9 +88,9 @@ export default function JoinField1({
     setShowConfirmPassword((prev) => !prev);
 
   //개별 필드 유효성 검사
-  const validateField = (fieldName: keyof SignUpFormData1, value: string) => {
+  const validateField = (fieldName: keyof accountFormData, value: string) => {
     try {
-      signUpStep1Schema.shape[fieldName].parse(value);
+      accountSchema.shape[fieldName].parse(value);
       setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: undefined }));
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -103,18 +103,18 @@ export default function JoinField1({
   };
   const onClickNextButton = () => {
     try {
-      signUpStep1Schema.parse(formData);
+      accountSchema.parse(formData);
 
       handleButtton();
     } catch (error) {
       if (error instanceof z.ZodError) {
         const formattedErrors = error.errors.reduce(
           (acc, curr) => {
-            const fieldName = curr.path[0] as keyof SignUpFormData1;
+            const fieldName = curr.path[0] as keyof accountFormData;
             acc[fieldName] = curr.message;
             return acc;
           },
-          {} as Partial<Record<keyof SignUpFormData1, string>>
+          {} as Partial<Record<keyof accountFormData, string>>
         );
 
         setErrors(formattedErrors);

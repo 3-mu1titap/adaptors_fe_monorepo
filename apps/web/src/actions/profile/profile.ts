@@ -43,7 +43,7 @@ export const postMenteeProfile = async ({
   uuid: string;
 }): Promise<any> => {
   const response = await fetch(
-    `${process.env.BACKEND_URL}/member-service/api/v1/member/mentee/profile`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/mentee/profile`,
     {
       method: 'POST',
       headers: {

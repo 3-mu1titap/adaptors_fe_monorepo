@@ -44,7 +44,10 @@ export const fetchData = async <T>({
     fetchOptions.next = { ...fetchOptions.next, revalidate };
   }
 
-  const res = await fetch(`${process.env.BACKEND_URL}${apiUrl}`, fetchOptions);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}${apiUrl}`,
+    fetchOptions
+  );
 
   return res.json();
 };

@@ -5,23 +5,23 @@ import useUserStore from '../../store/uuidStore';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import FunnelLevel from '../pages/member/FunnelLevel';
-import JoinField1 from '../pages/member/JoinField1';
-import JoinField2 from '../pages/member/JoinField2';
+import Account from '../pages/member/JoinField1';
+import Information from '../pages/member/JoinField2';
 import FileUpload from '../pages/profile/FileUpload';
 import HashTag from '../pages/profile/HashTag';
 import MenteeProfile from '../pages/profile/MenteeProfile';
 import MentorProfile from '../pages/profile/MentorProfile';
 import {
-  SignUpFormData1,
-  SignUpFormData2,
-  signUpStep1Schema,
-  signUpStep2Schema,
+  accountFormData,
+  accountSchema,
+  informationFormData,
+  informationSchema,
 } from './signUpSchema';
 
 export default function JoinFunnel() {
   const steps = [
-    'joinStep1',
-    'joinStep2',
+    'account',
+    'information',
     'profileImage',
     'profile',
     'hashTag',
@@ -30,31 +30,30 @@ export default function JoinFunnel() {
   const [confirmId, setConfirmId] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState('');
   const setUuid = useUserStore((state) => state.setUuid);
-  const [formData1, setFormData1] = useState<SignUpFormData1>({
+  const [account, serAccountData] = useState<accountFormData>({
     accountId: '',
     password: '',
     email: '',
     role: 'MENTEE',
   });
-  const [formData2, setFormData2] = useState<SignUpFormData2>({
+  const [information, serinformationData] = useState<informationFormData>({
     name: '',
     nickName: '',
     phoneNumber: '',
   });
 
   const [errors, setErrors] = useState<
-    Partial<Record<keyof SignUpFormData1 | keyof SignUpFormData2, string>>
+    Partial<Record<keyof accountFormData | keyof informationFormData, string>>
   >({});
-
+  console.log(account, information);
   //폼 제출 (회원가입 api 요청)
   const handleSubmit = async () => {
     const disable =
-      signUpStep1Schema.parse(formData1) && signUpStep2Schema.parse(formData2);
-    console.log(disable);
+      accountSchema.parse(account) && informationSchema.parse(information);
     if (disable) {
       const combinedFormData = {
-        ...formData1,
-        ...formData2,
+        ...account,
+        ...information,
       };
       const data = await postUserData(combinedFormData);
       setUuid(data);
@@ -65,8 +64,8 @@ export default function JoinFunnel() {
   const onClickNext = () => {
     const disable =
       confirmId &&
-      signUpStep1Schema.parse(formData1) &&
-      formData1.password === confirmPassword;
+      accountSchema.parse(account) &&
+      account.password === confirmPassword;
     if (disable) {
       onNextStep();
     }
@@ -77,10 +76,10 @@ export default function JoinFunnel() {
       <FunnelLevel level={level} />
       <section className="h-[78vh] sm:h-[70vh] bg-[#F9F9F9] sm:bg-transparent">
         <Funnel step={step}>
-          <Funnel.Step name="joinStep1">
-            <JoinField1
-              formData={formData1}
-              setFormData={setFormData1}
+          <Funnel.Step name="account">
+            <Account
+              formData={account}
+              setFormData={serAccountData}
               errors={errors}
               setErrors={setErrors}
               setConfirmId={setConfirmId}
@@ -89,10 +88,10 @@ export default function JoinFunnel() {
               handleButtton={onClickNext} //onClickNext
             />
           </Funnel.Step>
-          <Funnel.Step name="joinStep2">
-            <JoinField2
-              formData={formData2}
-              setFormData={setFormData2}
+          <Funnel.Step name="information">
+            <Information
+              formData={information}
+              setFormData={serinformationData}
               errors={errors}
               setErrors={setErrors}
               handleButtton={handleSubmit} //handleSubmit
@@ -102,7 +101,7 @@ export default function JoinFunnel() {
             <FileUpload handleButton={onNextStep} />
           </Funnel.Step>
           <Funnel.Step name="profile">
-            {formData1.role == 'MENTOR' ? (
+            {account.role == 'MENTOR' ? (
               <MentorProfile handleButtton={onNextStep} />
             ) : (
               <MenteeProfile handleButton={onNextStep} />
