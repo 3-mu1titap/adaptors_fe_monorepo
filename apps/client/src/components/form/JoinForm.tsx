@@ -77,7 +77,6 @@ export default function JoinForm() {
   // 중복 검사 함수
   const checkDuplicate = async (field: 'id' | 'email') => {
     const data = await checkAccountId(formData.id);
-    console.log(data);
     try {
       const data = await checkAccountId(formData.id);
       console.log(data);
@@ -195,7 +194,6 @@ export default function JoinForm() {
 
       // 데이터 전송
       const data = await postUserData(transformedData);
-      console.log('회원가입 요청 응답:', data.result);
     } catch (validationError) {
       if (validationError instanceof z.ZodError) {
         const errorMessages = validationError.errors.reduce(

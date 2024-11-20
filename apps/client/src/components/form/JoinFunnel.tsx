@@ -96,7 +96,6 @@ export default function JoinFunnel() {
       setErrors({});
       // 데이터 전송
       const data = await postUserData(formData);
-      console.log('회원가입 요청 응답:', data.result);
     } catch (validationError) {}
   };
 
