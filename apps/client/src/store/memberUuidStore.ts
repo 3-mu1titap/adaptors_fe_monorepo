@@ -2,13 +2,17 @@
 import { create } from 'zustand';
 
 interface UserStore {
-  memberUuid: string;
-  setMemberUuid: (memberUuid: string) => void;
+  nickname: string;
+  setNickname: (nickname: string) => void;
+  userUuid: string;
+  setUserUuid: (userUuid: string) => void;
 }
 
 const useUserStore = create<UserStore>((set) => ({
-  memberUuid: '9765d9ab-2298-479c-bbf2-736f5d740588',
-  setMemberUuid: (memberUuid) => set({ memberUuid }),
+  nickname: '',
+  setNickname: (nickname) => set({ nickname }),
+  userUuid: 'e782841e-7fcd-47c5-93e7-50203b3a0a99',
+  setUserUuid: (userUuid) => set({ userUuid }),
 }));
 
 export default useUserStore;

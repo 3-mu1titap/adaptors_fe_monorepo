@@ -9,10 +9,7 @@ import {
   SessionCancelType,
   SessionRequestType,
 } from '../../components/types/mentoring/mentoringTypes';
-import {
-  commonResListType,
-  commonResType,
-} from '../../components/types/ResponseTypes';
+import { commonResType } from '../../components/types/ResponseTypes';
 
 // 멘토링의 정보 및 세션리스트 정보 조회
 export async function GetMentoringSessionList(mentoringUuid: string) {
@@ -34,8 +31,9 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
         next: { tags: ['mentoring-sessions-list'] },
       }
     );
-    const result =
-      (await res.json()) as commonResListType<MentoringSessionDataType>;
+    const result = (await res.json()) as commonResType<
+      MentoringSessionDataType[]
+    >;
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);
