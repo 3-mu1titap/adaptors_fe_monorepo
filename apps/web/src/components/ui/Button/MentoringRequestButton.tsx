@@ -48,7 +48,7 @@ export default function MentoringRequestButton({
   return (
     <button
       onClick={onClickButton}
-      className={`px-4 py-2 rounded-xl text-xl font-medium ${
+      className={`px-4 py-3 rounded-[10px] text-xl w-28 ${
         isParticipating
           ? 'bg-gray-200 text-gray-600'
           : 'bg-adaptorsYellow text-white'

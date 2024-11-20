@@ -1,4 +1,5 @@
 'use client';
+import DottedlineEllipse from '@components/assets/icons/DottedlineEllipse';
 import { useState } from 'react';
 import { MentoringSessionDataType } from '../../../types/mentoring/mentoringTypes';
 import MentoringRequestButton from '../../../ui/Button/MentoringRequestButton';
@@ -68,35 +69,44 @@ export default function SessionList({
                 {date}
               </h3>
               {dateSessions.map((session) => (
-                <div
+                <figure
                   key={session.sessionUuid}
-                  className="flex items-center justify-between px-4 bg-white py-6 rounded-lg shadow-sm w-full"
+                  className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 bg-white py-6 rounded-lg shadow-sm w-full 
+                  hover:border-[1px] hover:border-adaptorsYellow hover:py-8 transition-transform duration-300 ease-in-out"
                 >
-                  <div>
-                    <div className="text-2xl font-semibold mb-2">
-                      {`${session.startTime.toString().slice(0, 5)} - ${session.endTime.toString().slice(0, 5)}`}
+                  <div className="flex items-center gap-1 sm:flex-col">
+                    {/* 시간 */}
+                    <div className="text-2xl sm:text-2xl font-semibold sm:mb-2 flex items-center">
+                      {`S ${session.startTime.toString().slice(0, 5)} - E ${session.endTime.toString().slice(0, 5)}`}
                     </div>
-                    <span className="flex items-center gap-3 mt-1 ">
-                      <div className="flex items-center gap-1">
-                        <span className="text-lg font-bold ml-1 text-[#FF922E]">
+                    <small className="flex items-center gap-3 sm:mt-1 ">
+                      <span className="flex items-center gap-1">
+                        <DottedlineEllipse className="hidden sm:block" />
+                        <p className="text-lg font-bold ml-1 text-[#FF922E]">
                           남은자리
-                        </span>
+                        </p>
                         <div className="text-lg font-bold text-[#FF922E] ">
                           {session.maxHeadCount - session.nowHeadCount}
                         </div>
-                      </div>
-                      <div className="text-lg font-bold text-yellow-500">
+                      </span>
+                      <span className="hidden sm:block text-lg font-bold text-yellow-500">
                         {session.isClosed ? '마감된 세션' : '참여 가능'}
-                      </div>
-                    </span>
+                      </span>
+                    </small>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 font-semibold">
-                      {session.price}V
+                  <div className="flex items-center gap-5 mt-5 sm:mt-0 sm:gap-20">
+                    {/* 가격 */}
+                    <div>
+                      <h1 className="text-2xl font-semibold">
+                        {session.price}V
+                      </h1>
+                      <h2 className="hidden sm:block text-[#727272] w-full text-center">
+                        volt
+                      </h2>
                     </div>
                     {session.isClosed ? (
-                      <div className="px-4 py-2 rounded-xl text-xl font-medium bg-gray-200 text-gray-600">
-                        마감된 세션
+                      <div className="px-4 py-3 w-28 text-center rounded-xl text-xl font-medium bg-[#433E3E] text-white">
+                        마감
                       </div>
                     ) : (
                       <MentoringRequestButton
@@ -108,7 +118,7 @@ export default function SessionList({
                       />
                     )}
                   </div>
-                </div>
+                </figure>
               ))}
             </div>
           ))

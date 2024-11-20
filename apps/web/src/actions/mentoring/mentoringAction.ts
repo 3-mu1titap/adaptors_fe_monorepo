@@ -20,6 +20,7 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const fetchURI = !menteeUuid ? `` : `&userUuid=${menteeUuid}`;
+  console.log('실행됨');
 
   try {
     const res = await fetch(
@@ -105,7 +106,7 @@ export async function SessionCancel(request: SessionCancelType) {
 
   try {
     const res = await fetch(
-      `http://10.10.10.158:9004/api/v1/session-request-service`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
       {
         cache: 'no-cache',
         method: 'PUT',

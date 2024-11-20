@@ -13,7 +13,7 @@ interface CalendarDay {
 }
 
 export default function Calendar({
-  mentoringSessionList,
+  mentoringSessionList = [],
 }: {
   mentoringSessionList: MentoringSessionDataType[];
 }) {
@@ -79,10 +79,14 @@ export default function Calendar({
 
   const handleDateClick = (year: number, month: number, date: number) => {
     const selected = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-    setSelectedDate(selected);
-    router.push(`/mentoring/${mentoringUuid}?selectedDate=${selected}`);
-  };
+    const scrollPosition = window.scrollY; // 현재 스크롤 위치를 캡처
 
+    // 스크롤 위치와 선택된 날짜를 쿼리 파라미터로 넘김
+    setSelectedDate(selected);
+    router.push(
+      `/mentoring/${mentoringUuid}?selectedDate=${selected}&scrollY=${scrollPosition}`
+    );
+  };
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const now = new Date();
 
