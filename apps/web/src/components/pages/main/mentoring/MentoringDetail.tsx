@@ -15,12 +15,11 @@ export default async function MentoringCalendar({
   mentoringDate: string;
 }) {
   const mentoringSessionList = await GetMentoringSessionList(
-    '3ec830b8-fade-4103-afef-4c633927c012'
+    'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3'
   );
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
-    '3ec830b8-fade-4103-afef-4c633927c012'
+    'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3'
   );
-  console.log(mentoringSessionList);
   return (
     <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
       {/* Left Section */}

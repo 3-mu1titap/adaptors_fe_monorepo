@@ -11,23 +11,25 @@ export default async function MentoringOverview({
       <h1 className="text-2xl font-bold py-5">{MentoringInfoData?.name}</h1>
 
       <div className="relative w-full h-[400px] p-5 rounded-xl overflow-hidden bg-gray-200">
-        <ul className="flex gap-3">
-          {MentoringInfoData?.categoryList[0].topCategoryName && (
-            <li className="bg-adaptorsYellow py-1 px-3 rounded-2xl">
-              {MentoringInfoData?.categoryList[0].topCategoryName}
-            </li>
-          )}
-          {MentoringInfoData?.categoryList[0].middleCategoryName && (
-            <li className="bg-adaptorsYellow py-1 px-3 rounded-2xl">
-              {MentoringInfoData?.categoryList[0].middleCategoryName}
-            </li>
-          )}
-          {MentoringInfoData?.categoryList[0].bottomCategoryName && (
-            <li className="bg-adaptorsYellow py-1 px-3 rounded-2xl">
-              {MentoringInfoData?.categoryList[0].bottomCategoryName}
-            </li>
-          )}
-        </ul>
+        {MentoringInfoData.categoryList && (
+          <ul className="flex gap-3">
+            {MentoringInfoData?.categoryList[0]?.topCategoryName && (
+              <li className="bg-adaptorsYellow py-1 px-3 rounded-2xl">
+                {MentoringInfoData?.categoryList[0].topCategoryName}
+              </li>
+            )}
+            {MentoringInfoData?.categoryList[0]?.middleCategoryName && (
+              <li className="bg-adaptorsYellow py-1 px-3 rounded-2xl">
+                {MentoringInfoData?.categoryList[0].middleCategoryName}
+              </li>
+            )}
+            {MentoringInfoData?.categoryList[0]?.bottomCategoryName && (
+              <li className="bg-adaptorsYellow py-1 px-3 rounded-2xl">
+                {MentoringInfoData?.categoryList[0].bottomCategoryName}
+              </li>
+            )}
+          </ul>
+        )}
         <FitImage
           src={`${MentoringInfoData?.thumbnailUrl}`}
           alt="Profile"

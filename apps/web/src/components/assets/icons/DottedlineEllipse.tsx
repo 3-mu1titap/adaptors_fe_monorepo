@@ -19,7 +19,7 @@ export default function DottedlineEllipse({
         stroke="#FACE00"
         stroke-width="1.5"
         stroke-linecap="round"
-        stroke-dasharray="2 4"
+        strokeDasharray="2 4"
       />
     </svg>
   );
