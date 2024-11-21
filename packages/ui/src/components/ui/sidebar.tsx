@@ -273,7 +273,9 @@ const SidebarTrigger = React.forwardRef<
       size="icon"
       className={cn(
         `h-9 w-9 absolute z-10`,
-        state === 'expanded' && 'left-[calc(var(--sidebar-width)_-_2.25rem)]',
+        state === 'expanded'
+          ? 'left-[calc(var(--sidebar-width)_-_2.25rem)]'
+          : '-left-1',
         className
       )}
       onClick={(event) => {
