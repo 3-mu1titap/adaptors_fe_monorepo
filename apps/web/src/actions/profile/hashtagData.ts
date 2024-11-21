@@ -34,7 +34,7 @@ export const addTagList = async (
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Uuid': uuid,
+        'userUuid': uuid,
       },
       body: JSON.stringify(hashtags),
     }
