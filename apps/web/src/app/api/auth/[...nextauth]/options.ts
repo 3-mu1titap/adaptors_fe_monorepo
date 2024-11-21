@@ -32,7 +32,7 @@ export const options: NextAuthOptions = {
         };
         try {
           const res = await fetch(
-            `${process.env.BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
             {
               method: 'POST',
               body: JSON.stringify(payload),
@@ -62,7 +62,7 @@ export const options: NextAuthOptions = {
           console.log('kakao');
           const kakaoProfile = profile as KakaoProfile;
           const result = await fetch(
-            `${process.env.BACKEND_URL}/auth-service/api/v1/auth/oauth-sign-in`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/oauth-sign-in`,
             {
               method: 'POST',
               body: JSON.stringify({

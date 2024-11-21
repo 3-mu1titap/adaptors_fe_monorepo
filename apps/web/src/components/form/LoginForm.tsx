@@ -32,7 +32,7 @@ export default function LoginForm() {
 
           // role에 따라 페이지 라우팅
           if (role === 'MENTEE') {
-            router.push('/mentee');
+            router.push('/home');
           } else if (role === 'MENTOR') {
             router.push('/mentor');
           }
