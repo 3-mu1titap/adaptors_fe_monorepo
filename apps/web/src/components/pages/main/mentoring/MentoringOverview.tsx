@@ -51,6 +51,9 @@ export default async function MentoringOverview({
           </li>
         </ul>
       </div>
+      <div className="py-4 px-6 leading-relaxed">
+        {MentoringInfoData.detail}
+      </div>
     </div>
   );
 }

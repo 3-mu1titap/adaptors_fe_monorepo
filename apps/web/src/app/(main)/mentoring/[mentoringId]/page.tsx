@@ -1,3 +1,4 @@
+import ScrollHandler from '@components/common/ScrollHandler/ScrollHandler';
 import MentoringDetail from '../../../../components/pages/main/mentoring/MentoringDetail';
 
 function formatDate(date: Date): string {
@@ -16,7 +17,7 @@ async function Page({
 
   return (
     <main className="my-2 py-2 px-4 min-h-screen bg-gray-50">
-      {/* <ScrollHandler scrollY={scrollY} selectedDate={selectedDate} /> */}
+      <ScrollHandler scrollY={scrollY} selectedDate={selectedDate} />
       <MentoringDetail mentoringDate={selectedDate} />
     </main>
   );
