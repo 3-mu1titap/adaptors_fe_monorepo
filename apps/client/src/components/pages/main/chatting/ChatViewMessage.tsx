@@ -4,8 +4,12 @@ import {
   chatDataType,
   chatMemberDataType,
 } from '../../../types/main/chatting/chattingTypes';
-import FitImage from '../../../ui/image/fit-image';
 import { getChatProfile } from '../../../../actions/chatting/chattingAction';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@repo/ui/components/ui/avatar';
 
 function ChatViewMessage({ message }: { message: chatDataType }) {
   const { userUuid } = useUserStore();
@@ -35,20 +39,17 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
   return (
     <>
       {message.messageType === 'NOTICE' ? (
-        <div className={`inline-block p-2 rounded-xl bg-gray-300 text-white`}>
+        <div className={`inline-block px-2 py-1 rounded-xl text-adaptorsBlue`}>
           {message.message}
         </div>
       ) : (
         <>
-          <FitImage
-            className="rounded-full w-10 h-10 mr-1 border-4 border-[#F5F5F5] overflow-hidden"
-            src={
-              profileInfo?.profileImageUrl
-                ? profileInfo.profileImageUrl
-                : '/assets/images/dummy.jpg'
-            }
-            alt="Profile"
-          />
+          {message.memberUuid !== userUuid && (
+            <Avatar>
+              <AvatarImage src={profileInfo?.profileImageUrl} alt="Profile" />
+              <AvatarFallback>{profileInfo?.nickName[0]}</AvatarFallback>
+            </Avatar>
+          )}
 
           <div
             className={`flex flex-col ${message.memberUuid === userUuid ? 'items-end' : 'items-start'}`}
@@ -76,7 +77,7 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
             ) : (
               <div
                 style={{ whiteSpace: 'pre-wrap' }}
-                className={`inline-block p-2 rounded-xl ${message.memberUuid === userUuid ? 'bg-blue-500 text-white' : 'bg-gray-100 text-black'}`}
+                className={`inline-block px-2 py-1 rounded-xl ${message.memberUuid === userUuid ? 'bg-blue-500 text-white' : 'bg-gray-100 text-black'}`}
               >
                 {message.message}
               </div>

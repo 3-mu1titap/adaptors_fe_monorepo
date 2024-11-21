@@ -72,6 +72,24 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #dfdfdf; /* 트랙의 배경색 */
+    border-radius: 20px; /* 트랙의 모서리 둥글기 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #f6d84c; /* 핸들의 배경색 */
+    border-radius: 0.5rem; /* 핸들의 모서리 둥글기 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    background: #f6d88c; /* 핸들에 마우스를 올렸을 때 색상 */
+  }
 }
 
 @layer base {

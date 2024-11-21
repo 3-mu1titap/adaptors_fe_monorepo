@@ -11,7 +11,7 @@ import {
 } from '../../components/types/main/mentor/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-const memberUuid = '671a55ae-2346-407f-85e3-9cd39f4e3d10';
+const memberUuid = 'c120841a-7dd0-4967-a7a8-ed1daf2544d8';
 
 // 멘토링 대 카테고리 리스트 조회
 export async function GetTopCategoryList() {
