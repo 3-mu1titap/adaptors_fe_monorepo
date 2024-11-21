@@ -23,3 +23,31 @@ export interface chatMemberDataType {
   nickName: string;
   profileImageUrl: string;
 }
+
+// 이전 채팅 내역 받아오는 데이터 타입
+export interface prevChatResType {
+  content: {
+    content: chatDataType[];
+    pageable: {
+      pageNumber: number;
+      pageSize: number;
+      sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+      };
+      offset: number;
+      pages: boolean;
+      unpaged: boolean;
+    };
+    last: boolean;
+    totalPages: number;
+    totalElements: number;
+    size: number;
+    number: number;
+    first: boolean;
+    numberOfElements: number;
+    empty: boolean;
+  };
+  hasNext: boolean;
+}
