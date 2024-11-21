@@ -34,15 +34,17 @@ export default function RecommendMentoring() {
   ];
 
   return (
-    <section className="container mx-auto px-16 py-12 max-w-full">
-      <RecommendTitle />
+    <section className="container mx-auto px-24 py-12 max-w-[84rem]">
+      <div className="mx-auto max-w-[84rem]">
+        <RecommendTitle />
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mx-48 rounded-xl">
-        {articles.map((article, index) => (
-          <article key={index} className="group cursor-pointer">
-            <RecommendMentoringItem item={article} />
-          </article>
-        ))}
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 mx-auto max-w-[70rem] lg:grid-cols-4 xl:grid-cols-4 gap-5  rounded-xl">
+          {articles.map((article, index) => (
+            <article key={index} className="group cursor-pointer">
+              <RecommendMentoringItem item={article} />
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
