@@ -19,23 +19,25 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
-  const fetchURI = !menteeUuid ? `` : `&userUuid=${menteeUuid}`;
-  console.log('실행됨');
+  console.log(menteeUuid);
+  console.log('멘토링의 정보 및 세션리스트 정보 조회');
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}${fetchURI}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'userUuid': menteeUuid,
         },
-        next: { tags: ['mentoring-sessions-list'] },
+        next: { tags: ['session-request'] },
       }
     );
     const result =
       (await res.json()) as commonResListType<MentoringSessionDataType>;
+    console.log('세션리스트', result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);
@@ -69,8 +71,8 @@ export async function GetMentoringInfo(mentoringUuid: string) {
 export async function SessionRequest(request: SessionRequestType) {
   'use server';
   const session = await getServerSession(options);
-  // const menteeUuid = session?.user.uuid;
-  const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
+  const menteeUuid = session?.user.uuid;
+  // const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
 
   try {
     const res = await fetch(
@@ -80,7 +82,7 @@ export async function SessionRequest(request: SessionRequestType) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'userUuid': 'b82f9e78-e96f-4b1c-9481-c587236f7d8f',
+          'userUuid': menteeUuid,
         },
         body: JSON.stringify(request),
       }
@@ -100,8 +102,8 @@ export async function SessionRequest(request: SessionRequestType) {
 export async function SessionCancel(request: SessionCancelType) {
   'use server';
   const session = await getServerSession(options);
-  // const menteeUuid = session?.user.uuid;
-  const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
+  const menteeUuid = session?.user.uuid;
+  // const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
 
   try {
     const res = await fetch(
@@ -113,10 +115,7 @@ export async function SessionCancel(request: SessionCancelType) {
           'Content-Type': 'application/json',
           'userUuid': menteeUuid,
         },
-        body: JSON.stringify({
-          sessionUuid: request.sessionUuid,
-          deadlineDate: request.deadlineDate,
-        }),
+        body: JSON.stringify(request),
       }
     );
     const result = (await res.json()) as commonResType<any>;
