@@ -22,7 +22,7 @@ type TrackInfo = {
   participantIdentity: string;
 };
 
-export default function VideoComponent() {
+export default function AdaptorsVideo() {
   const [room, setRoom] = useState<Room | null>(null);
   const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
     undefined
