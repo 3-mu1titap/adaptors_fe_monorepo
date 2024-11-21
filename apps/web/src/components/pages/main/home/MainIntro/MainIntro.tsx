@@ -59,27 +59,29 @@ export default function MainIntro() {
     <CommonLayout
       type="session"
       reative="container"
-      className="max-w-[88rem] mx-auto"
+      className="max-w-[80rem] mx-auto"
     >
-      <div className="flex flex-col w-full mx-auto bg-red-900">
-        <Swiper
-          loop
-          slidesPerView={1}
-          onSlideChange={onSlideIndexChange}
-          spaceBetween={16} // 간격을 모바일 친화적으로 조정
-        >
-          {SwiperItem.map((item, index) => (
-            <SwiperSlide key={index}>
-              <SwiperItemLayout item={item} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      <div className="flex flex-col">
+        <div>
+          <Swiper
+            loop
+            slidesPerView={1}
+            onSlideChange={onSlideIndexChange}
+            spaceBetween={16} // 간격을 모바일 친화적으로 조정
+          >
+            {SwiperItem.map((item, index) => (
+              <SwiperSlide key={index}>
+                <SwiperItemLayout item={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
-      <div className="flex mt-8">
-        {SwiperItem.map((_, index) => (
-          <SwiperIndex key={index} slideIndex={SlideIndex} index={index} />
-        ))}
+        <div className="flex mt-12 justify-center">
+          {SwiperItem.map((_, index) => (
+            <SwiperIndex key={index} slideIndex={SlideIndex} index={index} />
+          ))}
+        </div>
       </div>
     </CommonLayout>
   );

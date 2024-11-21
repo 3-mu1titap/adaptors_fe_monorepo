@@ -164,13 +164,13 @@ export default function PopularMentoring() {
   const filteredCourses = courses.filter((course) => course.id === SelectId);
 
   return (
-    <section className="bg-[#FFF9E7] px-56 py-20">
-      <div className="container mx-auto min-w-6xl">
+    <section className="container bg-[#FFF9E7] mx-auto max-w-full py-24">
+      <div className=" mx-auto max-w-[78rem]">
         <div className="text-center mb-8">
           <span className="text-sm text-gray-600 uppercase tracking-wider">
             POPULAR COURSES
           </span>
-          <h2 className="text-2xl font-bold mt-2">인기멘토링</h2>
+          <h2 className="text-4xl font-bold mt-2">인기멘토링</h2>
         </div>
 
         <div className="relative mb-6">
@@ -183,7 +183,7 @@ export default function PopularMentoring() {
           </button>
           <div
             id="category-scroll"
-            className="flex gap-4 overflow-hidden snap-x mx-16"
+            className="flex gap-4 overflow-hidden snap-x mx-auto max-w-[70rem]"
             style={{ scrollBehavior: 'smooth' }}
           >
             <ul className={`flex gap-4`}>
@@ -207,7 +207,7 @@ export default function PopularMentoring() {
           </button>
         </div>
 
-        <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 mx-16 gap-5">
+        <ul className="grid gap-y-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-auto max-w-[71rem] justify-items-stretch">
           {filteredCourses.map((course, index) => (
             <PopularCategoryMentoring key={index} item={course} />
           ))}

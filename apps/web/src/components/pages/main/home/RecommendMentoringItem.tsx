@@ -3,8 +3,8 @@ import { RecommendType } from '../../../types/recommendType';
 import ViewIcon from '../../../assets/icons/View';
 function RecommendMentoringItem({ item }: { item: RecommendType }) {
   return (
-    <div className="relative mb-2">
-      <div className="aspect-[4/4] bg-gray-200 py-16 rounded-2xl overflow-hidden" />
+    <div className=" mb-2 max-w-[400px] sm:max-w-[370px] mx-auto md:max-w-[380px]">
+      <div className="bg-gray-200 py-20 rounded-2xl overflow-hidden" />
       <div className="space-y-3">
         <div className="text-sm text-gray-600 mt-2 ml-2">{item.author}</div>
         <h3 className="font-medium group-hover:text-blue-600 transition-colors ml-2">
