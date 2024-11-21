@@ -9,9 +9,9 @@ interface UserStore {
 }
 
 const useUserStore = create<UserStore>((set) => ({
-  nickname: '',
+  nickname: '멘토',
   setNickname: (nickname) => set({ nickname }),
-  userUuid: 'e782841e-7fcd-47c5-93e7-50203b3a0a99',
+  userUuid: 'c120841a-7dd0-4967-a7a8-ed1daf2544d8',
   setUserUuid: (userUuid) => set({ userUuid }),
 }));
 

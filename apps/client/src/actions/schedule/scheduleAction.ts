@@ -3,7 +3,7 @@
 import { UserScheduleDataType } from '../../components/types/main/schedule/scheduleTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-const userUuid = '671a55ae-2346-407f-85e3-9cd39f4e3d10';
+const userUuid = 'c120841a-7dd0-4967-a7a8-ed1daf2544d8';
 
 export async function GetScheduleList(date: string) {
   'use server';

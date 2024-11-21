@@ -26,7 +26,7 @@ function ChatView({
       {messages.map((message, index) => (
         <div
           key={index}
-          className={`mb-2 flex ${message.messageType === 'NOTICE' ? 'justify-center' : message.memberUuid === userUuid ? 'justify-end' : 'justify-start'}`}
+          className={`mb-1 flex gap-x-1 ${message.messageType === 'NOTICE' ? 'justify-center' : message.memberUuid === userUuid ? 'justify-end' : 'justify-start'}`}
         >
           <ChatViewMessage message={message} />
         </div>
