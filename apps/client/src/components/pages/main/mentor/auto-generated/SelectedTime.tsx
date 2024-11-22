@@ -1,23 +1,31 @@
 import { Button } from '@repo/ui/components/ui/button';
-import { TimeSlotType } from './TimeSlotSelector';
+
+type SelectedTimeProps = {
+  day: string;
+  index: number;
+  start: string;
+  end: string;
+  removeTimeSlot: (day: string, index: number) => void;
+};
+
 export default function SelectedTime({
-  TimeSlot,
+  day,
+  index,
+  start,
+  end,
   removeTimeSlot,
-}: {
-  TimeSlot: TimeSlotType;
-  removeTimeSlot: (prop: TimeSlotType) => void;
-}) {
+}: SelectedTimeProps) {
   return (
-    <div className="flex justify-between items-center p-2 bg-gray-100 rounded">
-      <span>{`${TimeSlot.day} ${TimeSlot.start} - ${TimeSlot.end}`}</span>
+    <li className="flex justify-between items-center p-2 bg-gray-100 rounded">
+      <span>{`${start} ~ ${end}`}</span>
       <Button
         type="button"
         variant="destructive"
         size="sm"
-        onClick={() => removeTimeSlot(TimeSlot)}
+        onClick={() => removeTimeSlot(day, index)}
       >
         Remove
       </Button>
-    </div>
+    </li>
   );
 }
