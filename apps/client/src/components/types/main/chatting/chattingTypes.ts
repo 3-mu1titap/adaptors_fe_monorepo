@@ -56,7 +56,7 @@ export interface prevChatResType {
 export interface prevChatDataStoreType {
   sessionUuid: string;
   nickname: string;
-  profileUlr: string;
+  profileUrl: string;
   isNext: boolean;
   messageNumber: number;
   messages: chatDataType[];

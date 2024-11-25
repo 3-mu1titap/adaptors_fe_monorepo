@@ -2,6 +2,10 @@ import { Button } from '@repo/ui/components/ui/button';
 import VideoTrack from './tracks/VideoTrack';
 import AudioTrack from './tracks/AudioTrack';
 import { LocalVideoTrack, RemoteTrackPublication, Track } from 'livekit-client';
+import MicOnIcon from '../../../../assets/icons/MicOn';
+import MicOffIcon from '../../../../assets/icons/MicOff';
+import VideoOnIcon from '../../../../assets/icons/VideoOn';
+import VideoOffIcon from '../../../../assets/icons/VideoOff';
 
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;
@@ -16,6 +20,10 @@ export default function Tracks({
   localTrack,
   participantName,
   remoteTracks,
+  toggleMicrophone,
+  isMicrophoneOn,
+  toggleCamera,
+  isCameraOn,
 }: {
   roomName: string;
   leaveRoom: () => Promise<void>;
@@ -24,7 +32,23 @@ export default function Tracks({
   localTrack: LocalVideoTrack | undefined;
   participantName: string;
   remoteTracks: TrackInfo[];
+  toggleMicrophone: () => Promise<void>;
+  isMicrophoneOn: boolean;
+  toggleCamera: () => Promise<void>;
+  isCameraOn: boolean;
 }) {
+  const isAnotherParticipantSharing = remoteTracks.some(
+    (track) => track.trackPublication.source === Track.Source.ScreenShare
+  );
+
+  const handleToggleScreenSharing = async () => {
+    if (!isScreenSharing && isAnotherParticipantSharing) {
+      alert('다른 참가자가 이미 화면을 공유하고 있습니다.');
+      return;
+    }
+    await toggleScreenSharing();
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -32,11 +56,8 @@ export default function Tracks({
         <Button variant="destructive" onClick={leaveRoom}>
           Leave Room
         </Button>
-        <Button onClick={toggleScreenSharing} variant="outline">
-          {isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
-        </Button>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
         {localTrack && (
           <VideoTrack
             track={localTrack}
@@ -61,6 +82,17 @@ export default function Tracks({
             />
           )
         )}
+      </div>
+      <div className="flex justify-center space-x-4 mt-4">
+        <Button onClick={handleToggleScreenSharing} variant="outline">
+          {isScreenSharing ? 'Stop Sharing' : 'Share Screen'}
+        </Button>
+        <Button onClick={toggleMicrophone} variant="outline">
+          {isMicrophoneOn ? <MicOnIcon /> : <MicOffIcon />}
+        </Button>
+        <Button onClick={toggleCamera} variant="outline">
+          {isCameraOn ? <VideoOnIcon /> : <VideoOffIcon />}
+        </Button>
       </div>
     </div>
   );

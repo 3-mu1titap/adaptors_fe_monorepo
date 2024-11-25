@@ -9,10 +9,14 @@ function ParticipantsContent({
   participant,
   toggleMic,
   toggleVideo,
+  toggleParticipantMicrophone,
+  toggleParticipantCamera,
 }: {
   participant: userType;
   toggleMic: (id: number) => void;
   toggleVideo: (id: number) => void;
+  toggleParticipantMicrophone: (participantIdentity: string) => Promise<void>;
+  toggleParticipantCamera: (participantIdentity: string) => Promise<void>;
 }) {
   return (
     <div className="rounded-full bg-[#F5F5F5] p-[1px] grid grid-cols-6 items-center my-2">
@@ -23,13 +27,13 @@ function ParticipantsContent({
       />
       <h4 className="text-sm col-span-3 ml-3">{participant.username}</h4>
       <button
-        onClick={() => toggleMic(participant.id)}
+        onClick={() => toggleParticipantMicrophone('Participant61')}
         className={'p-2 rounded-full'}
       >
         {participant.micOn ? <MicOnIcon /> : <MicOffIcon />}
       </button>
       <button
-        onClick={() => toggleVideo(participant.id)}
+        onClick={() => toggleParticipantCamera('Participant61')}
         className={'p-2 rounded-full'}
       >
         {participant.videoOn ? <VideoOnIcon /> : <VideoOffIcon />}

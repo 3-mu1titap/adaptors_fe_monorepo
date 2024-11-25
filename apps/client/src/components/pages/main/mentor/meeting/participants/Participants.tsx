@@ -8,7 +8,15 @@ import {
   userType,
 } from '../../../../../types/main/meeting/meetingTypes';
 
-function Participants({ participants }: { participants: participantType[] }) {
+function Participants({
+  participants,
+  toggleParticipantMicrophone,
+  toggleParticipantCamera,
+}: {
+  participants: participantType[];
+  toggleParticipantMicrophone: (participantIdentity: string) => Promise<void>;
+  toggleParticipantCamera: (participantIdentity: string) => Promise<void>;
+}) {
   const [users, setUsers] = useState<userType[]>([]);
 
   const toggleMic = (id: number) => {
@@ -41,6 +49,8 @@ function Participants({ participants }: { participants: participantType[] }) {
             participant={participant}
             toggleMic={toggleMic}
             toggleVideo={toggleVideo}
+            toggleParticipantMicrophone={toggleParticipantMicrophone}
+            toggleParticipantCamera={toggleParticipantCamera}
           />
         ))}
       </div>
