@@ -104,7 +104,7 @@ export default function Select({
                 selectedOption?.value === option.value
                   ? `text-white bg-${mainColor}`
                   : 'text-gray-900'
-              } cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-${hoverColor} hover:text-gray-900`}
+              } cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-${hoverColor} hover:bg-[#DFEBFF] hover:text-gray-900`}
               id={option.value}
               role="option"
               aria-selected={selectedOption?.value === option.value}

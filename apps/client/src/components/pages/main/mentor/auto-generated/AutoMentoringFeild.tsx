@@ -20,7 +20,7 @@ export default function AutoMentoringField({
   ninetyDaysLater.setDate(today.getDate() + 90);
   const formattedNinetyDaysLater = ninetyDaysLater.toISOString().split('T')[0];
   return (
-    <section className="container p-4 my-8">
+    <section className="container py-4 my-8">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="minParticipants">최소 참가자 수</label>

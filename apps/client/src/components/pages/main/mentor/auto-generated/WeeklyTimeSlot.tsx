@@ -85,7 +85,7 @@ export default function WeeklyTimeSlotSelector({
   }, [now]);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto py-4">
       <h1 className="text-2xl font-bold mb-6">
         세션을 생성할 요일, 시간을 선택해주세요
       </h1>
