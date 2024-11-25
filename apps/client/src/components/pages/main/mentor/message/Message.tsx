@@ -13,11 +13,7 @@ type Message = {
   sender: string;
 };
 
-export default function Message({
-  participants,
-}: {
-  participants: participantType[];
-}) {
+export default function Message() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
   return (
@@ -31,7 +27,7 @@ export default function Message({
       {/* Right Content */}
       <div className="flex-1 flex flex-col px-4 py-1">
         {selectedChat ? (
-          <Chatting participants={participants} />
+          <Chatting />
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">

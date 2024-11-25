@@ -1,13 +1,26 @@
 'use server';
 
-import { participantsData } from '../../components/datas/main/meeting/participantsData';
+import { redirect } from 'next/navigation';
 import { participantType } from '../../components/types/main/meeting/meetingTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-export async function getParticipantsData() {
+export async function getParticipants(mentoringSessionUuid: string) {
   'use server';
-  const res: commonResType<participantType[]> = participantsData;
-  return res.result;
+  try {
+    const res = await fetch(
+      `${process.env.CHATSERVICE_URL}/api/v1/chat/getParticipants/${mentoringSessionUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    const result = (await res.json()) as commonResType<string[]>;
+    console.log(mentoringSessionUuid, result);
+    return result.result;
+  } catch (error) {
+    return redirect('/error?message=Failed to fetch cart update');
+  }
 }
 
 const APPLICATION_SERVER_URL = 'http://localhost:6080';

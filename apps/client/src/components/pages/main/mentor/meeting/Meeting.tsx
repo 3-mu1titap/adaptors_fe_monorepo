@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   LocalVideoTrack,
   Room,
@@ -15,6 +15,9 @@ import MeetingHeader from './MeetingHeader';
 import Participants from './participants/Participants';
 import Chatting from '../../chatting/Chatting';
 import { participantType } from '../../../../types/main/meeting/meetingTypes';
+import { getParticipants } from '../../../../../actions/meeting/meetingAction';
+import { getChatProfile } from '../../../../../actions/chatting/chattingAction';
+import { useUserInfoStore } from '../../../../../store/messagesStore';
 
 const APPLICATION_SERVER_URL =
   process.env.NEXT_PUBLIC_APPLICATION_SERVER_URL || 'http://localhost:6080/';
@@ -26,11 +29,7 @@ type TrackInfo = {
   participantIdentity: string;
 };
 
-export default function Meeting({
-  participants,
-}: {
-  participants: participantType[];
-}) {
+export default function Meeting() {
   const [room, setRoom] = useState<Room | null>(null);
   const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
     undefined
@@ -46,6 +45,41 @@ export default function Meeting({
   const [remoteMuteStatus, setRemoteMuteStatus] = useState<
     Record<string, { audio: boolean; video: boolean }>
   >({});
+  const { userInfo, addUserInfo } = useUserInfoStore();
+  const [participants, setParticipants] = useState<participantType[]>([]);
+
+  const fetchParticipants = async (userUuid: string) => {
+    const existingProfile = userInfo.find((user) => user.userUuid === userUuid);
+    if (existingProfile) {
+      setParticipants((prev) => [...prev, existingProfile]);
+    } else {
+      const participantsData = await getChatProfile({ userUuid: userUuid });
+      console.log(participantsData);
+      setParticipants((prev) => [
+        ...prev,
+        {
+          userUuid: userUuid,
+          nickname: participantsData.nickName,
+          profileImageUrl: participantsData.profileImageUrl,
+        },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    const fetchParticipantsUuid = async () => {
+      const participantsUuidData = await getParticipants(
+        'ac419217-cb98-4334-8b78-8126aa0e57aa'
+      );
+      const fetchPromises = participantsUuidData.map((userUuid: string) =>
+        fetchParticipants(userUuid)
+      );
+
+      await Promise.all(fetchPromises);
+    };
+
+    fetchParticipantsUuid();
+  }, [room]);
 
   async function joinRoom() {
     const room = new Room();
@@ -233,7 +267,7 @@ export default function Meeting({
                 />
               </div>
               <div className="h-[54vh]">
-                <Chatting participants={participants} />
+                <Chatting />
               </div>
             </div>
           </div>

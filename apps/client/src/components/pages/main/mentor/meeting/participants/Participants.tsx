@@ -19,13 +19,15 @@ function Participants({
 }) {
   const [users, setUsers] = useState<userType[]>([]);
 
-  const toggleMic = (id: number) => {
-    setUsers(users.map((p) => (p.id === id ? { ...p, micOn: !p.micOn } : p)));
+  const toggleMic = (id: string) => {
+    setUsers(
+      users.map((p) => (p.userUuid === id ? { ...p, micOn: !p.micOn } : p))
+    );
   };
 
-  const toggleVideo = (id: number) => {
+  const toggleVideo = (id: string) => {
     setUsers(
-      users.map((p) => (p.id === id ? { ...p, videoOn: !p.videoOn } : p))
+      users.map((p) => (p.userUuid === id ? { ...p, videoOn: !p.videoOn } : p))
     );
   };
 
@@ -45,7 +47,7 @@ function Participants({
       <div>
         {users.map((participant) => (
           <ParticipantsContent
-            key={participant.id}
+            key={participant.userUuid}
             participant={participant}
             toggleMic={toggleMic}
             toggleVideo={toggleVideo}

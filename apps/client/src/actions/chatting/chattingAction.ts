@@ -1,5 +1,6 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import {
   chatDataType,
   chatMemberDataType,
@@ -29,7 +30,7 @@ export async function getChattingData(page: number) {
     return result.result;
   } catch (error) {
     console.error('세션의 채팅 리스트 조회 실패 : ', error);
-    return [];
+    return redirect('/error?message=Failed to fetch session chatting');
   }
 }
 

@@ -17,7 +17,7 @@ import {
 
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
-function Chatting({ participants }: { participants: participantType[] }) {
+function Chatting() {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -26,7 +26,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [getPrev, setGetPrev] = useState<boolean>(true);
   const [isNext, setIsNext] = useState<boolean>(true);
-  const [prevMessagePage, setPrevMessagePage] = useState<number>(1);
+  const [prevMessagePage, setPrevMessagePage] = useState<number>(0);
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -109,10 +109,6 @@ function Chatting({ participants }: { participants: participantType[] }) {
     try {
       const prevMessages = (await getChattingData(page)) as prevChatResType;
 
-      if (!prevMessages || !prevMessages.content) {
-        return;
-      }
-
       if (!prevMessages.hasNext) {
         setIsNext(false);
       }
@@ -138,24 +134,20 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
   useEffect(scrollToBottom, [messages]);
 
-  const [loading, setLoading] = useState<boolean>(false);
-
   const handleScroll = async (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
     if (target) {
       const { scrollTop } = target;
-      if (scrollTop === 0 && isNext && !loading) {
-        setLoading(true);
+      if (scrollTop === 0 && isNext) {
         await getMessageData(prevMessagePage);
         target.scrollTop = 400;
-        setLoading(false);
       }
     }
   };
 
   return (
     <div className="flex flex-col w-full h-full">
-      <ChatHeader participants={participants} />
+      {/* <ChatHeader participants={participants} /> */}
       <ChatView
         handleDrop={handleDrop}
         messages={messages}
