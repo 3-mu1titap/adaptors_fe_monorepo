@@ -16,6 +16,7 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
+
   console.log(menteeUuid);
   console.log('멘토링의 정보 및 세션리스트 정보 조회');
 
