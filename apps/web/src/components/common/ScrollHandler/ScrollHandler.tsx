@@ -17,7 +17,7 @@ function ScrollHandler({
         behavior: 'smooth', // 부드러운 스크롤
       });
     }
-  }, [scrollY, selectedDate]);
+  }, [selectedDate]);
 
   return null; // 렌더링할 UI 없음
 }
