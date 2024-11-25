@@ -80,15 +80,12 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
   useEffect(() => {
     const chatServiceUrl = `http://3.35.228.51:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
-    console.log(`Connecting to: ${chatServiceUrl}`);
 
     const eventSource = new EventSourcePolyfill(chatServiceUrl, {
       heartbeatTimeout: 86400000,
     });
 
-    eventSource.onopen = () => {
-      console.log('SSE 연결이 성공적으로 열렸습니다.');
-    };
+    eventSource.onopen = () => {};
 
     const handleNewMessage = (event: any) => {
       setGetPrev(true);
@@ -109,13 +106,23 @@ function Chatting({ participants }: { participants: participantType[] }) {
   }, [mentoringSessionUuid]);
 
   const getMessageData = async (page: number) => {
-    const prevMessages = (await getChattingData(page)) as prevChatResType;
-    if (!prevMessages.hasNext) {
-      setIsNext(false);
+    try {
+      const prevMessages = (await getChattingData(page)) as prevChatResType;
+
+      if (!prevMessages || !prevMessages.content) {
+        return;
+      }
+
+      if (!prevMessages.hasNext) {
+        setIsNext(false);
+      }
+      setPrevMessagePage((prev) => prev + 1);
+
+      const reversedMessages = prevMessages.content.content.reverse();
+      setMessages((prev) => [...reversedMessages, ...prev]);
+    } catch (error) {
+      console.error('메시지 데이터를 가져오는 중 오류 발생:', error);
     }
-    setPrevMessagePage((prev) => prev + 1);
-    const reversedMessages = prevMessages.content.content.reverse();
-    setMessages((prev) => [...reversedMessages, ...prev]);
   };
 
   useEffect(() => {
@@ -131,17 +138,17 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
   useEffect(scrollToBottom, [messages]);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleScroll = async (e: React.UIEvent<HTMLDivElement>) => {
-    setGetPrev(false);
     const target = e.currentTarget;
     if (target) {
       const { scrollTop } = target;
-      if (scrollTop === 0) {
-        console.log(isNext);
-        if (isNext) {
-          await getMessageData(prevMessagePage);
-          target.scrollTop = 400;
-        }
+      if (scrollTop === 0 && isNext && !loading) {
+        setLoading(true);
+        await getMessageData(prevMessagePage);
+        target.scrollTop = 400;
+        setLoading(false);
       }
     }
   };
@@ -153,7 +160,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
         handleDrop={handleDrop}
         messages={messages}
         messagesEndRef={messagesEndRef}
-        handleScroll={handleScroll} // 스크롤 핸들러 전달
+        handleScroll={handleScroll}
       />
       <ChatSender
         handleSendMessage={handleSendMessage}

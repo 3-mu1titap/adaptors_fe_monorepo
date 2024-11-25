@@ -1,29 +1,167 @@
-import React from 'react';
+'use client';
+
+import { useState } from 'react';
+import {
+  LocalVideoTrack,
+  Room,
+  RoomEvent,
+  RemoteTrack,
+  RemoteTrackPublication,
+  RemoteParticipant,
+} from 'livekit-client';
+import Tracks from './Tracks';
+import OpenMentoring from './openMentoring/OpenMentoring';
 import MeetingHeader from './MeetingHeader';
 import Participants from './participants/Participants';
-import { participantType } from '../../../../types/main/meeting/meetingTypes';
 import Chatting from '../../chatting/Chatting';
-import AdaptorsVideo from './AdaptorsVideo';
+import { participantType } from '../../../../types/main/meeting/meetingTypes';
 
-async function Meeting({ participants }: { participants: participantType[] }) {
+const APPLICATION_SERVER_URL =
+  process.env.NEXT_PUBLIC_APPLICATION_SERVER_URL || 'http://localhost:6080/';
+const LIVEKIT_URL =
+  process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
+
+type TrackInfo = {
+  trackPublication: RemoteTrackPublication;
+  participantIdentity: string;
+};
+
+export default function Meeting({
+  participants,
+}: {
+  participants: participantType[];
+}) {
+  const [room, setRoom] = useState<Room | null>(null);
+  const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
+    undefined
+  );
+  const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
+  const [participantName, setParticipantName] = useState(
+    `Participant${Math.floor(Math.random() * 100)}`
+  );
+  const [roomName, setRoomName] = useState('Test Room');
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+
+  async function joinRoom() {
+    const room = new Room();
+    setRoom(room);
+
+    room.on(
+      RoomEvent.TrackSubscribed,
+      (
+        _track: RemoteTrack,
+        publication: RemoteTrackPublication,
+        participant: RemoteParticipant
+      ) => {
+        setRemoteTracks((prev) => [
+          ...prev,
+          {
+            trackPublication: publication,
+            participantIdentity: participant.identity,
+          },
+        ]);
+      }
+    );
+
+    room.on(
+      RoomEvent.TrackUnsubscribed,
+      (_track: RemoteTrack, publication: RemoteTrackPublication) => {
+        setRemoteTracks((prev) =>
+          prev.filter(
+            (track) => track.trackPublication.trackSid !== publication.trackSid
+          )
+        );
+      }
+    );
+
+    try {
+      const token = await getToken(roomName, participantName);
+      await room.connect(LIVEKIT_URL, token);
+      await room.localParticipant.enableCameraAndMicrophone();
+      const localVideoTrackPublication =
+        room.localParticipant.videoTrackPublications.values().next().value;
+
+      if (localVideoTrackPublication) {
+        setLocalTrack(localVideoTrackPublication.videoTrack);
+      }
+    } catch (error) {
+      console.log(
+        'There was an error connecting to the room:',
+        (error as Error).message
+      );
+      await leaveRoom();
+    }
+  }
+
+  async function leaveRoom() {
+    await room?.disconnect();
+    setRoom(null);
+    setLocalTrack(undefined);
+    setRemoteTracks([]);
+  }
+
+  async function getToken(roomName: string, participantName: string) {
+    const response = await fetch(`${APPLICATION_SERVER_URL}token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roomName, participantName }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Failed to get token: ${error.errorMessage}`);
+    }
+
+    const data = await response.json();
+    return data.token;
+  }
+
+  async function toggleScreenSharing() {
+    if (isScreenSharing) {
+      await room?.localParticipant.setScreenShareEnabled(false);
+      setIsScreenSharing(false);
+    } else {
+      await room?.localParticipant.setScreenShareEnabled(true);
+      setIsScreenSharing(true);
+    }
+  }
+
   return (
-    <>
-      <MeetingHeader participants={participants} />
-      <div className="grid grid-cols-7 h-[90vh]">
-        <div className="col-span-5 bg-[#FAFAFE]">
-          <AdaptorsVideo />
-        </div>
-        <div className="flex flex-col col-span-2 h-full">
-          <div className="h-[36vh]">
-            <Participants participants={participants} />
+    <div className="container mx-auto p-4">
+      {!room ? (
+        <OpenMentoring
+          joinRoom={joinRoom}
+          participantName={participantName}
+          setParticipantName={setParticipantName}
+          roomName={roomName}
+          setRoomName={setRoomName}
+        />
+      ) : (
+        <>
+          <MeetingHeader participants={participants} />
+          <div className="grid grid-cols-7 h-[90vh]">
+            <div className="col-span-5 bg-[#FAFAFE]">
+              <Tracks
+                roomName={roomName}
+                leaveRoom={leaveRoom}
+                toggleScreenSharing={toggleScreenSharing}
+                isScreenSharing={isScreenSharing}
+                localTrack={localTrack}
+                participantName={participantName}
+                remoteTracks={remoteTracks}
+              />
+            </div>
+            <div className="flex flex-col col-span-2 h-full">
+              <div className="h-[36vh]">
+                <Participants participants={participants} />
+              </div>
+              <div className="h-[54vh]">
+                <Chatting participants={participants} />
+              </div>
+            </div>
           </div>
-          <div className="h-[54vh]">
-            <Chatting participants={participants} />
-          </div>
-        </div>
-      </div>
-    </>
+        </>
+      )}
+    </div>
   );
 }
-
-export default Meeting;
