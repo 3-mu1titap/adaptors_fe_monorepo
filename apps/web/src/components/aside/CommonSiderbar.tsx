@@ -16,7 +16,6 @@ import {
 } from '@repo/ui/components/ui/sidebar';
 
 import { SidebarType } from '@components/types/navigation/navigationTypes';
-import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
 function CommonSidebar() {
   const pathname = usePathname();
   const basePath = pathname.startsWith('/mypage') ? '/mypage' : '/home';
