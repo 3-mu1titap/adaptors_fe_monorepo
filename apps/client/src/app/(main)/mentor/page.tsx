@@ -20,7 +20,7 @@ export default async function Page() {
             안내
           </span>
           현재 {}님의 멘토링은{' '}
-          {mentoringListData.length ? mentoringListData.length : 0}개의 멘토링을
+          {mentoringListData ? mentoringListData.length : 0}개의 멘토링을
           개설하고 있습니다.
         </p>
         <Link

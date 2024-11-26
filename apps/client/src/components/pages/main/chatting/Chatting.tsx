@@ -5,7 +5,6 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import ChatHeader from './ChatHeader';
 import ChatSender from './ChatSender';
 import ChatView from './ChatView';
-import { participantType } from '../../../types/main/meeting/meetingTypes';
 import {
   chatDataType,
   prevChatResType,
@@ -14,10 +13,11 @@ import {
   getChattingData,
   postChat,
 } from '../../../../actions/chatting/chattingAction';
+import { participantType } from '../../../types/main/meeting/meetingTypes';
 
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
-function Chatting() {
+function Chatting({ participants }: { participants: participantType[] }) {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -147,7 +147,7 @@ function Chatting() {
 
   return (
     <div className="flex flex-col w-full h-full">
-      {/* <ChatHeader participants={participants} /> */}
+      <ChatHeader participants={participants} />
       <ChatView
         handleDrop={handleDrop}
         messages={messages}

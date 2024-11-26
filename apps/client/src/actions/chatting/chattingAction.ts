@@ -8,7 +8,7 @@ import {
 } from '../../components/types/main/chatting/chattingTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-const userUuid = 'c120841a-7dd0-4967-a7a8-ed1daf2544d8';
+const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 const mentoringUuid = 'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3';
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 

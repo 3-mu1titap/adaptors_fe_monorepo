@@ -3,13 +3,13 @@
 import { UserScheduleDataType } from '../../components/types/main/schedule/scheduleTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-const userUuid = 'c120841a-7dd0-4967-a7a8-ed1daf2544d8';
+const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 export async function GetScheduleList(date: string) {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL3}/api/v1/booking-schedule-read/schedule-list?userUuid=${userUuid}&yearMonth=${date}`,
+      `${process.env.SCHEDULE_URL}/api/v1/schedule-read/schedule-list?yearMonth=${date}`,
       {
         cache: 'no-cache',
         method: 'GET',

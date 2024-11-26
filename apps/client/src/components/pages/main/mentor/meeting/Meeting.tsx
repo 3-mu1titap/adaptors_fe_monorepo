@@ -18,6 +18,7 @@ import { participantType } from '../../../../types/main/meeting/meetingTypes';
 import {
   getParticipants,
   getToken,
+  postJoinMeeting,
 } from '../../../../../actions/meeting/meetingAction';
 import { getChatProfile } from '../../../../../actions/chatting/chattingAction';
 import { useUserInfoStore } from '../../../../../store/messagesStore';
@@ -55,7 +56,6 @@ export default function Meeting() {
       setParticipants((prev) => [...prev, existingProfile]);
     } else {
       const participantsData = await getChatProfile({ userUuid: userUuid });
-      console.log(participantsData);
       setParticipants((prev) => [
         ...prev,
         {
@@ -83,6 +83,10 @@ export default function Meeting() {
   }, [room]);
 
   async function joinRoom() {
+    const join = await postJoinMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
+    if (!join) {
+      return;
+    }
     const room = new Room();
     setRoom(room);
 
@@ -254,7 +258,7 @@ export default function Meeting() {
                 />
               </div>
               <div className="h-[54vh]">
-                <Chatting />
+                <Chatting participants={participants} />
               </div>
             </div>
           </div>

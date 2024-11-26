@@ -11,7 +11,7 @@ import {
 } from '../../components/types/main/mentor/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-const memberUuid = 'c120841a-7dd0-4967-a7a8-ed1daf2544d8';
+const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 // 멘토링 대 카테고리 리스트 조회
 export async function GetTopCategoryList() {
@@ -92,15 +92,17 @@ export async function GetMentoringList() {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL}/api/v1/mentoring-query-service/mentoring-list/${memberUuid}`,
+      `${process.env.MENTORING_URL}/api/v1/mentoring-query-service/mentoring-list`,
       {
         cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'userUuid': userUuid,
         },
       }
     );
+    console.log(res);
 
     const result = (await res.json()) as commonResType<MentoringDataType[]>;
     return result.result;
@@ -149,7 +151,7 @@ export async function PostSessionTimeValidation({
   console.log(time);
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL2}/api/v1/mentoring-service/validate-session-time?startDate=${time.startDate}&endDate=${time.endDate}&startTime=${time.startTime}&endTime=${time.endTime}&mentorUuid=${memberUuid}`,
+      `${process.env.LOCAL_URL2}/api/v1/mentoring-service/validate-session-time?startDate=${time.startDate}&endDate=${time.endDate}&startTime=${time.startTime}&endTime=${time.endTime}&mentorUuid=${userUuid}`,
       {
         cache: 'no-cache',
         method: 'POST',
