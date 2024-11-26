@@ -20,7 +20,7 @@ export default function MentoringRequestButton({
   isParticipating: boolean;
 }) {
   const onClickButton = async () => {
-    const status = isParticipating
+    const status = !isParticipating
       ? await SessionRequest({
           sessionUuid: sessionUuid,
           mentoringName: mentoringName,
@@ -34,7 +34,7 @@ export default function MentoringRequestButton({
       Swal.fire({
         toast: true,
         icon: 'success',
-        title: isClosed ? '신청 취소되었습니다' : '신청 완료되었습니다',
+        title: isParticipating ? '신청 취소되었습니다' : '신청 완료되었습니다',
         showConfirmButton: false,
         customClass: {
           title: 'text-lg font-semibold text-gray-800 text-center',
@@ -48,7 +48,7 @@ export default function MentoringRequestButton({
   return (
     <button
       onClick={onClickButton}
-      className={`px-4 py-2 rounded-xl text-xl font-medium ${
+      className={`px-4 py-3 rounded-[10px] text-xl w-28 ${
         isParticipating
           ? 'bg-gray-200 text-gray-600'
           : 'bg-adaptorsYellow text-white'
