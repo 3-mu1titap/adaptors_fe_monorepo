@@ -244,7 +244,7 @@ const CalendarContent = ({
   };
 
   return (
-    <section className="pt-3">
+    <section className="pt-3 px-3">
       <div className="panel mb-5">
         <div className="calendar-wrapper">
           <div className="grid grid-cols-10 items-center justify-items-center text-xl">

@@ -17,9 +17,9 @@ export default function DottedlineEllipse({
         cy="10"
         r="9"
         stroke="#FACE00"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-dasharray="2 4"
+        strokeDasharray="2 4"
       />
     </svg>
   );

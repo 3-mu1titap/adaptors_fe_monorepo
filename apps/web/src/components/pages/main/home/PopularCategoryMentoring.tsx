@@ -3,7 +3,7 @@ import { PopluarCategoryItemType } from '../../../types/Category/PopularCategory
 import { Star } from 'lucide-react';
 function PopularCategoryMentoring({ item }: { item: PopluarCategoryItemType }) {
   return (
-    <li className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+    <li className="bg-white rounded-xl overflow-hidden max-w-[330px] mx-auto md:max-w-[370px] lg:max-w-[260px] xl:max-w-[260px] shadow-sm hover:shadow-md transition-shadow">
       <div className="relative">
         <div className="aspect-video bg-gray-200 py-20" />
         <span className="absolute top-3 left-3 bg-yellow-400 text-xs font-medium px-2 py-1 rounded-full">

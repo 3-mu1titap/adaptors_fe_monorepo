@@ -7,14 +7,15 @@ function MainHeaderMenu({ menuItem }: { menuItem: MenuType }) {
   const pathname = usePathname();
 
   return (
-    <li>
-      <Link
-        href={menuItem.href}
-        className={`text-center hover:underline underline-offset-4 ${menuItem.href === pathname ? 'text-black' : 'text-[#5C5C5C]'}`}
+    <Link href={menuItem.href}>
+      <li
+        className={`grid sm:grid-cols-1 lg:grid-cols-6 gap-6 ${menuItem.href === pathname ? 'text-black' : 'text-[#5C5C5C]'}`}
       >
-        {menuItem.label}
-      </Link>
-    </li>
+        <span className="col-span-5 md:text-2xl hover:underline underline-offset-4">
+          {menuItem.label}
+        </span>
+      </li>
+    </Link>
   );
 }
 
