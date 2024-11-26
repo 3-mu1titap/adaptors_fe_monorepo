@@ -2,17 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
-import {
-  formatDate,
-  DateSelectArg,
-  EventApi,
-  EventContentArg,
-} from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import koLocale from '@fullcalendar/core/locales/ko';
 import {
   ScheduleDataType,
   UserScheduleDataType,

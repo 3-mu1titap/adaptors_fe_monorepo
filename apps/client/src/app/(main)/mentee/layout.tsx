@@ -1,6 +1,5 @@
 import React from 'react';
 import Sidebar from '../../../components/aside/metting-room/Sidebar';
-import NavbarLayout from '../../../components/pages/main/sidebar/NavbarLayout';
 export default function layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

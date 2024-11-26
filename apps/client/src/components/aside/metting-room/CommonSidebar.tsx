@@ -14,15 +14,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@repo/ui/components/ui/sidebar';
-import AdaptorsLogoIcon from '../../assets/icons/AdaptorsLogo';
-import OverviewIcon from '../../assets/icons/Overview';
-import CalendarIcon from '../../assets/icons/Calendar';
-import VoltIcon from '../../assets/icons/Volt';
-import MeetingIcon from '../../assets/icons/Meeting';
-import MessagesIcon from '../../assets/icons/Messages';
-import MyCourseIcon from '../../assets/icons/MyCourse';
-import LogOutIcon from '../../assets/icons/LogOut';
 import { SidebarType } from '../../types/navigation/navigationTypes';
+import AdaptorsLogoIcon from '../../../assets/icons/AdaptorsLogo';
+import OverviewIcon from '../../../assets/icons/Overview';
+import CalendarIcon from '../../../assets/icons/Calendar';
+import VoltIcon from '../../../assets/icons/Volt';
+import MeetingIcon from '../../../assets/icons/Meeting';
+import MessagesIcon from '../../../assets/icons/Messages';
+import MyCourseIcon from '../../../assets/icons/MyCourse';
+import LogOutIcon from '../../../assets/icons/LogOut';
 
 function CommonSidebar() {
   const pathname = usePathname();

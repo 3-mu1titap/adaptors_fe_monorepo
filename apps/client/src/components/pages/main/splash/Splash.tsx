@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import AdaptorsLogoIcon from '../../../assets/icons/AdaptorsLogo';
+import AdaptorsLogoIcon from '../../../../assets/icons/AdaptorsLogo';
 import { useRouter } from 'next/navigation';
 
 function Splash() {

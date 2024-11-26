@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { participantType } from '../../components/types/main/meeting/meetingTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
+// 참가자 관리
 export async function getParticipants(mentoringSessionUuid: string) {
   'use server';
   try {
@@ -19,7 +20,7 @@ export async function getParticipants(mentoringSessionUuid: string) {
     console.log(mentoringSessionUuid, result);
     return result.result;
   } catch (error) {
-    return redirect('/error?message=Failed to fetch cart update');
+    return redirect('/error?message=Failed to fetch participants');
   }
 }
 

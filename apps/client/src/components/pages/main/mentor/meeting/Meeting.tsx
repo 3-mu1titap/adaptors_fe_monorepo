@@ -15,12 +15,13 @@ import MeetingHeader from './MeetingHeader';
 import Participants from './participants/Participants';
 import Chatting from '../../chatting/Chatting';
 import { participantType } from '../../../../types/main/meeting/meetingTypes';
-import { getParticipants } from '../../../../../actions/meeting/meetingAction';
+import {
+  getParticipants,
+  getToken,
+} from '../../../../../actions/meeting/meetingAction';
 import { getChatProfile } from '../../../../../actions/chatting/chattingAction';
 import { useUserInfoStore } from '../../../../../store/messagesStore';
 
-const APPLICATION_SERVER_URL =
-  process.env.NEXT_PUBLIC_APPLICATION_SERVER_URL || 'http://localhost:6080/';
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
 
@@ -137,22 +138,6 @@ export default function Meeting() {
     setRoom(null);
     setLocalTrack(undefined);
     setRemoteTracks([]);
-  }
-
-  async function getToken(roomName: string, participantName: string) {
-    const response = await fetch(`${APPLICATION_SERVER_URL}token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ roomName, participantName }),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`Failed to get token: ${error.errorMessage}`);
-    }
-
-    const data = await response.json();
-    return data.token;
   }
 
   async function toggleScreenSharing() {

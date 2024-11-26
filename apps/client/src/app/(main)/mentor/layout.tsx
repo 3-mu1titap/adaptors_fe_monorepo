@@ -1,5 +1,4 @@
 import React from 'react';
-import Sidebar from '../../../components/aside/metting-room/Sidebar';
 import {
   SidebarProvider,
   SidebarTrigger,
@@ -11,7 +10,6 @@ export default function layout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex h-full min-h-screen">
-      {/* <Sidebar /> */}
       <SidebarProvider>
         <CommonSidebar />
         <main className="w-full h-[100vh] overflow-y-auto transition-all duration-300 ml-2">

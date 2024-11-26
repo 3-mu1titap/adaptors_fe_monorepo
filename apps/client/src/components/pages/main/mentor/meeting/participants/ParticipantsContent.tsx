@@ -1,7 +1,7 @@
-import MicOffIcon from '../../../../../assets/icons/MicOff';
-import MicOnIcon from '../../../../../assets/icons/MicOn';
-import VideoOffIcon from '../../../../../assets/icons/VideoOff';
-import VideoOnIcon from '../../../../../assets/icons/VideoOn';
+import MicOffIcon from '../../../../../../assets/icons/MicOff';
+import MicOnIcon from '../../../../../../assets/icons/MicOn';
+import VideoOffIcon from '../../../../../../assets/icons/VideoOff';
+import VideoOnIcon from '../../../../../../assets/icons/VideoOn';
 import { userType } from '../../../../../types/main/meeting/meetingTypes';
 import FitImage from '../../../../../ui/image/fit-image';
 

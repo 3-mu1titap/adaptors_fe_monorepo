@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
@@ -9,7 +9,6 @@ import {
   TopCategoryDataType,
 } from '../types/main/mentor/mentoringTypes';
 import {
-  GetTopCategoryList,
   PostMentoring,
   PostSessionTimeValidation,
 } from '../../actions/mentoring/mentoringAction';
@@ -20,7 +19,6 @@ import '@toast-ui/editor/toastui-editor.css';
 import color from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import Nouislider from '@x1mrdonut1x/nouislider-react';
 import Swal from 'sweetalert2';
 
 export interface MentoringCategory {

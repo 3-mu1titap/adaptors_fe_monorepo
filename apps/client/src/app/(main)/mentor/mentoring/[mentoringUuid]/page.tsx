@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { GetMentoringSessionList } from '../../../../../actions/mentoring/mentoringAction';
 import MentoringSessionCard from '../../../../../components/pages/main/mentor/mentoring/MentoringSeesionCard';
 import { MentoringSessionDataType } from '../../../../../components/types/main/mentor/mentoringTypes';
-import PlusIcon from '../../../../../components/assets/icons/Plus';
+import PlusIcon from '../../../../../../../../packages/ui/assets/icons/Plus';
 
 export default async function Page({
   params,

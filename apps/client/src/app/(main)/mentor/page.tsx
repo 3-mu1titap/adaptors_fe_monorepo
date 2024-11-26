@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { MentoringDataType } from '../../../components/types/main/mentor/mentoringTypes';
 import { GetMentoringList } from '../../../actions/mentoring/mentoringAction';
-import PlusIcon from '../../../components/assets/icons/Plus';
+import PlusIcon from '../../../../../../packages/ui/assets/icons/Plus';
 import Mentoring from '../../../components/pages/main/mentor/Mentoring';
 
 export const metadata: Metadata = {
@@ -24,11 +24,11 @@ export default async function Page() {
           개설하고 있습니다.
         </p>
         <Link
-          className="flex flex-row items-center bg-adaptorsGray text-md rounded-xl mr-2 px-4 py-2 gap-x-2 text-white hover:bg-adaptorsBlue font-extrabold"
+          className="flex flex-row items-center bg-adaptorsGray text-md rounded-xl mr-2 px-4 py-2 gap-x-2 text-white hover:bg-adaptorsYellow font-extrabold"
           href={`/mentor/mentoring/add`}
         >
-          <PlusIcon />
-          <span>멘토링 추가</span>
+          <PlusIcon className="w-5 h-5" />
+          <span className="text-md">멘토링 추가</span>
         </Link>
       </header>
       <Mentoring mentoringListData={mentoringListData} />
