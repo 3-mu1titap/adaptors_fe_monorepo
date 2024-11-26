@@ -1,13 +1,11 @@
-import MentoringReview from '@components/pages/review/MentoringReview';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
 } from '../../../../actions/mentoring/mentoringAction';
 import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
-import Calendar from './Calendar';
-import MentoProfile from './MentoProfile';
 import MentoringOverview from './MentoringOverview';
-import NowDate from './NowDate';
+import MentorSection from './MentorSection';
+import MentoringReview from './review/MentoringReview';
 import SessionList from './SessionList';
 const reviews = [
   {
@@ -38,26 +36,20 @@ export default async function MentoringCalendar({
   mentoringDate: string;
 }) {
   const mentoringSessionList = await GetMentoringSessionList(
-    'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3'
+    'f7636d8c-1a1f-46a9-86ba-8868e07e8260'
   );
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
-    'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3'
+    'f7636d8c-1a1f-46a9-86ba-8868e07e8260'
   );
   return (
     <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
       {/* Left Section */}
-      <section className="w-[350px] p-6 bg-white border-r border-gray-200">
-        <div className="space-y-6">
-          <MentoProfile
-            mentorUuid={
-              MentoringInfoData?.mentorUuid ? MentoringInfoData?.mentorUuid : ''
-            }
-          />
-          <NowDate />
-          <Calendar mentoringSessionList={mentoringSessionList} />
-        </div>
-      </section>
-
+      <MentorSection
+        mentorUuid={
+          MentoringInfoData?.mentorUuid ? MentoringInfoData?.mentorUuid : ''
+        }
+        mentoringSessionList={mentoringSessionList}
+      />
       {/* Right Section */}
       <section className="flex-1 mt-6 sm:p-6 w-full">
         <div className="max-w-4xl mx-auto space-y-6">
