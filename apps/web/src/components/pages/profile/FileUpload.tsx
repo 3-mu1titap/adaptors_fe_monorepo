@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { uploadFileToS3 } from '../../../actions/common/awsMediaUploader';
 import { uploadProfileIamge } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+import JoinStepButton from '../../ui/Button/NextButton';
 import FitImage from '../../ui/image/fit-image';
 
 export default function FileUpload({

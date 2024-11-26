@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { postMenteeProfile } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
 import { MenteeProfileRequestType } from '../../types/profile/RequestType';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+import JoinStepButton from '../../ui/Button/NextButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import JoinSelect from '../../ui/select/JoinSelect';
 import '../member/index.css';

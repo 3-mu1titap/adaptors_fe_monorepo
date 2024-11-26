@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { postMentorProfile } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
 import { MentorProfileRequestType } from '../../types/profile/RequestType';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+import JoinStepButton from '../../ui/Button/NextButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import '../member/index.css';
 

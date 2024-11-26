@@ -71,7 +71,7 @@ export default function JoinFunnel() {
   return (
     <>
       <FunnelLevel level={level} />
-      <section className="h-[78vh] sm:h-[70vh] bg-[#F9F9F9] sm:bg-transparent">
+      <section className="">
         <Funnel step={step}>
           <Funnel.Step name="account">
             <Account

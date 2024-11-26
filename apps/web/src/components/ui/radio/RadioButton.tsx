@@ -24,7 +24,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   const defaultColor = '#e5e7eb';
 
   return (
-    <div className={`flex gap-2 ${classname}`}>
+    <fieldset className={`flex gap-2 ${classname}`}>
       {options.map((option, index) => (
         <label
           key={index}
@@ -53,7 +53,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           </div>
         </label>
       ))}
-    </div>
+    </fieldset>
   );
 };
 

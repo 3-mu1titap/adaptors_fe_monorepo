@@ -1,10 +1,16 @@
 'use client';
-import { Eye, EyeOff } from 'lucide-react';
+import PasswordViewer from '@components/form/PasswordViewer';
+import { Input } from '@components/ui/input/CommonInput';
 import { useState } from 'react';
 import { z } from 'zod';
 import { checkAccountId } from '../../../actions/auth/auth';
 import { accountFormData, accountSchema } from '../../form/signUpSchema';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+
+import InnerButton from '@components/ui/Button/InnerButton';
+import NextButton from '@components/ui/Button/NextButton';
+import Gutter from '@components/ui/Gutter';
+import TextH2 from '@components/ui/Text/TextH2';
+import ErrorToast from '@components/ui/Toast/ErrorToast';
 import RadioButton from '../../ui/radio/RadioButton';
 import './index.css';
 
@@ -33,6 +39,7 @@ export default function Account({
 }: JoinField1Props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [confirmButton, setConfirmButton] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -74,6 +81,8 @@ export default function Account({
           }));
         } else if (data === 200) {
           setConfirmId(true);
+          setConfirmButton(true);
+          // toast.success('사용 가능한 아이디입니다.');
           setErrors((prev) => ({ ...prev, accountId: '' }));
         }
       } catch (error) {
@@ -122,111 +131,95 @@ export default function Account({
   };
 
   return (
-    <div className=" py-2 space-y-1 h-full flex flex-col justify-between">
-      <span>
-        <h2 className="text-2xl font-bold mb-2">Role</h2>
-        <RadioButton
-          name="role"
-          options={[
-            { label: '멘티 + 멘토링 참가', value: 'MENTEE' },
-            { label: '멘토 + 멘토링 운영', value: 'MENTOR' },
-          ]}
-          selectedValue={formData.role}
-          onChange={handleRadioChange}
-          classname="flex-col"
+    <div className="py-2">
+      <TextH2 text="Role" />
+      <RadioButton
+        name="role"
+        options={[
+          { label: '멘티 + 멘토링 참가', value: 'MENTEE' },
+          { label: '멘토 + 멘토링 운영', value: 'MENTOR' },
+        ]}
+        selectedValue={formData.role}
+        onChange={handleRadioChange}
+        classname="flex-col"
+      />
+      <Gutter size={2} />
+      <TextH2 text="Account" />
+      {/* 아이디 */}
+      <fieldset className="relative flex items-center w-full rounded-xl bg-white focus-within:ring-2 focus-within:ring-yellow-300 mb-2">
+        <Input
+          type="text"
+          name="accountId"
+          value={formData.accountId}
+          onChange={handleChange}
+          placeholder="아이디"
         />
-        <div className="">
-          <h2 className="text-2xl font-bold mt-4 mb-2">Account</h2>
-          {/* 아이디 */}
-          <div className="relative flex items-center w-full rounded-xl bg-white focus-within:ring-2 focus-within:ring-yellow-300">
-            <input
-              type="text"
-              name="accountId"
-              value={formData.accountId}
-              onChange={handleChange}
-              placeholder="아이디"
-              className=" custom-input"
-            />
-            <button
-              className="absolute right-2 px-2 py-1 bg-[#F8D448] text-white text-[11px] font-medium rounded-[0.5rem] hover:bg-[#e5c340] transition-colors"
-              onClick={() => checkDuplicate('accountId')}
-              type="button"
-            >
-              중복확인
-            </button>
-          </div>
-          <p className={`error ${errors.accountId ? 'visible' : 'invisible'}`}>
-            {errors.accountId}
-          </p>
-          {/* 이메일 */}
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="이메일"
-            className="custom-input"
+        <InnerButton
+          onClick={() => checkDuplicate('accountId')}
+          title="중복확인"
+          colorType="primary"
+          isDisabled={confirmButton}
+        />
+        {errors.accountId && (
+          <ErrorToast errorMessage={errors.accountId} errorName="accountId" />
+        )}
+      </fieldset>
+      {/* 이메일 */}
+      <fieldset className="relative mb-2">
+        <Input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="이메일"
+        />
+        {errors.email && (
+          <ErrorToast errorMessage={errors.email} errorName="email" />
+        )}
+      </fieldset>
+      {/* 비밀번호 */}
+      <fieldset className="relative mb-2">
+        <Input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="비밀번호"
+        />
+        <PasswordViewer
+          isTrue={showPassword}
+          onClick={togglePasswordVisibility}
+        />
+        {errors.password && (
+          <ErrorToast errorMessage={errors.password} errorName="password" />
+        )}
+      </fieldset>
+      {/* 비밀번호 확인 */}
+      <fieldset className="relative mb-2">
+        <Input
+          type={showConfirmPassword ? 'text' : 'password'}
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)} // 함수로 감싸기
+          placeholder="비밀번호 확인"
+        />
+        <PasswordViewer
+          isTrue={showConfirmPassword}
+          onClick={toggleConfirmPasswordVisibility}
+        />
+        {confirmPassword !== formData.password && (
+          <ErrorToast
+            errorMessage="비밀번호가 일치하지 않습니다"
+            errorName="confirmPassword"
           />
-          <p className={`error ${errors.email ? 'visible' : 'invisible'}`}>
-            {errors.email}
-          </p>
-          {/* 비밀번호 */}
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="비밀번호"
-              className="custom-input"
-            />
-            <button
-              type="button"
-              className="absolute right-0 top-0 h-full px-3 text-gray-400 hover:text-black"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
-            </button>
-          </div>
-          <p
-            className={`error ${errors.password ? 'visible m-0' : 'invisible'}`}
-          >
-            {errors.password}
-          </p>
-          {/* 비밀번호 확인 */}
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? 'text' : 'password'}
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)} // 함수로 감싸기
-              placeholder="비밀번호 확인"
-              className="custom-input"
-            />
-            <button
-              type="button"
-              className="absolute right-0 top-0 h-full px-3 text-gray-400 hover:text-black"
-              onClick={toggleConfirmPasswordVisibility}
-            >
-              {showConfirmPassword ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
-            </button>
-          </div>
-          <p
-            className={`error ${confirmPassword !== formData.password ? 'visible m-0' : 'invisible'}`}
-          >
-            비밀번호가 일치하지 않습니다
-          </p>
-        </div>
-      </span>
-      <JoinStepButton
+        )}
+      </fieldset>
+
+      <NextButton
+        className="fixed bottom-5 left-[50%] translate-x-[-50%] md:relative md:bottom-auto w-[80%] md:w-full"
+        text="다음"
+        colorType="primary"
+        textColor="text-black"
         onClick={onClickNextButton}
         disabled={false} //!validateForm1(formData)
       />

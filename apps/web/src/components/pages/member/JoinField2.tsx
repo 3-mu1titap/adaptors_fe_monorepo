@@ -1,4 +1,5 @@
 'use client';
+import NextButton from '@components/ui/Button/NextButton';
 import { useState } from 'react';
 import { z } from 'zod';
 import {
@@ -6,7 +7,7 @@ import {
   informationSchema,
   validateForm,
 } from '../../form/signUpSchema';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+
 export interface JoinField2Props {
   formData: informationFormData;
   setFormData: React.Dispatch<React.SetStateAction<informationFormData>>;
@@ -153,7 +154,7 @@ export default function Information({
           입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
         </p>
       </span>
-      <JoinStepButton
+      <NextButton
         onClick={onClickNextButton}
         disabled={!validateForm(formData, informationSchema)}
       />
