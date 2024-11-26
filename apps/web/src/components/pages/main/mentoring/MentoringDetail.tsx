@@ -20,7 +20,7 @@ const reviews = [
     title: 'Good, but could be better',
     comment:
       "The product is good overall, but there's room for improvement in terms of durability.",
-    score: 3.5,
+    score: 5.0,
   },
   {
     reviewerId: 'tech_enthusiast',
@@ -36,25 +36,14 @@ export default async function MentoringCalendar({
   mentoringDate: string;
 }) {
   const mentoringSessionList = await GetMentoringSessionList(
-    'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3'
+    'f7636d8c-1a1f-46a9-86ba-8868e07e8260'
   );
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
-    'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3'
+    'f7636d8c-1a1f-46a9-86ba-8868e07e8260'
   );
   return (
     <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
       {/* Left Section */}
-      {/* <section className="w-[350px] p-6 bg-white border-r border-gray-200">
-        <div className="space-y-6">
-          <MentoProfile
-            mentorUuid={
-              MentoringInfoData?.mentorUuid ? MentoringInfoData?.mentorUuid : ''
-            }
-          />
-          <NowDate />
-          <Calendar mentoringSessionList={mentoringSessionList} />
-        </div>
-      </section> */}
       <MentorSection
         mentorUuid={
           MentoringInfoData?.mentorUuid ? MentoringInfoData?.mentorUuid : ''
