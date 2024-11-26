@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthImage from '../../../assets/images/AuthImage';
+import AuthImage from '../../assets/images/AuthImage';
 
 interface AuthFrameProps {
   children: React.ReactNode;

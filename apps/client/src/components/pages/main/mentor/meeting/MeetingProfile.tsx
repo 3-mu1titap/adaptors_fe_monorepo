@@ -1,4 +1,4 @@
-import MoreIcon from '../../../../../assets/icons/More';
+import MoreIcon from '../../../../assets/icons/More';
 import FitImage from '../../../../ui/image/fit-image';
 
 function MeetingProfile() {

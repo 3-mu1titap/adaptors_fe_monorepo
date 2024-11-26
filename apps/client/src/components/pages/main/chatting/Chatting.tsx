@@ -79,7 +79,7 @@ function Chatting() {
   };
 
   useEffect(() => {
-    const chatServiceUrl = `http://3.35.228.51:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    const chatServiceUrl = `http://43.200.249.170:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
 
     const eventSource = new EventSourcePolyfill(chatServiceUrl, {
       heartbeatTimeout: 86400000,

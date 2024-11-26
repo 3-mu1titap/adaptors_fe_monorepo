@@ -1,7 +1,6 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { participantType } from '../../components/types/main/meeting/meetingTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
 // 참가자 관리

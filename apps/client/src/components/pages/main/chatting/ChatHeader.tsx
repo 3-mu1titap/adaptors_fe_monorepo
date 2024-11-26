@@ -1,4 +1,4 @@
-import MyCourseIcon from '../../../../assets/icons/MyCourse';
+import MyCourseIcon from '../../../assets/icons/MyCourse';
 import { participantType } from '../../../types/main/meeting/meetingTypes';
 
 function ChatHeader({ participants }: { participants: participantType[] }) {

@@ -1,6 +1,6 @@
 'use client';
 import { signIn } from 'next-auth/react';
-import KakaoLogo from '../../../assets/icons/KakaoLogo';
+import KakaoLogo from '../../assets/icons/KakaoLogo';
 
 export default function KakaoLogin() {
   return (

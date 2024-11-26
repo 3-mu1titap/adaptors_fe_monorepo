@@ -135,6 +135,8 @@ export default function Meeting() {
 
   async function leaveRoom() {
     await room?.disconnect();
+    setIsCameraOn(true);
+    setIsMicOn(true);
     setRoom(null);
     setLocalTrack(undefined);
     setRemoteTracks([]);

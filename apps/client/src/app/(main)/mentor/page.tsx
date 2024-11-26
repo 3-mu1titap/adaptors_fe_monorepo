@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { MentoringDataType } from '../../../components/types/main/mentor/mentoringTypes';
 import { GetMentoringList } from '../../../actions/mentoring/mentoringAction';
-import PlusIcon from '../../../../../../packages/ui/assets/icons/Plus';
 import Mentoring from '../../../components/pages/main/mentor/Mentoring';
+import PlusIcon from '../../../components/assets/icons/Plus';
 
 export const metadata: Metadata = {
   title: `Home`,

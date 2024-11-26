@@ -1,4 +1,4 @@
-import FilterIcon from '../../../../../assets/icons/Filter';
+import FilterIcon from '../../../../assets/icons/Filter';
 import MeetingProfile from '../meeting/MeetingProfile';
 
 function CalendarHeader() {
