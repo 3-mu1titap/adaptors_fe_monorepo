@@ -16,11 +16,11 @@ function BlackListComponent() {
     { id: 8, mentorthumnail: ' ', mentorname: '홍기동이' },
   ];
   return (
-    <div className="container mx-auto ">
-      <div className="flex flex-col  max-w-screen-xl mx-auto">
+    <div className="container mx-auto">
+      <div className="flex flex-col  max-w-screen-xl">
         <h1 className="text-3xl font-bold py-12 px-20">블랙리스트 목록</h1>
 
-        <ul className="flex flex-col  mx-auto max-w-screen-xl gap-y-4 ">
+        <ul className="flex flex-col max-w-screen-xl gap-y-4 sm:max-w-[11rem] sm:min-w-[10rem]">
           {mentorlist.map((item) => (
             <BlackListCard CardItem={item} />
           ))}

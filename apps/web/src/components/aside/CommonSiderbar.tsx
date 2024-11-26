@@ -14,7 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@repo/ui/components/ui/sidebar';
-
+import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
 import { SidebarType } from '@components/types/navigation/navigationTypes';
 function CommonSidebar() {
   const pathname = usePathname();
@@ -65,7 +65,7 @@ function CommonSidebar() {
   }, [pathname]);
 
   return (
-    <Sidebar>
+    <Sidebar className="absolute top-56 h-[35rem]">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem></SidebarMenuItem>
@@ -77,7 +77,7 @@ function CommonSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem
-                  className={`cursor-pointer items-center border-l-8 border-transparent hover:border-adaptorsBlue py-4 px-2 ${
+                  className={`cursor-pointer items-center hover:border-adaptorsBlue py-4 px-2 ${
                     item.isActive ? 'border-adaptorsBlue' : 'border-transparent'
                   }`}
                   key={item.label}
@@ -85,7 +85,7 @@ function CommonSidebar() {
                   <SidebarMenuButton asChild>
                     <Link className="flex items-center gap-4" href={item.href}>
                       <span
-                        className={`whitespace-nowrap text-xl ${
+                        className={`whitespace-nowrap text-2xl ${
                           item.isActive
                             ? 'text-adaptorsBlue'
                             : 'text-adaptorsGray'

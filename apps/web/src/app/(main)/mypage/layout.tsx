@@ -6,12 +6,12 @@ import {
 } from '@repo/ui/components/ui/sidebar';
 function Layout({ children }: { childredn: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-full">
       {/* <Sidebar /> */}
-      <SidebarProvider>
+      <SidebarProvider className="">
         <CommonSidebar />
         <main className="w-full h-auto overflow-y-auto transition-all duration-300 ml-2 ">
-          <SidebarTrigger />
+          <SidebarTrigger className="" />
           {children}
         </main>
       </SidebarProvider>
