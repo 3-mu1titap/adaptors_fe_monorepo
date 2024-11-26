@@ -18,11 +18,11 @@ declare module 'next-auth' {
     } & DefaultSession['user'];
   }
 }
+
 declare module 'next-auth/jwt' {
   interface JWT {
-    accessToken: string; // accessToken 추가
-    refreshToken: string; // refreshToken 추가
-    uuid: string; // uuid 추가
-    AccessTokenExpiredTime: number; // AccessTokenExpiredTime 추가
+    accessToken: string;
+    refreshToken: string;
+    uuid: string;
   }
 }

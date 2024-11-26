@@ -102,6 +102,22 @@ export const options: NextAuthOptions = {
         token.uuid = user.uuid;
         token.role = user.role;
       }
+      // const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
+      // const expiredDate = new Date(payload.exp * 1000);
+
+      // if (Date.now() > expiredDate.getTime() && token.refreshToken) {
+      //   console.log('토큰만료됨...');
+      //   try {
+      //     const data = await refreshToken(token.refreshToken as string);
+      //     token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
+      //     if (data.ok) {
+      //       console.log('토큰 재발급 성공');
+      //     }
+      //   } catch (error) {
+      //     console.error('refreshToken 만료:', error);
+      //     return { ...token, redirect: '/login' };
+      //   }
+      // }
       return token;
     },
 
@@ -115,6 +131,15 @@ export const options: NextAuthOptions = {
       }
       return session;
     },
+
+    // 리다이렉트 콜백 추가
+    // async redirect({ url, baseUrl }) {
+    //   if (url === '/login') {
+    //     // 리프레시 토큰이 만료되었을 때, login 페이지로 강제로 리다이렉트
+    //     return `${baseUrl}/login`; // 여기서 baseUrl은 기본적으로 사이트의 URL입니다.
+    //   }
+    //   return baseUrl;
+    // },
   },
   pages: {
     signIn: '/login',
