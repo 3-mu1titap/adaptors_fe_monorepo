@@ -8,7 +8,7 @@ import { CommonLayout } from '@components/common/commomLayout';
 import BlackListComponent from '@components/pages/main/mypage/blacklist/page';
 function page() {
   return (
-    <CommonLayout>
+    <CommonLayout className="h-auto">
       <BlackListComponent />
     </CommonLayout>
   );
