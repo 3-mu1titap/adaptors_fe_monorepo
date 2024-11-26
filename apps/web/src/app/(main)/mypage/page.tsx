@@ -1,10 +1,15 @@
 import React from 'react';
-import Sidebar from '@components/pages/main/mypage/sidebar/sidebar';
+import CommonSidebar from '@components/aside/CommonSiderbar';
+import {
+  SidebarProvider,
+  SidebarTrigger,
+} from '@repo/ui/components/ui/sidebar';
 import { CommonLayout } from '@components/common/commomLayout';
+import BlackListComponent from '@components/pages/main/mypage/blacklist/page';
 function page() {
   return (
     <CommonLayout>
-      <Sidebar />
+      <BlackListComponent />
     </CommonLayout>
   );
 }

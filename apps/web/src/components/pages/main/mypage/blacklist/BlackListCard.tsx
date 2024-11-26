@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardHeader,
 } from '@repo/ui/components/ui/card';
-import { BlackListType } from '@components/types/mypage/blacklistType';
+import { BlackListType } from '../../../../types/mypage/blacklistType';
 function BlackListCard({ CardItem }: { CardItem: BlackListType }) {
   return (
     <li className="space-x-14 flex min-w-[20rem] justify-between sm:space-x-5 sm:max-w-screen-sm sm:min-w-[40rem] md:min-w-[45rem] md:max-w-screen-md  lg:min-w-[65rem] lg:max-w-screen-xl py-3 space rounded-md p-2 max-w-screen-xl  mx-auto items-center hover:shadow-lg transition-shadow-md duration-200 ease-in-out">
