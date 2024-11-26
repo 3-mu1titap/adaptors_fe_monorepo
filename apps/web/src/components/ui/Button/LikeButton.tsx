@@ -2,17 +2,20 @@
 import Heart from '@components/assets/icons/Heart';
 import { cn } from '@repo/ui/lib/utils';
 import { useState } from 'react';
+import { postLikeReaction } from 'src/actions/Like/like';
 
 interface SocialCounterProps {
   count: number;
   text?: string;
   className?: string;
+  mentorUuid: string;
 }
 
 export default function LikeButton({
   count,
   text = 'Is Good',
   className,
+  mentorUuid,
 }: SocialCounterProps) {
   const [isLiked, setIsLiked] = useState(false);
   const formatCount = (count: number) => {
@@ -26,7 +29,7 @@ export default function LikeButton({
   };
   const handleLikeButton = () => {
     setIsLiked((prev) => !prev);
-    //좋아요요청
+    postLikeReaction(mentorUuid);
   };
 
   return (
