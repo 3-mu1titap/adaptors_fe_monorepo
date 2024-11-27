@@ -13,13 +13,19 @@ interface JoinSelectProps {
   defaultValue?: string;
   onChange?: (value: string) => void;
   name?: string; // name 추가
+  mainColor?: string;
+  hoverColor?: string;
+  className?: string;
 }
 
-export default function JoinSelect({
+export default function Select({
   options,
   defaultValue,
   onChange,
   name,
+  mainColor = 'yellow-300',
+  hoverColor = 'yellow-100',
+  className = '',
 }: JoinSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(
@@ -68,11 +74,12 @@ export default function JoinSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-labelledby="custom-select-label"
-        className="relative w-full bg-white border border-gray-300 pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
+        className={`relative w-full bg-white border border-gray-300 shadow-sm pl-3 pr-10 py-2 text-left cursor-default 
+          focus:outline-none focus:ring-1 focus:ring-${mainColor} focus:border-${mainColor} sm:text-sm rounded-xl ${className}`}
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
       >
-        <span className="block truncate text-md">
+        <span className="block truncate text-lg">
           {selectedOption ? selectedOption.label : '선택하세요'}
         </span>
         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -82,7 +89,7 @@ export default function JoinSelect({
 
       {isOpen && (
         <ul
-          className="absolute z-10 w-full bg-white shadow-lg max-h-60 rounded-md pb-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+          className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
           tabIndex={-1}
           role="listbox"
           aria-labelledby="custom-select-label"
@@ -95,16 +102,16 @@ export default function JoinSelect({
               key={option.value}
               className={`${
                 selectedOption?.value === option.value
-                  ? 'text-white bg-yellow-600'
+                  ? `text-white bg-${mainColor}`
                   : 'text-gray-900'
-              } cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-yellow-100 hover:text-gray-900`}
+              } cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-${hoverColor} hover:bg-[#DFEBFF] hover:text-gray-900`}
               id={option.value}
               role="option"
               aria-selected={selectedOption?.value === option.value}
               onClick={() => handleSelect(option)}
             >
               <span
-                className={`block truncate text-md ${
+                className={`block truncate text-lg ${
                   selectedOption?.value === option.value
                     ? 'font-semibold'
                     : 'font-normal'
@@ -116,8 +123,6 @@ export default function JoinSelect({
           ))}
         </ul>
       )}
-
-      {/* hidden input field to handle form submission */}
       {name && selectedOption && (
         <input type="hidden" name={name} value={selectedOption.value} />
       )}

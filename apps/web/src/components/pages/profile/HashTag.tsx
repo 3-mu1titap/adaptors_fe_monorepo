@@ -5,7 +5,8 @@ import {
   Tag,
 } from '../../../actions/profile/hashtagData';
 import useUserStore from '../../../store/uuidStore';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+
+import NextButton from '@components/ui/Button/NextButton';
 import CheckboxButton from '../../ui/checkbox/CheckBox';
 
 export default function HashTag({
@@ -56,7 +57,7 @@ export default function HashTag({
       >
         해시태그를 1개 이상 선택해 주세요
       </p>
-      <JoinStepButton onClick={postHashtag} text="완료하기" />
+      <NextButton onClick={postHashtag} text="완료하기" />
     </section>
   );
 }

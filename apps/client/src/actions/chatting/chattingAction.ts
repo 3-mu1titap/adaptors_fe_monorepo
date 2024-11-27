@@ -2,14 +2,13 @@
 
 import { redirect } from 'next/navigation';
 import {
-  chatDataType,
   chatMemberDataType,
   prevChatResType,
 } from '../../components/types/main/chatting/chattingTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
-const mentoringUuid = 'f2a5b181-f1c3-4ad9-aa73-3d1bca4f5ad3';
+const mentoringUuid = '05b8b889-9798-4f31-88e5-f6b967cb069d';
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
 // 기존 채팅 데이터 불러오기

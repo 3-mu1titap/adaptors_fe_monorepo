@@ -1,5 +1,5 @@
-import { Config } from 'tailwindcss';
 import sharedConfig from '@repo/tailwind-config';
+import { Config } from 'tailwindcss';
 
 const config: Pick<Config, 'presets' | 'theme' | 'plugins'> = {
   presets: [sharedConfig],
@@ -20,6 +20,7 @@ const config: Pick<Config, 'presets' | 'theme' | 'plugins'> = {
         adaptorsYellow: '#F6D84C',
         adaptorsBlue: '#0060FF',
         adaptorsGray: '#ACACAC',
+        adaptorsSkyBlue: '#DFEBFF',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

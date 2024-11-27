@@ -1,10 +1,11 @@
 'use client';
 
+import { Input } from '@components/ui/input/CommonInput';
 import { useState } from 'react';
 import { postMenteeProfile } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
 import { MenteeProfileRequestType } from '../../types/profile/RequestType';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+import JoinStepButton from '../../ui/Button/NextButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import JoinSelect from '../../ui/select/JoinSelect';
 import '../member/index.css';
@@ -81,9 +82,9 @@ export default function MenteeProfile({
       }}
       className="py-2 space-y-1 h-full flex flex-col justify-between"
     >
-      <div className="space-y-2 ">
+      <div className="space-y-2">
         <h2 className="text-2xl font-bold">Profile</h2>
-        <div className="space-y-2 flex-1">
+        <fieldset className="space-y-2 flex-1">
           <label className="block text-sm font-medium text-gray-700">
             취업 상태
           </label>
@@ -93,12 +94,12 @@ export default function MenteeProfile({
             defaultValue="취준생"
             onChange={(value) => setOccupationStatus(value)}
           />
-        </div>
-        <div className="mt-2 space-y-2 flex-1">
+        </fieldset>
+        <fieldset className="mt-2 space-y-2 flex-1">
           <label className="block text-sm font-medium text-gray-700">
             입사 지원 횟수
           </label>
-          <input
+          <Input
             name="jobApplicationCount"
             type="number"
             value={jobApplicationCount}
@@ -106,9 +107,9 @@ export default function MenteeProfile({
             placeholder="ex) 5"
             className="custom-div number"
           />
-        </div>
-        <span className="sm:flex gap-2 ">
-          <div className="mt-2 space-y-2 flex-1">
+        </fieldset>
+        <div className="sm:flex gap-2 ">
+          <fieldset className="mt-2 space-y-2 flex-1">
             <label className="block text-sm font-medium text-gray-700">
               최종 학력
             </label>
@@ -118,22 +119,22 @@ export default function MenteeProfile({
               defaultValue="대졸"
               onChange={(value) => setEducationLevel(value)}
             />
-          </div>
-          <div className=" mt-2 space-y-2 flex-1">
+          </fieldset>
+          <fieldset className=" mt-2 space-y-2 flex-1">
             <label className="block text-sm font-medium text-gray-700">
               출생년도
             </label>
-            <input
+            <Input
               name="age"
               type="number"
               value={age}
               onChange={(e) => setAge(Number(e.target.value))}
-              placeholder="ex) 20"
+              placeholder="ex) 2000"
               className="custom-div number"
             />
-          </div>
-        </span>
-        <div className="mt-2 space-y-2">
+          </fieldset>
+        </div>
+        <fieldset className="mt-2 space-y-2">
           <label className="block text-sm font-medium text-gray-700">
             성별
           </label>
@@ -147,13 +148,13 @@ export default function MenteeProfile({
             selectedValue={gender}
             onChange={(value) => setGender(value as 'FEMALE' | 'MALE' | 'ATC')}
           />
-        </div>
-        <span className="flex gap-2 ">
-          <div className="mt-2  space-y-2">
+        </fieldset>
+        <div className="flex gap-2 ">
+          <fieldset className="mt-2 flex-1 space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               직종
             </label>
-            <input
+            <Input
               name="jobType"
               type="text"
               value={jobType}
@@ -161,12 +162,12 @@ export default function MenteeProfile({
               placeholder="ex) IT"
               className="custom-div"
             />
-          </div>
-          <div className="mt-2  space-y-2">
+          </fieldset>
+          <fieldset className="mt-2 flex-1 space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               경력
             </label>
-            <input
+            <Input
               name="jobExperience"
               type="text"
               value={jobExperience}
@@ -174,8 +175,8 @@ export default function MenteeProfile({
               placeholder="ex) 3년"
               className="custom-div"
             />
-          </div>
-        </span>
+          </fieldset>
+        </div>
       </div>
       <p className={`error ${error ? 'visible mt-3' : 'invisible'}`}>
         입력되지 않은 값이 있습니다. 모든 값을 입력해주세요

@@ -1,23 +1,28 @@
+import LikeButton from '@components/ui/Button/LikeButton';
+import { getProfileIamge } from 'src/actions/profile/getProfileData';
 import Share from '../../../assets/icons/Share';
 import FitImage from '../../../ui/image/fit-image';
-export default function MentoProfile({ mentorUuid }: { mentorUuid: string }) {
+export default async function MentoProfile({
+  mentorUuid,
+}: {
+  mentorUuid: string;
+}) {
   //멘토 프로필 요청하기
-  const mentorprofile = 1;
+  const mentorProfile = await getProfileIamge(mentorUuid);
   return (
     <div className="space-y-4">
-      <div className="hidden sm:block relative w-full aspect-square rounded-lg overflow-hidden">
-        <FitImage
-          src="/assets/images/intro1.svg"
-          alt="Profile"
-          className="object-cover"
-        />
-      </div>
-      <div>
-        <h1 className="text-xl font-bold">@Jason Ahn</h1>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <span>78K Reviews</span>
-          <span>•</span>
-          <span className="text-red-500">♥ 213K is Good</span>
+      <FitImage
+        src={mentorProfile.profileImageUrl}
+        alt="Profile"
+        className="object-cover p-4"
+      />
+
+      <div className="px-3">
+        <h1 className="text-3xl font-bold mb-3">@ {mentorProfile.nickName}</h1>
+        <div className="flex justify-between w-full mb-3">
+          {/* 리뷰 수 들어갈부분 */}
+          <LikeButton count={29823} mentorUuid={mentorUuid} />
+          <LikeButton count={200823} mentorUuid={mentorUuid} />
         </div>
       </div>
       <button className="w-full px-4 py-3 sm:py-4 bg-gray-100 rounded-lg text-lg font-semibold flex gap-1 items-center justify-center">

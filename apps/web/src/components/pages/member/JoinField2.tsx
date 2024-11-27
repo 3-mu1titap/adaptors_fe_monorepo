@@ -1,4 +1,6 @@
 'use client';
+import NextButton from '@components/ui/Button/NextButton';
+import { Input } from '@components/ui/input/CommonInput';
 import { useState } from 'react';
 import { z } from 'zod';
 import {
@@ -6,7 +8,7 @@ import {
   informationSchema,
   validateForm,
 } from '../../form/signUpSchema';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+
 export interface JoinField2Props {
   formData: informationFormData;
   setFormData: React.Dispatch<React.SetStateAction<informationFormData>>;
@@ -80,14 +82,14 @@ export default function Information({
         <h2 className="text-2xl font-bold ">Personal Information</h2>
         <div className="space-y-2">
           {/* Name Field */}
-          <div className="space-y-1">
+          <fieldset className="space-y-1">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
               이름
             </label>
-            <input
+            <Input
               value={formData.name}
               id="name"
               name="name"
@@ -99,16 +101,16 @@ export default function Information({
             <p className={`error ${errors.name ? 'visible m-0' : 'invisible'}`}>
               {errors.name}
             </p>
-          </div>
+          </fieldset>
           {/* NickName Field */}
-          <div className="space-y-1">
+          <fieldset className="space-y-1">
             <label
               htmlFor="nickName"
               className="block text-sm font-medium text-gray-700"
             >
               닉네임
             </label>
-            <input
+            <Input
               name="nickName"
               id="nickName"
               value={formData.nickName}
@@ -122,16 +124,16 @@ export default function Information({
             >
               {errors.nickName}
             </p>
-          </div>
+          </fieldset>
           {/* Phone Number Field */}
-          <div className="space-y-1">
+          <fieldset className="space-y-1">
             <label
               htmlFor="phoneNumber"
               className="block text-sm font-medium text-gray-700"
             >
               전화번호
             </label>
-            <input
+            <Input
               id="phoneNumber"
               name="phoneNumber"
               value={formData.phoneNumber}
@@ -145,7 +147,7 @@ export default function Information({
             >
               {errors.phoneNumber}
             </p>
-          </div>
+          </fieldset>
         </div>
         <p
           className={`error ${validateForm(formData, informationSchema) && showErrorMessege ? 'visible mt-3' : 'invisible'}`}
@@ -153,7 +155,7 @@ export default function Information({
           입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
         </p>
       </span>
-      <JoinStepButton
+      <NextButton
         onClick={onClickNextButton}
         disabled={!validateForm(formData, informationSchema)}
       />

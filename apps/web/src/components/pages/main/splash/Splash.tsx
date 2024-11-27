@@ -1,9 +1,9 @@
 'use client';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
 import FitImage from '@components/ui/image/fit-image';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function Splash() {
   const router = useRouter();
