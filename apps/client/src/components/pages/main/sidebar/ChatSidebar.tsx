@@ -1,16 +1,4 @@
-import {
-  MessageCircle,
-  Phone,
-  Users,
-  Bell,
-  MoreVertical,
-  Search,
-  Smile,
-  Paperclip,
-  Send,
-  ImageIcon,
-  Settings,
-} from 'lucide-react';
+import { MoreVertical, Search } from 'lucide-react';
 import {
   Avatar,
   AvatarFallback,

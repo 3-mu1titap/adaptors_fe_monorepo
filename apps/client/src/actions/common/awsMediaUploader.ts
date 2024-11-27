@@ -1,3 +1,5 @@
+'use server';
+
 async function uploadFileToS3(file: File, folder: string) {
   const formData = new FormData();
   formData.append('fileName', file.name);

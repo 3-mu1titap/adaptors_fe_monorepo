@@ -1,9 +1,9 @@
 'use client';
 
-import { useAsideNavigationStore } from '../../../store/asideNavigationStore';
 import AdaptorsLogoIcon from '../../assets/icons/AdaptorsLogo';
 import ArrowLeftIcon from '../../assets/icons/ArrowLeft';
 import ContainerIcon from '../../assets/icons/Container';
+import { useAsideNavigationStore } from '../../../store/asideNavigationStore';
 import MeetingRoomNavCategories from './SidebarCategories';
 import { useEffect, useState } from 'react';
 
@@ -11,7 +11,6 @@ function Sidebar() {
   const { useNavigation, setUseNavigation } = useAsideNavigationStore();
   const [isVisible, setIsVisible] = useState(useNavigation);
   const [isHovered, setIsHovered] = useState(false);
-
   useEffect(() => {
     if (useNavigation) {
       setIsVisible(true);

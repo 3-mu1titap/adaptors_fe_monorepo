@@ -1,9 +1,9 @@
-import React from 'react';
-import ScrollToTopButton from '@components/util/ScrollToTopButton';
 import MainFooter from '@components/footer/MainFooter';
 import MainHeader from '@components/header/MainHeader';
+import ScrollToTopButton from '@components/util/ScrollToTopButton';
+import React from 'react';
 
-async function Layout({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <MainHeader />

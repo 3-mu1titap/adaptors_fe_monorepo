@@ -51,3 +51,13 @@ export interface prevChatResType {
   };
   hasNext: boolean;
 }
+
+// 채팅 내역 저장하는 타입
+export interface prevChatDataStoreType {
+  sessionUuid: string;
+  nickname: string;
+  profileUrl: string;
+  isNext: boolean;
+  messageNumber: number;
+  messages: chatDataType[];
+}
