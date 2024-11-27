@@ -5,7 +5,6 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import ChatHeader from './ChatHeader';
 import ChatSender from './ChatSender';
 import ChatView from './ChatView';
-import { participantType } from '../../../types/main/meeting/meetingTypes';
 import {
   chatDataType,
   prevChatResType,
@@ -14,6 +13,12 @@ import {
   getChattingData,
   postChat,
 } from '../../../../actions/chatting/chattingAction';
+import { participantType } from '../../../types/main/meeting/meetingTypes';
+import {
+  postExitMeeting,
+  postHeartbeat,
+  postJoinMeeting,
+} from '../../../../actions/meeting/meetingAction';
 
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
@@ -26,7 +31,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [getPrev, setGetPrev] = useState<boolean>(true);
   const [isNext, setIsNext] = useState<boolean>(true);
-  const [prevMessagePage, setPrevMessagePage] = useState<number>(1);
+  const [prevMessagePage, setPrevMessagePage] = useState<number>(0);
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,16 +84,17 @@ function Chatting({ participants }: { participants: participantType[] }) {
   };
 
   useEffect(() => {
-    const chatServiceUrl = `http://3.35.228.51:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
-    console.log(`Connecting to: ${chatServiceUrl}`);
+    const chatServiceUrl = `http://43.200.249.170:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
 
     const eventSource = new EventSourcePolyfill(chatServiceUrl, {
       heartbeatTimeout: 86400000,
     });
 
-    eventSource.onopen = () => {
-      console.log('SSE 연결이 성공적으로 열렸습니다.');
-    };
+    const heartbeatInterval = setInterval(async () => {
+      await postHeartbeat('ac419217-cb98-4334-8b78-8126aa0e57aa');
+    }, 30000);
+
+    eventSource.onopen = async () => {};
 
     const handleNewMessage = (event: any) => {
       setGetPrev(true);
@@ -100,22 +106,31 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
     eventSource.onerror = (error) => {
       console.error('EventSource 오류:', error);
+      postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
       eventSource.close();
     };
 
     return () => {
+      clearInterval(heartbeatInterval);
+      postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
       eventSource.close();
     };
   }, [mentoringSessionUuid]);
 
   const getMessageData = async (page: number) => {
-    const prevMessages = (await getChattingData(page)) as prevChatResType;
-    if (!prevMessages.hasNext) {
-      setIsNext(false);
+    try {
+      const prevMessages = (await getChattingData(page)) as prevChatResType;
+
+      if (!prevMessages.hasNext) {
+        setIsNext(false);
+      }
+      setPrevMessagePage((prev) => prev + 1);
+
+      const reversedMessages = prevMessages.content.content.reverse();
+      setMessages((prev) => [...reversedMessages, ...prev]);
+    } catch (error) {
+      console.error('메시지 데이터를 가져오는 중 오류 발생:', error);
     }
-    setPrevMessagePage((prev) => prev + 1);
-    const reversedMessages = prevMessages.content.content.reverse();
-    setMessages((prev) => [...reversedMessages, ...prev]);
   };
 
   useEffect(() => {
@@ -132,16 +147,12 @@ function Chatting({ participants }: { participants: participantType[] }) {
   useEffect(scrollToBottom, [messages]);
 
   const handleScroll = async (e: React.UIEvent<HTMLDivElement>) => {
-    setGetPrev(false);
     const target = e.currentTarget;
     if (target) {
       const { scrollTop } = target;
-      if (scrollTop === 0) {
-        console.log(isNext);
-        if (isNext) {
-          await getMessageData(prevMessagePage);
-          target.scrollTop = 400;
-        }
+      if (scrollTop === 0 && isNext) {
+        await getMessageData(prevMessagePage);
+        target.scrollTop = 400;
       }
     }
   };
@@ -153,7 +164,7 @@ function Chatting({ participants }: { participants: participantType[] }) {
         handleDrop={handleDrop}
         messages={messages}
         messagesEndRef={messagesEndRef}
-        handleScroll={handleScroll} // 스크롤 핸들러 전달
+        handleScroll={handleScroll}
       />
       <ChatSender
         handleSendMessage={handleSendMessage}

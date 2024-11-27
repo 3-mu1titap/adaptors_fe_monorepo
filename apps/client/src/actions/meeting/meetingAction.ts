@@ -1,13 +1,93 @@
 'use server';
 
-import { participantsData } from '../../components/datas/main/meeting/participantsData';
-import { participantType } from '../../components/types/main/meeting/meetingTypes';
+import { redirect } from 'next/navigation';
 import { commonResType } from '../../components/types/ResponseTypes';
 
-export async function getParticipantsData() {
+const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
+const nickName = '멘토';
+
+// 화상회의, 채팅 참가하기
+export async function postJoinMeeting(mentoringSessionUuid: string) {
   'use server';
-  const res: commonResType<participantType[]> = participantsData;
-  return res.result;
+  try {
+    const res = await fetch(
+      `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickName}`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+      }
+    );
+    console.log(res);
+    return true;
+  } catch (error) {
+    return redirect('/error?message=Failed to post join');
+  }
+}
+
+// 화상회의, 채팅 나가기
+export async function postExitMeeting(mentoringSessionUuid: string) {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickName}`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+      }
+    );
+    console.log(res);
+    return true;
+  } catch (error) {
+    return redirect('/error?message=Failed to post exit');
+  }
+}
+
+// heartbeat 쏘기
+export async function postHeartbeat(mentoringSessionUuid: string) {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickName}`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+// 참가자 관리
+export async function getParticipants(mentoringSessionUuid: string) {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.CHATSERVICE_URL}/api/v1/chat/getParticipants/${mentoringSessionUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    const result = (await res.json()) as commonResType<string[]>;
+    return result.result;
+  } catch (error) {
+    return redirect('/error?message=Failed to fetch participants');
+  }
 }
 
 const APPLICATION_SERVER_URL = 'http://localhost:6080';

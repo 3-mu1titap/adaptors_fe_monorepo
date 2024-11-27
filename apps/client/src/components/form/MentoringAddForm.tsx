@@ -1,27 +1,16 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import React, { useRef, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import {
-  SessionTimeDataType,
-  SessionTimeValidationType,
-  TopCategoryDataType,
-} from '../types/main/mentor/mentoringTypes';
-import {
-  GetTopCategoryList,
-  PostMentoring,
-  PostSessionTimeValidation,
-} from '../../actions/mentoring/mentoringAction';
-import { ko } from 'date-fns/locale';
+import { TopCategoryDataType } from '../types/main/mentor/mentoringTypes';
+import { PostMentoring } from '../../actions/mentoring/mentoringAction';
 import { uploadFileToS3 } from '../../actions/common/awsMediaUploader';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/toastui-editor.css';
 import color from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import Nouislider from '@x1mrdonut1x/nouislider-react';
-import Swal from 'sweetalert2';
+import FitImage from '../ui/image/fit-image';
 
 export interface MentoringCategory {
   topCategoryName: string;
@@ -43,7 +32,6 @@ export interface MentoringAddForm {
   name: string;
   description: string;
   detail: string;
-  mentorUuid: string;
   isReusable: boolean;
   thumbnailUrl: string;
   sessionList: MentoringSession[];
@@ -59,7 +47,6 @@ export default function MentoringForm({
     name: '',
     description: '',
     detail: '',
-    mentorUuid: '671a55ae-2346-407f-85e3-9cd39f4e3d10',
     isReusable: false,
     thumbnailUrl: '',
     sessionList: [],
@@ -126,115 +113,115 @@ export default function MentoringForm({
     });
   };
 
-  const handleSelectedDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    if (date) {
-      const deadline = new Date(date);
-      deadline.setDate(deadline.getDate() - 1);
-      setDeadlineDate(deadline);
-    } else {
-      setDeadlineDate(null);
-    }
-  };
+  // const handleSelectedDateChange = (date: Date | null) => {
+  //   setSelectedDate(date);
+  //   if (date) {
+  //     const deadline = new Date(date);
+  //     deadline.setDate(deadline.getDate() - 1);
+  //     setDeadlineDate(deadline);
+  //   } else {
+  //     setDeadlineDate(null);
+  //   }
+  // };
 
-  const handleStartTimeChange = (time: string) => {
-    setStartTime(time);
+  // const handleStartTimeChange = (time: string) => {
+  //   setStartTime(time);
 
-    if (time) {
-      const [hours, minutes] = time.split(':').map(Number);
-      const endDate = new Date();
-      endDate.setHours(hours);
-      endDate.setMinutes(minutes + 30);
+  //   if (time) {
+  //     const [hours, minutes] = time.split(':').map(Number);
+  //     const endDate = new Date();
+  //     endDate.setHours(hours);
+  //     endDate.setMinutes(minutes + 30);
 
-      const formattedEndTime = `${String(endDate.getHours()).padStart(2, '0')}:${String(endDate.getMinutes()).padStart(2, '0')}`;
-      setEndTime(formattedEndTime);
-    }
-  };
+  //     const formattedEndTime = `${String(endDate.getHours()).padStart(2, '0')}:${String(endDate.getMinutes()).padStart(2, '0')}`;
+  //     setEndTime(formattedEndTime);
+  //   }
+  // };
 
-  const handleEndTimeChange = (time: string) => {
-    if (time && startTime) {
-      const [startHours, startMinutes] = startTime.split(':').map(Number);
-      const [endHours, endMinutes] = time.split(':').map(Number);
+  // const handleEndTimeChange = (time: string) => {
+  //   if (time && startTime) {
+  //     const [startHours, startMinutes] = startTime.split(':').map(Number);
+  //     const [endHours, endMinutes] = time.split(':').map(Number);
 
-      const startDate = new Date();
-      startDate.setHours(startHours, startMinutes);
+  //     const startDate = new Date();
+  //     startDate.setHours(startHours, startMinutes);
 
-      const endDate = new Date();
-      endDate.setHours(endHours, endMinutes);
+  //     const endDate = new Date();
+  //     endDate.setHours(endHours, endMinutes);
 
-      if (endDate < new Date(startDate.getTime() + 30 * 60 * 1000)) {
-        alert('종료 시간은 시작 시간 30분 이후여야 합니다.');
-        return;
-      }
-    }
-    setEndTime(time);
-  };
+  //     if (endDate < new Date(startDate.getTime() + 30 * 60 * 1000)) {
+  //       alert('종료 시간은 시작 시간 30분 이후여야 합니다.');
+  //       return;
+  //     }
+  //   }
+  //   setEndTime(time);
+  // };
 
-  const handleSessionAdd = async () => {
-    if (selectedDate && startTime && endTime && deadlineDate) {
-      const newSession: MentoringSession = {
-        startDate: selectedDate,
-        endDate: selectedDate,
-        startTime,
-        endTime,
-        deadlineDate: deadlineDate,
-        minHeadCount: 2,
-        maxHeadCount: 5,
-        price: price,
-      };
-      const formattedDate = selectedDate.toISOString().split('T')[0];
-      const time: SessionTimeDataType = {
-        startDate: formattedDate,
-        endDate: formattedDate,
-        startTime,
-        endTime,
-      };
-      const sessionValidate: SessionTimeValidationType | null =
-        await PostSessionTimeValidation({ time });
-      if (
-        !sessionValidate?.isPossible &&
-        sessionValidate?.timeDuplicateResponse
-      ) {
-        const { startDate, endDate, startTime, endTime } =
-          sessionValidate?.timeDuplicateResponse;
-        const startDateStr = `${startDate[0]}-${String(startDate[1]).padStart(2, '0')}-${String(startDate[2]).padStart(2, '0')}`;
-        const message = `시간이 겹칩니다!<br/>${startDateStr} ${String(startTime[0]).padStart(2, '0')}:${String(startTime[1]).padStart(2, '0')} - ${String(endTime[0]).padStart(2, '0')}:${String(endTime[1]).padStart(2, '0')}에<br/> 이미 예약된 세션이 있습니다.`;
+  // const handleSessionAdd = async () => {
+  //   if (selectedDate && startTime && endTime && deadlineDate) {
+  //     const newSession: MentoringSession = {
+  //       startDate: selectedDate,
+  //       endDate: selectedDate,
+  //       startTime,
+  //       endTime,
+  //       deadlineDate: deadlineDate,
+  //       minHeadCount: 2,
+  //       maxHeadCount: 5,
+  //       price: price,
+  //     };
+  //     const formattedDate = selectedDate.toISOString().split('T')[0];
+  //     const time: SessionTimeDataType = {
+  //       startDate: formattedDate,
+  //       endDate: formattedDate,
+  //       startTime,
+  //       endTime,
+  //     };
+  //     const sessionValidate: SessionTimeValidationType | null =
+  //       await PostSessionTimeValidation({ time });
+  //     if (
+  //       !sessionValidate?.isPossible &&
+  //       sessionValidate?.timeDuplicateResponse
+  //     ) {
+  //       const { startDate, endDate, startTime, endTime } =
+  //         sessionValidate?.timeDuplicateResponse;
+  //       const startDateStr = `${startDate[0]}-${String(startDate[1]).padStart(2, '0')}-${String(startDate[2]).padStart(2, '0')}`;
+  //       const message = `시간이 겹칩니다!<br/>${startDateStr} ${String(startTime[0]).padStart(2, '0')}:${String(startTime[1]).padStart(2, '0')} - ${String(endTime[0]).padStart(2, '0')}:${String(endTime[1]).padStart(2, '0')}에<br/> 이미 예약된 세션이 있습니다.`;
 
-        Swal.fire({
-          toast: true,
-          icon: 'warning',
-          title: message,
-          customClass: {
-            title: 'text-lg font-semibold text-gray-800 text-center',
-            confirmButton:
-              'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
-            actions: '!grid !grid-cols-1',
-          },
-        });
-      } else {
-        setFormData((prevData) => ({
-          ...prevData,
-          sessionList: [...prevData.sessionList, newSession],
-        }));
-        setStartTime('');
-        setEndTime('');
-        setDeadlineDate(new Date());
-      }
-    } else {
-      Swal.fire({
-        toast: true,
-        icon: 'info',
-        title: '선택하지 않은 값을<br/> 선택해주세요.',
-        confirmButtonText: '확인',
-        customClass: {
-          title: 'text-lg font-semibold text-gray-800 text-center',
-          confirmButton:
-            'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
-          actions: '!grid !grid-cols-1',
-        },
-      });
-    }
-  };
+  //       Swal.fire({
+  //         toast: true,
+  //         icon: 'warning',
+  //         title: message,
+  //         customClass: {
+  //           title: 'text-lg font-semibold text-gray-800 text-center',
+  //           confirmButton:
+  //             'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
+  //           actions: '!grid !grid-cols-1',
+  //         },
+  //       });
+  //     } else {
+  //       setFormData((prevData) => ({
+  //         ...prevData,
+  //         sessionList: [...prevData.sessionList, newSession],
+  //       }));
+  //       setStartTime('');
+  //       setEndTime('');
+  //       setDeadlineDate(new Date());
+  //     }
+  //   } else {
+  //     Swal.fire({
+  //       toast: true,
+  //       icon: 'info',
+  //       title: '선택하지 않은 값을<br/> 선택해주세요.',
+  //       confirmButtonText: '확인',
+  //       customClass: {
+  //         title: 'text-lg font-semibold text-gray-800 text-center',
+  //         confirmButton:
+  //           'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
+  //         actions: '!grid !grid-cols-1',
+  //       },
+  //     });
+  //   }
+  // };
 
   const handleEditorChange = () => {
     const description = editorRef.current?.getInstance().getHTML();
@@ -320,7 +307,7 @@ export default function MentoringForm({
             hover:file:bg-indigo-100"
         />
         {formData.thumbnailUrl && (
-          <img
+          <FitImage
             src={`${formData.thumbnailUrl}`}
             alt="Thumbnail"
             className="mt-2 w-32 h-32 object-cover rounded"
@@ -346,7 +333,7 @@ export default function MentoringForm({
         />
       </div>
 
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
           세션 선택
         </label>
@@ -460,7 +447,7 @@ export default function MentoringForm({
             </ul>
           </div>
         )}
-      </div>
+      </div> */}
 
       <div className="mb-4">
         <Editor

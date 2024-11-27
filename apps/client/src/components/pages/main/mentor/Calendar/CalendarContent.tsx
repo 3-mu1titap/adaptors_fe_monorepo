@@ -2,17 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
-import {
-  formatDate,
-  DateSelectArg,
-  EventApi,
-  EventContentArg,
-} from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import koLocale from '@fullcalendar/core/locales/ko';
 import {
   ScheduleDataType,
   UserScheduleDataType,
@@ -33,7 +26,7 @@ const CalendarContent = ({
   scheduleList: UserScheduleDataType;
 }) => {
   useEffect(() => {
-    if (scheduleList.scheduleLists.length > 0) {
+    if (scheduleList && scheduleList.scheduleLists.length > 0) {
       const newEvents = scheduleList.scheduleLists.map((schedule) => ({
         id: schedule.mentoringSessionUuid,
         title: schedule.mentoringName,
@@ -46,7 +39,6 @@ const CalendarContent = ({
 
       setEvents(newEvents);
     }
-    console.log(scheduleList.scheduleLists);
   }, []);
 
   const now = new Date();
@@ -246,15 +238,12 @@ const CalendarContent = ({
   return (
     <section className="pt-3 px-3">
       <div className="panel mb-5">
-        <div className="calendar-wrapper">
-          <div className="grid grid-cols-10 items-center justify-items-center text-xl">
-            <div
-              className="col-span-2 cursor-pointer"
-              onClick={handleTitleClick}
-            >
+        <div className="calendar-wrapper mx-5">
+          <div className="flex flex-row justify-around items-center justify-items-center text-xl">
+            <div className="cursor-pointer" onClick={handleTitleClick}>
               {currentTitle}
             </div>
-            <div className="col-span-5 flex flex-row gap-x-2">
+            <div className="flex flex-row gap-x-2">
               <button
                 className="p-2 hover:bg-adaptorsBlue hover:text-white rounded"
                 onClick={handlePrev}
@@ -274,7 +263,7 @@ const CalendarContent = ({
                 &gt;
               </button>
             </div>
-            <div className="col-span-3 flex flex-row gap-x-2">
+            <div className="flex flex-row gap-x-2">
               <button
                 className={`px-4 py-2 rounded text-adaptorsBlue ${selectedView === 'dayGridMonth' ? 'bg-transparent border-b-2 shadow-sm' : 'hover:bg-adaptorsBlue hover:text-white'}`}
                 onClick={() => handleViewChange('dayGridMonth')}
@@ -299,7 +288,7 @@ const CalendarContent = ({
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{ left: '', center: '', right: '' }}
-            initialView="timeGridWeek"
+            initialView="dayGridMonth"
             editable={true}
             dayMaxEvents={true}
             // locale={koLocale}

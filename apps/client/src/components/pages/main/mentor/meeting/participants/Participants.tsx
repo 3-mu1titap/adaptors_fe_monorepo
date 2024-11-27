@@ -8,16 +8,26 @@ import {
   userType,
 } from '../../../../../types/main/meeting/meetingTypes';
 
-function Participants({ participants }: { participants: participantType[] }) {
+function Participants({
+  participants,
+  toggleParticipantMicrophone,
+  toggleParticipantCamera,
+}: {
+  participants: participantType[];
+  toggleParticipantMicrophone: (participantIdentity: string) => Promise<void>;
+  toggleParticipantCamera: (participantIdentity: string) => Promise<void>;
+}) {
   const [users, setUsers] = useState<userType[]>([]);
 
-  const toggleMic = (id: number) => {
-    setUsers(users.map((p) => (p.id === id ? { ...p, micOn: !p.micOn } : p)));
+  const toggleMic = (id: string) => {
+    setUsers(
+      users.map((p) => (p.userUuid === id ? { ...p, micOn: !p.micOn } : p))
+    );
   };
 
-  const toggleVideo = (id: number) => {
+  const toggleVideo = (id: string) => {
     setUsers(
-      users.map((p) => (p.id === id ? { ...p, videoOn: !p.videoOn } : p))
+      users.map((p) => (p.userUuid === id ? { ...p, videoOn: !p.videoOn } : p))
     );
   };
 
@@ -37,10 +47,12 @@ function Participants({ participants }: { participants: participantType[] }) {
       <div>
         {users.map((participant) => (
           <ParticipantsContent
-            key={participant.id}
+            key={participant.userUuid}
             participant={participant}
             toggleMic={toggleMic}
             toggleVideo={toggleVideo}
+            toggleParticipantMicrophone={toggleParticipantMicrophone}
+            toggleParticipantCamera={toggleParticipantCamera}
           />
         ))}
       </div>

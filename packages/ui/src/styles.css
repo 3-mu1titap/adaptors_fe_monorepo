@@ -72,16 +72,22 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
   ::-webkit-scrollbar {
+    display: none; /* 스크롤바를 아예 숨김 */
   }
 
+  /* 추가 스타일이 필요하지 않다면 아래의 스타일을 삭제합니다 */
   ::-webkit-scrollbar-track {
+    background-color: transparent; /* 배경을 투명하게 설정 */
   }
 
   ::-webkit-scrollbar-thumb {
+    background: transparent; /* 스크롤바의 thumb 색상을 투명하게 설정 */
   }
 
   ::-webkit-scrollbar-thumb:hover {
+    background: transparent; /* hover 시에도 투명하게 유지 */
   }
 }
 

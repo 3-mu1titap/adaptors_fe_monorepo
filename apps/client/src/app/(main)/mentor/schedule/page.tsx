@@ -11,13 +11,13 @@ export default async function Page() {
   const scheduleList = await GetScheduleList('2024-11');
 
   return (
-    <div className="w-full">
+    <main className="w-full">
       <CalendarHeader />
-      <div className="w-full h-full">
+      <section className="w-full h-full">
         <div className="h-full px-4 mb-6 bg-[#FAFAFE]">
           <CalendarContent scheduleList={scheduleList} />
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

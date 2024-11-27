@@ -42,15 +42,15 @@ function MentoringSessionCard({
           </p>
           <p>
             <span className="font-semibold">신청 마감:</span>{' '}
-            {formatDate(session.deadlinestringtime, '')}
+            {formatDate(session.deadlineDate, 'time')}
           </p>
           <p>
-            <span className="font-semibold">인원:</span> {session.minHeadCount}{' '}
-            - {session.maxHeadCount}명
+            <span className="font-semibold">인원:</span> {session.nowHeadCount}
+            명 {session.minHeadCount} ~ {session.maxHeadCount}명
           </p>
           <p>
             <span className="font-semibold">가격:</span>{' '}
-            {session.price.toLocaleString()}원
+            {session.price.toLocaleString()} Volt
           </p>
         </div>
       </div>
