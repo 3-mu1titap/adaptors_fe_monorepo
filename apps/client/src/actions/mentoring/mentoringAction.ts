@@ -1,5 +1,6 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { MentoringAddForm } from '../../components/form/MentoringAddForm';
 import {
   MentoringDataType,
@@ -69,15 +70,18 @@ export async function GetMiddleCategoryList({
 export async function PostMentoring(payload: MentoringAddForm) {
   'use server';
   try {
-    const res = await fetch(`${process.env.LOCAL_URL2}/api/v1/mentoring`, {
-      cache: 'no-cache',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
+    const res = await fetch(
+      `${process.env.MENTORING_URL}/api/v1/mentoring-service`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
     const result = (await res.json()) as commonResType<null>;
     console.log('멘토링 생성 성공', result);
     return result;
@@ -92,7 +96,7 @@ export async function GetMentoringList() {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.MENTORING_URL}/api/v1/mentoring-query-service/mentoring-list`,
+      `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -112,32 +116,52 @@ export async function GetMentoringList() {
   }
 }
 
-// 멘토링의 세션리스트 조희
-export async function GetMentoringSessionList({
-  mentoringUuid,
-}: {
-  mentoringUuid: string;
-}) {
+// 멘토링 1개에 대한 정보 조회
+export async function GetMentoringInfo(mentoringUuid: string) {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL}/api/v1/mentoring-query-service/session-list/${mentoringUuid}`,
+      `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring/${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'userUuid': userUuid,
         },
       }
     );
-
-    const result = (await res.json()) as commonResType<
-      MentoringSessionDataType[]
-    >;
+    const result = (await res.json()) as commonResType<MentoringDataType>;
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 정보 조회 : ', error);
-    return [];
+    return redirect('/error?message=Failed to fetch session list');
+  }
+}
+
+// 멘토링의 세션리스트 조희
+export async function GetMentoringSessionList(mentoringUuid: string) {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<
+      MentoringSessionDataType[]
+    >;
+    console.log(result);
+    return result.result;
+  } catch (error) {
+    console.error('멘토링 세션 리스트 정보 조회 : ', error);
+    return redirect('/error?message=Failed to fetch session list');
   }
 }
 
@@ -151,7 +175,7 @@ export async function PostSessionTimeValidation({
   console.log(time);
   try {
     const res = await fetch(
-      `${process.env.LOCAL_URL2}/api/v1/mentoring-service/validate-session-time?startDate=${time.startDate}&endDate=${time.endDate}&startTime=${time.startTime}&endTime=${time.endTime}&mentorUuid=${userUuid}`,
+      `${process.env.MENTORING_URL}/api/v1/mentoring-service/validate-session-time?startDate=${time.startDate}&endDate=${time.endDate}&startTime=${time.startTime}&endTime=${time.endTime}&mentorUuid=${userUuid}`,
       {
         cache: 'no-cache',
         method: 'POST',

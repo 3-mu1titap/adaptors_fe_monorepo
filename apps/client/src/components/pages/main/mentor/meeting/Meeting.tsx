@@ -218,7 +218,7 @@ export default function Meeting() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <main className="container mx-auto p-4">
       {!room ? (
         <OpenMentoring
           joinRoom={joinRoom}
@@ -261,6 +261,6 @@ export default function Meeting() {
           </div>
         </>
       )}
-    </div>
+    </main>
   );
 }

@@ -11,10 +11,8 @@ export default function layout({
   return (
     <SidebarProvider>
       <CommonSidebar />
-      <main className="w-full h-[100vh] overflow-y-auto transition-all duration-300 ml-2">
-        <SidebarTrigger />
-        {children}
-      </main>
+      <SidebarTrigger />
+      {children}
     </SidebarProvider>
   );
 }

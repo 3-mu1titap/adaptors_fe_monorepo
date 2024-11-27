@@ -33,9 +33,11 @@ export interface SessionTimeValidationType {
 
 // 멘토링 세션 정보
 export interface MentoringSessionDataType extends SessionTimeDataType {
-  deadlinestringtime: Date;
+  deadlineDate: Date;
   minHeadCount: number;
   maxHeadCount: number;
+  nowHeadCount: number;
+  isParticipating: boolean;
   price: number;
 }
 
