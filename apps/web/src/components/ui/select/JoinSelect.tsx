@@ -68,11 +68,11 @@ export default function JoinSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-labelledby="custom-select-label"
-        className="relative w-full bg-white border border-gray-300 shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
+        className="relative w-full bg-white border border-gray-300 pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-300 focus:border-yellow-300 sm:text-sm rounded-xl"
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
       >
-        <span className="block truncate text-lg">
+        <span className="block truncate text-md">
           {selectedOption ? selectedOption.label : '선택하세요'}
         </span>
         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -82,7 +82,7 @@ export default function JoinSelect({
 
       {isOpen && (
         <ul
-          className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+          className="absolute z-10 w-full bg-white shadow-lg max-h-60 rounded-md pb-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
           tabIndex={-1}
           role="listbox"
           aria-labelledby="custom-select-label"
@@ -104,7 +104,7 @@ export default function JoinSelect({
               onClick={() => handleSelect(option)}
             >
               <span
-                className={`block truncate text-lg ${
+                className={`block truncate text-md ${
                   selectedOption?.value === option.value
                     ? 'font-semibold'
                     : 'font-normal'
