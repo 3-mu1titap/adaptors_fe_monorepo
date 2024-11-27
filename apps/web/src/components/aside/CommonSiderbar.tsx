@@ -32,7 +32,7 @@ function CommonSidebar() {
         {
           label: '나의 수강정보',
           isActive: pathname.startsWith(`/mypage/mymentoring`),
-          href: `/mypage/mymentoring`,
+          href: `/mypage/mycourse`,
         },
         {
           label: '평가보기',
