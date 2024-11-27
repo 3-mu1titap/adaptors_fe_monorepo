@@ -14,8 +14,8 @@ import { useUserInfoStore } from '@repo/client/store/messagesStore';
 import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
 import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
 import {
+  getOpenViduToken,
   getParticipants,
-  getToken,
   postJoinMeeting,
 } from '@repo/client/actions/meeting/meetingAction';
 import OpenMentoring from './openMentoring/OpenMentoring';
@@ -116,7 +116,7 @@ export default function Meeting() {
     );
 
     try {
-      const token = await getToken(roomName, participantName);
+      const token = await getOpenViduToken(roomName, participantName);
       await room.connect(LIVEKIT_URL, token);
       await room.localParticipant.enableCameraAndMicrophone();
       const localVideoTrackPublication =

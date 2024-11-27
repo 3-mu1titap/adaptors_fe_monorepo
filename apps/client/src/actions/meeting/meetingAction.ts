@@ -92,7 +92,10 @@ export async function getParticipants(mentoringSessionUuid: string) {
 
 const APPLICATION_SERVER_URL = 'http://localhost:6080';
 // openvidu token 받아오기
-export async function getToken(roomName: string, participantName: string) {
+export async function getOpenViduToken(
+  roomName: string,
+  participantName: string
+) {
   'use server';
   const res = await fetch(`${APPLICATION_SERVER_URL}/token`, {
     method: 'POST',

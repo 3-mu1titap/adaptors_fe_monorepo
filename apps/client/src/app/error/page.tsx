@@ -19,6 +19,7 @@ function Page({ searchParams }: { searchParams: SearchParams }) {
         <p className="flex justify-end mt-4">
           <Link
             href="/login"
+            replace
             className="px-4 py-2 bg-adaptorsYellow text-white rounded"
           >
             홈으로 돌아가기
