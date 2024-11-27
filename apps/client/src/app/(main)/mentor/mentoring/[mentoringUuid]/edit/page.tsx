@@ -1,3 +1,9 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `Mentoring Update`,
+};
+
 export default async function Page() {
-  return <div className="w-full">111</div>;
+  return <main className="w-full">111</main>;
 }

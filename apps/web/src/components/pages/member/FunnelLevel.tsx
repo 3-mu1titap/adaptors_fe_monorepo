@@ -1,7 +1,7 @@
 export default function FunnelLevel({ level = 0 }: { level?: number }) {
   return (
     <div
-      className="w-full max-w-md my-3"
+      className="w-full my-3"
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={4}

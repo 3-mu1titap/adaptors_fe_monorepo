@@ -7,6 +7,8 @@ interface VideoTrackProps {
   participantIdentity: string;
   local?: boolean;
   isScreenShare?: boolean;
+  className?: string;
+  onClick: () => void;
 }
 
 export default function VideoTrack({
@@ -14,6 +16,8 @@ export default function VideoTrack({
   participantIdentity,
   local = false,
   isScreenShare = false,
+  className = '',
+  onClick,
 }: VideoTrackProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -28,7 +32,10 @@ export default function VideoTrack({
   }, [track]);
 
   return (
-    <Card className={`overflow-hidden ${isScreenShare ? 'col-span-2' : ''}`}>
+    <Card
+      className={`overflow-hidden ${className} ${isScreenShare ? '' : ''}`}
+      onClick={onClick}
+    >
       <CardContent className="p-0">
         <div className="relative">
           <video ref={videoRef} className="w-full h-auto" />

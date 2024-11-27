@@ -71,7 +71,7 @@ export default function JoinFunnel() {
   return (
     <>
       <FunnelLevel level={level} />
-      <section className="h-[78vh] sm:h-[70vh] bg-[#F9F9F9] sm:bg-transparent">
+      <section className="">
         <Funnel step={step}>
           <Funnel.Step name="account">
             <Account
@@ -98,7 +98,7 @@ export default function JoinFunnel() {
             <FileUpload handleButton={onNextStep} />
           </Funnel.Step>
           <Funnel.Step name="profile">
-            {account.role == 'MENTOR' ? (
+            {account.role != 'MENTOR' ? (
               <MentorProfile handleButtton={onNextStep} />
             ) : (
               <MenteeProfile handleButton={onNextStep} />

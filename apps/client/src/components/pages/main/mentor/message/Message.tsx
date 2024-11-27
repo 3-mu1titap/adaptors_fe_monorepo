@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { participantType } from '../../../../types/main/meeting/meetingTypes';
 import Chatting from '../../chatting/Chatting';
 import ChatSidebar from '../../sidebar/ChatSidebar';
+import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
 
 type Message = {
   id: string;
@@ -13,11 +13,8 @@ type Message = {
   sender: string;
 };
 
-export default function Message({
-  participants,
-}: {
-  participants: participantType[];
-}) {
+export default function Message() {
+  const [participants, setParticipants] = useState<participantType[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
   return (

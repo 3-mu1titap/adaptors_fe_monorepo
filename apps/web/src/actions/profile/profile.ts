@@ -76,7 +76,7 @@ export const uploadProfileIamge = async ({
   uuid: string;
 }): Promise<any> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-query-service/api/v1/memberInfo/profileImage`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/memberInfo/profileImage`,
     {
       method: 'POST',
       headers: {

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
 
 import { cn } from '@repo/ui/lib/utils';
 
@@ -7,7 +7,7 @@ const layoutVariants = cva('', {
   variants: {
     type: {
       main: '',
-      session: '',
+      section: '',
       div: '',
     },
     reative: {
@@ -35,7 +35,7 @@ export interface DivProps
 
 const CommonLayout = React.forwardRef<HTMLDivElement, DivProps>(
   (
-    { className, type = 'session', reative, detail, asChild = false, ...props },
+    { className, type = 'section', reative, detail, asChild = false, ...props },
     ref
   ) => {
     const Component = type as keyof JSX.IntrinsicElements;

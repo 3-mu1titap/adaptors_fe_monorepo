@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react';
-import useUserStore from '../../../../store/memberUuidStore';
-import {
-  chatDataType,
-  chatMemberDataType,
-} from '../../../types/main/chatting/chattingTypes';
-import { getChatProfile } from '../../../../actions/chatting/chattingAction';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@repo/ui/components/ui/avatar';
+import {
+  chatDataType,
+  chatMemberDataType,
+} from '@repo/client/components/types/main/chatting/chattingTypes';
+import useUserStore from '@repo/client/store/memberUuidStore';
+import { useUserInfoStore } from '@repo/client/store/messagesStore';
+import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
 
 function ChatViewMessage({ message }: { message: chatDataType }) {
   const { userUuid } = useUserStore();
+  const { userInfo, addUserInfo } = useUserInfoStore();
   const [profileInfo, setProfileInfo] = useState<chatMemberDataType>();
 
   const getProfileImage = async () => {
     try {
-      const profile = await getChatProfile({ userUuid });
+      const profile = await getChatProfile({ userUuid: message.memberUuid });
       if (profile) {
         setProfileInfo(profile);
+        const userInfoToAdd = {
+          userUuid: message.memberUuid,
+          nickname: profile.nickName,
+          profileImageUrl: profile.profileImageUrl,
+        };
+        addUserInfo(userInfoToAdd);
       }
     } catch (error) {
       console.error('프로필 이미지 가져오기 실패 :', error);
@@ -27,7 +35,18 @@ function ChatViewMessage({ message }: { message: chatDataType }) {
   };
 
   useEffect(() => {
-    getProfileImage();
+    // 상태에서 이미 존재하는 프로필 정보를 확인
+    const existingProfile = userInfo.find(
+      (user) => user.userUuid === message.memberUuid
+    );
+    if (existingProfile) {
+      setProfileInfo({
+        nickName: existingProfile.nickname,
+        profileImageUrl: existingProfile.profileImageUrl,
+      }); // 이미 존재하면 상태에서 가져옴
+    } else {
+      getProfileImage(); // 존재하지 않으면 API 호출
+    }
   }, []);
 
   const formatDate = (dateArray: number[]) => {

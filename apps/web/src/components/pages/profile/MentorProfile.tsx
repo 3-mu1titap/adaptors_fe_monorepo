@@ -1,10 +1,11 @@
 'use client';
 
+import { Input } from '@components/ui/input/CommonInput';
 import { useState } from 'react';
 import { postMentorProfile } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
 import { MentorProfileRequestType } from '../../types/profile/RequestType';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+import JoinStepButton from '../../ui/Button/NextButton';
 import RadioButton from '../../ui/radio/RadioButton';
 import '../member/index.css';
 
@@ -15,7 +16,7 @@ export default function MentorProfile({
 }) {
   const [mentoringField, setMentoringField] = useState('');
   const [gender, setGender] = useState<string>('MALE');
-  const [age, setAge] = useState<number>(20);
+  const [age, setAge] = useState<number | ''>('');
   const [jobExperience, setJobExperience] = useState('');
   const { uuid } = useUserStore();
   const [error, setError] = useState(false);
@@ -33,7 +34,7 @@ export default function MentorProfile({
     const mentorProfile: MentorProfileRequestType = {
       mentoringField,
       gender,
-      age,
+      age: Number(age),
       jobExperience,
     };
     const data = await postMentorProfile({ profile: mentorProfile, uuid });
@@ -42,10 +43,10 @@ export default function MentorProfile({
 
   return (
     <div className="py-2 h-full flex flex-col justify-between">
-      <span className="space-y-2">
+      <div className="space-y-2">
         <h2 className="text-2xl font-bold">Profile</h2>
         {/* Mentoring Field */}
-        <div className="space-y-2">
+        <fieldset className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             멘토링 분야
           </label>
@@ -65,24 +66,24 @@ export default function MentorProfile({
               </div>
             ))}
           </div>
-        </div>
-        <div className="space-y-2">
+        </fieldset>
+        <fieldset className="space-y-2">
           <label
             htmlFor="age"
             className="block text-sm font-medium text-gray-700"
           >
             출생년도
           </label>
-          <input
+          <Input
             id="age"
             type="number"
             value={age}
             onChange={(e) => setAge(Number(e.target.value))}
-            placeholder="출생년도를 입력해주세요"
+            placeholder="출생년도를 입력해주세요 ex)2000"
             className="custom-div number"
           />
-        </div>
-        <div className="space-y-2">
+        </fieldset>
+        <fieldset className="space-y-2">
           <label
             htmlFor="gender"
             className="block text-sm font-medium text-gray-700"
@@ -99,16 +100,16 @@ export default function MentorProfile({
             selectedValue={gender}
             onChange={handleRadioChange}
           />
-        </div>
+        </fieldset>
         {/* Job Experience Input */}
-        <div className="space-y-2">
+        <fieldset className="space-y-2">
           <label
             htmlFor="jobExperience"
             className="block text-sm font-medium text-gray-700"
           >
             경력
           </label>
-          <input
+          <Input
             id="jobExperience"
             type="text"
             value={jobExperience}
@@ -116,8 +117,8 @@ export default function MentorProfile({
             placeholder="(예: 3년)"
             className="custom-div"
           />
-        </div>
-      </span>
+        </fieldset>
+      </div>
       <p className={`error ${error ? 'visible mt-3' : 'invisible'}`}>
         입력되지 않은 값이 있습니다. 모든 값을 입력해주세요
       </p>

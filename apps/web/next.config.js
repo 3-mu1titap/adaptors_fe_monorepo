@@ -6,6 +6,7 @@ module.exports = {
     domains: [
       'www.naver.com',
       'adaptors-bucket.s3.ap-northeast-2.amazonaws.com',
+      'i.pinimg.com',
     ],
   },
 };

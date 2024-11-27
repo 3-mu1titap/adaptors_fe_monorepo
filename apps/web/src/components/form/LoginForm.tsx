@@ -1,9 +1,12 @@
 'use client';
-import { Eye, EyeOff } from 'lucide-react';
+
+import NextButton from '@components/ui/Button/NextButton';
+import { Input } from '@components/ui/input/CommonInput';
 import { getSession, signIn } from 'next-auth/react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import IdAndPassword from './IdAndPassword';
+import PasswordViewer from './PasswordViewer';
 
 export default function LoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
@@ -45,53 +48,27 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="space-y-2">
-        <input
-          className="w-full px-3 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          placeholder="아이디"
-          type="text"
-          name="id"
-        />
-      </div>
-      <div className="space-y-2 relative">
-        <input
-          className="w-full px-3 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400"
+    <form className="space-y-2 pb-2" onSubmit={handleSubmit}>
+      <Input placeholder="아이디" type="text" name="id" />
+      <fieldset className="relative mb-2">
+        <Input
           placeholder="패스워드"
           type={showPassword ? 'text' : 'password'}
           name="password"
         />
-        <button
-          type="button"
+        <PasswordViewer
+          isTrue={showPassword}
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-[22%] translate-y-[-25%] text-gray-500"
-        >
-          {showPassword ? (
-            <EyeOff className="h-5 w-5" />
-          ) : (
-            <Eye className="h-5 w-5" />
-          )}
-          <span className="sr-only">Toggle password visibility</span>
-        </button>
-      </div>
-      <div className="flex justify-between items-center">
-        <Link href="/findId" className="text-md text-gray-600 hover:underline">
-          아이디 찾기
-        </Link>
-        <Link
-          href="/findPassword"
-          className="text-md text-gray-600 hover:underline"
-        >
-          패스워드가 기억이 나지 않나요?
-        </Link>
-      </div>
+        />
+      </fieldset>
+      <IdAndPassword />
       {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
-      <button
-        className="w-full h-12 bg-adaptorsYellow text-md text-white font-semibold py-3.5 rounded-xl hover:bg-[#ffc635] transition-colors"
+      <NextButton
+        text="로그인"
+        colorType="primary"
+        textColor="text-white"
         type="submit"
-      >
-        SIGN IN
-      </button>
+      />
     </form>
   );
 }

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { uploadFileToS3 } from '../../../actions/common/awsMediaUploader';
 import { uploadProfileIamge } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
-import JoinStepButton from '../../ui/Button/JoinStepButton';
+import NextButton from '../../ui/Button/NextButton';
 import FitImage from '../../ui/image/fit-image';
 
 export default function FileUpload({
@@ -85,7 +85,7 @@ export default function FileUpload({
       {!preview ? (
         <label
           htmlFor="file-upload"
-          className={`relative flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer bg-[#FFF9DF] transition-colors
+          className={`relative flex flex-col items-center justify-center w-full h-full min-h-[300px] border-2 border-dashed rounded-lg cursor-pointer bg-[#FFF9DF] transition-colors
                 ${isDragging ? 'border-gray-500' : 'border-gray-300'}
                 hover:bg-[#fff9e6]`}
           onDragEnter={handleDrag}
@@ -121,13 +121,13 @@ export default function FileUpload({
           </button>
         </span>
       )}
-      <JoinStepButton onClick={handleMentoringImg} text="프로필 이미지 등록" />
-      <JoinStepButton
-        onClick={handleNextButton}
-        disabled={false}
-        text="next"
-        className="bg-white border-2 border-adaptorsYellow text-adaptorsYellow hover:text-white"
+      <NextButton
+        onClick={handleMentoringImg}
+        text="프로필 이미지 등록"
+        colorType="secondary"
+        textColor="text-white"
       />
+      <NextButton onClick={handleNextButton} disabled={false} text="next" />
     </div>
   );
 }
