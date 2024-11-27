@@ -11,7 +11,7 @@ export default function MentorSection({
   mentoringSessionList: MentoringSessionDataType[];
 }) {
   return (
-    <section className="w-[400px] p-6 bg-white border-r border-gray-200">
+    <section className="w-full sm:w-[350px] p-6 bg-white border-r border-gray-200">
       <div className="space-y-6">
         <MentoProfile mentorUuid={mentorUuid} />
         <NowDate />

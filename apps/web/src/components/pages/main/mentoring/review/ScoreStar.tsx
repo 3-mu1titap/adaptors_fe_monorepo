@@ -38,5 +38,5 @@ export default function ScoreStar({ score }: { score: number }) {
     return stars;
   };
 
-  return <div className="flex gap-1">{renderStars()}</div>;
+  return <div className="flex my-1">{renderStars()}</div>;
 }
