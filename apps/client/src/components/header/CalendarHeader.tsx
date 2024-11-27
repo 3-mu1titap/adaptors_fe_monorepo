@@ -1,4 +1,4 @@
-import MeetingProfile from '../meeting/MeetingProfile';
+import MeetingProfile from '../pages/main/mentor/meeting/MeetingProfile';
 
 function CalendarHeader() {
   return (

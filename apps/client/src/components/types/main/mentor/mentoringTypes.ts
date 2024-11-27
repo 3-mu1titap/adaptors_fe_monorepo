@@ -63,3 +63,30 @@ export interface MentoringDataType {
   updatedAt: Date;
   mentoringCategoryList: MentoringCategoryDataType[];
 }
+
+export interface MentoringCategory {
+  topCategoryName: string;
+  topCategoryCode: string;
+}
+
+export interface MentoringSession {
+  startDate: Date;
+  endDate: Date;
+  startTime: string;
+  endTime: string;
+  deadlineDate: Date;
+  minHeadCount: number;
+  maxHeadCount: number;
+  price: number;
+}
+
+// 멘토링 등록 form type
+export interface MentoringAddFormType {
+  name: string;
+  description: string;
+  detail: string;
+  isReusable: boolean;
+  thumbnailUrl: string;
+  sessionList: MentoringSession[];
+  categoryList: MentoringCategory[];
+}

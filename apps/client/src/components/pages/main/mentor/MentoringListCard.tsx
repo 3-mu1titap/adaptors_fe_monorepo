@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MentoringDataType } from '../../../types/main/mentor/mentoringTypes';
+import { MentoringDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
 
 function MentoringListCard({ mentoring }: { mentoring: MentoringDataType }) {
   return (

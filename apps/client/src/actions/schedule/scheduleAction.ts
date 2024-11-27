@@ -1,10 +1,11 @@
-// 스케쥴 조회
+'use server';
 
 import { UserScheduleDataType } from '../../components/types/main/schedule/scheduleTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
+// 스케쥴 조회
 export async function GetScheduleList(date: string) {
   'use server';
   try {

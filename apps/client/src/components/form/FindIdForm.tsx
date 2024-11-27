@@ -1,6 +1,6 @@
 'use client';
+import { findId } from '@repo/client/actions/auth/auth';
 import { useState } from 'react';
-import { findId } from '../../actions/auth/auth';
 import JoinInput from '../ui/input/JoinInput';
 
 export default function FindIdForm() {

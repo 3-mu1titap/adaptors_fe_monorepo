@@ -1,16 +1,16 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-import { MentoringAddForm } from '../../components/form/MentoringAddForm';
 import {
+  MentoringAddFormType,
   MentoringDataType,
   MentoringSessionDataType,
   MiddleCategoryDataType,
   SessionTimeDataType,
   SessionTimeValidationType,
   TopCategoryDataType,
-} from '../../components/types/main/mentor/mentoringTypes';
-import { commonResType } from '../../components/types/ResponseTypes';
+} from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { commonResType } from '@repo/client/components/types/ResponseTypes';
+import { redirect } from 'next/navigation';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
@@ -67,7 +67,7 @@ export async function GetMiddleCategoryList({
 }
 
 // 멘토의 멘토링 생성
-export async function PostMentoring(payload: MentoringAddForm) {
+export async function PostMentoring(payload: MentoringAddFormType) {
   'use server';
   try {
     const res = await fetch(

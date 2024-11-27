@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import useUserStore from '../../../../store/memberUuidStore';
-import {
-  chatDataType,
-  chatMemberDataType,
-} from '../../../types/main/chatting/chattingTypes';
-import { getChatProfile } from '../../../../actions/chatting/chattingAction';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@repo/ui/components/ui/avatar';
-import { useUserInfoStore } from '../../../../store/messagesStore';
+import {
+  chatDataType,
+  chatMemberDataType,
+} from '@repo/client/components/types/main/chatting/chattingTypes';
+import useUserStore from '@repo/client/store/memberUuidStore';
+import { useUserInfoStore } from '@repo/client/store/messagesStore';
+import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
 
 function ChatViewMessage({ message }: { message: chatDataType }) {
   const { userUuid } = useUserStore();

@@ -1,6 +1,6 @@
 'use server';
 
-import { commonResType } from '../../components/types/ResponseTypes';
+import { commonResType } from '@repo/client/components/types/ResponseTypes';
 import { fetchData } from '../common/common';
 
 export const postUserData = async (userData: {

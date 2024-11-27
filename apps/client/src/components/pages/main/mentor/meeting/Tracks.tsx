@@ -1,12 +1,11 @@
 import { Button } from '@repo/ui/components/ui/button';
 import VideoTrack from './tracks/VideoTrack';
-import AudioTrack from './tracks/AudioTrack';
 import { LocalVideoTrack, RemoteTrackPublication, Track } from 'livekit-client';
-import MicOnIcon from '../../../../assets/icons/MicOn';
-import MicOffIcon from '../../../../assets/icons/MicOff';
-import VideoOnIcon from '../../../../assets/icons/VideoOn';
-import VideoOffIcon from '../../../../assets/icons/VideoOff';
 import { useEffect, useState } from 'react';
+import MicOnIcon from '@repo/client/components/assets/icons/MicOn';
+import MicOffIcon from '@repo/client/components/assets/icons/MicOff';
+import VideoOnIcon from '@repo/client/components/assets/icons/VideoOn';
+import VideoOffIcon from '@repo/client/components/assets/icons/VideoOff';
 
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;

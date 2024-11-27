@@ -6,12 +6,12 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+
+import './CalendarContent.css';
 import {
   ScheduleDataType,
   UserScheduleDataType,
-} from '../../../../types/main/schedule/scheduleTypes';
-
-import './CalendarContent.css';
+} from '@repo/client/components/types/main/schedule/scheduleTypes';
 
 interface CalendarDataType {
   id: string;

@@ -1,7 +1,7 @@
 'use server';
 
+import { commonResType } from '@repo/client/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
-import { commonResType } from '../../components/types/ResponseTypes';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 const nickName = '멘토';

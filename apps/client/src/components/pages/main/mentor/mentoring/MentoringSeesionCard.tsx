@@ -1,4 +1,4 @@
-import { MentoringSessionDataType } from '../../../../../components/types/main/mentor/mentoringTypes';
+import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
 
 function MentoringSessionCard({
   session,

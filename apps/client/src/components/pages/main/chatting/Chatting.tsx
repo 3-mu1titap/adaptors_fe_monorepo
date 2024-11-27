@@ -2,23 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import ChatHeader from './ChatHeader';
-import ChatSender from './ChatSender';
-import ChatView from './ChatView';
+import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
 import {
   chatDataType,
   prevChatResType,
-} from '../../../types/main/chatting/chattingTypes';
+} from '@repo/client/components/types/main/chatting/chattingTypes';
 import {
   getChattingData,
   postChat,
-} from '../../../../actions/chatting/chattingAction';
-import { participantType } from '../../../types/main/meeting/meetingTypes';
+} from '@repo/client/actions/chatting/chattingAction';
 import {
   postExitMeeting,
   postHeartbeat,
-  postJoinMeeting,
-} from '../../../../actions/meeting/meetingAction';
+} from '@repo/client/actions/meeting/meetingAction';
+import ChatHeader from '@repo/client/components/header/ChatHeader';
+import ChatView from './ChatView';
+import ChatSender from './ChatSender';
 
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 

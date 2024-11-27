@@ -10,18 +10,18 @@ import {
   RemoteParticipant,
 } from 'livekit-client';
 import Tracks from './Tracks';
-import OpenMentoring from './openMentoring/OpenMentoring';
-import MeetingHeader from './MeetingHeader';
-import Participants from './participants/Participants';
-import Chatting from '../../chatting/Chatting';
-import { participantType } from '../../../../types/main/meeting/meetingTypes';
+import { useUserInfoStore } from '@repo/client/store/messagesStore';
+import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
+import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
 import {
   getParticipants,
   getToken,
   postJoinMeeting,
-} from '../../../../../actions/meeting/meetingAction';
-import { getChatProfile } from '../../../../../actions/chatting/chattingAction';
-import { useUserInfoStore } from '../../../../../store/messagesStore';
+} from '@repo/client/actions/meeting/meetingAction';
+import OpenMentoring from './openMentoring/OpenMentoring';
+import MeetingHeader from '../../../../header/MeetingHeader';
+import Participants from './participants/Participants';
+import Chatting from '../../chatting/Chatting';
 
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
@@ -218,7 +218,7 @@ export default function Meeting() {
   };
 
   return (
-    <main className="container mx-auto p-4">
+    <>
       {!room ? (
         <OpenMentoring
           joinRoom={joinRoom}
@@ -261,6 +261,6 @@ export default function Meeting() {
           </div>
         </>
       )}
-    </main>
+    </>
   );
 }

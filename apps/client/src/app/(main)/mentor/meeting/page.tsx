@@ -1,10 +1,14 @@
+import Meeting from '@repo/client/components/pages/main/mentor/meeting/Meeting';
 import { Metadata } from 'next';
-import Meeting from '../../../../components/pages/main/mentor/meeting/Meeting';
 
 export const metadata: Metadata = {
-  title: `Meeting`,
+  title: `Mentoring Meeting`,
 };
 
 export default async function Page() {
-  return <Meeting />;
+  return (
+    <main className="container mx-auto p-4">
+      <Meeting />
+    </main>
+  );
 }

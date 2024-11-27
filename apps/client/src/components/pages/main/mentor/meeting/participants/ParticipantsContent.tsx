@@ -1,9 +1,9 @@
+import { userType } from '@repo/client/components/types/main/meeting/meetingTypes';
 import MicOffIcon from '../../../../../assets/icons/MicOff';
 import MicOnIcon from '../../../../../assets/icons/MicOn';
 import VideoOffIcon from '../../../../../assets/icons/VideoOff';
 import VideoOnIcon from '../../../../../assets/icons/VideoOn';
-import { userType } from '../../../../../types/main/meeting/meetingTypes';
-import FitImage from '../../../../../ui/image/fit-image';
+import FitImage from '@repo/client/components/ui/image/fit-image';
 
 function ParticipantsContent({
   participant,

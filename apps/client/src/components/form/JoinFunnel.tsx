@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { postUserData } from '../../actions/auth/auth';
 import Funnel from '../common/Funnel/Funnel';
 import useFunnel from '../common/Funnel/useFunnel';
 import FunnelLevel from '../pages/member/FunnelLevel';
+import { postUserData } from '@repo/client/actions/auth/auth';
 import JoinField1 from '../pages/member/JoinField1';
 import JoinField2 from '../pages/member/JoinField2';
 

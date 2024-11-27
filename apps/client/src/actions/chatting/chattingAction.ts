@@ -1,11 +1,11 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import {
   chatMemberDataType,
   prevChatResType,
-} from '../../components/types/main/chatting/chattingTypes';
-import { commonResType } from '../../components/types/ResponseTypes';
+} from '@repo/client/components/types/main/chatting/chattingTypes';
+import { commonResType } from '@repo/client/components/types/ResponseTypes';
+import { redirect } from 'next/navigation';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 const mentoringUuid = '05b8b889-9798-4f31-88e5-f6b967cb069d';

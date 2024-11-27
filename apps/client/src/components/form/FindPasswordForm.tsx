@@ -1,6 +1,6 @@
 'use client';
+import { resetPassword } from '@repo/client/actions/auth/auth';
 import { useState } from 'react';
-import { resetPassword } from '../../actions/auth/auth';
 import JoinInput from '../ui/input/JoinInput';
 
 export default function FindPasswordForm() {

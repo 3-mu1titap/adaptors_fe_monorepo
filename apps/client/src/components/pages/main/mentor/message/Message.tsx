@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { participantType } from '../../../../types/main/meeting/meetingTypes';
 import Chatting from '../../chatting/Chatting';
 import ChatSidebar from '../../sidebar/ChatSidebar';
+import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
 
 type Message = {
   id: string;
@@ -14,6 +14,7 @@ type Message = {
 };
 
 export default function Message() {
+  const [participants, setParticipants] = useState<participantType[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
   return (
@@ -27,7 +28,7 @@ export default function Message() {
       {/* Right Content */}
       <div className="flex-1 flex flex-col px-4 py-1">
         {selectedChat ? (
-          <Chatting />
+          <Chatting participants={participants} />
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">

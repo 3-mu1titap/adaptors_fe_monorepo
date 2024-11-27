@@ -1,7 +1,7 @@
+import { GetScheduleList } from '@repo/client/actions/schedule/scheduleAction';
+import CalendarHeader from '@repo/client/components/header/CalendarHeader';
+import CalendarContent from '@repo/client/components/pages/main/mentor/Calendar/CalendarContent';
 import { Metadata } from 'next';
-import CalendarContent from '../../../../components/pages/main/mentor/Calendar/CalendarContent';
-import CalendarHeader from '../../../../components/pages/main/mentor/Calendar/CalendarHeader';
-import { GetScheduleList } from '../../../../actions/schedule/scheduleAction';
 
 export const metadata: Metadata = {
   title: `Schedule`,

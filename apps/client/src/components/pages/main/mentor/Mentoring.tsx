@@ -1,4 +1,4 @@
-import { MentoringDataType } from '../../../types/main/mentor/mentoringTypes';
+import { MentoringDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
 import MentoringListCard from './MentoringListCard';
 
 function Mentoring({

@@ -1,12 +1,12 @@
 'use client';
+import { checkAccountId, postUserData } from '@repo/client/actions/auth/auth';
 import { useState } from 'react';
 import { z } from 'zod';
-import { checkAccountId, postUserData } from '../../actions/auth/auth';
-import Funnel from '../common/Funnel/Funnel';
-import useFunnel from '../common/Funnel/useFunnel';
 import { SignInInputType } from '../types/auth/authType';
-import SubmitButton from '../ui/Button/SubmitButton';
+import useFunnel from '../common/Funnel/useFunnel';
+import Funnel from '../common/Funnel/Funnel';
 import JoinInput from '../ui/input/JoinInput';
+import SubmitButton from '../ui/Button/SubmitButton';
 
 const signUpSchema = z.object({
   name: z.string().nonempty({ message: '이름을 입력해주세요.' }),

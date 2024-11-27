@@ -2,48 +2,26 @@
 
 import React, { useRef, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { TopCategoryDataType } from '../types/main/mentor/mentoringTypes';
-import { PostMentoring } from '../../actions/mentoring/mentoringAction';
-import { uploadFileToS3 } from '../../actions/common/awsMediaUploader';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/toastui-editor.css';
 import color from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import {
+  MentoringAddFormType,
+  MentoringCategory,
+  TopCategoryDataType,
+} from '../types/main/mentor/mentoringTypes';
+import { uploadFileToS3 } from '@repo/client/actions/common/awsMediaUploader';
+import { PostMentoring } from '@repo/client/actions/mentoring/mentoringAction';
 import FitImage from '../ui/image/fit-image';
 
-export interface MentoringCategory {
-  topCategoryName: string;
-  topCategoryCode: string;
-}
-
-export interface MentoringSession {
-  startDate: Date;
-  endDate: Date;
-  startTime: string;
-  endTime: string;
-  deadlineDate: Date;
-  minHeadCount: number;
-  maxHeadCount: number;
-  price: number;
-}
-
-export interface MentoringAddForm {
-  name: string;
-  description: string;
-  detail: string;
-  isReusable: boolean;
-  thumbnailUrl: string;
-  sessionList: MentoringSession[];
-  categoryList: MentoringCategory[];
-}
-
-export default function MentoringForm({
+export default function MentoringAddForm({
   topCategories,
 }: {
   topCategories: TopCategoryDataType[];
 }) {
-  const [formData, setFormData] = useState<MentoringAddForm>({
+  const [formData, setFormData] = useState<MentoringAddFormType>({
     name: '',
     description: '',
     detail: '',
