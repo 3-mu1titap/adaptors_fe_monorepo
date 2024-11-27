@@ -83,10 +83,7 @@ export default function Meeting() {
   }, [room]);
 
   async function joinRoom() {
-    const join = await postJoinMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
-    if (!join) {
-      return;
-    }
+    await postJoinMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
     const room = new Room();
     setRoom(room);
 

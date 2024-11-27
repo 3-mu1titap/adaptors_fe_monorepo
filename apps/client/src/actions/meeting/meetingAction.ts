@@ -46,7 +46,28 @@ export async function postExitMeeting(mentoringSessionUuid: string) {
     console.log(res);
     return true;
   } catch (error) {
-    return redirect('/error?message=Failed to post join');
+    return redirect('/error?message=Failed to post exit');
+  }
+}
+
+// heartbeat 쏘기
+export async function postHeartbeat(mentoringSessionUuid: string) {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickName}`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+      }
+    );
+    return true;
+  } catch (error) {
+    return false;
   }
 }
 

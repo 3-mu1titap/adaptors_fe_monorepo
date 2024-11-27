@@ -14,6 +14,11 @@ import {
   postChat,
 } from '../../../../actions/chatting/chattingAction';
 import { participantType } from '../../../types/main/meeting/meetingTypes';
+import {
+  postExitMeeting,
+  postHeartbeat,
+  postJoinMeeting,
+} from '../../../../actions/meeting/meetingAction';
 
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
@@ -85,7 +90,11 @@ function Chatting({ participants }: { participants: participantType[] }) {
       heartbeatTimeout: 86400000,
     });
 
-    eventSource.onopen = () => {};
+    const heartbeatInterval = setInterval(async () => {
+      await postHeartbeat('ac419217-cb98-4334-8b78-8126aa0e57aa');
+    }, 30000);
+
+    eventSource.onopen = async () => {};
 
     const handleNewMessage = (event: any) => {
       setGetPrev(true);
@@ -97,10 +106,13 @@ function Chatting({ participants }: { participants: participantType[] }) {
 
     eventSource.onerror = (error) => {
       console.error('EventSource 오류:', error);
+      postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
       eventSource.close();
     };
 
     return () => {
+      clearInterval(heartbeatInterval);
+      postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
       eventSource.close();
     };
   }, [mentoringSessionUuid]);
