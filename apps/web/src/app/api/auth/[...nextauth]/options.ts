@@ -73,15 +73,22 @@ export const options: NextAuthOptions = {
               headers: { 'Content-Type': 'application/json' },
             }
           );
+          const data = await result.json();
           if (result.ok) {
-            const data = await result.json();
             user.role = data.result.role;
             user.accessToken = data.result.accessToken;
             user.refreshToken = data.result.refreshToken;
             user.uuid = data.result.uuid;
             return true;
+          } else if ((data.code = 2105)) {
+            console.log('2105면 회원등록 필요');
+            const email = kakaoProfile?.kakao_account?.email;
+            const name = kakaoProfile.kakao_account?.profile?.nickname;
+            console.log(name);
+            // const profile_image_url =
+            //   kakaoProfile.kakao_account?.profile?.nickname;
+            return `/join?path=account&name=${encodeURIComponent(name ? name : '')}&email=${email}`;
           }
-
           if (result.status === 401) {
             const provider = account.provider;
             const providerAccountId = account.providerAccountId;
@@ -131,15 +138,6 @@ export const options: NextAuthOptions = {
       }
       return session;
     },
-
-    // 리다이렉트 콜백 추가
-    // async redirect({ url, baseUrl }) {
-    //   if (url === '/login') {
-    //     // 리프레시 토큰이 만료되었을 때, login 페이지로 강제로 리다이렉트
-    //     return `${baseUrl}/login`; // 여기서 baseUrl은 기본적으로 사이트의 URL입니다.
-    //   }
-    //   return baseUrl;
-    // },
   },
   pages: {
     signIn: '/login',

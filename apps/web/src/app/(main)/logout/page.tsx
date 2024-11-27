@@ -6,5 +6,9 @@ export default function Page() {
     signOut({ callbackUrl: '/login' });
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button onClick={handleLogout} className="mt-36">
+      Logout
+    </button>
+  );
 }
