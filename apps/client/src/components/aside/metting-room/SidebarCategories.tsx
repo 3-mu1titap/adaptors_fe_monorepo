@@ -78,7 +78,7 @@ function SidebarCategories() {
 
   return (
     <nav className="w-full flex flex-col justify-center items-center ">
-      <ul className="w-full flex flex-col justify-center items-center text-lg">
+      <ul className="w-full relative flex flex-col justify-center items-center text-lg">
         {routes.map((item: SidebarType, index: number) => (
           <MeetingRoomNavCategory key={index} item={item} />
         ))}
