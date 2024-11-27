@@ -10,6 +10,7 @@ declare module 'next-auth' {
   }
 
   interface Session {
+    error?: string;
     user: {
       accessToken: string; // session.user에 accessToken 포함
       refreshToken: string; // accessToken 추가

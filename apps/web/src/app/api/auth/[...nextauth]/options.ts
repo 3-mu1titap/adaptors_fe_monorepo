@@ -1,6 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
+import { refreshToken } from 'src/actions/common/refreshToken';
 
 // Kakao 프로필 타입 정의
 interface KakaoProfile {
@@ -41,6 +42,7 @@ export const options: NextAuthOptions = {
           );
           if (res.ok) {
             const user = await res.json();
+
             return user.result;
           }
           //  return null;
@@ -109,22 +111,24 @@ export const options: NextAuthOptions = {
         token.uuid = user.uuid;
         token.role = user.role;
       }
-      // const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
-      // const expiredDate = new Date(payload.exp * 1000);
 
-      // if (Date.now() > expiredDate.getTime() && token.refreshToken) {
-      //   console.log('토큰만료됨...');
-      //   try {
-      //     const data = await refreshToken(token.refreshToken as string);
-      //     token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
-      //     if (data.ok) {
-      //       console.log('토큰 재발급 성공');
-      //     }
-      //   } catch (error) {
-      //     console.error('refreshToken 만료:', error);
-      //     return { ...token, redirect: '/login' };
-      //   }
-      // }
+      const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
+      const expiredDate = new Date(payload.exp * 1000);
+
+      if (Date.now() > expiredDate.getTime() && token.refreshToken) {
+        console.log('토큰 만료됨...');
+        try {
+          const data = await refreshToken(token.refreshToken as string);
+          token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
+          if (data.ok) {
+            console.log('토큰 재발급 성공');
+          }
+        } catch (error) {
+          console.error('refreshToken 만료:', error);
+          // 토큰 갱신 실패 시 redirect 플래그 추가
+          token.redirect = true;
+        }
+      }
       return token;
     },
 
@@ -136,9 +140,13 @@ export const options: NextAuthOptions = {
         session.user.name = token.name;
         session.user.role = token.role;
       }
+      if (token.redirect) {
+        session.error = 'TokenExpired';
+      }
       return session;
     },
   },
+
   pages: {
     signIn: '/login',
     error: '/login?error=loginError',
