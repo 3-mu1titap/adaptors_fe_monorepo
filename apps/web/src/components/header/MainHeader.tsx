@@ -6,7 +6,10 @@ import MainHeaderMenu from './MainHeaderMenu';
 export default function MainHeader() {
   const menuItem = [
     { label: 'Home', href: '/home' },
-    { label: 'About us', href: '/about' },
+    {
+      label: 'Mypage',
+      href: '/mypage',
+    },
     { label: 'Services', href: '/service' },
     { label: 'Courses', href: '/course' },
     { label: 'FAQ', href: '/faq' },

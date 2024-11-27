@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@repo/ui/components/ui/tooltip';
-import { useIsMobile } from '@repo/ui/hooks/use-mobile';
+import { useIsMobile } from '@repo/ui/hooks/use-mobile.jsx';
 import { cn } from '@repo/ui/lib/utils';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state';
@@ -181,7 +181,7 @@ const Sidebar = React.forwardRef<
       return (
         <div
           className={cn(
-            'flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground',
+            'flex h- w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground',
             className
           )}
           ref={ref}
@@ -206,7 +206,7 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            <div className="flex h-[40px] w-full flex-col">{children}</div>
+            <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>
       );
@@ -327,7 +327,7 @@ const SidebarInset = React.forwardRef<
     <main
       ref={ref}
       className={cn(
-        'relative flex min-h-svh flex-1 flex-col bg-background',
+        ' flex min-h-svh flex-1 flex-col bg-background',
         'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow',
         className
       )}
@@ -426,7 +426,7 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn('relative flex w-full min-w-0 flex-col', className)}
+      className={cn('flex w-full min-w-0 flex-col', className)}
       {...props}
     />
   );

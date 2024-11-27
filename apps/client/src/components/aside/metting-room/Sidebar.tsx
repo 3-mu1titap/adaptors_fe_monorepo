@@ -11,7 +11,6 @@ function Sidebar() {
   const { useNavigation, setUseNavigation } = useAsideNavigationStore();
   const [isVisible, setIsVisible] = useState(useNavigation);
   const [isHovered, setIsHovered] = useState(false);
-
   useEffect(() => {
     if (useNavigation) {
       setIsVisible(true);
