@@ -1,28 +1,11 @@
 import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { formatDate } from '@repo/client/components/utils/dateUtil';
 
 function MentoringSessionCard({
   session,
 }: {
   session: MentoringSessionDataType;
 }) {
-  const formatDate = (date: Date | string, type: string) => {
-    const d = new Date(date);
-    if (type === 'time') {
-      return d.toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    }
-    return d.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
   const formatTime = (time: Date | string) => {
     return time.toString().slice(0, 5);
   };
@@ -34,7 +17,7 @@ function MentoringSessionCard({
         <div className="text-gray-700 text-base space-y-2">
           <p>
             <span className="font-semibold">날짜:</span>{' '}
-            {formatDate(session.startDate, 'time')}
+            {formatDate('day', session.startDate)}
           </p>
           <p>
             <span className="font-semibold">시간:</span>{' '}
@@ -42,7 +25,7 @@ function MentoringSessionCard({
           </p>
           <p>
             <span className="font-semibold">신청 마감:</span>{' '}
-            {formatDate(session.deadlineDate, 'time')}
+            {formatDate('day', session.deadlineDate)}
           </p>
           <p>
             <span className="font-semibold">인원:</span> {session.nowHeadCount}

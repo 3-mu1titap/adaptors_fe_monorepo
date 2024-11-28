@@ -1,3 +1,4 @@
+import { formatDate } from '@repo/client/components/utils/dateUtil';
 import {
   Card,
   CardContent,
@@ -39,15 +40,6 @@ export function isWithinFiveMinutes(
 
 export function formatTime(time: TimeDataType): string {
   return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
-}
-
-function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-  });
 }
 
 export default function OpenMentoring({
