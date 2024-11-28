@@ -4,7 +4,7 @@ import { PopularCategoryType } from '../../../types/Category/PopularCategoryType
 
 function PopularCategory({ item }: { item: PopularCategoryType }) {
   return (
-    <div className={`flex py-6 justify-center gap-4`}>
+    <div className={`flex py-3 justify-center bg-slate-100 rounded-lg mx-2`}>
       <span className="text-2xl w-[30px] h-[30px]">{item.icon}</span>
       <div>
         <p className="font-medium">{item.name}</p>

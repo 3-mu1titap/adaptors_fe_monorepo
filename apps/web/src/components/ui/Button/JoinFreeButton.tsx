@@ -6,7 +6,7 @@ function JoinFreeButton() {
   const router = useRouter();
   return (
     <Button
-      className="bg-[#F8D448] text-white py-2 px-4 rounded-lg md:text-md"
+      className="bg-[#F8D448] text-white py-2 px-4 rounded-lg md:text-md hover:bg-[#111111]"
       onClick={() => router.push('/login')}
     >
       Join Free
