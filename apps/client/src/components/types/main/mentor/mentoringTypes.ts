@@ -9,6 +9,11 @@ export interface MiddleCategoryDataType {
   middleCategoryName: string;
 }
 
+export interface HashtagDataType {
+  name: string;
+  hashtagId: number;
+}
+
 // 멘토링 세션 시간 정보
 export interface SessionTimeDataType {
   startDate: string;
@@ -89,4 +94,5 @@ export interface MentoringAddFormType {
   thumbnailUrl: string;
   sessionList: MentoringSession[];
   categoryList: MentoringCategory[];
+  hashtagList: HashtagDataType[];
 }

@@ -18,7 +18,9 @@ import {
   getParticipants,
   postJoinMeeting,
 } from '@repo/client/actions/meeting/meetingAction';
-import OpenMentoring from './openMentoring/OpenMentoring';
+import OpenMentoring, {
+  MentoringSessionDataType,
+} from './openMentoring/OpenMentoring';
 import MeetingHeader from '../../../../header/MeetingHeader';
 import Participants from './participants/Participants';
 import Chatting from '../../chatting/Chatting';
@@ -31,16 +33,16 @@ type TrackInfo = {
   participantIdentity: string;
 };
 
-export default function Meeting() {
+export default function Meeting({
+  mentoringSessionList,
+}: {
+  mentoringSessionList: MentoringSessionDataType[];
+}) {
   const [room, setRoom] = useState<Room | null>(null);
   const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
     undefined
   );
   const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
-  const [participantName, setParticipantName] = useState(
-    `Participant${Math.floor(Math.random() * 100)}`
-  );
-  const [roomName, setRoomName] = useState('Test Room');
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -116,7 +118,7 @@ export default function Meeting() {
     );
 
     try {
-      const token = await getOpenViduToken(roomName, participantName);
+      const token = await getOpenViduToken('roomName', 'participantName');
       await room.connect(LIVEKIT_URL, token);
       await room.localParticipant.enableCameraAndMicrophone();
       const localVideoTrackPublication =
@@ -221,11 +223,8 @@ export default function Meeting() {
     <>
       {!room ? (
         <OpenMentoring
+          mentoringSessionList={mentoringSessionList}
           joinRoom={joinRoom}
-          participantName={participantName}
-          setParticipantName={setParticipantName}
-          roomName={roomName}
-          setRoomName={setRoomName}
         />
       ) : (
         <>
@@ -233,7 +232,6 @@ export default function Meeting() {
           <div className="grid grid-cols-7 h-[90vh]">
             <div className="col-span-5 bg-[#FAFAFE]">
               <Tracks
-                roomName={roomName}
                 leaveRoom={leaveRoom}
                 toggleScreenSharing={toggleScreenSharing}
                 isScreenSharing={isScreenSharing}
@@ -242,7 +240,6 @@ export default function Meeting() {
                 toggleMicrophone={toggleMicrophone}
                 isMicrophoneOn={isMicOn}
                 localTrack={localTrack}
-                participantName={participantName}
                 remoteTracks={remoteTracks}
               />
             </div>

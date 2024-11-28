@@ -1,6 +1,7 @@
 'use server';
 
 import {
+  HashtagDataType,
   MentoringAddFormType,
   MentoringDataType,
   MentoringSessionDataType,
@@ -62,6 +63,28 @@ export async function GetMiddleCategoryList({
     return result.result;
   } catch (error) {
     console.error('중 카테고리 리스트 조회 : ', error);
+    return [];
+  }
+}
+
+// 멘토링 해시태그 리스트 출력
+export async function GetHashTagsList() {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/hashtag-service/api/v1/admin/hashtag`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const result = (await res.json()) as commonResType<HashtagDataType[]>;
+    return result.result;
+  } catch (error) {
+    console.error('해시태그 에러 ', error);
     return [];
   }
 }

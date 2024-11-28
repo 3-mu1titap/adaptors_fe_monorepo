@@ -13,24 +13,20 @@ type TrackInfo = {
 };
 
 export default function Tracks({
-  roomName,
   leaveRoom,
   toggleScreenSharing,
   isScreenSharing,
   localTrack,
-  participantName,
   remoteTracks,
   toggleMicrophone,
   isMicrophoneOn,
   toggleCamera,
   isCameraOn,
 }: {
-  roomName: string;
   leaveRoom: () => Promise<void>;
   toggleScreenSharing: () => Promise<void>;
   isScreenSharing: boolean;
   localTrack: LocalVideoTrack | undefined;
-  participantName: string;
   remoteTracks: TrackInfo[];
   toggleMicrophone: () => Promise<void>;
   isMicrophoneOn: boolean;
@@ -80,7 +76,7 @@ export default function Tracks({
               videoTrack: localTrack,
               source: 'local',
             },
-            participantIdentity: participantName,
+            participantIdentity: 'participantName',
           },
         ]
       : []),
