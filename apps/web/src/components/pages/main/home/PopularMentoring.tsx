@@ -24,6 +24,7 @@ export default function PopularMentoring() {
 
   const courses = [
     {
+      mentorUuId: 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb',
       id: 0,
       title: 'Education Software and PHP and JS System Script',
       duration: '55 WEEKS',
@@ -33,6 +34,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '2',
       id: 0,
       title: 'Education Software and PHP and JS System Script',
       duration: '55 WEEKS',
@@ -42,6 +44,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '3',
       id: 0,
       title: 'Education Software and PHP and JS System Script',
       duration: '55 WEEKS',
@@ -51,6 +54,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '4',
       id: 0,
       title: 'Education Software and PHP and JS System Script',
       duration: '55 WEEKS',
@@ -60,6 +64,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '5',
       id: 1,
       title: 'Learn Figma — UI/UX Design Essential Training',
       duration: '55 WEEKS',
@@ -69,6 +74,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '6',
       id: 1,
       title: 'Learn Figma — UI/UX Design Essential Training',
       duration: '55 WEEKS',
@@ -78,6 +84,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '7',
       id: 1,
       title: 'Learn Figma — UI/UX Design Essential Training',
       duration: '55 WEEKS',
@@ -87,6 +94,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '8',
       id: 1,
       title: 'Learn Figma — UI/UX Design Essential Training',
       duration: '55 WEEKS',
@@ -96,6 +104,7 @@ export default function PopularMentoring() {
     },
 
     {
+      mentorUuId: '9',
       id: 2,
       title: 'Advanced Android 12 & Kotlin Development Course',
       duration: '55 WEEKS',
@@ -104,6 +113,7 @@ export default function PopularMentoring() {
       instructor: 'Max Alexis',
     },
     {
+      mentorUuId: '10',
       id: 3,
       title: 'IT Statistics Data Science and Business Analysis',
       duration: '55 WEEKS',
@@ -112,6 +122,7 @@ export default function PopularMentoring() {
       instructor: 'Max Alexis',
     },
     {
+      mentorUuId: '11',
       id: 4,
       title: 'IT Statistics Data Science and Business Analysis',
       duration: '55 WEEKS',
@@ -120,6 +131,7 @@ export default function PopularMentoring() {
       instructor: 'Max Alexis',
     },
     {
+      mentorUuId: '12',
       id: 5,
       title: 'IT Statistics Data Science and Business Analysis',
       duration: '55 WEEKS',
@@ -128,6 +140,7 @@ export default function PopularMentoring() {
       instructor: 'Max Alexis',
     },
     {
+      mentorUuId: '13',
       id: 6,
       title: 'IT Statistics Data Science and Business Analysis',
       duration: '55 WEEKS',

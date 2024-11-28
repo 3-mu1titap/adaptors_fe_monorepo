@@ -7,7 +7,7 @@ const layoutVariants = cva('', {
   variants: {
     type: {
       main: '',
-      session: '',
+      section: '',
       div: '',
     },
     reative: {
