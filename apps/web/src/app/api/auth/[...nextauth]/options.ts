@@ -33,7 +33,6 @@ export const options: NextAuthOptions = {
         };
         try {
           const res = await fetch(
-            // `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
             {
               method: 'POST',
@@ -63,7 +62,6 @@ export const options: NextAuthOptions = {
     async signIn({ account, profile, user }) {
       if (account?.provider === 'kakao') {
         try {
-          console.log('kakao');
           const kakaoProfile = profile as KakaoProfile;
           const result = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/oauth-sign-in`,
@@ -105,12 +103,11 @@ export const options: NextAuthOptions = {
         token.refreshToken = user.refreshToken;
         token.uuid = user.uuid;
         token.role = user.role;
-
+      }
+      if (token) {
         const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
         const expiredDate = new Date(payload.exp * 1000);
-
         if (Date.now() > expiredDate.getTime() && token.refreshToken) {
-          console.log('토큰 만료됨...');
           try {
             const data = await refreshToken(token.refreshToken as string);
             token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
@@ -119,11 +116,10 @@ export const options: NextAuthOptions = {
             }
           } catch (error) {
             console.error('refreshToken 만료:', error);
-            token.redirect = true;
+            token.error = 'refreshTokenExpired';
           }
         }
       }
-
       return token;
     },
 
@@ -134,6 +130,9 @@ export const options: NextAuthOptions = {
         session.user.uuid = token.uuid;
         session.user.role = token.role;
       }
+      // if (token.error) {
+      //   session.error = token.error; // 에러 상태를 세션으로 전달
+      // }
       return session;
     },
   },

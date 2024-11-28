@@ -2,6 +2,7 @@
 
 import { Session } from 'next-auth';
 import { getServerSession } from 'next-auth/next';
+import { refreshToken } from './refreshToken';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -48,39 +49,6 @@ export const fetchData = async <T>({
     `${process.env.NEXT_PUBLIC_BACKEND_URL}${apiUrl}`,
     fetchOptions
   );
-
-  return res.json();
-};
-
-export const URLfetch = async <T>({
-  method,
-  apiUrl,
-  body,
-  cache = 'default',
-  tags,
-  revalidate,
-}: FetchOptions): Promise<T> => {
-  const fetchOptions: RequestInit = {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    cache,
-  };
-
-  if (body) {
-    fetchOptions.body = JSON.stringify(body);
-  }
-
-  if (tags) {
-    fetchOptions.next = { tags };
-  }
-
-  if (revalidate !== undefined) {
-    fetchOptions.next = { ...fetchOptions.next, revalidate };
-  }
-
-  const res = await fetch(`${apiUrl}`, fetchOptions);
 
   return res.json();
 };
@@ -134,17 +102,7 @@ export const fetchAuthData = async <T>({
 
   // 401 에러시 refreshToken으로 재시도
   if (res.status === 401 && session?.user.refreshToken) {
-    // refreshToken으로 새로운 accessToken 발급 요청
-    const refreshRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refreshToken: session.user.refreshToken }),
-      }
-    );
+    const refreshRes = await refreshToken(session.user.refreshToken);
 
     if (!refreshRes.ok) {
       throw new Error('Token refresh failed');
@@ -158,6 +116,39 @@ export const fetchAuthData = async <T>({
   if (!res.ok) {
     throw new Error(`${res.status}`);
   }
+
+  return res.json();
+};
+
+export const URLfetch = async <T>({
+  method,
+  apiUrl,
+  body,
+  cache = 'default',
+  tags,
+  revalidate,
+}: FetchOptions): Promise<T> => {
+  const fetchOptions: RequestInit = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache,
+  };
+
+  if (body) {
+    fetchOptions.body = JSON.stringify(body);
+  }
+
+  if (tags) {
+    fetchOptions.next = { tags };
+  }
+
+  if (revalidate !== undefined) {
+    fetchOptions.next = { ...fetchOptions.next, revalidate };
+  }
+
+  const res = await fetch(`${apiUrl}`, fetchOptions);
 
   return res.json();
 };

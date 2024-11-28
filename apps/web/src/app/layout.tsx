@@ -2,7 +2,6 @@ import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { Inter } from 'next/font/google';
-import { redirect } from 'next/navigation';
 import { options } from './api/auth/[...nextauth]/options';
 import AuthContextProvider from './provider/AuthContextProvider';
 
@@ -39,9 +38,6 @@ export default async function RootLayout({
   const session = await getServerSession(options);
   const isAuth = session?.user ? true : false;
   const role = session?.user?.role ?? null;
-  if (session?.error == 'TokenExpired') {
-    redirect('/login');
-  }
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
