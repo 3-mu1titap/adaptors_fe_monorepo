@@ -96,7 +96,7 @@ export async function GetMentoringList() {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list`,
+      `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list?isMentor=true`,
       {
         cache: 'no-cache',
         method: 'GET',
