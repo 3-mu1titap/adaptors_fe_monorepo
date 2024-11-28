@@ -1,36 +1,43 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronUp } from 'lucide-react';
 
 function ScrollToTopButton() {
-  const [isTop, setIsTop] = React.useState(true);
-
-  const handleClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const [isView, setIsView] = useState(false);
+  const handleTopToScroll = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsTop(window.scrollY === 0);
+      if (window.scrollY > 100) {
+        setIsView(true);
+      } else {
+        setIsView(false);
+      }
     };
-
     window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div
-      className={`bg-white bg-opacity-90 fixed bottom-[75px] right-4 z-10 p-3 rounded-full ${isTop && 'hidden'}`}
-      onClick={handleClick}
+      onClick={handleTopToScroll}
+      className={`
+        flex items-center justify-center
+      scroll-btn
+      ${isView ? 'go-Up-view' : 'go_Down-hide'}
+      `}
+      aria-label="scroll to top"
     >
       <ChevronUp
         size={24}
         strokeWidth={1}
-        className={`${isTop ? ' rotate-180' : ' rotate-0'} transition-all`}
+        className={`${isView ? ' rotate-0' : ' rotate-180'} transition-all`}
       />
     </div>
   );

@@ -10,9 +10,9 @@
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --primary: #ffd84d;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
+    --secondary: #111111;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -98,4 +98,56 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* scrollbtn */
+.scroll-btn {
+  position: fixed;
+  right: 1rem;
+  z-index: 1000;
+  width: 52px;
+  height: 52px;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.2);
+  border: thin solid white;
+  bottom: 3rem;
+  opacity: 0;
+}
+
+.go-Up-view {
+  opacity: 1;
+  bottom: 5rem;
+  transition: all 0.5s ease-in-out;
+}
+
+.go_Down-hide {
+  opacity: 0;
+  bottom: 3rem;
+  transition: all 0.5s ease-in-out;
+}
+
+/* review rate */
+
+.star-rating {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.star-rating__background {
+  color: #ddd; /* Color of empty stars */
+}
+
+.star-rating__foreground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  transition: width 1.5s ease-in-out;
 }

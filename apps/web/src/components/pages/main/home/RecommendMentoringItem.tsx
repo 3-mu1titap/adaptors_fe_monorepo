@@ -7,7 +7,7 @@ function RecommendMentoringItem({ item }: { item: RecommendType }) {
       <div className="bg-gray-200 py-20 rounded-2xl overflow-hidden" />
       <div className="space-y-3">
         <div className="text-sm text-gray-600 mt-2 ml-2">{item.author}</div>
-        <h3 className="font-medium group-hover:text-blue-600 transition-colors ml-2">
+        <h3 className="font-medium group-hover:text-yellow-400 transition-colors ml-2">
           {item.title}
         </h3>
         <div className="flex items-center text-sm text-gray-500 gap-4 ml-2">

@@ -10,9 +10,9 @@ function SwiperIndex({
   return (
     <span
       key={index}
-      className={`rounded-full w-2 h-2 mx-[0.2rem] ${
+      className={`rounded-full w-1 h-1 mx-[0.2rem] ${
         slideIndex === index
-          ? 'bg-yellow-500 scale-150 transition-all'
+          ? 'bg-yellow-500 scale-[300%] transition-all mx-[0.4rem]'
           : 'bg-gray-300 transition-all'
       }`}
       onClick={onClick}
