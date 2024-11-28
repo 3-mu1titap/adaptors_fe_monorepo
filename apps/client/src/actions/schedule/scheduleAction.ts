@@ -16,11 +16,12 @@ export async function GetScheduleList(date: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'userUuid': userUuid,
         },
       }
     );
-
     const result = (await res.json()) as commonResType<UserScheduleDataType>;
+    console.log(result);
     return result.result;
   } catch (error) {
     console.error('유저 스케쥴 리스트 조회 실패 : ', error);
