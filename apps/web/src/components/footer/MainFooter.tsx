@@ -1,46 +1,25 @@
+import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
+
 export default function MeinFooter() {
   return (
-    <footer className="border-t bg-[#FFF9E7] px-10">
+    <footer className="border-t bg-[#FFF9E7] px-0 md:px-10 ">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-8">
           {/* Newsletter Section */}
           <div className="col-span-3 space-y-4">
             <div className="flex items-center">
-              <span className="text-xl font-bold">Adaptors</span>
+              <AdaptorsLogoIcon className="h-[3rem] text-[#FFD84D] opacity-80" />
             </div>
-            <p className="text-md text-gray-600">
-              Integer semvolutpat consequat elit. Curabitur eget suscipit nibh.
-              Cras euismod, tellus vitae aliquam ultricies, lacus erat sagittis
-              nulla, ut viverra velit ligula congue diam.
+            <p className="text-sm text-gray-600">
+              멘토링이 필요한 모든 사람을 위한 플랫폼! 어뎁터!!! <br />
+              전문 멘토와 멘티를 연결해 언제 어디서나 온라인으로 멘토링 서비스를
+              받을 수 있습니다. <br />
+              지금 바로 가입하고 나만의 멘토링을 시작하세요!
             </p>
-            <form className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Your mail here"
-                className="flex-1 px-3 py-2 border rounded-md text-sm"
-              />
-              <button className="bg-[#FFD84D] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#FFD84D]/90 flex items-center gap-2">
-                Send Message
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </button>
-            </form>
           </div>
 
           {/* Contact Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-3 md:col-span-1">
             <h3 className="font-semibold">Contact Us</h3>
             <div className="space-y-2 text-sm text-gray-600">
               <p>556 Oxford Street Victoria</p>
@@ -52,7 +31,7 @@ export default function MeinFooter() {
           </div>
 
           {/* Explore Courses */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-3 md:col-span-1">
             <h3 className="font-semibold">Explore Courses</h3>
             <div className="space-y-2 text-sm">
               <a href="#" className="block text-gray-600 hover:text-gray-900">
@@ -77,7 +56,7 @@ export default function MeinFooter() {
           </div>
 
           {/* Use Full Links */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-3 md:col-span-1">
             <h3 className="font-semibold">Use Full Links</h3>
             <div className="space-y-2 text-sm">
               <a href="#" className="block text-gray-600 hover:text-gray-900">
@@ -104,7 +83,9 @@ export default function MeinFooter() {
 
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t text-sm text-gray-600">
-          <p>Copyright © 2024. All Rights Reserved | TheArtOfDigitals</p>
+          <p>
+            Copyright © 2024. All Rights Reserved | MultiTap & TheUNIONGraphix
+          </p>
         </div>
       </div>
     </footer>

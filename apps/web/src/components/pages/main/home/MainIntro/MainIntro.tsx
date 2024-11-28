@@ -24,7 +24,11 @@ export default function MainIntro() {
   };
 
   return (
-    <CommonLayout type="section" reative="container" className="mx-auto my-4">
+    <CommonLayout
+      type="section"
+      reative="container"
+      className="mx-auto my-4 xl:max-w-[1180px] lg:max-w-[1024px] md:max-w-[768px]"
+    >
       <Swiper
         loop
         slidesPerView={1}

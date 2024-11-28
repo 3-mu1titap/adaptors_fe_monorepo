@@ -159,6 +159,7 @@ export default function Account({
           title="중복확인"
           colorType="primary"
           isDisabled={confirmButton}
+          className="absolute right-2"
         />
         {errors.accountId && (
           <ErrorToast errorMessage={errors.accountId} errorName="accountId" />

@@ -120,3 +120,164 @@ export const mainIntroDatas = [
     ],
   },
 ];
+
+export const categories = [
+  { id: 0, icon: '💻', name: 'Web Development', courses: '206 Courses' },
+  { id: 1, icon: '📱', name: 'Digital Marketing', courses: '206 Courses' },
+  { id: 2, icon: '🎨', name: 'UI/UX Design', courses: '206 Courses' },
+  { id: 3, icon: '📊', name: 'FrontEnd Development', courses: '206 Courses' },
+  { id: 4, icon: '📈', name: 'Graph', courses: '206 Courses' },
+  { id: 5, icon: '📊', name: 'Android Development', courses: '206 Courses' },
+  { id: 6, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+  { id: 7, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+  { id: 8, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+  { id: 9, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+  { id: 10, icon: '📈', name: 'Backend Development', courses: '206 Courses' },
+];
+
+export const courses = [
+  {
+    id: 0,
+    title: 'Education Software and PHP and JS System Script',
+    duration: '55 WEEKS',
+    rating: 4.5,
+    reviews: 142,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 0,
+    title: 'Education Software and PHP and JS System Script',
+    duration: '55 WEEKS',
+    rating: 4.5,
+    reviews: 142,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 0,
+    title: 'Education Software and PHP and JS System Script',
+    duration: '55 WEEKS',
+    rating: 4.5,
+    reviews: 142,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 0,
+    title: 'Education Software and PHP and JS System Script',
+    duration: '55 WEEKS',
+    rating: 4.5,
+    reviews: 142,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 1,
+    title: 'Learn Figma — UI/UX Design Essential Training',
+    duration: '55 WEEKS',
+    rating: 4.8,
+    reviews: 171,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 1,
+    title: 'Learn Figma — UI/UX Design Essential Training',
+    duration: '55 WEEKS',
+    rating: 4.8,
+    reviews: 171,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 1,
+    title: 'Learn Figma — UI/UX Design Essential Training',
+    duration: '55 WEEKS',
+    rating: 4.8,
+    reviews: 171,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 1,
+    title: 'Learn Figma — UI/UX Design Essential Training',
+    duration: '55 WEEKS',
+    rating: 4.8,
+    reviews: 171,
+    instructor: 'Max Alexis',
+  },
+
+  {
+    id: 2,
+    title: 'Advanced Android 12 & Kotlin Development Course',
+    duration: '55 WEEKS',
+    rating: 4.6,
+    reviews: 163,
+    instructor: 'Max Alexis',
+  },
+  {
+    id: 3,
+    title: 'IT Statistics Data Science and Business Analysis',
+    duration: '55 WEEKS',
+    rating: 4.7,
+    reviews: 157,
+    instructor: 'Max Alexis',
+  },
+  {
+    id: 4,
+    title: 'IT Statistics Data Science and Business Analysis',
+    duration: '55 WEEKS',
+    rating: 4.7,
+    reviews: 157,
+    instructor: 'Max Alexis',
+  },
+  {
+    id: 5,
+    title: 'IT Statistics Data Science and Business Analysis',
+    duration: '55 WEEKS',
+    rating: 4.7,
+    reviews: 157,
+    instructor: 'Max Alexis',
+  },
+  {
+    id: 6,
+    title: 'IT Statistics Data Science and Business Analysis',
+    duration: '55 WEEKS',
+    rating: 4.7,
+    reviews: 157,
+    instructor: 'Max Alexis',
+  },
+];
+
+export const articles = [
+  {
+    author: 'Emily Johnson',
+    title: 'The Future of Online Learning Trends to Watch in 2024',
+    date: 'July 15, 2024',
+    views: 20,
+    image: '/placeholder.svg?height=200&width=400',
+  },
+  {
+    author: 'Michael Lee',
+    title: 'Top 10 Tips for Staying Motivated in Online Courses',
+    date: 'August 3, 2024',
+    views: 19,
+    image: '/placeholder.svg?height=200&width=400',
+  },
+  {
+    author: 'Sarah Thompson',
+    title: 'How to Choose the Right Online Course for Your Career Goals',
+    date: 'September 10, 2024',
+    views: 10,
+    image: '/placeholder.svg?height=200&width=400',
+  },
+
+  {
+    author: 'Sarah Thompson',
+    title: 'How to Choose the Right Online Course for Your Career Goals',
+    date: 'September 10, 2024',
+    views: 10,
+    image: '/placeholder.svg?height=200&width=400',
+  },
+];
