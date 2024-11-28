@@ -33,6 +33,7 @@ export const options: NextAuthOptions = {
         };
         try {
           const res = await fetch(
+            // `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
             {
               method: 'POST',
@@ -40,14 +41,15 @@ export const options: NextAuthOptions = {
               headers: { 'Content-Type': 'application/json' },
             }
           );
-          if (res.ok) {
-            const user = await res.json();
+          const data = await res.json();
+          console.log('전체응답', data);
 
-            return user.result;
+          // 백엔드 응답 구조에 맞게 조건 수정
+          if (data.isSuccess && data.result) {
+            return data.result;
           }
-          //  return null;
         } catch (error) {
-          console.error('Authorization error:', error);
+          console.error('인증 오류:', error);
           return null;
         }
       },
@@ -75,22 +77,15 @@ export const options: NextAuthOptions = {
               headers: { 'Content-Type': 'application/json' },
             }
           );
-          const data = await result.json();
           if (result.ok) {
+            const data = await result.json();
             user.role = data.result.role;
             user.accessToken = data.result.accessToken;
             user.refreshToken = data.result.refreshToken;
             user.uuid = data.result.uuid;
             return true;
-          } else if ((data.code = 2105)) {
-            console.log('2105면 회원등록 필요');
-            const email = kakaoProfile?.kakao_account?.email;
-            const name = kakaoProfile.kakao_account?.profile?.nickname;
-            console.log(name);
-            // const profile_image_url =
-            //   kakaoProfile.kakao_account?.profile?.nickname;
-            return `/join?path=account&name=${encodeURIComponent(name ? name : '')}&email=${email}`;
           }
+
           if (result.status === 401) {
             const provider = account.provider;
             const providerAccountId = account.providerAccountId;
@@ -110,25 +105,25 @@ export const options: NextAuthOptions = {
         token.refreshToken = user.refreshToken;
         token.uuid = user.uuid;
         token.role = user.role;
-      }
 
-      const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
-      const expiredDate = new Date(payload.exp * 1000);
+        const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
+        const expiredDate = new Date(payload.exp * 1000);
 
-      if (Date.now() > expiredDate.getTime() && token.refreshToken) {
-        console.log('토큰 만료됨...');
-        try {
-          const data = await refreshToken(token.refreshToken as string);
-          token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
-          if (data.ok) {
-            console.log('토큰 재발급 성공');
+        if (Date.now() > expiredDate.getTime() && token.refreshToken) {
+          console.log('토큰 만료됨...');
+          try {
+            const data = await refreshToken(token.refreshToken as string);
+            token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
+            if (data.ok) {
+              console.log('토큰 재발급 성공');
+            }
+          } catch (error) {
+            console.error('refreshToken 만료:', error);
+            token.redirect = true;
           }
-        } catch (error) {
-          console.error('refreshToken 만료:', error);
-          // 토큰 갱신 실패 시 redirect 플래그 추가
-          token.redirect = true;
         }
       }
+
       return token;
     },
 
@@ -137,16 +132,11 @@ export const options: NextAuthOptions = {
         session.user.accessToken = token.accessToken;
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
-        session.user.name = token.name;
         session.user.role = token.role;
-      }
-      if (token.redirect) {
-        session.error = 'TokenExpired';
       }
       return session;
     },
   },
-
   pages: {
     signIn: '/login',
     error: '/login?error=loginError',
