@@ -7,3 +7,7 @@ export interface MentorMentoringListDataType {
   inAvailable: boolean;
   nowSessionCount: number;
 }
+
+export interface ContentOnlyResType {
+  content: MentorMentoringListDataType[];
+}

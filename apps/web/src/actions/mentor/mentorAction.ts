@@ -2,18 +2,12 @@ import { commonResType } from '../../components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from '../../app/api/auth/[...nextauth]/options';
 import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
-
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
   isMentor: boolean
 ) {
   'use server';
-  // const session = await getServerSession(options);
-  // const menteeUuid = session?.user.uuid;
-
-  // console.log(menteeUuid);
-  // console.log('멘토의 멘토링 리스트 조회');
 
   try {
     const res = await fetch(
@@ -30,6 +24,7 @@ export async function GetMentorMentoringList(
     const result = (await res.json()) as commonResType<
       MentorMentoringListDataType[]
     >;
+
     return result.result;
   } catch (error) {
     console.error('멘토의 멘토링 리스트 조회 : ', error);
