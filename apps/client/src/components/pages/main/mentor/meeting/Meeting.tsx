@@ -54,18 +54,15 @@ export default function Meeting({
 
   const fetchParticipants = async (userUuid: string) => {
     const existingProfile = userInfo.find((user) => user.userUuid === userUuid);
-    if (existingProfile) {
-      setParticipants((prev) => [...prev, existingProfile]);
-    } else {
+    if (!existingProfile) {
       const participantsData = await getChatProfile({ userUuid: userUuid });
-      setParticipants((prev) => [
-        ...prev,
-        {
-          userUuid: userUuid,
-          nickname: participantsData.nickName,
-          profileImageUrl: participantsData.profileImageUrl,
-        },
-      ]);
+      const newUserInfo = {
+        userUuid: userUuid,
+        nickname: participantsData.nickName,
+        profileImageUrl: participantsData.profileImageUrl,
+      };
+      addUserInfo(newUserInfo);
+      setParticipants((prev) => [...prev, newUserInfo]);
     }
   };
 
