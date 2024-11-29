@@ -33,12 +33,12 @@ export default async function MentoringCalendar({
           {MentoringInfoData && (
             <MentoringOverview MentoringInfoData={MentoringInfoData} />
           )}
-          <MentoringReviewSection />
           <SessionList
             mentoringSessionList={mentoringSessionList}
             mentoringName={MentoringInfoData?.name}
             mentoringDate={mentoringDate}
           />
+          <MentoringReviewSection />
         </div>
       </section>
     </div>

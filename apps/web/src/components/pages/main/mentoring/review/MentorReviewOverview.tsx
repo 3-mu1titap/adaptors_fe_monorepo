@@ -29,11 +29,11 @@ export default function MentorReviewOverview({
   return (
     <div className="flex items-center gap-2">
       <div className="flex items-center">
-        <div className="flex -space-x-6">
+        <div className="flex -space-x-4">
           {visibleReviewers.map((reviewer, index) => (
             <Avatar
               key={index}
-              className="h-10 w-10 border-2 border-background"
+              className="h-10 w-10 border-4 border-background"
             >
               <AvatarImage
                 src={visibleReviewers[index]}

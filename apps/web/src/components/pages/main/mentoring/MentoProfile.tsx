@@ -16,14 +16,12 @@ export default async function MentoProfile({
       <FitImage
         src={mentorProfile.profileImageUrl}
         alt="Profile"
-        className="object-cover p-4"
+        className="object-cover p-2"
       />
 
-      <div className="px-3">
+      <div className="px-1">
         <h1 className="text-3xl font-bold mb-3">@ {mentorProfile.nickName}</h1>
         <div className="flex justify-between w-full mb-3">
-          {/* 리뷰 수 들어갈부분 */}
-          {/* <LikeButton count={29823} mentorUuid={mentorUuid} /> */}
           <MentorReviewOverview maxVisible={4} />
           <LikeButton count={200823} mentorUuid={mentorUuid} />
         </div>
