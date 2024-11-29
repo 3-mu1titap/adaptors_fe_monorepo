@@ -24,7 +24,7 @@ export interface MentoringSessionDataType {
   endTime: TimeDataType;
 }
 
-export function isWithinFiveMinutes(
+export function isWithinTenMinutes(
   startDate: string,
   startTime: TimeDataType
 ): boolean {
@@ -34,8 +34,7 @@ export function isWithinFiveMinutes(
   start.setMinutes(startTime.minute);
 
   const tenMinutesBefore = new Date(start.getTime() - 10 * 60000);
-
-  return now >= tenMinutesBefore && now <= new Date(startDate);
+  return now >= tenMinutesBefore;
 }
 
 export function formatTime(time: TimeDataType): string {
@@ -50,7 +49,7 @@ export default function OpenMentoring({
   joinRoom: () => Promise<void>;
 }) {
   const handleJoinAttempt = async (session: MentoringSessionDataType) => {
-    if (isWithinFiveMinutes(session.startDate, session.startTime)) {
+    if (isWithinTenMinutes(session.startDate, session.startTime)) {
       await joinRoom();
     } else {
       const startTime = new Date(session.startDate);
@@ -71,7 +70,7 @@ export default function OpenMentoring({
   return (
     <ul className="w-full max-w-4xl mx-auto space-y-6 p-6">
       {mentoringSessionList.map((session) => {
-        const canJoin = isWithinFiveMinutes(
+        const canJoin = isWithinTenMinutes(
           session.startDate,
           session.startTime
         );

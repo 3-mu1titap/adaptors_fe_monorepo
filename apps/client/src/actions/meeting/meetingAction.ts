@@ -1,5 +1,6 @@
 'use server';
 
+import { MentoringFeedbackType } from '@repo/client/components/types/main/meeting/meetingTypes';
 import { commonResType } from '@repo/client/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
 
@@ -90,7 +91,9 @@ export async function getParticipants(mentoringSessionUuid: string) {
   }
 }
 
+// const APPLICATION_SERVER_URL = 'http://adaptors.store:4443/api/vi/openvidu/generate-token';
 const APPLICATION_SERVER_URL = 'http://localhost:6080';
+
 // openvidu token 받아오기
 export async function getOpenViduToken(
   roomName: string,
@@ -107,4 +110,27 @@ export async function getOpenViduToken(
   }
   const { token } = await res.json();
   return token;
+}
+
+// 화상회의 종료 후 피드백 작성
+export async function postFeedback(payload: MentoringFeedbackType) {
+  'use server';
+  try {
+    // api 완성되면 넣기
+    console.log(payload);
+    // const res = await fetch(`${process.env}/api/v1/`, {
+    //   cache: 'no-cache',
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'userUuid': userUuid,
+    //   },
+    //   body: JSON.stringify({
+    //     payload,
+    //   }),
+    // });
+    return true;
+  } catch (error) {
+    return redirect('/error?message=Failed to post Feedback');
+  }
 }

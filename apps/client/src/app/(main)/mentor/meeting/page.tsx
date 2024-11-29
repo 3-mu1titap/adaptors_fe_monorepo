@@ -9,16 +9,16 @@ const mentoringSessionList = [
   {
     mentoringName: '프로그래밍 기초 멘토링',
     sessionUuid: '123',
-    startDate: '2024-11-28',
-    endDate: '2024-11-28',
+    startDate: '2024-11-29',
+    endDate: '2024-11-29',
     startTime: {
-      hour: 14,
-      minute: 30,
+      hour: 16,
+      minute: 0,
       second: 0,
       nano: 0,
     },
     endTime: {
-      hour: 16,
+      hour: 18,
       minute: 30,
       second: 0,
       nano: 0,

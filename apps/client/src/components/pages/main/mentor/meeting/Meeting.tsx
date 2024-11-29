@@ -24,6 +24,14 @@ import OpenMentoring, {
 import MeetingHeader from '../../../../header/MeetingHeader';
 import Participants from './participants/Participants';
 import Chatting from '../../chatting/Chatting';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@repo/ui/components/ui/Dialog';
+import MentoringFeedbackForm from './closeMentoring/MentoringFeedbackForm';
 
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
@@ -51,6 +59,7 @@ export default function Meeting({
   >({});
   const { userInfo, addUserInfo } = useUserInfoStore();
   const [participants, setParticipants] = useState<participantType[]>([]);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
   const fetchParticipants = async (userUuid: string) => {
     const existingProfile = userInfo.find((user) => user.userUuid === userUuid);
@@ -135,6 +144,7 @@ export default function Meeting({
 
   async function leaveRoom() {
     await room?.disconnect();
+    setShowFeedbackModal(true);
     setIsCameraOn(true);
     setIsMicOn(true);
     setRoom(null);
@@ -255,6 +265,15 @@ export default function Meeting({
           </div>
         </>
       )}
+      <Dialog open={showFeedbackModal} onOpenChange={setShowFeedbackModal}>
+        <DialogHeader className="hidden">
+          <DialogTitle>멘토링 피드백</DialogTitle>
+          <DialogDescription>멘티의 수준 평가</DialogDescription>
+        </DialogHeader>
+        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+          <MentoringFeedbackForm />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
