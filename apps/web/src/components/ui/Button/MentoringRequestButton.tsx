@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@repo/ui/components/ui/button';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 import {
   SessionCancel,
@@ -7,54 +9,67 @@ import {
 } from '../../../actions/mentoring/mentoringAction';
 
 export default function MentoringRequestButton({
-  isClosed,
   sessionUuid,
   mentoringName,
   deadlineDate,
   isParticipating,
+  price,
 }: {
-  isClosed: boolean;
   sessionUuid: string;
   mentoringName: string;
   deadlineDate: string;
   isParticipating: boolean;
+  price: number;
 }) {
+  const [isRegistered, setIsRegistered] = useState(isParticipating);
   const onClickButton = async () => {
-    const status = !isParticipating
-      ? await SessionRequest({
-          sessionUuid: sessionUuid,
-          mentoringName: mentoringName,
-        })
-      : await SessionCancel({
+    Swal.fire({
+      toast: true,
+      // icon: 'success',
+      title: isRegistered
+        ? `신청을 취소하시겠습니까?`
+        : `세션을 신청하시겠습니까?`,
+      html: `<p class="text-center">
+      <span style="color: #ff2c2c;">${price}V</span>가 차감됩니다</p>`,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+      customClass: {
+        title: 'text-lg font-semibold text-gray-800 !text-center',
+        actions: '!grid !grid-cols-2 !justify-center',
+        confirmButton:
+          'bg-adaptorsYellow text-black py-2 px-4 rounded hover:bg-amber-500',
+        denyButton:
+          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
+      },
+    }).then((result) => {
+      if (result.isConfirmed && isRegistered) {
+        SessionCancel({
           sessionUuid: sessionUuid,
           deadlineDate: deadlineDate,
         });
-
-    if (status == 200) {
-      Swal.fire({
-        toast: true,
-        icon: 'success',
-        title: isParticipating ? '신청 취소되었습니다' : '신청 완료되었습니다',
-        showConfirmButton: false,
-        customClass: {
-          title: 'text-lg font-semibold text-gray-800 text-center',
-          actions: '!grid !grid-cols-2 !justify-center',
-        },
-        timer: 2000,
-      });
-    }
+        setIsRegistered((prev) => !prev);
+      } else if (result.isConfirmed && !isRegistered) {
+        SessionRequest({
+          sessionUuid: sessionUuid,
+          mentoringName: mentoringName,
+        });
+        setIsRegistered((prev) => !prev);
+      }
+    });
   };
 
   return (
-    <button
+    <Button
       onClick={onClickButton}
       className={`px-4 py-3 rounded-[10px] text-xl w-28 ${
-        isParticipating
-          ? 'bg-gray-200 text-gray-600'
-          : 'bg-adaptorsYellow text-white'
+        isRegistered
+          ? 'bg-gray-200 text-gray-600 hover:bg-gray-200'
+          : 'bg-adaptorsYellow text-white hover:bg-black'
       }`}
     >
-      {isParticipating ? '취소하기' : '참가하기'}
-    </button>
+      {isRegistered ? '취소하기' : '참가하기'}
+    </Button>
   );
 }

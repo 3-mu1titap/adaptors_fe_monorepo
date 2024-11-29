@@ -10,11 +10,20 @@ declare module 'next-auth' {
   }
 
   interface Session {
+    error?: any;
     user: {
       accessToken: string; // session.user에 accessToken 포함
       refreshToken: string; // accessToken 추가
       uuid: string; // accessToken 추가
       role: string;
     } & DefaultSession['user'];
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    accessToken: string;
+    refreshToken: string;
+    uuid: string;
   }
 }

@@ -18,9 +18,15 @@ import {
   informationSchema,
 } from './signUpSchema';
 
-export default function JoinFunnel() {
+export default function JoinFunnel({
+  name,
+  email,
+}: {
+  name: string;
+  email: string;
+}) {
   const steps = [
-    'account',
+    `account&name=${name}&email=${email}`,
     'information',
     'profileImage',
     'profile',
@@ -33,11 +39,11 @@ export default function JoinFunnel() {
   const [account, serAccountData] = useState<accountFormData>({
     accountId: '',
     password: '',
-    email: '',
+    email: email ? email : '',
     role: 'MENTEE',
   });
   const [information, serinformationData] = useState<informationFormData>({
-    name: '',
+    name: name ? name : '',
     nickName: '',
     phoneNumber: '',
   });
@@ -73,7 +79,7 @@ export default function JoinFunnel() {
       <FunnelLevel level={level} />
       <section className="">
         <Funnel step={step}>
-          <Funnel.Step name="account">
+          <Funnel.Step name={`account&name=${name}&email=${email}`}>
             <Account
               formData={account}
               setFormData={serAccountData}
@@ -85,7 +91,7 @@ export default function JoinFunnel() {
               handleButtton={onClickNext} //onClickNext
             />
           </Funnel.Step>
-          <Funnel.Step name="information">
+          <Funnel.Step name={`information`}>
             <Information
               formData={information}
               setFormData={serinformationData}

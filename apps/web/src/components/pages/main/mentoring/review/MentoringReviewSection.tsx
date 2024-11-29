@@ -1,8 +1,8 @@
 'use client';
 
 import { Card } from '@repo/ui/components/ui/card';
-import { ChevronRight } from 'lucide-react';
 
+import ChevronText from '@components/ui/Text/ChevronText';
 import Link from 'next/link';
 import MentoringReview from './MentoringReview';
 // import MentoringReview from './MentoringReview';
@@ -57,9 +57,7 @@ export default function MentoringReviewSection() {
   return (
     <Card className="w-full ">
       <div className="flex justify-between items-center px-7 py-4">
-        <h2 className="text-xl font-semibold flex gap-2 items-center">
-          <ChevronRight className="w-5" /> 수강후기
-        </h2>
+        <ChevronText text="수강후기" />
         <Link
           href={`/mentoring/1/review`}
           className="text-lg border border-adaptorsGray py-2.5 px-6 rounded-md"
