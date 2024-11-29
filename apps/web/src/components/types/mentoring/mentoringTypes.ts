@@ -1,4 +1,4 @@
-export interface Time {
+export interface TimeDataType {
   hour: number;
   minute: number;
   second: number;
@@ -10,8 +10,8 @@ export interface MentoringSessionDataType {
   mentoringUuid: string;
   startDate: string;
   endDate: string;
-  startTime: Time;
-  endTime: Time;
+  startTime: TimeDataType;
+  endTime: TimeDataType;
   deadlineDate: string;
   minHeadCount: number;
   maxHeadCount: number;

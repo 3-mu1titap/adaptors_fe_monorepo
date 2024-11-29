@@ -8,7 +8,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const scheduleList = await GetScheduleList('2024-11');
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  // const scheduleList = await GetScheduleList(`${year}-${month}`);
+  const scheduleList = await GetScheduleList(`2024-12`);
 
   return (
     <main className="w-full">
