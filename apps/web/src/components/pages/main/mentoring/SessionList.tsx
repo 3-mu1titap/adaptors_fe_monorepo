@@ -1,8 +1,12 @@
 'use client';
 import DottedlineEllipse from '@components/assets/icons/DottedlineEllipse';
+import ChevronText from '@components/ui/Text/ChevronText';
+import { Button } from '@repo/ui/components/ui/button';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { MentoringSessionDataType } from '../../../types/mentoring/mentoringTypes';
 import MentoringRequestButton from '../../../ui/Button/MentoringRequestButton';
+import MentorReviewOverview from './review/MentorReviewOverview';
 
 export default function SessionList({
   mentoringSessionList,
@@ -61,6 +65,7 @@ export default function SessionList({
 
   return (
     <>
+      <ChevronText text="멘토링 세션" />
       <div className="space-y-6">
         {Object.entries(groupedSessions).length > 0 ? (
           Object.entries(groupedSessions).map(([date, dateSessions]) => (
@@ -72,7 +77,7 @@ export default function SessionList({
                 <figure
                   key={session.sessionUuid}
                   className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 bg-white py-6 rounded-lg shadow-sm w-full 
-                  hover:border-[1px] hover:border-adaptorsYellow hover:py-8 transition-transform duration-300 ease-in-out"
+                  hover:ring-4 hover:ring-adaptorsYellow"
                 >
                   <div className="flex items-center gap-1 sm:flex-col">
                     {/* 시간 */}
@@ -95,6 +100,7 @@ export default function SessionList({
                     </small>
                   </div>
                   <div className="flex items-center gap-5 mt-5 sm:mt-0 sm:gap-20">
+                    <MentorReviewOverview />
                     {/* 가격 */}
                     <div>
                       <h1 className="text-2xl font-semibold">
@@ -110,7 +116,7 @@ export default function SessionList({
                       </div>
                     ) : (
                       <MentoringRequestButton
-                        isClosed={session.isClosed}
+                        price={session.price}
                         isParticipating={session.isParticipating}
                         sessionUuid={session.sessionUuid}
                         mentoringName={mentoringName ? mentoringName : ''}
@@ -129,19 +135,26 @@ export default function SessionList({
               : '해당 날짜에 예약 가능한 세션이 없습니다.'}
           </div>
         )}
+        <Button
+          className="z-20 text-black flex flex-col mx-auto"
+          onClick={() => setShowAllSessions(true)}
+        >
+          전체 세션 더보기
+          <ChevronDown className="w-5 text-adaptorsYellow" />
+        </Button>
       </div>
-
-      {mentoringDate &&
+      {/* {mentoringDate &&
         !showAllSessions &&
         mentoringSessionList.length >
           (groupedSessions[mentoringDate]?.length || 0) && (
           <button
             onClick={() => setShowAllSessions(true)}
-            className="w-full py-3 text-sm text-gray-500 hover:text-gray-700"
+            className="w-full py-3 text-lg text-gray-500 bg-adaptorsYellow hover:text-gray-700"
           >
             전체 세션 더보기
+            <ChevronDown className="w-5 text-adaptorsYellow" />
           </button>
-        )}
+        )} */}
     </>
   );
 }
