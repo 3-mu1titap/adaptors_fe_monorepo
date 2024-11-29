@@ -10,7 +10,7 @@ export default async function MentoringOverview({
     <div>
       <h1 className="text-2xl font-bold py-5">{MentoringInfoData?.name}</h1>
 
-      <div className="relative w-full h-[400px] p-5 rounded-xl object-cover overflow-hidden bg-gray-200">
+      <div className="relative w-full rounded-xl bg-gray-200 overflow-hidden">
         {MentoringInfoData.categoryList && (
           <ul className="flex gap-3">
             {MentoringInfoData?.categoryList[0]?.topCategoryName && (
@@ -33,8 +33,10 @@ export default async function MentoringOverview({
         <Image
           src={`${MentoringInfoData?.thumbnailUrl}`}
           alt="Profile"
-          layout="fill" // 부모 크기에 맞게 조정
-          objectFit="contain" // 높이 맞추고 원본 비율 유지
+          layout="intrinsic"
+          width={800}
+          height={0}
+          className="w-full h-auto"
           priority
         />
       </div>
