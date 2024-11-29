@@ -31,7 +31,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@repo/ui/components/ui/Dialog';
-import MentoringFeedbackForm from './closeMentoring/MentoringFeedbackForm';
+import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
 
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
