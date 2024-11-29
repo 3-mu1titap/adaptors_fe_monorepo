@@ -6,7 +6,7 @@ import UserProfile from './UserProfile';
 
 function MainHeaderRightMenu({ openSideBar }: { openSideBar: () => void }) {
   const session = useSession();
-  console.log(session?.isAuth);
+  // console.log(session?.isAuth);
   return (
     <nav>
       <ul className="flex justify-end items-center gap-4">

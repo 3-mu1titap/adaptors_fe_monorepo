@@ -1,6 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
+import { refreshToken } from 'src/actions/common/refreshToken';
 
 // Kakao 프로필 타입 정의
 interface KakaoProfile {
@@ -39,13 +40,15 @@ export const options: NextAuthOptions = {
               headers: { 'Content-Type': 'application/json' },
             }
           );
-          if (res.ok) {
-            const user = await res.json();
-            return user.result;
+          const data = await res.json();
+          console.log('전체응답', data);
+
+          // 백엔드 응답 구조에 맞게 조건 수정
+          if (data.isSuccess && data.result) {
+            return data.result;
           }
-          //  return null;
         } catch (error) {
-          console.error('Authorization error:', error);
+          console.error('인증 오류:', error);
           return null;
         }
       },
@@ -59,7 +62,6 @@ export const options: NextAuthOptions = {
     async signIn({ account, profile, user }) {
       if (account?.provider === 'kakao') {
         try {
-          console.log('kakao');
           const kakaoProfile = profile as KakaoProfile;
           const result = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/oauth-sign-in`,
@@ -102,6 +104,22 @@ export const options: NextAuthOptions = {
         token.uuid = user.uuid;
         token.role = user.role;
       }
+      if (token) {
+        const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
+        const expiredDate = new Date(payload.exp * 1000);
+        if (Date.now() > expiredDate.getTime() && token.refreshToken) {
+          try {
+            const data = await refreshToken(token.refreshToken as string);
+            token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
+            if (data.ok) {
+              console.log('토큰 재발급 성공');
+            }
+          } catch (error) {
+            console.error('refreshToken 만료:', error);
+            token.error = 'refreshTokenExpired';
+          }
+        }
+      }
       return token;
     },
 
@@ -110,9 +128,11 @@ export const options: NextAuthOptions = {
         session.user.accessToken = token.accessToken;
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
-        session.user.name = token.name;
         session.user.role = token.role;
       }
+      // if (token.error) {
+      //   session.error = token.error; // 에러 상태를 세션으로 전달
+      // }
       return session;
     },
   },

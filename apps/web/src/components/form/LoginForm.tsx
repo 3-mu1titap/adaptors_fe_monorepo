@@ -25,14 +25,15 @@ export default function LoginForm() {
         password: pw,
         redirect: false,
       });
-
-      if (result?.error) {
+      console.log(result);
+      if (result?.status == 401) {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
-      } else {
+      } else if (result?.status == 200) {
+        console.log(result?.status == 200);
         const updatedSession = await getSession();
         if (updatedSession) {
           const role = updatedSession.user?.role;
-
+          console.log(role);
           // role에 따라 페이지 라우팅
           if (role === 'MENTEE') {
             router.push('/home');
