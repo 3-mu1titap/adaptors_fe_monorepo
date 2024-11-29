@@ -15,7 +15,7 @@ export const postMentorProfile = async ({
   'use server';
   console.log(profile, uuid);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-query-service/api/v1/memberInfo/profileImage`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/mentor/profile`,
     {
       method: 'POST',
       headers: {
