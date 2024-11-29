@@ -14,3 +14,9 @@ export interface MentorProfileRequestType {
   gender: string;
   jobExperience: string;
 }
+
+//회원의 프로필 이미지,닉네임 Request
+export interface userProfileType {
+  nickName: string;
+  profileImageUrl: string;
+}

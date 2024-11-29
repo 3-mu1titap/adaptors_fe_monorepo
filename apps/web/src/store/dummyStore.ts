@@ -137,6 +137,7 @@ export const categories = [
 
 export const courses = [
   {
+    mentorUuId: 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -146,6 +147,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '1',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -155,6 +157,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '2',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -164,6 +167,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '3',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -173,6 +177,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '3',
     id: 1,
     title: 'Learn Figma — UI/UX Design Essential Training',
     duration: '55 WEEKS',
@@ -182,6 +187,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '5',
     id: 1,
     title: 'Learn Figma — UI/UX Design Essential Training',
     duration: '55 WEEKS',
@@ -191,6 +197,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '6',
     id: 1,
     title: 'Learn Figma — UI/UX Design Essential Training',
     duration: '55 WEEKS',
@@ -200,6 +207,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '7',
     id: 1,
     title: 'Learn Figma — UI/UX Design Essential Training',
     duration: '55 WEEKS',
@@ -209,6 +217,7 @@ export const courses = [
   },
 
   {
+    mentorUuId: '8',
     id: 2,
     title: 'Advanced Android 12 & Kotlin Development Course',
     duration: '55 WEEKS',
@@ -217,6 +226,7 @@ export const courses = [
     instructor: 'Max Alexis',
   },
   {
+    mentorUuId: '9',
     id: 3,
     title: 'IT Statistics Data Science and Business Analysis',
     duration: '55 WEEKS',
@@ -225,6 +235,7 @@ export const courses = [
     instructor: 'Max Alexis',
   },
   {
+    mentorUuId: '9',
     id: 4,
     title: 'IT Statistics Data Science and Business Analysis',
     duration: '55 WEEKS',
@@ -233,6 +244,7 @@ export const courses = [
     instructor: 'Max Alexis',
   },
   {
+    mentorUuId: '9',
     id: 5,
     title: 'IT Statistics Data Science and Business Analysis',
     duration: '55 WEEKS',
@@ -241,6 +253,7 @@ export const courses = [
     instructor: 'Max Alexis',
   },
   {
+    mentorUuId: '9',
     id: 6,
     title: 'IT Statistics Data Science and Business Analysis',
     duration: '55 WEEKS',
