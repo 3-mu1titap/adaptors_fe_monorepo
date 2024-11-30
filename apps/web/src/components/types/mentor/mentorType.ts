@@ -9,5 +9,14 @@ export interface MentorMentoringListDataType {
 }
 
 export interface ContentOnlyResType {
-  content: MentorMentoringListDataType[];
+  content: SearchMentoringType[];
+}
+
+export interface SearchMentoringType {
+  mentoringUuid: string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  isAvailable: boolean;
+  nowSessionCount: number;
 }

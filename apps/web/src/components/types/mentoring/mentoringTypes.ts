@@ -52,3 +52,19 @@ export interface SessionCancelType {
   sessionUuid: string;
   deadlineDate: string;
 }
+
+export interface SearchMentoringListType {
+  mentoringUuid: string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  isAvailable: boolean;
+  nowSessionCount: number;
+}
+
+// API 전체 응답 타입 정의
+export interface ApiResponse {
+  result: {
+    content: SearchMentoringListType[];
+  };
+}
