@@ -34,8 +34,7 @@ import {
 import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
 
 const LIVEKIT_URL =
-  process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
-
+  process.env.NEXT_PUBLIC_LIVEKIT_URL || 'http://43.200.249.170:4443';
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;
   participantIdentity: string;
@@ -124,8 +123,10 @@ export default function Meeting({
     );
 
     try {
-      const token = await getOpenViduToken('roomName', 'participantName');
-      await room.connect(LIVEKIT_URL, token);
+      // const token = await getOpenViduToken('roomName', 'participantName');
+      // console.log('token', token);
+      // await room.connect(LIVEKIT_URL, token);
+      await room.connect(LIVEKIT_URL, 'cff6324c-566f-4803-8db8-31712b071a6b');
       await room.localParticipant.enableCameraAndMicrophone();
       const localVideoTrackPublication =
         room.localParticipant.videoTrackPublications.values().next().value;

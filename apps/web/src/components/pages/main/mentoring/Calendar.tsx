@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { MentoringSessionDataType } from '../../../types/mentoring/mentoringTypes';
+import { MentoringSessionList } from '../../../types/mentoring/mentoringTypes';
 
 interface CalendarDay {
   date: number;
@@ -9,39 +9,47 @@ interface CalendarDay {
   year: number;
   isCurrentMonth: boolean;
   hasSession: boolean;
+  sessionCount: number;
   isSelected: boolean;
 }
 
 export default function Calendar({
   mentoringSessionList = [],
 }: {
-  mentoringSessionList: MentoringSessionDataType[];
+  mentoringSessionList: MentoringSessionList | [];
 }) {
+  // Create a Set of dates with sessions and a map to track session counts
+  const sessionDates = useMemo(() => {
+    const dates = new Set<string>();
+    const sessionCountMap = new Map<string, number>();
+
+    Object.entries(mentoringSessionList).forEach(([date, sessions]) => {
+      dates.add(date);
+      sessionCountMap.set(date, sessions.length);
+    });
+
+    return {
+      dates,
+      sessionCountMap,
+    };
+  }, [mentoringSessionList]);
+
   // Find the nearest future session date
   const today = new Date();
   const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
   const nearestFutureSession = useMemo(() => {
-    const futureSessions = mentoringSessionList
-      .filter((session) => session.startDate >= formattedToday)
-      .sort(
-        (a, b) =>
-          new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-      );
+    const futureSessions = Object.keys(mentoringSessionList)
+      .filter((date) => date >= formattedToday)
+      .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-    return futureSessions[0]?.startDate || formattedToday;
+    return futureSessions[0] || formattedToday;
   }, [mentoringSessionList, formattedToday]);
 
   const [selectedDate, setSelectedDate] =
     useState<string>(nearestFutureSession);
   const router = useRouter();
   const mentoringUuid = '1';
-
-  // Create a Set of dates with sessions for faster lookups
-  const sessionDates = useMemo(
-    () => new Set(mentoringSessionList.map((session) => session.startDate)),
-    [mentoringSessionList]
-  );
 
   const generateCalendarDays = (year: number, month: number): CalendarDay[] => {
     const firstDay = new Date(year, month, 1);
@@ -57,6 +65,7 @@ export default function Calendar({
         year: date.getFullYear(),
         isCurrentMonth: false,
         hasSession: false,
+        sessionCount: 0,
         isSelected: false,
       });
     }
@@ -64,12 +73,18 @@ export default function Calendar({
     // Days in the current month
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+      const hasSession = sessionDates.dates.has(currentDate);
+      const sessionCount = hasSession
+        ? sessionDates.sessionCountMap.get(currentDate) || 0
+        : 0;
+
       days.push({
         date: i,
         month: month,
         year: year,
         isCurrentMonth: true,
-        hasSession: sessionDates.has(currentDate),
+        hasSession,
+        sessionCount,
         isSelected: currentDate === selectedDate,
       });
     }
@@ -79,14 +94,10 @@ export default function Calendar({
 
   const handleDateClick = (year: number, month: number, date: number) => {
     const selected = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-    const scrollPosition = window.scrollY; // 현재 스크롤 위치를 캡처
-
-    // 스크롤 위치와 선택된 날짜를 쿼리 파라미터로 넘김
     setSelectedDate(selected);
-    router.push(
-      `/mentoring/${mentoringUuid}?selectedDate=${selected}&scrollY=${scrollPosition}`
-    );
+    router.push(`/mentoring/${mentoringUuid}?selectedDate=${selected}`);
   };
+
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const now = new Date();
 
@@ -117,6 +128,11 @@ export default function Calendar({
                   new Date(day.year, day.month, day.date).getDay() === 6;
                 const isSunday =
                   new Date(day.year, day.month, day.date).getDay() === 0;
+                const sessionColorIntensity =
+                  day.sessionCount > 0
+                    ? `bg-green-${Math.min(day.sessionCount * 200, 700)}`
+                    : '';
+
                 return (
                   <button
                     key={i}
@@ -126,11 +142,12 @@ export default function Calendar({
                       }
                     }}
                     className={`
-                      aspect-square flex items-center justify-center rounded-full text-md
+                      z-0 aspect-square flex items-center justify-center rounded-full text-md
                       ${day.isCurrentMonth ? (isSaturday ? 'text-blue-500' : isSunday ? 'text-red-500' : 'text-black') : 'text-gray-300'}
                       ${day.isSelected ? 'bg-yellow-400 text-black' : ''}
-                      ${day.hasSession && !day.isSelected ? 'bg-gray-200 text-black' : ''}
+                      ${day.hasSession && !day.isSelected ? `${sessionColorIntensity} bg-gray-200` : ''}
                       ${!day.isCurrentMonth ? 'cursor-default' : 'cursor-pointer'}
+                      relative
                     `}
                   >
                     {day.date}

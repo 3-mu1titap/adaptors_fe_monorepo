@@ -6,7 +6,7 @@ import { options } from '../../app/api/auth/[...nextauth]/options';
 import { SearchMentoringType } from '@components/types/mentor/mentorType';
 import {
   MentoringDataType,
-  MentoringSessionDataType,
+  MentoringSessionList,
   SessionCancelType,
   SessionRequestType,
 } from '../../components/types/mentoring/mentoringTypes';
@@ -17,13 +17,12 @@ import {
   pageableType,
 } from '../../components/types/mentoring/mentoringTypes';
 // 멘토링의 정보 및 세션리스트 정보 조회
-export async function GetMentoringSessionList(mentoringUuid: string) {
+export async function GetMentoringSessionList(
+  mentoringUuid: string
+): Promise<MentoringSessionList | []> {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
-
-  console.log(menteeUuid);
-  console.log('멘토링의 정보 및 세션리스트 정보 조회');
 
   try {
     const res = await fetch(
@@ -38,9 +37,8 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
         next: { tags: ['session-request'] },
       }
     );
-    const result = (await res.json()) as commonResType<
-      MentoringSessionDataType[]
-    >;
+    const result = (await res.json()) as commonResType<MentoringSessionList>;
+    // console.log(result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);

@@ -187,7 +187,7 @@ export default function AdaptorcConcentImage({
         rx="27.8886"
         ry="19.522"
         fill="#BFC2C4"
-        fillOpacity="0.32"
+        fill-opacity="0.32"
       />
       <ellipse
         cx="154.981"
@@ -195,7 +195,7 @@ export default function AdaptorcConcentImage({
         rx="25.0998"
         ry="18.3268"
         fill="#BFC2C4"
-        fillOpacity="0.32"
+        fill-opacity="0.32"
       />
       <ellipse
         cx="207.173"
@@ -203,7 +203,7 @@ export default function AdaptorcConcentImage({
         rx="3.98409"
         ry="2.78886"
         fill="#BFC2C4"
-        fillOpacity="0.32"
+        fill-opacity="0.32"
       />
       <ellipse
         cx="210.36"
@@ -211,7 +211,7 @@ export default function AdaptorcConcentImage({
         rx="31.0759"
         ry="19.9205"
         fill="#BFC2C4"
-        fillOpacity="0.32"
+        fill-opacity="0.32"
       />
       <path
         d="M106.426 182.381C106.426 184.176 106.216 186.355 108.049 186.355C109.655 186.355 111.058 183.007 112.182 178.627V178.64C112.478 180.088 113.148 181.306 113.148 182.722C113.148 184.507 108.069 193.767 105.156 193.767C103.699 193.767 102.79 192.611 102.79 191.387C102.79 189.507 104.863 187.199 106.426 182.144V182.381Z"

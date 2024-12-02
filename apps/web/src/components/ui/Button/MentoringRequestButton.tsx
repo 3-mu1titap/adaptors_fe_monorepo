@@ -14,12 +14,14 @@ export default function MentoringRequestButton({
   deadlineDate,
   isParticipating,
   price,
+  isClosed,
 }: {
   sessionUuid: string;
   mentoringName: string;
   deadlineDate: string;
   isParticipating: boolean;
   price: number;
+  isClosed: boolean;
 }) {
   const [isRegistered, setIsRegistered] = useState(isParticipating);
   const onClickButton = async () => {
@@ -61,15 +63,23 @@ export default function MentoringRequestButton({
   };
 
   return (
-    <Button
-      onClick={onClickButton}
-      className={`px-4 py-3 rounded-[10px] text-xl w-28 ${
-        isRegistered
-          ? 'bg-gray-200 text-gray-600 hover:bg-gray-200'
-          : 'bg-adaptorsYellow text-white hover:bg-black'
-      }`}
-    >
-      {isRegistered ? '취소하기' : '참가하기'}
-    </Button>
+    <div>
+      {isClosed ? (
+        <div className="px-4 py-3 w-28 text-center rounded-xl text-xl font-medium bg-[#433E3E] text-white">
+          마감
+        </div>
+      ) : (
+        <Button
+          onClick={onClickButton}
+          className={`px-4 py-3 rounded-[10px] text-xl w-28 ${
+            isRegistered
+              ? 'bg-gray-200 text-gray-600 hover:bg-gray-200'
+              : 'bg-adaptorsYellow text-white hover:bg-black'
+          }`}
+        >
+          {isRegistered ? '취소하기' : '참가하기'}
+        </Button>
+      )}
+    </div>
   );
 }

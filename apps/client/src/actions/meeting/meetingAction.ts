@@ -91,8 +91,9 @@ export async function getParticipants(mentoringSessionUuid: string) {
   }
 }
 
-// const APPLICATION_SERVER_URL = 'http://adaptors.store:4443/api/vi/openvidu/generate-token';
-const APPLICATION_SERVER_URL = 'http://localhost:6080';
+const APPLICATION_SERVER_URL =
+  'http://43.200.249.170:5555/api/v1/openvidu/generate-token';
+// const APPLICATION_SERVER_URL = 'http://localhost:6080';
 
 // openvidu token 받아오기
 export async function getOpenViduToken(
@@ -100,11 +101,18 @@ export async function getOpenViduToken(
   participantName: string
 ) {
   'use server';
-  const res = await fetch(`${APPLICATION_SERVER_URL}/token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ roomName, participantName }),
-  });
+  const res = await fetch(
+    `${APPLICATION_SERVER_URL}?mentoringSessionUuid=session`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'userUuid': userUuid,
+      },
+      // body: JSON.stringify({ roomName, participantName }),
+    }
+  );
+  console.log('=======================================', res);
   if (!res.ok) {
     throw new Error('Failed to get token');
   }
