@@ -34,8 +34,7 @@ import {
 import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
 
 const LIVEKIT_URL =
-  process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
-
+  process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://43.200.249.170:4443/';
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;
   participantIdentity: string;
@@ -125,6 +124,7 @@ export default function Meeting({
 
     try {
       const token = await getOpenViduToken('roomName', 'participantName');
+      console.log('token', token);
       await room.connect(LIVEKIT_URL, token);
       await room.localParticipant.enableCameraAndMicrophone();
       const localVideoTrackPublication =
