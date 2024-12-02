@@ -1,3 +1,4 @@
+import ValueUnit from '@components/ui/Text/ValueUnit';
 import {
   Avatar,
   AvatarFallback,
@@ -49,12 +50,12 @@ export default function MentorReviewOverview({
           )}
         </div>
       </div>
-      <div className="flex flex-col">
-        <span className="text-[1.15rem] font-bold text-[#1a1a2e]">
-          {ReviewData.totalReviews.toLocaleString()}K
-        </span>
-        <span className="text-sm text-gray-500">Reviews</span>
-      </div>
+      <ValueUnit
+        value={`${ReviewData.totalReviews.toLocaleString()}K`}
+        unit="Reviews"
+        valueSize="text-[1.15rem]"
+        unitSize="text-sm"
+      />
     </div>
   );
 }
