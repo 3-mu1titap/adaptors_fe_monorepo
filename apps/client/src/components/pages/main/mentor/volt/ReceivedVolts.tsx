@@ -9,6 +9,7 @@ import {
 } from '@repo/ui/components/ui/card';
 import { Input } from '@repo/ui/components/ui/input';
 import { Button } from '@repo/ui/components/ui/button';
+import InnerButton from '@repo/client/components/ui/Button/InnerButton';
 
 interface VoltRecord {
   id: number;
@@ -58,11 +59,9 @@ export default function ReceivedVolts() {
                 key={record.id}
                 className="flex justify-between items-center border-b pb-2"
               >
-                <div>
-                  <p className="font-semibold">{record.amount} 볼트</p>
-                  <p className="text-sm text-gray-500">{record.date}</p>
-                </div>
+                <p className="font-semibold">{record.amount} 볼트</p>
                 <p>{record.sender}</p>
+                <p className="text-md">{record.date}</p>
               </li>
             ))}
           </ul>
@@ -82,7 +81,13 @@ export default function ReceivedVolts() {
               onChange={(e) => setExchangeAmount(e.target.value)}
               className="flex-grow"
             />
-            <Button onClick={handleExchange}>환전하기</Button>
+            <InnerButton
+              title="환전하기"
+              onClick={handleExchange}
+              isDisabled={false}
+              colorType="secondary"
+              className="text-nowrap"
+            />
           </div>
         </CardContent>
       </Card>
