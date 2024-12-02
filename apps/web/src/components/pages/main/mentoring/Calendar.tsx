@@ -142,7 +142,7 @@ export default function Calendar({
                       }
                     }}
                     className={`
-                      aspect-square flex items-center justify-center rounded-full text-md
+                      z-0 aspect-square flex items-center justify-center rounded-full text-md
                       ${day.isCurrentMonth ? (isSaturday ? 'text-blue-500' : isSunday ? 'text-red-500' : 'text-black') : 'text-gray-300'}
                       ${day.isSelected ? 'bg-yellow-400 text-black' : ''}
                       ${day.hasSession && !day.isSelected ? `${sessionColorIntensity} bg-gray-200` : ''}
