@@ -1,19 +1,64 @@
-import MainHeaderGNBMenuItem from '@components/header/MainGNBMenuItem';
-// import { CategoryData } from 'src/store/initialStore';
-export const CategoryData = [
-  { label: '자기소개서', href: '/cover-letter' },
-  { label: '포트폴리오', href: '/portfolio' },
-  { label: '이력서', href: '/resume' },
-];
+'use client';
 
-export default function Category() {
+import { motion } from 'framer-motion';
+import { useLayoutEffect, useRef, useState } from 'react';
+
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface AnimatedCategoriesProps {
+  categories: Category[];
+}
+
+export function AnimatedCategories({ categories }: AnimatedCategoriesProps) {
+  const [activeCategory, setActiveCategory] = useState(categories[0].id);
+  const containerRef = useRef<HTMLUListElement>(null);
+  const [indicatorStyles, setIndicatorStyles] = useState({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      const activeElement = containerRef.current.querySelector(
+        `[aria-current="page"]`
+      ) as HTMLElement;
+      if (activeElement) {
+        setIndicatorStyles({
+          left: activeElement.offsetLeft,
+          width: activeElement.offsetWidth,
+        });
+      }
+    }
+  }, [activeCategory]);
+
   return (
-    <nav className="hidden lg:flex w-full justify-center ml-12">
-      <ul className="text-base lg:text-lg flex gap-x-4 lg:gap-x-8">
-        {CategoryData.map((item) => (
-          <MainHeaderGNBMenuItem key={item.label} menuItem={item} />
+    <nav className="relative w-full mt-20 mb-4">
+      <ul className="flex space-x-4 justify-center" ref={containerRef}>
+        {categories.map((category) => (
+          <li key={category.id}>
+            <button
+              className={`px-3 py-2 text-lg transition-colors z-20 ${
+                activeCategory === category.id
+                  ? 'text-primary font-extrabold'
+                  : 'text-muted-foreground rounded-md hover:text-primary hover:bg-adaptorsYellow/20'
+              }`}
+              onClick={() => setActiveCategory(category.id)}
+              aria-current={activeCategory === category.id ? 'page' : undefined}
+            >
+              {category.name}
+            </button>
+          </li>
         ))}
       </ul>
+      <motion.div
+        className="absolute bottom-0 h-full bg-adaptorsYellow/30 rounded-md z-10"
+        animate={indicatorStyles}
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 30,
+        }}
+      />
     </nav>
   );
 }
