@@ -1,17 +1,41 @@
-export interface Time {
+// export interface Time {
+//   hour: number;
+//   minute: number;
+//   second: number;
+//   nano: number;
+// }
+
+// export interface MentoringSessionDataType {
+//   sessionUuid: string;
+//   mentoringUuid: string;
+//   startDate: string;
+//   endDate: string;
+//   startTime: Time;
+//   endTime: Time;
+//   deadlineDate: string;
+//   minHeadCount: number;
+//   maxHeadCount: number;
+//   nowHeadCount: number;
+//   isParticipating: boolean;
+//   price: number;
+//   isClosed: boolean;
+//   createdAt: string;
+//   updatedAt: string;
+// }
+export interface SessionTime {
   hour: number;
   minute: number;
   second: number;
   nano: number;
 }
 
-export interface MentoringSessionDataType {
+export interface MentoringSessionData {
   sessionUuid: string;
   mentoringUuid: string;
   startDate: string;
   endDate: string;
-  startTime: Time;
-  endTime: Time;
+  startTime: string; // "HH:mm:ss" 형식
+  endTime: string; // "HH:mm:ss" 형식
   deadlineDate: string;
   minHeadCount: number;
   maxHeadCount: number;
@@ -19,9 +43,9 @@ export interface MentoringSessionDataType {
   isParticipating: boolean;
   price: number;
   isClosed: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
+
+export type MentoringSessionList = Record<string, MentoringSessionData[]>;
 
 export interface MentoringDataType {
   mentoringUuid: string;
