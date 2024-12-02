@@ -13,7 +13,9 @@
     "type-check": "turbo type-check",
     "clean": "turbo clean",
     "format": "prettier --cache --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "turbo start",
+    "shadcn": "npm --workspace=@repo/ui run shadcn"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss,md}": [
@@ -29,5 +31,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.2"
   }
 }

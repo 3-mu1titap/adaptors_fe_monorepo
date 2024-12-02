@@ -32,17 +32,15 @@ export const options: NextAuthOptions = {
         };
         try {
           const res = await fetch(
-            `${process.env.BACKEND_URL}/api/v1/auth/sign-in`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/sign-in`,
             {
               method: 'POST',
               body: JSON.stringify(payload),
               headers: { 'Content-Type': 'application/json' },
             }
           );
-          console.log('서버 응답 상태:', res.status);
           if (res.ok) {
             const user = await res.json();
-            console.log('여기서 user찍힘', user.result);
             return user.result;
           }
           //  return null;
@@ -61,10 +59,9 @@ export const options: NextAuthOptions = {
     async signIn({ account, profile, user }) {
       if (account?.provider === 'kakao') {
         try {
-          console.log('kakao');
           const kakaoProfile = profile as KakaoProfile;
           const result = await fetch(
-            `${process.env.BACKEND_URL}/api/v1/auth/oauth-sign-in`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/oauth-sign-in`,
             {
               method: 'POST',
               body: JSON.stringify({

@@ -1,11 +1,12 @@
 'use client';
+import { checkAccountId, postUserData } from '@repo/client/actions/auth/auth';
 import { useState } from 'react';
 import { z } from 'zod';
-import Funnel from '../common/Funnel/Funnel';
-import useFunnel from '../common/Funnel/useFunnel';
 import { SignInInputType } from '../types/auth/authType';
-import SubmitButton from '../ui/Button/SubmitButton';
+import useFunnel from '../common/Funnel/useFunnel';
+import Funnel from '../common/Funnel/Funnel';
 import JoinInput from '../ui/input/JoinInput';
+import SubmitButton from '../ui/Button/SubmitButton';
 
 const signUpSchema = z.object({
   name: z.string().nonempty({ message: '이름을 입력해주세요.' }),
@@ -75,12 +76,11 @@ export default function JoinForm() {
 
   // 중복 검사 함수
   const checkDuplicate = async (field: 'id' | 'email') => {
+    const data = await checkAccountId(formData.id);
     try {
-      const response = await fetch(
-        `/api/check-duplicate?field=${field}&value=${formData[field]}`
-      );
-      const result = await response.json();
-      if (!result.isUnique) {
+      const data = await checkAccountId(formData.id);
+      console.log(data);
+      if (data == 2011) {
         setErrors((prev) => ({
           ...prev,
           [field]: `해당 아이디가 이미 사용중입니다.`,
@@ -175,12 +175,25 @@ export default function JoinForm() {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       signUpSchema.parse(formData);
       setErrors({});
-      console.log('폼 데이터:', formData);
+
+      // `formData`를 `postUserData`에 맞는 타입으로 변환합니다.
+      const transformedData = {
+        name: formData.name,
+        nickName: formData.nickname, // `nickname`을 `nickName`으로 변환
+        email: formData.email,
+        accountId: formData.id, // `id`를 `accountId`로 변환
+        password: formData.password,
+        phoneNumber: formData.phone_number.replace(/-/g, ''), // 하이픈 제거
+        role: formData.role.toUpperCase(), // 역할을 대문자로 변환
+      };
+
+      // 데이터 전송
+      const data = await postUserData(transformedData);
     } catch (validationError) {
       if (validationError instanceof z.ZodError) {
         const errorMessages = validationError.errors.reduce(
@@ -201,25 +214,28 @@ export default function JoinForm() {
   const { level, step, onNextStep, onPrevStep } = useFunnel({ steps });
 
   return (
-    <form className="max-w-[400px] mx-auto" onSubmit={handleSubmit}>
+    <form className="max-w-[400px] mx-auto">
       <Funnel step={step}>
         <Funnel.Step name="step1">
           {fields1.map((field) => (
             <div key={field.name} className="mt-4">
               <JoinInput signInInput={field} />
               {errors[field.name] && (
-                <p className="text-red-500">{errors[field.name]}</p>
+                <p className="text-red-500 text-md">{errors[field.name]}</p>
               )}
             </div>
           ))}
-          <button
-            type="button"
-            onClick={() => onNextStep()}
-            className="bg-adaptorsYellow text-white
-            px-3 py-1"
-          >
-            다음 단계
-          </button>
+          <span className="flex justify-end pt-3">
+            <button
+              type="button"
+              onClick={() => onNextStep()}
+              className="bg-adaptorsYellow text-zinc-700
+            px-8 py-1
+            font-bold"
+            >
+              다음 단계
+            </button>
+          </span>
         </Funnel.Step>
 
         <Funnel.Step name="step2">
@@ -227,7 +243,7 @@ export default function JoinForm() {
             <div key={field.name} className="mt-4">
               <JoinInput signInInput={field} />
               {errors[field.name] && (
-                <p className="text-red-500">{errors[field.name]}</p>
+                <p className="text-red-500 text-md">{errors[field.name]}</p>
               )}
             </div>
           ))}
@@ -263,14 +279,18 @@ export default function JoinForm() {
             </div>
             {errors.role && <p className="text-red-500">{errors.role}</p>}
           </div>
-          <button
-            onClick={() => onPrevStep()}
-            className="bg-adaptorsYellow text-white
-                      px-3 py-1"
-          >
-            이전 단계
-          </button>
-          <SubmitButton title="회원가입" />
+          <span className="flex justify-between pt-3">
+            <button
+              onClick={() => onPrevStep()}
+              className="bg-adaptorsYellow text-zinc-700
+                        px-8 py-1
+                        font-bold
+                        "
+            >
+              이전 단계
+            </button>
+            <SubmitButton title="회원가입" />
+          </span>
         </Funnel.Step>
       </Funnel>
     </form>

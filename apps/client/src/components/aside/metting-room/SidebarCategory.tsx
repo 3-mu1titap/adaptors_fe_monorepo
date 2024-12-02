@@ -1,6 +1,9 @@
+'use client';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
+import { useState } from 'react';
 import { SidebarType } from '../../types/navigation/navigationTypes';
+import { CategoryType } from '../../types/category/categoryType';
 
 function SidebarCategory({ item }: { item: SidebarType }) {
   return (

@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -14,9 +10,9 @@ body {
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --primary: #ffd84d;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
+    --secondary: #111111;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -33,6 +29,14 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -59,6 +63,31 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  ::-webkit-scrollbar {
+    display: none; /* 스크롤바를 아예 숨김 */
+  }
+
+  /* 추가 스타일이 필요하지 않다면 아래의 스타일을 삭제합니다 */
+  ::-webkit-scrollbar-track {
+    background-color: transparent; /* 배경을 투명하게 설정 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent; /* 스크롤바의 thumb 색상을 투명하게 설정 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent; /* hover 시에도 투명하게 유지 */
   }
 }
 
@@ -69,4 +98,56 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* scrollbtn */
+.scroll-btn {
+  position: fixed;
+  right: 1rem;
+  z-index: 1000;
+  width: 52px;
+  height: 52px;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.2);
+  border: thin solid white;
+  bottom: 3rem;
+  opacity: 0;
+}
+
+.go-Up-view {
+  opacity: 1;
+  bottom: 5rem;
+  transition: all 0.5s ease-in-out;
+}
+
+.go_Down-hide {
+  opacity: 0;
+  bottom: 3rem;
+  transition: all 0.5s ease-in-out;
+}
+
+/* review rate */
+
+.star-rating {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.star-rating__background {
+  color: #ddd; /* Color of empty stars */
+}
+
+.star-rating__foreground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  transition: width 1.5s ease-in-out;
 }

@@ -6,32 +6,28 @@ import ParticipantsContent from './ParticipantsContent';
 import {
   participantType,
   userType,
-} from '../../../../../types/main/meeting/meetingTypes';
+} from '@repo/client/components/types/main/meeting/meetingTypes';
 
-function Participants({ participants }: { participants: participantType[] }) {
+function Participants({
+  participants,
+  toggleParticipantMicrophone,
+  toggleParticipantCamera,
+}: {
+  participants: participantType[];
+  toggleParticipantMicrophone: (participantIdentity: string) => Promise<void>;
+  toggleParticipantCamera: (participantIdentity: string) => Promise<void>;
+}) {
   const [users, setUsers] = useState<userType[]>([]);
 
-  const addParticipant = () => {
-    const newName = prompt('새 참가자의 이름을 입력하세요:');
-    if (newName) {
-      const newParticipant: userType = {
-        id: users.length + 1,
-        username: newName,
-        profile_image_url: '',
-        micOn: true,
-        videoOn: true,
-      };
-      setUsers([...users, newParticipant]);
-    }
-  };
-
-  const toggleMic = (id: number) => {
-    setUsers(users.map((p) => (p.id === id ? { ...p, micOn: !p.micOn } : p)));
-  };
-
-  const toggleVideo = (id: number) => {
+  const toggleMic = (id: string) => {
     setUsers(
-      users.map((p) => (p.id === id ? { ...p, videoOn: !p.videoOn } : p))
+      users.map((p) => (p.userUuid === id ? { ...p, micOn: !p.micOn } : p))
+    );
+  };
+
+  const toggleVideo = (id: string) => {
+    setUsers(
+      users.map((p) => (p.userUuid === id ? { ...p, videoOn: !p.videoOn } : p))
     );
   };
 
@@ -47,14 +43,16 @@ function Participants({ participants }: { participants: participantType[] }) {
 
   return (
     <div className="py-2 px-4 h-full border overflow-y-auto">
-      <ParticipantsTitle addParticipant={addParticipant} />
+      <ParticipantsTitle />
       <div>
         {users.map((participant) => (
           <ParticipantsContent
-            key={participant.id}
+            key={participant.userUuid}
             participant={participant}
             toggleMic={toggleMic}
             toggleVideo={toggleVideo}
+            toggleParticipantMicrophone={toggleParticipantMicrophone}
+            toggleParticipantCamera={toggleParticipantCamera}
           />
         ))}
       </div>
