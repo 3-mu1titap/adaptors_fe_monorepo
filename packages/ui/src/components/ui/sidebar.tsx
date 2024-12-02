@@ -272,7 +272,7 @@ const SidebarTrigger = React.forwardRef<
       variant="ghost"
       size="icon"
       className={cn(
-        `h-9 w-9 absolute z-10`,
+        `h-9 w-9 absolute z-10 group`,
         state === 'expanded'
           ? 'left-[calc(var(--sidebar-width)_-_2.25rem)]'
           : '-left-1',
@@ -284,7 +284,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <PanelLeft />
+      <PanelLeft className="group-hover:text-adaptorsYellow" />
     </Button>
   );
 });

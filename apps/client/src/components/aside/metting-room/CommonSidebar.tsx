@@ -102,8 +102,10 @@ function CommonSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem
-                  className={`cursor-pointer items-center border-l-8 border-transparent hover:border-adaptorsBlue py-4 px-2 ${
-                    item.isActive ? 'border-adaptorsBlue' : 'border-transparent'
+                  className={`cursor-pointer items-center border-l-8 border-transparent hover:border-adaptorsYellow py-4 px-2 ${
+                    item.isActive
+                      ? 'border-adaptorsYellow'
+                      : 'border-transparent'
                   }`}
                   key={item.label}
                 >
@@ -113,7 +115,7 @@ function CommonSidebar() {
                       <span
                         className={`whitespace-nowrap text-xl ${
                           item.isActive
-                            ? 'text-adaptorsBlue'
+                            ? 'text-adaptorsYellow'
                             : 'text-adaptorsGray'
                         }`}
                       >
