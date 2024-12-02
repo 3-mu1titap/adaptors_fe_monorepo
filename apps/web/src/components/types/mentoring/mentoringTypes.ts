@@ -62,9 +62,21 @@ export interface SearchMentoringListType {
   nowSessionCount: number;
 }
 
+export interface pageableType {
+  pageNumber: number;
+  pageSize: number;
+  sort?: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  offset?: number;
+  paged?: boolean;
+  unpaged?: boolean;
+}
+
 // API 전체 응답 타입 정의
 export interface ApiResponse {
-  result: {
-    content: SearchMentoringListType[];
-  };
+  content: SearchMentoringListType[];
+  pageable: pageableType;
 }

@@ -14,6 +14,7 @@ import { commonResType } from '../../components/types/ResponseTypes';
 import {
   ApiResponse,
   SearchMentoringListType,
+  pageableType,
 } from '../../components/types/mentoring/mentoringTypes';
 // 멘토링의 정보 및 세션리스트 정보 조회
 export async function GetMentoringSessionList(mentoringUuid: string) {
@@ -133,13 +134,17 @@ export async function SessionCancel(request: SessionCancelType) {
 
 //멘토링 이름으로 멘토링 검색API
 export async function GetMentoringNameSearch(
-  name: string
-): Promise<SearchMentoringListType[]> {
+  name: string,
+  page: number
+): Promise<{
+  content: SearchMentoringListType[];
+  pageable: pageableType;
+} | null> {
   'use server';
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring-list-pagination/${name}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring-list-pagination/${name}?page=${page}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -149,11 +154,11 @@ export async function GetMentoringNameSearch(
       }
     );
 
-    const result = (await res.json()) as ApiResponse;
-
-    return result.result.content;
+    const result = (await res.json()) as commonResType<ApiResponse>;
+    // console.log(result, '검색 api 연결 성공!!~~~~~~~~~~~~~');
+    return result.result;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
-    return [];
+    return null;
   }
 }

@@ -12,8 +12,7 @@ import {
 import { useState, useEffect } from 'react';
 import { Input } from '@repo/ui/components/ui/input';
 import { Label } from '@repo/ui/components/ui/label';
-import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
-import { GetMentoringNameSearch } from 'src/actions/mentoring/mentoringAction';
+import Link from 'next/link';
 export function SearchDialog({
   isOpen,
   openCloser,
@@ -21,30 +20,14 @@ export function SearchDialog({
   isOpen: boolean;
   openCloser: () => void;
 }) {
-  const [SearchText, setSearchText] = useState('');
-  const onClickTextSave = () => {
-    console.log(SearchText, 'text text text 12412414');
-  };
-  useEffect(() => {
-    const SearchMentoringData = async () => {
-      try {
-        const data = await GetMentoringNameSearch(SearchText);
-        console.log(data, 'seach data');
-      } catch (error) {
-        console.error('No Search Mentoring', error);
-      }
-    };
-
-    SearchMentoringData();
-  }, [SearchText]);
+  const [name, setSearchName] = useState('');
+  console.log(name, 'test test searchName');
   return (
     <Dialog open={isOpen} onOpenChange={openCloser}>
       <DialogContent className="md:max-w-[800px] flex flex-col">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>Search Mentoring</DialogTitle>
+          <DialogDescription>Search Mentoring here!</DialogDescription>
         </DialogHeader>
 
         <div className="mt-4">
@@ -52,19 +35,20 @@ export function SearchDialog({
             id="Search"
             type="text"
             placeholder="Search here...."
-            onChange={(text) => setSearchText(text.target.value)}
+            onChange={(text) => setSearchName(text.target.value.trim())}
             className="text-2xl"
           ></Input>
         </div>
 
         <DialogFooter>
-          <Button
-            className="bg-yellow-200 hover:bg-black hover:text-white"
-            type="submit"
-            onClick={() => onClickTextSave()}
-          >
-            Save changes
-          </Button>
+          <Link href={`/search/${encodeURIComponent(name)}`}>
+            <Button
+              className="bg-yellow-200 hover:bg-black hover:text-white"
+              type="submit"
+            >
+              Save changes
+            </Button>
+          </Link>
         </DialogFooter>
       </DialogContent>
     </Dialog>
