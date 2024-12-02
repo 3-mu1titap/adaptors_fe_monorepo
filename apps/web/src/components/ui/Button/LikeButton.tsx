@@ -3,6 +3,7 @@ import Heart from '@components/assets/icons/Heart';
 import { cn } from '@repo/ui/lib/utils';
 import { useState } from 'react';
 import { postLikeReaction } from 'src/actions/Like/like';
+import ValueUnit from '../Text/ValueUnit';
 
 interface SocialCounterProps {
   count: number;
@@ -40,12 +41,12 @@ export default function LikeButton({
       >
         <Heart isLiked={isLiked} />
       </div>
-      <div className="flex flex-col items-center ">
-        <span className="text-[1.15rem] font-semibold text-[#1a1a2e]">
-          {formatCount(count)}
-        </span>
-        <span className="text-base text-gray-500 text-sm">{text}</span>
-      </div>
+      <ValueUnit
+        value={`${formatCount(count)}`}
+        unit="Reviews"
+        valueSize="text-[1.15rem]"
+        unitSize="text-sm"
+      />
     </div>
   );
 }
