@@ -5,6 +5,8 @@ export interface PopularCategoryType {
 }
 
 export interface PopluarCategoryItemType {
+  mentorUuId: string;
+  id: number;
   title: string;
   duration: string;
   rating: number;

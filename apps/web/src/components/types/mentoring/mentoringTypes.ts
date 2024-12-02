@@ -1,27 +1,3 @@
-// export interface Time {
-//   hour: number;
-//   minute: number;
-//   second: number;
-//   nano: number;
-// }
-
-// export interface MentoringSessionDataType {
-//   sessionUuid: string;
-//   mentoringUuid: string;
-//   startDate: string;
-//   endDate: string;
-//   startTime: Time;
-//   endTime: Time;
-//   deadlineDate: string;
-//   minHeadCount: number;
-//   maxHeadCount: number;
-//   nowHeadCount: number;
-//   isParticipating: boolean;
-//   price: number;
-//   isClosed: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-// }
 export interface SessionTime {
   hour: number;
   minute: number;

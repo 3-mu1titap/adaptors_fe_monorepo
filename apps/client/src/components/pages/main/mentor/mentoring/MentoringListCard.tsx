@@ -11,7 +11,11 @@ function MentoringListCard({ mentoring }: { mentoring: MentoringDataType }) {
           <div className="-mt-7 mb-2 -mx-6 h-[215px] overflow-hidden">
             <Link href={`/mentor/mentoring/${mentoring.mentoringUuid}`}>
               <Image
-                src={mentoring.thumbnailUrl}
+                src={
+                  mentoring.thumbnailUrl
+                    ? mentoring.thumbnailUrl
+                    : '/assets/images/imageDummy.jpg'
+                }
                 alt="더미"
                 width={1920}
                 height={1080}

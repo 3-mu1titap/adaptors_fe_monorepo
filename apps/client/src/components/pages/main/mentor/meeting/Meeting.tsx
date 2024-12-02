@@ -14,14 +14,24 @@ import { useUserInfoStore } from '@repo/client/store/messagesStore';
 import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
 import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
 import {
+  getOpenViduToken,
   getParticipants,
-  getToken,
   postJoinMeeting,
 } from '@repo/client/actions/meeting/meetingAction';
-import OpenMentoring from './openMentoring/OpenMentoring';
+import OpenMentoring, {
+  MentoringSessionDataType,
+} from './openMentoring/OpenMentoring';
 import MeetingHeader from '../../../../header/MeetingHeader';
 import Participants from './participants/Participants';
 import Chatting from '../../chatting/Chatting';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@repo/ui/components/ui/Dialog';
+import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
 
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
@@ -31,16 +41,16 @@ type TrackInfo = {
   participantIdentity: string;
 };
 
-export default function Meeting() {
+export default function Meeting({
+  mentoringSessionList,
+}: {
+  mentoringSessionList: MentoringSessionDataType[];
+}) {
   const [room, setRoom] = useState<Room | null>(null);
   const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
     undefined
   );
   const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
-  const [participantName, setParticipantName] = useState(
-    `Participant${Math.floor(Math.random() * 100)}`
-  );
-  const [roomName, setRoomName] = useState('Test Room');
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -49,21 +59,19 @@ export default function Meeting() {
   >({});
   const { userInfo, addUserInfo } = useUserInfoStore();
   const [participants, setParticipants] = useState<participantType[]>([]);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
   const fetchParticipants = async (userUuid: string) => {
     const existingProfile = userInfo.find((user) => user.userUuid === userUuid);
-    if (existingProfile) {
-      setParticipants((prev) => [...prev, existingProfile]);
-    } else {
+    if (!existingProfile) {
       const participantsData = await getChatProfile({ userUuid: userUuid });
-      setParticipants((prev) => [
-        ...prev,
-        {
-          userUuid: userUuid,
-          nickname: participantsData.nickName,
-          profileImageUrl: participantsData.profileImageUrl,
-        },
-      ]);
+      const newUserInfo = {
+        userUuid: userUuid,
+        nickname: participantsData.nickName,
+        profileImageUrl: participantsData.profileImageUrl,
+      };
+      addUserInfo(newUserInfo);
+      setParticipants((prev) => [...prev, newUserInfo]);
     }
   };
 
@@ -116,7 +124,7 @@ export default function Meeting() {
     );
 
     try {
-      const token = await getToken(roomName, participantName);
+      const token = await getOpenViduToken('roomName', 'participantName');
       await room.connect(LIVEKIT_URL, token);
       await room.localParticipant.enableCameraAndMicrophone();
       const localVideoTrackPublication =
@@ -136,6 +144,7 @@ export default function Meeting() {
 
   async function leaveRoom() {
     await room?.disconnect();
+    setShowFeedbackModal(true);
     setIsCameraOn(true);
     setIsMicOn(true);
     setRoom(null);
@@ -221,11 +230,8 @@ export default function Meeting() {
     <>
       {!room ? (
         <OpenMentoring
+          mentoringSessionList={mentoringSessionList}
           joinRoom={joinRoom}
-          participantName={participantName}
-          setParticipantName={setParticipantName}
-          roomName={roomName}
-          setRoomName={setRoomName}
         />
       ) : (
         <>
@@ -233,7 +239,6 @@ export default function Meeting() {
           <div className="grid grid-cols-7 h-[90vh]">
             <div className="col-span-5 bg-[#FAFAFE]">
               <Tracks
-                roomName={roomName}
                 leaveRoom={leaveRoom}
                 toggleScreenSharing={toggleScreenSharing}
                 isScreenSharing={isScreenSharing}
@@ -242,7 +247,6 @@ export default function Meeting() {
                 toggleMicrophone={toggleMicrophone}
                 isMicrophoneOn={isMicOn}
                 localTrack={localTrack}
-                participantName={participantName}
                 remoteTracks={remoteTracks}
               />
             </div>
@@ -261,6 +265,15 @@ export default function Meeting() {
           </div>
         </>
       )}
+      <Dialog open={showFeedbackModal} onOpenChange={setShowFeedbackModal}>
+        <DialogHeader className="hidden">
+          <DialogTitle>멘토링 피드백</DialogTitle>
+          <DialogDescription>멘티의 수준 평가</DialogDescription>
+        </DialogHeader>
+        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+          <MentoringFeedbackForm />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
