@@ -15,28 +15,28 @@ export default function CalendarIcon({ color }: { color?: boolean }) {
         width="20"
         height="21.1765"
         rx="2"
-        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        stroke={`${color ? '#F6D84C' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M18.4445 2V6.70588"
-        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        stroke={`${color ? '#F6D84C' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M9.55556 2V6.70588"
-        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        stroke={`${color ? '#F6D84C' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M4 11.4118H24"
-        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        stroke={`${color ? '#F6D84C' : '#ACACAC'}`}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

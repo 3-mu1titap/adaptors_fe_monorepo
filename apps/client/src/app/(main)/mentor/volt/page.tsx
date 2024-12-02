@@ -1,9 +1,5 @@
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: `Volt`,
-};
+import ReceivedVolts from '@repo/client/components/pages/main/mentor/volt/ReceivedVolts';
 
 export default async function Page() {
-  return <></>;
+  return <ReceivedVolts />;
 }
