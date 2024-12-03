@@ -4,7 +4,7 @@ export default function AIFeedbackInfo() {
   return (
     <div className="flex items-start ">
       <ChevronText text="AI 피드백이란?" className="min-w-[180px]" />
-      <p className="text-lg text-adaptorsGray leading-relaxed px-4 lg:px-10">
+      <p className="text-lg text-adaptorsGray leading-relaxed px-1 lg:px-2">
         Adaptors는 자기소개서, 포트폴리오, 이력서와 같은 취업 관련 문서를
         분석하여 취업 경쟁력을 높이는 AI 진단 서비스를 제공합니다.
         <br />
