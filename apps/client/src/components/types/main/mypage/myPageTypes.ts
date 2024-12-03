@@ -27,3 +27,13 @@ export interface mentorVoltListDataType {
   totalVolt: number;
   voltList: mentorVoltDataType[];
 }
+
+export interface MentorProfileEditFormType {
+  profileImageUrl: string;
+  nickName: string;
+  phoneNumber: string;
+  mentoringField: string;
+  age: number;
+  gender: string;
+  jobExperience: string;
+}

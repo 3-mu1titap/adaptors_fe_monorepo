@@ -272,7 +272,7 @@ const SidebarTrigger = React.forwardRef<
       variant="ghost"
       size="icon"
       className={cn(
-        `h-9 w-9 absolute z-10 group`,
+        `h-9 w-9 absolute z-10 group hidden md:block`,
         state === 'expanded'
           ? 'left-[calc(var(--sidebar-width)_-_2.25rem)]'
           : '-left-1',

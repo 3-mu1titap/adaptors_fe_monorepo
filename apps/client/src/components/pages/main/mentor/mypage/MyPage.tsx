@@ -12,26 +12,8 @@ import MentorProfile from './mentor-profile/MentorProfile';
 import MentorProfileEdit from './mentor-profile-edit/MentorProfileEdit';
 import MentorSessionList from './MentoringSessionList';
 
-const mockMentor: Mentor = {
-  profileImageUrl:
-    'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732604594876-mentor1.png',
-  memberRequestDto: {
-    name: '정토미',
-    nickName: '토미누나다',
-    email: 'tommy12345678@gmail.com',
-    accountId: 'tommy0720111',
-    phoneNumber: '01012341234',
-  },
-  mentorProfileRequestDto: {
-    mentoringField: '면접',
-    age: 27,
-    gender: 'FEMALE',
-    jobExperience: '3년',
-  },
-};
-
-export default function MyPage() {
-  const [mentor, setMentor] = useState<Mentor>(mockMentor);
+export default function MyPage({ userInfo }: { userInfo: Mentor }) {
+  const [mentor, setMentor] = useState<Mentor>(userInfo);
 
   const handleProfileUpdate = (updatedMentor: Mentor) => {
     setMentor(updatedMentor);

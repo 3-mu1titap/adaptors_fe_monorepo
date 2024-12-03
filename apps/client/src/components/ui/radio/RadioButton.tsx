@@ -23,7 +23,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   const defaultColor = '#e5e7eb';
 
   return (
-    <div className="space-y-2 max-w-[140px]">
+    <div className="grid grid-cols-3 space-x-4">
       {options.map((option, index) => (
         <label
           key={index}
@@ -38,7 +38,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
             onChange={() => onChange(option.value)}
             className="hidden text-sm"
           />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <div
               className="w-4 h-4 rounded"
               style={{
