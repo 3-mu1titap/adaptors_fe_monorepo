@@ -2,7 +2,10 @@ import {
   GetMentoringInfo,
   GetMentoringSessionList,
 } from '../../../../actions/mentoring/mentoringAction';
-import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
+import {
+  MentoringDataType,
+  MentoringSessionList,
+} from '../../../types/mentoring/mentoringTypes';
 import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
 import MentoringReviewSection from './review/MentoringReviewSection';
@@ -12,12 +15,12 @@ export default async function MentoringCalendar({
 }: {
   mentoringDate: string;
 }) {
-  const mentoringSessionList = await GetMentoringSessionList(
-    '05b8b889-9798-4f31-88e5-f6b967cb069d'
-  );
+  const mentoringSessionList: MentoringSessionList | [] =
+    await GetMentoringSessionList('05b8b889-9798-4f31-88e5-f6b967cb069d');
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
     '05b8b889-9798-4f31-88e5-f6b967cb069d'
   );
+  console.log(mentoringSessionList);
   return (
     <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
       {/* Left Section */}
@@ -33,11 +36,13 @@ export default async function MentoringCalendar({
           {MentoringInfoData && (
             <MentoringOverview MentoringInfoData={MentoringInfoData} />
           )}
-          <SessionList
-            mentoringSessionList={mentoringSessionList}
-            mentoringName={MentoringInfoData?.name}
-            mentoringDate={mentoringDate}
-          />
+          {MentoringInfoData && (
+            <SessionList
+              mentoringSessionList={mentoringSessionList}
+              mentoringName={MentoringInfoData.name}
+              mentoringDate={mentoringDate}
+            />
+          )}
           <MentoringReviewSection />
         </div>
       </section>

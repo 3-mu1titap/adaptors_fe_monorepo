@@ -8,6 +8,7 @@ import color from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import {
+  HashtagDataType,
   MentoringAddFormType,
   MentoringCategory,
   TopCategoryDataType,
@@ -18,8 +19,10 @@ import FitImage from '../ui/image/fit-image';
 
 export default function MentoringAddForm({
   topCategories,
+  hashtags,
 }: {
   topCategories: TopCategoryDataType[];
+  hashtags: HashtagDataType[];
 }) {
   const [formData, setFormData] = useState<MentoringAddFormType>({
     name: '',
@@ -29,6 +32,7 @@ export default function MentoringAddForm({
     thumbnailUrl: '',
     sessionList: [],
     categoryList: [],
+    hashtagList: [],
   });
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -88,6 +92,26 @@ export default function MentoringAddForm({
         : [...prevData.categoryList, newCategory];
 
       return { ...prevData, categoryList: newCategoryList };
+    });
+  };
+
+  const handleHashtagSelect = (hashtag: HashtagDataType) => {
+    // 대략적으로 해놓음
+    // const newHashtag: MentoringCategory = {
+    //   topCategoryName: hashtag.topCategoryName,
+    //   topCategoryCode: hashtag.topCategoryCode,
+    // };
+
+    setFormData((prevData) => {
+      const isSelected = prevData.hashtagList.some(
+        (cat) => cat.name === hashtag.name
+      );
+
+      const newHashtagList = isSelected
+        ? prevData.hashtagList.filter((cat) => cat.name !== hashtag.name)
+        : [...prevData.hashtagList, hashtag];
+
+      return { ...prevData, hashtagList: newHashtagList };
     });
   };
 
@@ -260,6 +284,35 @@ export default function MentoringAddForm({
                   } hover:bg-gray-200`}
                 >
                   {category.topCategoryName}
+                </button>
+              );
+            })}
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">
+          해시태그 선택 (최소 3개)
+        </label>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {hashtags &&
+            hashtags.map((hashtag, index) => {
+              const isSelected = formData.hashtagList.some(
+                (cat) => cat.name === hashtag.name
+              );
+
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleHashtagSelect(hashtag)}
+                  className={`py-2 px-4 rounded ${
+                    isSelected
+                      ? 'bg-adaptorsBlue text-white'
+                      : 'bg-gray-100 text-gray-700'
+                  } hover:bg-gray-200`}
+                >
+                  {hashtag.name}
                 </button>
               );
             })}

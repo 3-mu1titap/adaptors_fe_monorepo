@@ -1,17 +1,17 @@
-export interface Time {
+export interface SessionTime {
   hour: number;
   minute: number;
   second: number;
   nano: number;
 }
 
-export interface MentoringSessionDataType {
+export interface MentoringSessionData {
   sessionUuid: string;
   mentoringUuid: string;
   startDate: string;
   endDate: string;
-  startTime: Time;
-  endTime: Time;
+  startTime: string; // "HH:mm:ss" 형식
+  endTime: string; // "HH:mm:ss" 형식
   deadlineDate: string;
   minHeadCount: number;
   maxHeadCount: number;
@@ -19,9 +19,9 @@ export interface MentoringSessionDataType {
   isParticipating: boolean;
   price: number;
   isClosed: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
+
+export type MentoringSessionList = Record<string, MentoringSessionData[]>;
 
 export interface MentoringDataType {
   mentoringUuid: string;
@@ -51,4 +51,32 @@ export interface SessionRequestType {
 export interface SessionCancelType {
   sessionUuid: string;
   deadlineDate: string;
+}
+
+export interface SearchMentoringListType {
+  mentoringUuid: string;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  isAvailable: boolean;
+  nowSessionCount: number;
+}
+
+export interface pageableType {
+  pageNumber: number;
+  pageSize: number;
+  sort?: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  offset?: number;
+  paged?: boolean;
+  unpaged?: boolean;
+}
+
+// API 전체 응답 타입 정의
+export interface ApiResponse {
+  content: SearchMentoringListType[];
+  pageable: pageableType;
 }

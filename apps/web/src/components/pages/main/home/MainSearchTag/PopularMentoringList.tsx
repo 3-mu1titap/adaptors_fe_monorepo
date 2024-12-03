@@ -8,7 +8,7 @@ import { categories, courses } from 'src/store/dummyStore';
 import { Autoplay, Navigation } from 'swiper/modules'; // Autoplay, Navigation 모듈 가져오기
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
+import { useSession } from 'src/app/context/SessionContext';
 import PopularCategoryMentoring from '../PopularCategoryMentoring';
 import SwiperIndex from '../MainIntro/SwiperIndex';
 import TitleSection from '@components/common/TitleSection';
@@ -18,7 +18,7 @@ function PopularMentoringList() {
   const data = courses; // 데이터 복제
   const swiperRef = useRef<any>(null); // Swiper 인스턴스를 참조하기 위한 ref
   const [SlideIndex, setSlideIndex] = useState(0);
-
+  const session = useSession();
   const onSlideIndexChange = (swiper: any) => {
     setSlideIndex(swiper.realIndex);
   };
@@ -127,7 +127,7 @@ function PopularMentoringList() {
       >
         {data.map((category, index) => (
           <SwiperSlide key={index}>
-            <PopularCategoryMentoring item={category} />
+            <PopularCategoryMentoring item={category} isRole={session?.role} />
           </SwiperSlide>
         ))}
       </Swiper>

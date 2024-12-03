@@ -36,10 +36,10 @@ const CalendarContent = ({
         borderColor: '#F6D84C',
         textColor: 'white',
       }));
-
+      console.log(newEvents);
       setEvents(newEvents);
     }
-  }, []);
+  }, [scheduleList]);
 
   const now = new Date();
 

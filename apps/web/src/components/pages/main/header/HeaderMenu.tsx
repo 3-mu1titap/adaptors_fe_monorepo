@@ -1,7 +1,7 @@
 'use client';
-import React from 'react';
+
+import { MenuType } from '@components/types/menu/MenuType';
 import Link from 'next/link';
-import { MenuType } from '@components/types/menu/menuType';
 import { usePathname } from 'next/navigation';
 
 function HeaderMenu({ item }: { item: MenuType }) {

@@ -17,7 +17,7 @@ export default function VoltIcon({
     >
       <path
         d="M10.2222 14.4889L9.51111 21.6L18.7556 11.6445L13.7778 8.80002L14.4889 2.40002L5.24445 12.3556L10.2222 14.4889Z"
-        stroke={`${color ? '#0060FF' : '#ACACAC'}`}
+        stroke={`${color ? '#F6D84C' : '#ACACAC'}`}
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"

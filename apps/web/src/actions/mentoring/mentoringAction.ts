@@ -3,22 +3,26 @@
 import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
+import { SearchMentoringType } from '@components/types/mentor/mentorType';
 import {
   MentoringDataType,
-  MentoringSessionDataType,
+  MentoringSessionList,
   SessionCancelType,
   SessionRequestType,
 } from '../../components/types/mentoring/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
-
+import {
+  ApiResponse,
+  SearchMentoringListType,
+  pageableType,
+} from '../../components/types/mentoring/mentoringTypes';
 // 멘토링의 정보 및 세션리스트 정보 조회
-export async function GetMentoringSessionList(mentoringUuid: string) {
+export async function GetMentoringSessionList(
+  mentoringUuid: string
+): Promise<MentoringSessionList | []> {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
-
-  console.log(menteeUuid);
-  console.log('멘토링의 정보 및 세션리스트 정보 조회');
 
   try {
     const res = await fetch(
@@ -33,9 +37,8 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
         next: { tags: ['session-request'] },
       }
     );
-    const result = (await res.json()) as commonResType<
-      MentoringSessionDataType[]
-    >;
+    const result = (await res.json()) as commonResType<MentoringSessionList>;
+    // console.log(result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);
@@ -123,6 +126,37 @@ export async function SessionCancel(request: SessionCancelType) {
     return result.code;
   } catch (error) {
     console.error('멘토링 신청하기: ', error);
+    return null;
+  }
+}
+
+//멘토링 이름으로 멘토링 검색API
+export async function GetMentoringNameSearch(
+  name: string,
+  page: number
+): Promise<{
+  content: SearchMentoringListType[];
+  pageable: pageableType;
+} | null> {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring-list-pagination/${name}?page=${page}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const result = (await res.json()) as commonResType<ApiResponse>;
+    // console.log(result, '검색 api 연결 성공!!~~~~~~~~~~~~~');
+    return result.result;
+  } catch (error) {
+    console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
     return null;
   }
 }

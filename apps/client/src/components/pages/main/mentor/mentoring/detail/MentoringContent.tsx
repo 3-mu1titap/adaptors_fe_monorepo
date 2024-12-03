@@ -2,7 +2,7 @@ import {
   MentoringDataType,
   MentoringSessionDataType,
 } from '@repo/client/components/types/main/mentor/mentoringTypes';
-import MentoringSessionCard from '../MentoringSeesionCard';
+import MentoringSessionCard from '../session/MentoringSeesionCard';
 
 export default function MentoringContent({
   mentoringInfo,
