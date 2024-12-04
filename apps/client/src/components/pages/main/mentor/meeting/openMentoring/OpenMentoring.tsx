@@ -16,7 +16,7 @@ export interface TimeDataType {
   nano: number;
 }
 
-export interface MentoringSessionDataType {
+interface MentoringSessionDataType {
   mentoringName: string;
   sessionUuid: string;
   startDate: string;

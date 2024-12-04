@@ -129,8 +129,6 @@ export async function GetMentoringList() {
         },
       }
     );
-    console.log(res);
-
     const result = (await res.json()) as commonResType<MentoringDataType[]>;
     return result.result;
   } catch (error) {
