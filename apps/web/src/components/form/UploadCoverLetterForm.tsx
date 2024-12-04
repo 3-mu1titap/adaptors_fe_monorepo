@@ -39,14 +39,14 @@ export default function UploadCoverLetterForm({ job }: { job: string }) {
   return (
     <div>
       <form onSubmit={handleSubmitButton} className="">
-        <fieldset className="md:flex items-start mb-10 lg:pr-40">
+        <fieldset className="md:flex items-start mb-10 lg:pr-20">
           <ChevronText
             text="자기소개서 문항"
             className="py-4 sm:py-2 min-w-44"
           />
           <Input name="question" placeholder="문항을 입력해주세요" />
         </fieldset>
-        <fieldset className="md:flex items-start lg:pr-40">
+        <fieldset className="md:flex items-start lg:pr-20">
           <ChevronText text="자기소개서" className="py-4 sm:py-2 min-w-44" />
           <textarea
             name="coverLetter"

@@ -1,9 +1,10 @@
 import FeedbackResult from '@components/pages/AI-feedback/FeedbackResult';
+import SelectedFile from '@components/pages/AI-feedback/SelectedFile';
 import { feedbackResult } from '@components/types/AI-feedback/requestTypes';
 import ProgressBar from '@components/ui/Progress/ProgressBar';
 import Status from '@components/ui/Progress/Success';
 import { Button } from '@repo/ui/components/ui/button';
-import { Upload, X } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { requestAIFeedback_pdf } from 'src/actions/AI-feedback/AI-feedback';
 
@@ -23,7 +24,7 @@ export default function FileUploadForm({
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState<
-    'idle' | 'success' | 'error'
+    'idle' | 'success' | 'error' | 'fileSizeError'
   >('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [feedback, setFeedback] = useState<feedbackResult | ''>();
@@ -64,6 +65,11 @@ export default function FileUploadForm({
   };
 
   const addFile = (newFile: File) => {
+    if (newFile.size > 5 * 1024 * 1024) {
+      setUploadStatus('fileSizeError'); // 상태를 'fileSizeError'로 설정
+      return;
+    }
+
     if (
       (newFile.type.startsWith('image/') ||
         newFile.type === 'application/pdf') &&
@@ -77,6 +83,7 @@ export default function FileUploadForm({
           preview: URL.createObjectURL(newFile),
         })
       );
+      setUploadStatus('idle'); // 파일 추가 시 상태 초기화
     }
   };
 
@@ -174,34 +181,15 @@ export default function FileUploadForm({
         </div>
 
         {file && (
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold mb-2 text-gray-700">
-              선택된 파일:
-            </h3>
-            <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-              <span
-                className="text-sm text-gray-600 truncate"
-                style={{ maxWidth: '200px' }}
-              >
-                {file.name}
-              </span>
-              <Button
-                onClick={removeFile}
-                className="text-red-500 hover:text-red-700 transition-colors duration-200"
-              >
-                <X size={18} />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {file && (
-          <Button
-            onClick={uploadFiles}
-            className="w-full mt-4 px-4 py-2 bg-adaptorsYellow text-white rounded hover:bg-blue-600 transition-colors duration-200"
-          >
-            분석하기
-          </Button>
+          <>
+            <SelectedFile fileName={file.name} removeFile={removeFile} />
+            <Button
+              onClick={uploadFiles}
+              className="w-full mt-4 px-4 py-2 text-md bg-adaptorsYellow text-white rounded hover:bg-black transition-colors duration-200"
+            >
+              분석하기
+            </Button>
+          </>
         )}
 
         {uploading && <ProgressBar uploadProgress={uploadProgress} />}

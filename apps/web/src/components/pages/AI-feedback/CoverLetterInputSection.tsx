@@ -7,19 +7,18 @@ import ChevronText from '@components/ui/Text/ChevronText';
 import { useState } from 'react';
 
 const industry = [
-  { value: 'MARKETING', label: '마케팅' },
   { value: 'IT', label: 'IT' },
+  { value: 'MARKETING', label: '마케팅' },
   { value: 'PROJECT_MANAGEMENT', label: 'PM' },
   { value: 'CONTENT_CREATION', label: '콘텐츠 제작' },
   { value: 'EDUCATION', label: '교육' },
 ];
 
 export default function ploadSection({ category }: { category: string }) {
-  const [job, setJob] = useState<string>('MARKETING');
+  const [job, setJob] = useState<string>('IT');
   const handleRadioChange = (value: string) => {
     setJob(value);
   };
-  console.log(category);
 
   return (
     <>
