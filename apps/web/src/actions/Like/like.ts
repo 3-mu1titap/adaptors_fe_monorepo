@@ -1,8 +1,6 @@
+'use server';
 import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';
 import { commonResType } from '@components/types/ResponseTypes';
-
-('use server');
-
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
 //좋아요

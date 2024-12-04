@@ -1,4 +1,4 @@
-import { MentoringSessionList } from '@components/types/mentoring/mentoringTypes';
+import { MentoringResult } from '@components/types/mentoring/mentoringTypes';
 import Calendar from './Calendar';
 import MentoProfile from './MentoProfile';
 import NowDate from './NowDate';
@@ -8,7 +8,7 @@ export default function MentorSection({
   mentoringSessionList,
 }: {
   mentorUuid: string;
-  mentoringSessionList: MentoringSessionList | [];
+  mentoringSessionList: MentoringResult[] | [];
 }) {
   return (
     <section className="w-full sm:w-[350px] p-6 bg-white border-r border-gray-200">

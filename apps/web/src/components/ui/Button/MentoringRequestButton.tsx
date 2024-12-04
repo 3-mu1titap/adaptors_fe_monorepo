@@ -65,13 +65,13 @@ export default function MentoringRequestButton({
   return (
     <div>
       {isClosed ? (
-        <div className="px-4 py-3 w-28 text-center rounded-xl text-xl font-medium bg-[#433E3E] text-white">
+        <div className="px-4 py-3.5 max-w-24 md:w-28 text-center rounded-md text-md md:text-xl font-medium bg-[#433E3E] text-white">
           마감
         </div>
       ) : (
         <Button
           onClick={onClickButton}
-          className={`px-4 py-3 rounded-[10px] text-xl w-28 ${
+          className={`px-6 md:px-10 md:py-6 rounded-[10px] text-md md:text-lg  max-w-24 md:w-28 ${
             isRegistered
               ? 'bg-gray-200 text-gray-600 hover:bg-gray-200'
               : 'bg-adaptorsYellow text-white hover:bg-black'

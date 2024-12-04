@@ -9,6 +9,7 @@ import {
   RemoteTrackPublication,
   RemoteParticipant,
 } from 'livekit-client';
+
 import Tracks from './Tracks';
 import { useUserInfoStore } from '@repo/client/store/messagesStore';
 import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';

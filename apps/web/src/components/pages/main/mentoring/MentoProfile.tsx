@@ -2,7 +2,6 @@ import LikeButton from '@components/ui/Button/LikeButton';
 import { getProfileIamge } from 'src/actions/profile/getProfileData';
 import Share from '../../../assets/icons/Share';
 import FitImage from '../../../ui/image/fit-image';
-import MentorReviewOverview from './review/MentorReviewOverview';
 export default async function MentoProfile({
   mentorUuid,
 }: {
@@ -22,7 +21,7 @@ export default async function MentoProfile({
       <div className="px-1">
         <h1 className="text-3xl font-bold mb-3">@ {mentorProfile.nickName}</h1>
         <div className="flex justify-between w-full mb-3">
-          <MentorReviewOverview maxVisible={4} />
+          {/* <ParticipateAndUnit maxVisible={4} /> */}
           <LikeButton count={200823} mentorUuid={mentorUuid} />
         </div>
       </div>
