@@ -1,7 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
-import { refreshToken } from 'src/actions/common/refreshToken';
 
 // Kakao 프로필 타입 정의
 interface KakaoProfile {
@@ -104,22 +103,22 @@ export const options: NextAuthOptions = {
         token.uuid = user.uuid;
         token.role = user.role;
       }
-      if (token) {
-        const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
-        const expiredDate = new Date(payload.exp * 1000);
-        if (Date.now() > expiredDate.getTime() && token.refreshToken) {
-          try {
-            const data = await refreshToken(token.refreshToken as string);
-            token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
-            if (data.ok) {
-              console.log('토큰 재발급 성공');
-            }
-          } catch (error) {
-            console.error('refreshToken 만료:', error);
-            token.error = 'refreshTokenExpired';
-          }
-        }
-      }
+      // if (token) {
+      //   const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
+      //   const expiredDate = new Date(payload.exp * 1000);
+      //   if (Date.now() > expiredDate.getTime() && token.refreshToken) {
+      //     try {
+      //       const data = await refreshToken(token.refreshToken as string);
+      //       token.accessToken = data.result.accessToken; // 갱신된 AccessToken 저장
+      //       if (data.ok) {
+      //         console.log('토큰 재발급 성공');
+      //       }
+      //     } catch (error) {
+      //       // console.error('refreshToken 만료:', error);
+      //       token.error = 'refreshTokenExpired';
+      //     }
+      //   }
+      // }
       return token;
     },
 

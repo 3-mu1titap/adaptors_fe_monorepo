@@ -12,7 +12,6 @@ export const refreshToken = async (refreshToken: string) => {
   );
 
   if (!response.ok) {
-    console.log('refreshtoken로 요청 실패');
     const res = await response.json();
     console.log(res);
     throw new Error('Failed to refresh token');
