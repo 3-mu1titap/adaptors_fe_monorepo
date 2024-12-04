@@ -9,8 +9,8 @@ const mentoringSessionList = [
   {
     mentoringName: '프로그래밍 기초 멘토링',
     sessionUuid: '123',
-    startDate: '2024-12-02',
-    endDate: '2024-12-02',
+    startDate: '2024-12-04',
+    endDate: '2024-12-04',
     startTime: {
       hour: 9,
       minute: 0,

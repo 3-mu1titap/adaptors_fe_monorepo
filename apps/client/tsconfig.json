@@ -7,6 +7,13 @@
       "@repo/client/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/pages/main/mentor/meeting/Meeting.tsx",
+    "src/components/pages/main/mentor/meeting/Meeting copy.jsx"
+  ],
   "exclude": ["node_modules"]
 }

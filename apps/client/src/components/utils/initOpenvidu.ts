@@ -29,6 +29,7 @@ export default async function initOpenVidu({
   session.on('exception', console.warn);
 
   const token = await getToken(sessionId);
+  console.log('여기', token);
   await session.connect(token, { userId, nickname }).catch((error) => {
     console.log(
       'There was an error connecting to the session:',
