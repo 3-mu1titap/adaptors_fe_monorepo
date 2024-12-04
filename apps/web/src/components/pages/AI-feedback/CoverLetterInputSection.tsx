@@ -1,50 +1,47 @@
 'use client';
 import { CommonLayout } from '@components/common/commomLayout';
-import FeedbackSubmitButton from '@components/ui/Button/FeedbackSubmitButton';
-import { Input } from '@components/ui/input/CommonInput';
+import FileUploadForm from '@components/form/FileUploadForm';
+import UploadCoverLetterForm from '@components/form/UploadCoverLetterForm';
+import RadioButton from '@components/ui/radio/RadioButton';
 import ChevronText from '@components/ui/Text/ChevronText';
-import FeedbackResult from './FeedbackResult';
+import { useState } from 'react';
 
-export default function CoverLetterInputSection({
-  categoryId,
-}: {
-  categoryId: string;
-}) {
-  const handleSubmitButton = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 폼 제출 방지
-    const formData = new FormData(e.currentTarget);
-    const question = formData.get('question');
-    const coverLetter = formData.get('coverLetter');
+const industry = [
+  { value: 'MARKETING', label: '마케팅' },
+  { value: 'IT', label: 'IT' },
+  { value: 'PROJECT_MANAGEMENT', label: 'PM' },
+  { value: 'CONTENT_CREATION', label: '콘텐츠 제작' },
+  { value: 'EDUCATION', label: '교육' },
+];
 
-    console.log({ question, coverLetter });
+export default function ploadSection({ category }: { category: string }) {
+  const [job, setJob] = useState<string>('MARKETING');
+  const handleRadioChange = (value: string) => {
+    setJob(value);
   };
-  console.log(categoryId);
+  console.log(category);
+
   return (
-    <div className="">
+    <>
       <CommonLayout type="section" className="w-full relative mb-10 flex-1">
-        <p className="text-red-600">{categoryId}</p>
-        {categoryId == 'cover-letter' ? (
-          <form onSubmit={handleSubmitButton}>
-            <fieldset>
-              <ChevronText text="자기소개서 문항" className="py-4" />
-              <Input name="question" placeholder="문항을 입력해주세요" />
-            </fieldset>
-            <fieldset>
-              <ChevronText text="자기소개서" className="py-4" />
-              <textarea
-                name="coverLetter"
-                placeholder="작성한 자기소개서를 입력해주세요"
-                maxLength={1500}
-                className="text-md lg:text-lg leading-relaxed border-[1px] outline-adaptorsYellow outline-2 border-adaptorsGray rounded-lg focus:border-2 focus:border-adaptorsYellow w-full sm:h-[50vh] lg:min-h-[400px] p-6"
-              ></textarea>
-            </fieldset>
-            <FeedbackSubmitButton handelSubmitButton={() => {}} />
-          </form>
-        ) : (
-          <form>이력서 제출 폼..</form>
+        <fieldset className="md:flex items-start mb-10">
+          <ChevronText text="산업군" className="py-4 sm:py-2 min-w-44" />
+          <RadioButton
+            name="gob"
+            options={industry}
+            selectedValue={job}
+            onChange={handleRadioChange}
+            classname="gap-4"
+          />
+        </fieldset>
+        {category === 'COVER_LETTER' && <UploadCoverLetterForm job={job} />}
+        {category === 'RESUME' && (
+          <FileUploadForm job={job} category={category} />
+        )}
+        {category === 'PORTFOLIO' && (
+          <FileUploadForm job={job} category={category} />
         )}
       </CommonLayout>
-      <FeedbackResult />
-    </div>
+    </>
   );
 }

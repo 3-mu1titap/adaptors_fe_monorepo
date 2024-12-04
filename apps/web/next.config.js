@@ -9,4 +9,9 @@ module.exports = {
       'i.pinimg.com',
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '5mb', // 5MB로 제한을 증가
+    },
+  },
 };

@@ -13,6 +13,7 @@ interface JoinSelectProps {
   defaultValue?: string;
   onChange?: (value: string) => void;
   name?: string; // name 추가
+  className?: string;
 }
 
 export default function JoinSelect({
@@ -20,6 +21,7 @@ export default function JoinSelect({
   defaultValue,
   onChange,
   name,
+  className = '',
 }: JoinSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(
@@ -62,7 +64,7 @@ export default function JoinSelect({
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         type="button"
         aria-haspopup="listbox"

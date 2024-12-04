@@ -1,7 +1,6 @@
-import React from 'react';
 import AdaptorsLogoIcon from '../../../assets/icons/AdaptorsLogo';
-import HeaderMenu from './HeaderMenu';
 import RightIcon from '../../../assets/icons/Right';
+import HeaderMenu from './HeaderMenu';
 function Header() {
   const menu = [
     {
