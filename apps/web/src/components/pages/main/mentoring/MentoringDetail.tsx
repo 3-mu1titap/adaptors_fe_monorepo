@@ -4,7 +4,7 @@ import {
 } from '../../../../actions/mentoring/mentoringAction';
 import {
   MentoringDataType,
-  MentoringSessionList,
+  MentoringResult,
 } from '../../../types/mentoring/mentoringTypes';
 import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
@@ -15,12 +15,11 @@ export default async function MentoringCalendar({
 }: {
   mentoringDate: string;
 }) {
-  const mentoringSessionList: MentoringSessionList | [] =
-    await GetMentoringSessionList('05b8b889-9798-4f31-88e5-f6b967cb069d');
+  const mentoringSessionList: MentoringResult[] | [] =
+    await GetMentoringSessionList('8e68777e-47ae-46c6-a42b-389d459c8f21');
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
-    '05b8b889-9798-4f31-88e5-f6b967cb069d'
+    '8e68777e-47ae-46c6-a42b-389d459c8f21'
   );
-  console.log(mentoringSessionList);
   return (
     <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
       {/* Left Section */}
