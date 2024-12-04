@@ -10,13 +10,13 @@ const categories = [
 export default function Page({
   searchParams,
 }: {
-  searchParams: { selectedDate: string };
+  searchParams: { category: string };
 }) {
   return (
-    <CommonLayout type="main" className="mt-[7rem] px-4 sm:px-32 lg:px-64">
+    <CommonLayout type="main" className="mt-[7rem] px-4 sm:px-32 lg:px-44">
       <AIFeedbackInfo />
       <AnimatedCategories categories={categories} />
-      <CoverLetterInputSection />
+      <CoverLetterInputSection categoryId={searchParams.category} />
     </CommonLayout>
   );
 }

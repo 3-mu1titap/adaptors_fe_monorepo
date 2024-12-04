@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 interface Category {
@@ -16,8 +17,8 @@ export function AnimatedCategories({ categories }: AnimatedCategoriesProps) {
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
   const containerRef = useRef<HTMLUListElement>(null);
   const [indicatorStyles, setIndicatorStyles] = useState({ left: 0, width: 0 });
-
-  useLayoutEffect(() => {
+  const router = useRouter();
+  const updateIndicatorStyles = () => {
     if (containerRef.current) {
       const activeElement = containerRef.current.querySelector(
         `[aria-current="page"]`
@@ -29,7 +30,20 @@ export function AnimatedCategories({ categories }: AnimatedCategoriesProps) {
         });
       }
     }
-  }, [activeCategory]);
+  };
+
+  useLayoutEffect(() => {
+    updateIndicatorStyles();
+    window.addEventListener('resize', updateIndicatorStyles);
+    return () => {
+      window.removeEventListener('resize', updateIndicatorStyles);
+    };
+  }, [activeCategory]); // activeCategory 변경 시에도 업데이트
+
+  const onClickCategoryButotn = (categoryId: string) => {
+    setActiveCategory(categoryId);
+    router.push(`?category=${categoryId}`);
+  };
 
   return (
     <nav className="relative w-full mt-20 mb-4">
@@ -39,10 +53,10 @@ export function AnimatedCategories({ categories }: AnimatedCategoriesProps) {
             <button
               className={`px-3 py-2 text-lg transition-colors z-20 ${
                 activeCategory === category.id
-                  ? 'text-primary font-extrabold'
+                  ? 'text-primary '
                   : 'text-muted-foreground rounded-md hover:text-primary hover:bg-adaptorsYellow/20'
               }`}
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => onClickCategoryButotn(category.id)}
               aria-current={activeCategory === category.id ? 'page' : undefined}
             >
               {category.name}
