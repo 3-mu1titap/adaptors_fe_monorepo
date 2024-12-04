@@ -5,6 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import Chatting from '../../chatting/Chatting';
 import ChatSidebar from '../../sidebar/ChatSidebar';
 import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
+import { TimeType } from '@repo/client/components/types/main/mentor/mentoringTypes';
 
 type Message = {
   id: string;
@@ -13,7 +14,32 @@ type Message = {
   sender: string;
 };
 
-export default function Message() {
+interface chatRequestDtoType {
+  memberUuid: string;
+  message: string;
+  sentAt: string;
+}
+
+interface mentoringRequestDtoType {
+  mentoringUuid: string;
+  mentoringName: string;
+  startDate: string;
+  endDate: string;
+  startTime: TimeType;
+  endTime: TimeType;
+}
+
+interface userMessageDataType {
+  id: string;
+  chatRequestDto: chatRequestDtoType;
+  mentoringRequestDto: mentoringRequestDtoType;
+}
+
+export default function Message({
+  userMessageData,
+}: {
+  userMessageData: userMessageDataType[];
+}) {
   const [participants, setParticipants] = useState<participantType[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
@@ -28,7 +54,10 @@ export default function Message() {
       {/* Right Content */}
       <div className="flex-1 flex flex-col px-4 py-1">
         {selectedChat ? (
-          <Chatting participants={participants} />
+          <Chatting
+            participants={participants}
+            mentoringSessionUuid={selectedChat}
+          />
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">

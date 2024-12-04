@@ -18,9 +18,7 @@ import {
   getParticipants,
   postJoinMeeting,
 } from '@repo/client/actions/meeting/meetingAction';
-import OpenMentoring, {
-  MentoringSessionDataType,
-} from './openMentoring/OpenMentoring';
+import OpenMentoring from './openMentoring/OpenMentoring';
 import MeetingHeader from '../../../../header/MeetingHeader';
 import Participants from './participants/Participants';
 import Chatting from '../../chatting/Chatting';
@@ -32,6 +30,10 @@ import {
   DialogTitle,
 } from '@repo/ui/components/ui/Dialog';
 import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
+import {
+  MentoringSessionDataType,
+  TodayMentoringSessionDataType,
+} from '@repo/client/components/types/main/mentor/mentoringTypes';
 
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
@@ -43,9 +45,10 @@ type TrackInfo = {
 export default function Meeting({
   mentoringSessionList,
 }: {
-  mentoringSessionList: MentoringSessionDataType[];
+  mentoringSessionList: TodayMentoringSessionDataType[];
 }) {
   const [room, setRoom] = useState<Room | null>(null);
+  const [sessionUuid, setSessionUuid] = useState<string>('');
   const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
     undefined
   );
@@ -76,21 +79,21 @@ export default function Meeting({
 
   useEffect(() => {
     const fetchParticipantsUuid = async () => {
-      const participantsUuidData = await getParticipants(
-        'ac419217-cb98-4334-8b78-8126aa0e57aa'
-      );
+      const participantsUuidData = await getParticipants(sessionUuid);
       const fetchPromises = participantsUuidData.map((userUuid: string) =>
         fetchParticipants(userUuid)
       );
 
       await Promise.all(fetchPromises);
     };
+    if (sessionUuid) {
+      fetchParticipantsUuid();
+    }
+  }, [room, sessionUuid]);
 
-    fetchParticipantsUuid();
-  }, [room]);
-
-  async function joinRoom() {
-    await postJoinMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
+  async function joinRoom(sessionUuid: string) {
+    setSessionUuid(sessionUuid);
+    await postJoinMeeting(sessionUuid);
     const room = new Room();
     setRoom(room);
 
@@ -260,7 +263,10 @@ export default function Meeting({
                 />
               </div>
               <div className="h-[54vh]">
-                <Chatting participants={participants} />
+                <Chatting
+                  participants={participants}
+                  mentoringSessionUuid={sessionUuid}
+                />
               </div>
             </div>
           </div>
@@ -272,7 +278,7 @@ export default function Meeting({
           <DialogDescription>멘티의 수준 평가</DialogDescription>
         </DialogHeader>
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>
-          <MentoringFeedbackForm />
+          <MentoringFeedbackForm sessionUuid={sessionUuid} />
         </DialogContent>
       </Dialog>
     </>

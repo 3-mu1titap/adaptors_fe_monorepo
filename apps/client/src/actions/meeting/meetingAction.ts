@@ -85,6 +85,7 @@ export async function getParticipants(mentoringSessionUuid: string) {
       }
     );
     const result = (await res.json()) as commonResType<string[]>;
+    console.log('1111111111111111111111', mentoringSessionUuid);
     return result.result;
   } catch (error) {
     return redirect('/error?message=Failed to fetch participants');

@@ -1,10 +1,12 @@
 'use server';
 
-import { MentoringSessionDataType } from '@repo/client/components/pages/main/mentor/meeting/openMentoring/OpenMentoring';
 import { UserScheduleDataType } from '../../components/types/main/schedule/scheduleTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
-import { MentoringDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+import {
+  MentoringDataType,
+  MentoringSessionDataType,
+} from '@repo/client/components/types/main/mentor/mentoringTypes';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 

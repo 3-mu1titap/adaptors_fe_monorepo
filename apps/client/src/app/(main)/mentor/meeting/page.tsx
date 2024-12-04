@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const mentoringSessionList = [
   {
     mentoringName: '프로그래밍 기초 멘토링',
-    sessionUuid: '123',
+    sessionUuid: 'ac419217-cb98-4334-8b78-8126aa0e57aa',
     startDate: '2024-12-04',
     endDate: '2024-12-04',
     startTime: {

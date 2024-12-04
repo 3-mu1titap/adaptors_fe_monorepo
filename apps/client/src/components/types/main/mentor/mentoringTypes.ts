@@ -1,3 +1,5 @@
+import { StringValidation } from 'zod';
+
 export interface TopCategoryDataType {
   id: number;
   topCategoryCode: string;
@@ -108,4 +110,20 @@ export interface MentoringSessionDataType {
   totalCount: number;
   startDate: string;
   mentoringSessionResponseDtoList: MentoringSession[];
+}
+
+export interface TimeType {
+  hour: number;
+  minute: number;
+  second: number;
+  nano: number;
+}
+
+export interface TodayMentoringSessionDataType {
+  mentoringName: string;
+  sessionUuid: string;
+  startDate: string;
+  endDate: string;
+  startTime: TimeType;
+  endTime: TimeType;
 }
