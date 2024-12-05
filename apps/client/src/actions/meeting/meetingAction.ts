@@ -85,15 +85,16 @@ export async function getParticipants(mentoringSessionUuid: string) {
       }
     );
     const result = (await res.json()) as commonResType<string[]>;
+    console.log('1111111111111111111111', mentoringSessionUuid);
     return result.result;
   } catch (error) {
     return redirect('/error?message=Failed to fetch participants');
   }
 }
 
-const APPLICATION_SERVER_URL =
-  'http://43.200.249.170:5555/api/v1/openvidu/generate-token';
-// const APPLICATION_SERVER_URL = 'http://localhost:6080';
+// const APPLICATION_SERVER_URL =
+//   'http://43.200.249.170:5555/api/v1/openvidu/generate-token';
+const APPLICATION_SERVER_URL = 'http://localhost:6080';
 
 // openvidu token 받아오기
 export async function getOpenViduToken(
@@ -101,18 +102,14 @@ export async function getOpenViduToken(
   participantName: string
 ) {
   'use server';
-  const res = await fetch(
-    `${APPLICATION_SERVER_URL}?mentoringSessionUuid=session`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'userUuid': userUuid,
-      },
-      // body: JSON.stringify({ roomName, participantName }),
-    }
-  );
-  console.log('=======================================', res);
+  const res = await fetch(`${APPLICATION_SERVER_URL}/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // 'userUuid': userUuid,
+    },
+    body: JSON.stringify({ roomName, participantName }),
+  });
   if (!res.ok) {
     throw new Error('Failed to get token');
   }

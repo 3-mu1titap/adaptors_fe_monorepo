@@ -15,3 +15,12 @@ export interface UserScheduleDataType {
   yearMonth: string;
   scheduleLists: ScheduleDataType[];
 }
+
+export interface MentoringDataType {
+  mentoringUuid: string;
+  mentoringName: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+}

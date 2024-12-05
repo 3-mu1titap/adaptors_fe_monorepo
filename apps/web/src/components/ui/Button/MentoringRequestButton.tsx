@@ -15,6 +15,7 @@ export default function MentoringRequestButton({
   isParticipating,
   price,
   isClosed,
+  mentorUuid,
 }: {
   sessionUuid: string;
   mentoringName: string;
@@ -22,6 +23,7 @@ export default function MentoringRequestButton({
   isParticipating: boolean;
   price: number;
   isClosed: boolean;
+  mentorUuid: string;
 }) {
   const [isRegistered, setIsRegistered] = useState(isParticipating);
   const onClickButton = async () => {
@@ -50,12 +52,14 @@ export default function MentoringRequestButton({
         SessionCancel({
           sessionUuid: sessionUuid,
           deadlineDate: deadlineDate,
+          mentorUuid: mentorUuid,
         });
         setIsRegistered((prev) => !prev);
       } else if (result.isConfirmed && !isRegistered) {
         SessionRequest({
           sessionUuid: sessionUuid,
           mentoringName: mentoringName,
+          mentorUuid: mentorUuid,
         });
         setIsRegistered((prev) => !prev);
       }

@@ -10,10 +10,12 @@ export default function SessionList({
   mentoringSessionList,
   mentoringName,
   mentoringDate,
+  mentorUuid,
 }: {
   mentoringSessionList: MentoringResult[] | [];
   mentoringName: string;
   mentoringDate?: string;
+  mentorUuid: string;
 }) {
   const [LimitNumber, setLimitNumber] = useState(5);
   const totalSum = mentoringDate
@@ -34,7 +36,11 @@ export default function SessionList({
           <div key={index} className="space-y-3">
             <DateBadge date={sessions.startDate} />
             {sessions.mentoringSessionResponseDtoList.map((session) => (
-              <SessionFigure session={session} mentoringName={mentoringName} />
+              <SessionFigure
+                session={session}
+                mentoringName={mentoringName}
+                mentorUuid={mentorUuid}
+              />
             ))}
           </div>
         ))}

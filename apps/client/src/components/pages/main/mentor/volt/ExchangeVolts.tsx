@@ -4,77 +4,87 @@ import React, { useState, useEffect } from 'react';
 import SelectPeriod from './exchange/SelectPeriod';
 import TotalExchange from './exchange/TotalExchange';
 import SettleList from './exchange/SettleList';
-
-interface DateRange {
-  from: Date;
-  to: Date;
-}
-
-interface ExchangeRecord {
-  id: number;
-  date: string;
-  volt: number;
-  status: 'processing' | 'complete';
-  money: number;
-}
-
-const mockData: ExchangeRecord[] = [
-  { id: 1, date: '2024-06-01', volt: 100, status: 'complete', money: 10000 },
-  { id: 2, date: '2023-06-02', volt: 200, status: 'processing', money: 20000 },
-  { id: 3, date: '2024-12-01', volt: 150, status: 'complete', money: 15000 },
-];
-
-const filterData = (
-  data: ExchangeRecord[],
-  selectedPeriod: string,
-  selectedDateRange: DateRange
-) => {
-  const today = new Date();
-  let startDate = new Date();
-  let endDate = new Date();
-
-  switch (selectedPeriod) {
-    case '오늘':
-      startDate.setHours(0, 0, 0, 0);
-      break;
-    case '1주일':
-      startDate.setDate(today.getDate() - 7);
-      break;
-    case '1개월':
-      startDate.setMonth(today.getMonth() - 1);
-      break;
-    case '기간 선택':
-      startDate = selectedDateRange.from;
-      endDate = selectedDateRange.to;
-      break;
-    default:
-      return data;
-  }
-
-  return data.filter((record) => {
-    const recordDate = new Date(record.date);
-    return recordDate >= startDate && recordDate <= endDate;
-  });
-};
+import { GetSettleList } from '@repo/client/actions/volt/voltAction';
+import {
+  dateRange,
+  exchangeDataType,
+} from '@repo/client/components/types/main/mypage/myPageTypes';
 
 export default function ExchangeHistory() {
   const [period, setPeriod] = useState<string>('오늘');
-  const [dateRange, setDateRange] = useState<DateRange>({
+  const [dateRange, setDateRange] = useState<dateRange>({
     from: new Date(),
     to: new Date(),
   });
-  const [filteredData, setFilteredData] = useState<ExchangeRecord[]>(mockData);
+  const [totalExchange, setTotalExchange] = useState<number>(0);
+  const [filteredData, setFilteredData] = useState<exchangeDataType[]>([]);
+  const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
   useEffect(() => {
-    setFilteredData(filterData(mockData, period, dateRange));
-  }, [period, dateRange]);
+    const fetchData = async () => {
+      try {
+        let startDate: string;
+        let endDate: string;
+
+        const today = new Date();
+        switch (period) {
+          case '오늘':
+            startDate = today.toISOString().split('T')[0].split('-').join('');
+            endDate = today.toISOString().split('T')[0].split('-').join('');
+            break;
+          case '1주일':
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(today.getDate() - 7);
+            startDate = oneWeekAgo
+              .toISOString()
+              .split('T')[0]
+              .split('-')
+              .join('');
+            endDate = today.toISOString().split('T')[0].split('-').join('');
+            break;
+          case '1개월':
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(today.getMonth() - 1);
+            startDate = oneMonthAgo
+              .toISOString()
+              .split('T')[0]
+              .split('-')
+              .join('');
+            endDate = today.toISOString().split('T')[0].split('-').join('');
+            break;
+          case '기간 선택':
+            startDate = dateRange.from
+              .toISOString()
+              .split('T')[0]
+              .split('-')
+              .join('');
+            endDate = dateRange.to
+              .toISOString()
+              .split('T')[0]
+              .split('-')
+              .join('');
+            break;
+          default:
+            return;
+        }
+
+        const data = await GetSettleList(startDate, endDate, userUuid);
+        setTotalExchange(data.totalExchange);
+        setFilteredData(data.exchangeList);
+      } catch (error) {
+        console.error('데이터를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchData();
+  }, [period, dateRange.from, dateRange.to]);
 
   const totalProcessing = filteredData.filter(
-    (record) => record.status === 'processing'
+    (record) => record.status === 'PROCEEDING'
   ).length;
 
   const totalComplete = filteredData.filter(
-    (record) => record.status === 'complete'
+    (record) => record.status === 'COMPLETED'
   ).length;
 
   const totalMoney = filteredData.reduce(
@@ -82,11 +92,7 @@ export default function ExchangeHistory() {
     0
   );
 
-  const handleCancel = (id: number) => {
-    alert(`ID ${id}의 환전을 취소합니다.`);
-  };
-
-  const handleDateRangeSelect = (range: DateRange | undefined) => {
+  const handleDateRangeSelect = (range: dateRange | undefined) => {
     if (range && range.from && range.to) {
       setDateRange({ from: range.from, to: range.to });
     } else {
@@ -109,7 +115,13 @@ export default function ExchangeHistory() {
         totalMoney={totalMoney}
       />
 
-      <SettleList filteredData={filteredData} handleCancel={handleCancel} />
+      {!filteredData ? (
+        <p>기간을 선택해주세요.</p>
+      ) : !totalExchange ? (
+        <p>환전 내역이 없습니다.</p>
+      ) : (
+        <SettleList filteredData={filteredData} />
+      )}
     </>
   );
 }

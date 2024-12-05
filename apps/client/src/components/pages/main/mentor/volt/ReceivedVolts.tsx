@@ -8,32 +8,63 @@ import {
   CardTitle,
 } from '@repo/ui/components/ui/card';
 import { Input } from '@repo/ui/components/ui/input';
-import { Button } from '@repo/ui/components/ui/button';
 import InnerButton from '@repo/client/components/ui/Button/InnerButton';
+import { mentorVoltListDataType } from '@repo/client/components/types/main/mypage/myPageTypes';
+import { formatDate } from '@repo/client/components/utils/dateUtil';
+import Swal from 'sweetalert2';
 
-interface VoltRecord {
-  id: number;
-  amount: number;
-  date: string;
-  sender: string;
-}
-
-const mockData: VoltRecord[] = [
-  { id: 1, amount: 100, date: '2023-06-01', sender: '김멘티' },
-  { id: 2, amount: 200, date: '2023-06-02', sender: '이학생' },
-  { id: 3, amount: 150, date: '2023-06-03', sender: '박배움' },
-];
-
-export default function ReceivedVolts() {
+export default function ReceivedVolts({
+  mentorVoltList,
+}: {
+  mentorVoltList: mentorVoltListDataType;
+}) {
   const [exchangeAmount, setExchangeAmount] = useState<string>('');
-  const totalVolts = mockData.reduce((sum, record) => sum + record.amount, 0);
 
   const handleExchange = () => {
-    if (exchangeAmount && parseInt(exchangeAmount) > 0) {
-      alert(`${exchangeAmount} 볼트를 환전합니다.`);
+    if (exchangeAmount && mentorVoltList.totalVolt < parseInt(exchangeAmount)) {
+      Swal.fire({
+        title: '금액 초과',
+        html: `${exchangeAmount}Volt는 가지고 있는<br/> ${mentorVoltList.totalVolt}를 초과하는 Volt입니다.<br/> 다시 입력해주세요.`,
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    } else if (
+      parseInt(exchangeAmount) > 100 &&
+      parseInt(exchangeAmount) % 100 === 0
+    ) {
+      Swal.fire({
+        title: '환전',
+        html: `${exchangeAmount}Volt 만큼 환전을 진행하시겠습니까?`,
+        icon: 'question',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
       setExchangeAmount('');
+    } else if (parseInt(exchangeAmount) < 100) {
+      Swal.fire({
+        title: '알림',
+        html: `100Volt 미만으로는 환전이 불가능합니다.`,
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    } else if (parseInt(exchangeAmount) % 100 !== 0) {
+      Swal.fire({
+        title: '알림',
+        html: `100Volt 단위로만 환전이 가능합니다.`,
+        icon: 'info',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
     } else {
-      alert('올바른 환전 금액을 입력해주세요.');
+      Swal.fire({
+        title: '환전 불가',
+        html: `올바른 환전 금액을 입력해주세요`,
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
     }
   };
 
@@ -44,7 +75,7 @@ export default function ReceivedVolts() {
           <CardTitle>총 받은 볼트</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-4xl font-bold">{totalVolts} 볼트</p>
+          <p className="text-4xl font-bold">{mentorVoltList.totalVolt} 볼트</p>
         </CardContent>
       </Card>
 
@@ -54,14 +85,14 @@ export default function ReceivedVolts() {
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {mockData.map((record) => (
+            {mentorVoltList.voltList.map((record) => (
               <li
                 key={record.id}
                 className="flex justify-between items-center border-b pb-2"
               >
-                <p className="font-semibold">{record.amount} 볼트</p>
+                <p className="font-semibold">{record.volt} 볼트</p>
                 <p>{record.sender}</p>
-                <p className="text-md">{record.date}</p>
+                <p className="text-md">{formatDate('time', record.date)}</p>
               </li>
             ))}
           </ul>
@@ -70,16 +101,22 @@ export default function ReceivedVolts() {
 
       <Card>
         <CardHeader>
-          <CardTitle>볼트 환전</CardTitle>
+          <CardTitle>
+            볼트 환전
+            <span className="text-md ml-2 text-gray-300">
+              * 100Volt 단위로 환전이 가능합니다.
+            </span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex space-x-4">
             <Input
               type="number"
+              step={100}
               placeholder="환전할 볼트 수"
               value={exchangeAmount}
               onChange={(e) => setExchangeAmount(e.target.value)}
-              className="flex-grow"
+              className="flex-grow !text-xl"
             />
             <InnerButton
               title="환전하기"

@@ -1,3 +1,5 @@
+import { StringValidation } from 'zod';
+
 export interface TopCategoryDataType {
   id: number;
   topCategoryCode: string;
@@ -36,14 +38,10 @@ export interface SessionTimeValidationType {
   timeDuplicateResponse: SessionTimeResType | null;
 }
 
-// 멘토링 세션 정보
-export interface MentoringSessionDataType extends SessionTimeDataType {
-  deadlineDate: Date;
-  minHeadCount: number;
-  maxHeadCount: number;
-  nowHeadCount: number;
-  isParticipating: boolean;
-  price: number;
+export interface MentoringSessionDateDataType {
+  totalCount: number;
+  startDate: string;
+  mentoringSessionResponseDtoList: MentoringSessionDataType[];
 }
 
 // 멘토링 카테고리 정보
@@ -74,17 +72,6 @@ export interface MentoringCategory {
   topCategoryCode: string;
 }
 
-export interface MentoringSession {
-  startDate: Date;
-  endDate: Date;
-  startTime: string;
-  endTime: string;
-  deadlineDate: Date;
-  minHeadCount: number;
-  maxHeadCount: number;
-  price: number;
-}
-
 // 멘토링 등록 form type
 export interface MentoringAddFormType {
   name: string;
@@ -95,4 +82,48 @@ export interface MentoringAddFormType {
   sessionList: MentoringSession[];
   categoryList: MentoringCategory[];
   hashtagList: HashtagDataType[];
+}
+
+export interface SessionUser {
+  userUuid: string | null;
+  menteeImageUrl: string | null;
+}
+
+export interface MentoringSession {
+  sessionUuid: string;
+  mentoringUuid: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+  deadlineDate: string;
+  minHeadCount: number;
+  maxHeadCount: number;
+  nowHeadCount: number;
+  isParticipating: boolean;
+  price: number;
+  isClosed: boolean;
+  sessionUserList: SessionUser[];
+}
+
+export interface MentoringSessionDataType {
+  totalCount: number;
+  startDate: string;
+  mentoringSessionResponseDtoList: MentoringSession[];
+}
+
+export interface TimeType {
+  hour: number;
+  minute: number;
+  second: number;
+  nano: number;
+}
+
+export interface TodayMentoringSessionDataType {
+  mentoringName: string;
+  sessionUuid: string;
+  startDate: string;
+  endDate: string;
+  startTime: TimeType;
+  endTime: TimeType;
 }

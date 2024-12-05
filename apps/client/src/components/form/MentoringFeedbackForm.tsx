@@ -20,19 +20,47 @@ import {
 import { postFeedback } from '@repo/client/actions/meeting/meetingAction';
 
 const categoryElements: CategoryElementsType = {
-  면접: ['발음', '태도', '내용', '자세', '?'],
-  자기소개서: ['문장력', '내용', '구성', '?', '??'],
-  이력서: ['형식', '내용', '가독성', '?', '??'],
-  포트폴리오: ['프로젝트 다양성', '기술 스택', '문서화', '디자인', '?'],
+  면접: [
+    '논리적 사고 및 문제 해결 능력',
+    '자신감 및 태도',
+    '의사소통 및 표현력',
+    '적응력 및 유연성',
+    '직무 적합성 및 회사에 대한 이해',
+  ],
+  자기소개서: [
+    '구성 및  논리적 흐름',
+    '자기소개 및 강점 강조',
+    '지원 동기 및 직무 적합성',
+    '글의 표현력 및 문법',
+    '성취 및 경험 사례',
+  ],
+  이력서: [
+    '경력 및 학력 사항의 명확성',
+    '기술 및 자격증',
+    '업무 성과 중심의 경력 기술',
+    '맞춤화 및 직무 연관성',
+    '가독성 및 디자인',
+  ],
+  포트폴리오: [
+    '프로젝트 다양성 및 깊이',
+    '결과와 성과',
+    '기술적 능력과 활용',
+    'UI/UX 디자인 및 가독성',
+    '자기소개 및 목표의 일관성',
+  ],
 };
 
 const MAX_CONTENT_LENGTH = 2000;
 
-export default function MentoringFeedbackForm() {
+export default function MentoringFeedbackForm({
+  sessionUuid,
+}: {
+  sessionUuid: string;
+}) {
   const router = useRouter();
   const [feedback, setFeedback] = useState<MentoringFeedbackType>({
     mentorNickName: '',
-    mentoringSessionUuid: '',
+    mentoringSessionUuid: sessionUuid,
     categoryCode: '면접',
     elements: {},
     content: '',
@@ -49,7 +77,8 @@ export default function MentoringFeedbackForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await postFeedback(feedback);
+    console.log(feedback);
+    // await postFeedback(feedback);
   };
 
   const handleScoreChange = (element: string, value: number[]) => {

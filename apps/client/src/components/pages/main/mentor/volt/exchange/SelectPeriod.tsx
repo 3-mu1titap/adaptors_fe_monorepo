@@ -84,7 +84,7 @@ export default function SelectPeriod({
                 mode="range"
                 defaultMonth={dateRange.from}
                 selected={dateRange}
-                onSelect={() => handleDateRangeSelect}
+                onSelect={handleDateRangeSelect}
                 numberOfMonths={2}
               />
             </PopoverContent>

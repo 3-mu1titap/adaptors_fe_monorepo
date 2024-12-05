@@ -1,9 +1,8 @@
 export const headerGNBMenuData = [
   { label: 'Home', href: '/home' },
-  { label: 'About us', href: '/about' },
-  { label: 'Services', href: '/service' },
+  { label: 'Mentoring', href: '/mentoring' },
   { label: 'AI', href: '/AI-feedback/COVER_LETTER' },
-  { label: 'FAQ', href: '/faq' },
+  { label: 'MyPage', href: '/mypage' },
 ];
 
 export const CategoryData = [
