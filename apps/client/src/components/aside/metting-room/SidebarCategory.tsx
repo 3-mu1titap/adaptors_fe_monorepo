@@ -22,5 +22,4 @@ function SidebarCategory({ item }: { item: SidebarType }) {
     </Link>
   );
 }
-
 export default SidebarCategory;

@@ -10,7 +10,6 @@ import VoltIcon from '../../assets/icons/Volt';
 import MeetingRoomNavCategory from './SidebarCategory';
 import { useMemo } from 'react';
 import { SidebarType } from '../../types/navigation/navigationTypes';
-
 function SidebarCategories() {
   const pathname = usePathname();
   const basePath = pathname.startsWith('/mentor') ? '/mentor' : '/mentee';

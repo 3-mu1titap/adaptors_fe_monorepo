@@ -1,42 +1,128 @@
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { ImageIcon, X } from 'lucide-react';
 import { Input } from '../ui/input/CommonInput';
 import RadioButton from '../ui/radio/RadioButton';
-
-interface MentorPorfileEditFormType {
-  profileImageUrl: string;
-  nickName: string;
-  phoneNumber: string;
-  mentoringField: string;
-  age: number;
-  gender: string; // 'FEMAIL' -> 'FEMALE'로 수정
-  jobExperience: string;
-}
+import FitImage from '../ui/image/fit-image';
+import { MentorProfileEditFormType } from '../types/main/mypage/myPageTypes';
 
 interface MentorProfileEditFormProps {
-  formData: MentorPorfileEditFormType;
-  setFormData: React.Dispatch<React.SetStateAction<MentorPorfileEditFormType>>;
+  formData: MentorProfileEditFormType;
+  setFormData: React.Dispatch<React.SetStateAction<MentorProfileEditFormType>>;
+  file: File | null;
+  setFile: Dispatch<SetStateAction<File | null>>;
 }
 
 export default function MentorProfileEditForm({
   formData,
   setFormData,
+  file,
+  setFile,
 }: MentorProfileEditFormProps) {
+  const [preview, setPreview] = useState<string | null>(
+    formData.profileImageUrl
+  );
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleDrag = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setIsDragging(true);
+    } else if (e.type === 'dragleave') {
+      setIsDragging(false);
+    }
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    if (files && files[0]) {
+      setFile(files[0]);
+    }
+  }, []);
+
+  const handleRemove = () => {
+    setFile(null);
+    setPreview(null);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // 업데이트된 입력값을 반영
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const files = e.target.files;
+    if (files && files[0]) {
+      setFile(files[0]);
+    }
   };
 
   const handleRadioChange = (value: string) => {
     setFormData((prev) => ({ ...prev, gender: value }));
   };
 
+  useEffect(() => {
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [file]);
+
   return (
     <>
-      {/*  프로필 이미지 */}
-      <fieldset className="relative flex items-center w-full rounded-xl bg-white focus-within:ring-2 focus-within:ring-yellow-300 mb-2">
-        <></>
+      <fieldset className="relative flex justify-center items-center w-full rounded-xl bg-white focus-within:ring-2 focus-within:ring-yellow-300 mb-2">
+        {!preview ? (
+          <label
+            htmlFor="file-upload"
+            className={`relative flex flex-col items-center justify-center w-full h-full min-h-[300px] border-2 border-dashed rounded-lg cursor-pointer bg-[#FFF9DF] transition-colors
+                ${isDragging ? 'border-gray-500' : 'border-gray-300'}
+                hover:bg-[#fff9e6]`}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+          >
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <div className="bg-gray-800 rounded-full p-3 mb-4">
+                <ImageIcon className="w-6 h-6 text-white" />
+              </div>
+              <p className="mb-2 text-xl text-gray-700">사진을 등록해주세요</p>
+              <p className="text-lg text-gray-500">Drag and drop here</p>
+            </div>
+            <input
+              id="file-upload"
+              type="file"
+              className="hidden"
+              onChange={handleImageChange}
+              accept="image/*"
+            />
+          </label>
+        ) : (
+          <span className="relative h-full flex items-center justify-center">
+            <div className="h-[100%] max-h-auto max-w-[400px] overflow-hidden py-auto">
+              <FitImage src={preview} alt="Preview" />
+            </div>
+            <button
+              onClick={handleRemove}
+              className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 p-2 bg-gray-900/80 rounded-full hover:bg-gray-900 transition-colors"
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </span>
+        )}
       </fieldset>
-      {/* 닉네임 */}
       <fieldset className="space-y-1">
         <label
           htmlFor="nickName"
@@ -54,7 +140,6 @@ export default function MentorProfileEditForm({
           onChange={handleChange}
         />
       </fieldset>
-      {/* 전화번호 */}
       <fieldset className="space-y-1">
         <label
           htmlFor="phoneNumber"
@@ -72,7 +157,6 @@ export default function MentorProfileEditForm({
           onChange={handleChange}
         />
       </fieldset>
-      {/* Mentoring Field */}
       <fieldset className="space-y-2">
         <label className="block text-lg font-medium text-gray-700 mb-2">
           멘토링 분야
@@ -84,7 +168,7 @@ export default function MentorProfileEditForm({
               onClick={() =>
                 setFormData((prev) => ({ ...prev, mentoringField: field }))
               }
-              className={`px-3 py-2 rounded-md text-md font-medium transition-colors
+              className={`px-3 py-2 rounded-md text-md font-medium transition-colors cursor-pointer
                     ${
                       formData.mentoringField === field
                         ? 'bg-[#F8D448] text-white'
@@ -96,7 +180,6 @@ export default function MentorProfileEditForm({
           ))}
         </div>
       </fieldset>
-      {/* 출생년도 */}
       <fieldset className="space-y-2">
         <label
           htmlFor="age"
@@ -106,7 +189,7 @@ export default function MentorProfileEditForm({
         </label>
         <Input
           id="age"
-          name="age" // 추가: name 속성 추가
+          name="age"
           type="number"
           value={formData.age}
           onChange={handleChange}
@@ -114,7 +197,6 @@ export default function MentorProfileEditForm({
           className="custom-div number"
         />
       </fieldset>
-      {/* 성별 */}
       <fieldset className="space-y-2">
         <label
           htmlFor="gender"
@@ -130,10 +212,9 @@ export default function MentorProfileEditForm({
             { label: '기타', value: 'OTHERS' },
           ]}
           selectedValue={formData.gender}
-          onChange={handleRadioChange} // 추가: handleRadioChange 함수 사용
+          onChange={handleRadioChange}
         />
       </fieldset>
-      {/* Job Experience Input */}
       <fieldset className="space-y-2">
         <label
           htmlFor="jobExperience"
@@ -143,10 +224,10 @@ export default function MentorProfileEditForm({
         </label>
         <Input
           id="jobExperience"
-          name="jobExperience" // 추가: name 속성 추가
+          name="jobExperience"
           type="text"
           value={formData.jobExperience}
-          onChange={handleChange} // 추가: handleChange 함수 사용
+          onChange={handleChange}
           placeholder="(예: 3년)"
           className="custom-div"
         />

@@ -23,10 +23,10 @@ function MentoringListCard({ mentoring }: { mentoring: MentoringDataType }) {
               />
             </Link>
           </div>
-          <h5 className="text-[#3b3f5c] text-xl font-semibold mb-2 dark:text-white-light">
+          <h5 className="text-[#3b3f5c] text-xl font-semibold mb-2 text-ellipsis whitespace-nowrap dark:text-white-light">
             {mentoring.name}
           </h5>
-          <p className="text-white-dark text-lg mb-4">
+          <p className="text-white-dark text-lg mb-4 h-16 overflow-hidden ">
             {mentoring.description}
           </p>
           <Link

@@ -27,7 +27,7 @@ export default async function Page({
       <MentoringContent
         mentoringInfo={mentoringInfo}
         mentoringSessionData={mentoringSessionData}
-      ></MentoringContent>
+      />
     </div>
   );
 }
