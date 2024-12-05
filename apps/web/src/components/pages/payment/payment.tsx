@@ -28,6 +28,7 @@ function Payment() {
     { id: 4, itemName: 'Volt', count: 300, price: 30000 },
     { id: 5, itemName: 'Volt', count: 500, price: 50000 },
   ];
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [selectedItem, setSelectedItem] = useState<BoltItem | null>(null);
   const [Quantity, setQuantity] = useState(0);
@@ -55,63 +56,43 @@ function Payment() {
     setQuantity(Quantity + 10);
   };
 
-  const PaymentApprove = async (pgToken: string) => {
-    if (!Res) return;
-
-    const data = {
-      cid: 'TC0ONETIME',
-      tid: Res.tid || '',
-      partnerOrderId: Res.partnerOrderId || '',
-      partnerUserId: '23993e78-b0af-42de-839f-060ae99a8bf5',
-      pgToken: pgToken,
-      quantity: totalCount || 0,
-    };
-
-    try {
-      console.log('Start');
-
-      const approvalRes = await PaymentApproval(data);
-      console.log('결제 승인 성공:', approvalRes);
-    } catch (error) {
-      console.error('결제 승인 실패:', error);
-    }
-  };
-
   useEffect(() => {
-    //결제 리다이랙트시 pg_token 값을 찾는다
-    const pgToken = searchParams.get('pg_token');
+    // //결제 리다이랙트시 pg_token 값을 찾는다
+    // const pgToken = searchParams.get('pg_token');
 
-    //pg_token값이 있을경우
-    if (pgToken) {
-      PaymentApprove(pgToken);
-    }
+    // //pg_token값이 있을경우
+    // if (pgToken) {
+    //   PaymentApprove(pgToken);
+    // }
 
     setTotalCount(Quantity + (selectedItem?.count || 0));
     setTotalMoney(totalCount * 100);
   }, [Quantity, selectedItem, totalCount, pgToken]);
 
-  const Paymenthandle = async () => {
-    const data = {
-      cid: 'TC0ONETIME',
-      partnerOrderId: 'string',
-      partnerUserId: '23993e78-b0af-42de-839f-060ae99a8bf5',
-      itemName: selectedItem?.itemName || ' ',
-      quantity: totalCount || 0,
-      totalAmount: totalMoney || 0,
-      taxFreeAmount: 0,
-      approvalUrl: 'https://lims-dev.tistory.com',
-      failUrl: 'https://pknustu.youngjin.com',
-      cancelUrl: 'https://github.com',
-    };
+  const data = {
+    cid: 'TC0ONETIME',
+    partnerOrderId: 'string',
+    partnerUserId: '23993e78-b0af-42de-839f-060ae99a8bf5',
+    itemName: selectedItem?.itemName || ' ',
+    quantity: totalCount || 0,
+    totalAmount: totalMoney || 0,
+    taxFreeAmount: 0,
+    approvalUrl: 'http://localhost:3003/payment/payment-confirm',
+    failUrl: 'http://localhost:3003/mypage/volt/payment-fail',
+    cancelUrl: 'http://localhost:3003/mypage/volt/payment-cancel',
+  };
 
+  const Paymenthandle = async () => {
     try {
       const res = await PaymentReq(data);
-      console.log(res, '결제 준비 완료!!');
       console.log(res?.nextRedirectPcUrl, 'url url ');
-      console.log(Res, 'useState 데이터');
+      console.log(res?.partnerOrderId, 'order');
+      console.log(res?.tid, 'tid, tid');
 
       if (res?.nextRedirectPcUrl) {
-        window.location.href = res.nextRedirectPcUrl;
+        setRes(res);
+        router.push(`${res.nextRedirectPcUrl}`);
+
         console.log('이동합니다!~!~');
       }
     } catch (error) {
