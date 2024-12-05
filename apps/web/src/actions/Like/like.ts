@@ -1,5 +1,6 @@
 'use server';
-
+import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';
+import { commonResType } from '@components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
 //좋아요
@@ -60,3 +61,28 @@ export const postHateReaction = async (targetUuid: string): Promise<number> => {
   const data = await response.json();
   return data.code;
 };
+
+export async function GetMentorBlacklist(userUuid: string) {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/black/targetUuid`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': userUuid,
+        },
+      }
+    );
+
+    const result = (await res.json()) as commonResType<BlakcListTargetType[]>;
+    return result.result;
+  } catch (error) {
+    console.log('블랙리스트 멘토 Uuid 조회', error);
+    return null;
+  }
+}
+//관심목록 리스트 조회
