@@ -1,0 +1,202 @@
+import FeedbackResult from '@components/pages/AI-feedback/FeedbackResult';
+import SelectedFile from '@components/pages/AI-feedback/SelectedFile';
+import { feedbackResult } from '@components/types/AI-feedback/requestTypes';
+import ProgressBar from '@components/ui/Progress/ProgressBar';
+import Status from '@components/ui/Progress/Success';
+import { Button } from '@repo/ui/components/ui/button';
+import { Upload } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { requestAIFeedback_pdf } from 'src/actions/AI-feedback/AI-feedback';
+
+interface FileWithPreview extends File {
+  preview: string;
+}
+
+export default function FileUploadForm({
+  job,
+  category,
+}: {
+  job: string;
+  category: string;
+}) {
+  const [file, setFile] = useState<FileWithPreview | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStatus, setUploadStatus] = useState<
+    'idle' | 'success' | 'error' | 'fileSizeError'
+  >('idle');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [feedback, setFeedback] = useState<feedbackResult | ''>();
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    if (droppedFiles.length > 0) {
+      addFile(droppedFiles[0]);
+    }
+  };
+
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      addFile(selectedFile);
+    }
+  };
+
+  const addFile = (newFile: File) => {
+    if (newFile.size > 5 * 1024 * 1024) {
+      setUploadStatus('fileSizeError'); // 상태를 'fileSizeError'로 설정
+      return;
+    }
+
+    if (
+      (newFile.type.startsWith('image/') ||
+        newFile.type === 'application/pdf') &&
+      newFile.size <= 5 * 1024 * 1024
+    ) {
+      if (file) {
+        URL.revokeObjectURL(file.preview);
+      }
+      setFile(
+        Object.assign(newFile, {
+          preview: URL.createObjectURL(newFile),
+        })
+      );
+      setUploadStatus('idle'); // 파일 추가 시 상태 초기화
+    }
+  };
+
+  const removeFile = () => {
+    if (file) {
+      URL.revokeObjectURL(file.preview);
+      setFile(null);
+    }
+  };
+
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const uploadFiles = async () => {
+    if (!file) {
+      console.error('파일이 없습니다');
+      return;
+    }
+
+    setUploading(true);
+    setUploadProgress(0);
+    setUploadStatus('idle');
+
+    try {
+      // 서버 요청 및 진행률 동기화
+      const base64File = await fileToBase64(file);
+      const uploadStartTime = Date.now();
+
+      const uploadInterval = setInterval(() => {
+        const elapsedTime = Date.now() - uploadStartTime;
+        const estimatedUploadTime = 30000; // 30초 (서버 응답 예상 시간)
+        const progress = Math.min(
+          Math.floor((elapsedTime / estimatedUploadTime) * 100),
+          99
+        );
+        setUploadProgress(progress);
+      }, 300);
+
+      const data = await requestAIFeedback_pdf({
+        industryType: job,
+        documentType: category,
+        file: base64File,
+      });
+
+      clearInterval(uploadInterval);
+      setUploadProgress(100);
+      setUploading(false);
+      setUploadStatus('success');
+      setFile(null);
+      setFeedback(data);
+    } catch (error) {
+      console.error('업로드 중 오류 발생:', error);
+      setUploadStatus('error');
+      setUploading(false);
+    }
+  };
+
+  return (
+    <>
+      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+        <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
+          파일 업로드
+        </h2>
+        <div
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+          className={`p-8 border-2 border-dashed rounded-lg text-center cursor-pointer transition-colors duration-200 ease-in-out ${
+            isDragging
+              ? 'border-blue-400 bg-blue-50'
+              : 'border-gray-300 hover:border-gray-400'
+          }`}
+        >
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileInput}
+            accept="image/*,.pdf"
+            className="hidden"
+          />
+          <p className="text-gray-500">
+            파일을 이곳에 드래그하거나 클릭하여 선택하세요
+            <br />
+            <span className="text-sm">(최대 5MB, 이미지 또는 PDF)</span>
+          </p>
+          <Upload className="mx-auto mt-4 text-gray-400" size={32} />
+        </div>
+
+        {file && (
+          <>
+            <SelectedFile fileName={file.name} removeFile={removeFile} />
+            <Button
+              onClick={uploadFiles}
+              className="w-full mt-4 px-4 py-2 text-md bg-adaptorsYellow text-white rounded hover:bg-black transition-colors duration-200"
+            >
+              분석하기
+            </Button>
+          </>
+        )}
+
+        {uploading && <ProgressBar uploadProgress={uploadProgress} />}
+
+        <Status uploadStatus={uploadStatus} />
+      </div>
+      {feedback && <FeedbackResult feedback={feedback} />}
+    </>
+  );
+}
