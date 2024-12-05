@@ -17,6 +17,7 @@ declare module 'next-auth' {
       uuid: string; // accessToken 추가
       role: string;
       profileImageUrl: string;
+      nickName: string;
     } & DefaultSession['user'];
   }
 }
