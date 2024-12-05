@@ -21,7 +21,6 @@ export function SearchDialog({
   openCloser: () => void;
 }) {
   const [name, setSearchName] = useState('');
-  console.log(name, 'test test searchName');
   return (
     <Dialog open={isOpen} onOpenChange={openCloser}>
       <DialogContent className="md:max-w-[800px] flex flex-col">
@@ -35,7 +34,7 @@ export function SearchDialog({
             id="Search"
             type="text"
             placeholder="Search here...."
-            onChange={(text) => setSearchName(text.target.value.trim())}
+            // onChange={(text) => setSearchName(text.target.value.trim())}
             className="text-2xl"
           ></Input>
         </div>
