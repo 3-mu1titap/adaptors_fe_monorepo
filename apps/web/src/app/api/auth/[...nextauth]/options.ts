@@ -1,6 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
+import { getProfileIamge } from 'src/actions/profile/getProfileData';
 
 // Kakao 프로필 타입 정의
 interface KakaoProfile {
@@ -102,7 +103,9 @@ export const options: NextAuthOptions = {
         token.refreshToken = user.refreshToken;
         token.uuid = user.uuid;
         token.role = user.role;
+        token.role = user.role;
       }
+
       // if (token) {
       //   const payload = JSON.parse(atob(token.accessToken.split('.')[1]));
       //   const expiredDate = new Date(payload.exp * 1000);
@@ -128,6 +131,9 @@ export const options: NextAuthOptions = {
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
         session.user.role = token.role;
+        const profileData = await getProfileIamge(token.uuid);
+        session.user.profileImageUrl = profileData.profileImageUrl;
+        session.user.nickName = profileData.nickName;
       }
       // if (token.error) {
       //   session.error = token.error; // 에러 상태를 세션으로 전달

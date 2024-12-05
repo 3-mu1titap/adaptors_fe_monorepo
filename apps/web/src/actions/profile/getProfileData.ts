@@ -18,6 +18,8 @@ export const getProfileIamge = async (
         'Content-Type': 'application/json',
         'userUuid': uuid,
       },
+      next: { tags: ['profileUpdate'] },
+      cache: 'force-cache',
     }
   );
 
