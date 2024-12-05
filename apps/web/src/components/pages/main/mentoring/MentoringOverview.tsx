@@ -5,7 +5,6 @@ export default async function MentoringOverview({
 }: {
   MentoringInfoData: MentoringDataType;
 }) {
-  console.log(MentoringInfoData);
   return (
     <div>
       <h1 className="text-2xl font-bold py-5">{MentoringInfoData?.name}</h1>
