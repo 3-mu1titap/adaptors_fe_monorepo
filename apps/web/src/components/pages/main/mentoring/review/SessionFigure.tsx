@@ -10,9 +10,11 @@ import ValueUnit from '@components/ui/Text/ValueUnit';
 export default function SessionFigure({
   session,
   mentoringName,
+  mentorUuid,
 }: {
   session: MentoringSession;
   mentoringName: string;
+  mentorUuid: string;
 }) {
   const formatTime = (time: SessionTime | string) => {
     if (typeof time === 'string') {
@@ -64,6 +66,7 @@ export default function SessionFigure({
           sessionUuid={session.sessionUuid}
           mentoringName={mentoringName || ''}
           deadlineDate={session.deadlineDate}
+          mentorUuid={mentorUuid}
         />
       </div>
     </figure>
