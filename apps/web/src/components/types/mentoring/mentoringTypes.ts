@@ -78,12 +78,12 @@ export interface Category {
 export interface SessionRequestType {
   sessionUuid: string;
   mentoringName: string;
-  mentorUuid: string;
+  // mentorUuid: string;
 }
 export interface SessionCancelType {
   sessionUuid: string;
   deadlineDate: string;
-  mentorUuid: string;
+  // mentorUuid: string;
 }
 
 export interface SearchMentoringListType {
