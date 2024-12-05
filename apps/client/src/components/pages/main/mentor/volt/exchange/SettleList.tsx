@@ -1,3 +1,4 @@
+import { exchangeDataType } from '@repo/client/components/types/main/mypage/myPageTypes';
 import { Button } from '@repo/ui/components/ui/button';
 import {
   Card,
@@ -6,20 +7,10 @@ import {
   CardTitle,
 } from '@repo/ui/components/ui/card';
 
-interface ExchangeRecord {
-  id: number;
-  date: string;
-  volt: number;
-  status: 'processing' | 'complete';
-  money: number;
-}
-
 export default function SettleList({
   filteredData,
-  handleCancel,
 }: {
-  filteredData: ExchangeRecord[];
-  handleCancel: (id: number) => void;
+  filteredData: exchangeDataType[];
 }) {
   return (
     <Card>
@@ -40,19 +31,11 @@ export default function SettleList({
               <div className="text-right">
                 <p>{record.money.toLocaleString()}원</p>
                 <p
-                  className={`text-sm ${record.status === 'complete' ? 'text-green-500' : 'text-yellow-500'}`}
+                  className={`text-sm ${record.status === 'COMPLETED' ? 'text-green-500' : 'text-yellow-500'}`}
                 >
-                  {record.status === 'complete' ? '완료' : '처리 중'}
+                  {record.status === 'COMPLETED' ? '완료' : '처리 중'}
                 </p>
               </div>
-              {record.status === 'processing' && (
-                <Button
-                  variant="destructive"
-                  onClick={() => handleCancel(record.id)}
-                >
-                  취소
-                </Button>
-              )}
             </li>
           ))}
         </ul>

@@ -12,6 +12,8 @@ import {
   ScheduleDataType,
   UserScheduleDataType,
 } from '@repo/client/components/types/main/schedule/scheduleTypes';
+import { useRouter } from 'next/navigation';
+import { GetMentoringUuid } from '@repo/client/actions/schedule/scheduleAction';
 
 interface CalendarDataType {
   id: string;
@@ -25,6 +27,8 @@ const CalendarContent = ({
 }: {
   scheduleList: UserScheduleDataType;
 }) => {
+  const router = useRouter();
+
   useEffect(() => {
     if (scheduleList && scheduleList.scheduleLists.length > 0) {
       const newEvents = scheduleList.scheduleLists.map((schedule) => ({
@@ -70,13 +74,13 @@ const CalendarContent = ({
   };
 
   const editEvent = (data: any = null) => {
-    let newParams = { ...defaultParams };
-    if (data) {
+    console.log('111111111', data);
+    if (data.event.id) {
+      console.log(data.event);
       const obj = data.event;
-      console.log('-----', obj);
-      newParams = {
-        mentoringSessionUuid: obj.mentoringSessionUuid || 0,
-        mentoringName: obj.mentoringName || '',
+      const newParams = {
+        mentoringSessionUuid: obj.id || 0,
+        mentoringName: obj.title || '',
         startDate: obj.startDate || now,
         startTime: obj.start,
         endDate: obj.endDate || now,
@@ -87,62 +91,45 @@ const CalendarContent = ({
       };
       setMinStartDate(dateFormat(now));
       setMinEndDate(dateFormat(obj.start));
+      setParams(newParams);
+      setIsAddEventModal(true);
     } else {
       setMinStartDate(dateFormat(now));
       setMinEndDate(dateFormat(now));
+      Swal.fire({
+        toast: true,
+        icon: 'info',
+        title: '등록된 스케쥴이 없습니다.',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: '멘토링 등록하러가기',
+        denyButtonText: '취소',
+        customClass: {
+          title: 'text-lg font-semibold text-gray-800 text-center',
+          confirmButton:
+            'col-span-3 bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500 !text-md',
+          denyButton:
+            'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300 !text-md',
+          actions: '!grid !grid-cols-4 !justify-center',
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push('/mentor/mentoring/add');
+        } else if (result.isDenied) {
+          showMessage('취소하였습니다.', 'info');
+        }
+      });
     }
-    setParams(newParams);
-    setIsAddEventModal(true);
   };
 
   const editDate = (data: { start: Date; end: Date }) => {
     editEvent({ event: { start: data.start, end: data.end } });
   };
 
-  const saveEvent = () => {
-    if (!params.mentoringName || !params.startDate || !params.endDate) {
-      showMessage('비어있는 곳을 채워주세요', 'error');
-      return;
-    }
-
-    let updatedEvents = [...events];
-    if (params.mentoringSessionUuid) {
-      updatedEvents = updatedEvents.map((event) =>
-        event.id === params.mentoringSessionUuid
-          ? { ...event, ...params }
-          : event
-      );
-    } else {
-      // const maxId = Math.max(0, ...events.map((e) => e.mentoringSessionUuid));
-      // updatedEvents.push({ ...params, mentoringSessionUuid: maxId + 1 });
-    }
-
-    setEvents(updatedEvents);
-    Swal.fire({
-      toast: true,
-      icon: 'question',
-      title: '스케쥴을 생성하시겠습니까?',
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: '저장',
-      denyButtonText: '취소',
-      customClass: {
-        title: 'text-lg font-semibold text-gray-800 text-center',
-        confirmButton:
-          'bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500',
-        denyButton:
-          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
-        actions: '!grid !grid-cols-2 !justify-center',
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        showMessage('스케쥴이 생성되었습니다.');
-      } else if (result.isDenied) {
-        showMessage('스케쥴 생성을 취소하였습니다.', 'info');
-      }
-    });
-
+  const goMentoring = async () => {
+    const mentoringUuid = await GetMentoringUuid(params.mentoringSessionUuid);
     setIsAddEventModal(false);
+    router.push(`/mentor/mentoring/${mentoringUuid}`);
   };
 
   const startDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -354,7 +341,7 @@ const CalendarContent = ({
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-                  {params.mentoringSessionUuid ? '일정 변경' : '일정 추가'}
+                  {params.mentoringSessionUuid ? '일정 확인' : '일정 추가'}
                 </h3>
                 <form className="space-y-4">
                   <div>
@@ -366,11 +353,12 @@ const CalendarContent = ({
                       value={params.mentoringName}
                       onChange={changeValue}
                       required
+                      disabled
                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-between gap-4">
-                    <div className="w-full sm:w-1/2">
+                  <div className="flex flex-col sm:flex-row justify-between gap-4 text-lg">
+                    <div className="w-full sm:w-5/12">
                       <input
                         id="start"
                         type="datetime-local"
@@ -380,10 +368,12 @@ const CalendarContent = ({
                         min={minStartDate}
                         onChange={startDateChange}
                         required
+                        disabled
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                       />
                     </div>
-                    <div className="w-full sm:w-1/2">
+                    <span className="w-full sm:w-2/12">~</span>
+                    <div className="w-full sm:w-5/12">
                       <input
                         id="end"
                         type="datetime-local"
@@ -398,6 +388,7 @@ const CalendarContent = ({
                           })
                         }
                         required
+                        disabled
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                       />
                     </div>
@@ -407,10 +398,10 @@ const CalendarContent = ({
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   type="button"
-                  onClick={saveEvent}
+                  onClick={goMentoring}
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-adaptorsYellow text-base font-medium text-white hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adaptorsBlue sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  {params.mentoringSessionUuid ? '수정' : '추가'}
+                  멘토링 자세히 보기
                 </button>
                 <button
                   type="button"

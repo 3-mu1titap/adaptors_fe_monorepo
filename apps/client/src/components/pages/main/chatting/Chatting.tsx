@@ -19,9 +19,13 @@ import ChatHeader from '@repo/client/components/header/ChatHeader';
 import ChatView from './ChatView';
 import ChatSender from './ChatSender';
 
-const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
-
-function Chatting({ participants }: { participants: participantType[] }) {
+function Chatting({
+  participants,
+  mentoringSessionUuid,
+}: {
+  participants: participantType[];
+  mentoringSessionUuid: string;
+}) {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

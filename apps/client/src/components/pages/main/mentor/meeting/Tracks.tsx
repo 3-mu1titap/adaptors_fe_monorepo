@@ -131,27 +131,18 @@ export default function Tracks({
           onClick={handleToggleScreenSharing}
           variant="outline"
           className="bg-adaptorsBlue text-white text-md"
-          size="meetingroomBtn"
         >
           {isScreenSharing ? '공유 중지' : '화면 공유'}
         </Button>
         <div className="flex flex-row gap-x-2">
-          <Button
-            onClick={toggleMicrophone}
-            variant="outline"
-            size="meetingroomIcon"
-          >
+          <Button onClick={toggleMicrophone} variant="outline">
             {isMicrophoneOn ? (
               <MicOnIcon size="25" />
             ) : (
               <MicOffIcon size="25" />
             )}
           </Button>
-          <Button
-            onClick={toggleCamera}
-            variant="outline"
-            size="meetingroomIcon"
-          >
+          <Button onClick={toggleCamera} variant="outline">
             {isCameraOn ? (
               <VideoOnIcon size="25" />
             ) : (
@@ -159,12 +150,7 @@ export default function Tracks({
             )}
           </Button>
         </div>
-        <Button
-          variant="destructive"
-          size="meetingroomBtn"
-          className="text-md"
-          onClick={leaveRoom}
-        >
+        <Button variant="destructive" className="text-md" onClick={leaveRoom}>
           멘토링 종료
         </Button>
       </div>
