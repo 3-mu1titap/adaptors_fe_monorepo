@@ -18,12 +18,11 @@ export default function SessionFigure({
 }) {
   const formatTime = (time: SessionTime | string) => {
     if (typeof time === 'string') {
-      return time.endsWith(':00') ? time.slice(0, -3) : time; // 뒤에 ":00" 제거
+      return time.endsWith(':00') ? time.slice(0, -3) : time;
     }
 
     return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
-  console.log('session: ', session);
   return (
     <figure
       key={session.sessionUuid}

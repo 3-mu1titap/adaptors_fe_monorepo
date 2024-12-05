@@ -8,7 +8,7 @@ export default function MentoringItem({
   item: SearchMentoringListType;
 }) {
   return (
-    <Link href={`/mentoring/${item.mentoringUuid}`}>
+    <Link href={`/mentoring/${item.mentoringUuid}`} className="w-full">
       <div className="bg-white rounded-xl overflow-hidden mx-2 hover:shadow-md ring-1 hover:ring-4 ring-yellow-400 my-3 transition-all">
         <div className="relative">
           <div className="aspect-video bg-gray-200 py-20" />

@@ -8,13 +8,16 @@ export default async function CategoryAside({
 }) {
   const categorise = await getTopCategoryList();
   return (
-    <aside>
-      <ul className="min-w-32 pt-10">
+    <aside className="lg:fixed lg:left-0 static backdrop-blur-lg max-w-[330px] mx-auto ">
+      <ul className="lg:min-w-36 pt-10 flex lg:block justify-center lg:justify-normal">
         {categorise?.map((category) => (
-          <li className="w-full text-start pl-10 mb-10" key={category.id}>
+          <li
+            className="text-md mobile:text-lg w-full text-center lg:text-start lg:px-10 mb-10"
+            key={category.id}
+          >
             <Link
               href={`/mentoring?category=${category.topCategoryCode}`}
-              className={`${category.topCategoryCode == categoryParam ? `text-extrabold` : ``}`}
+              className={`${category.topCategoryCode == categoryParam ? `text-extrabold p-2 border-b-[1px] border-black` : `text-gray-400`}`}
             >
               {category.topCategoryName}
             </Link>

@@ -42,7 +42,7 @@ export async function GetMentoringByCategory({
     const result = (await res.json()) as commonResType<
       SearchMentoringListType[]
     >;
-    console.log(result.result);
+    // console.log(result.result);
     return result.result;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
