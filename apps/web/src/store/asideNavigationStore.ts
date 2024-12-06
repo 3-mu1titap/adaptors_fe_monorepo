@@ -1,12 +1,11 @@
 import { create } from 'zustand';
+
 export interface asideNavigationStoreType {
-  isNavigation: boolean;
-  setNavigation: () => void;
+  useNavigation: boolean;
+  setUseNavigation: () => void;
 }
 
-export const useNavigationStore = create<asideNavigationStoreType>(
-  (set, get) => ({
-    isNavigation: true,
-    setNavigation: () => set({ isNavigation: !get().isNavigation }),
-  })
-);
+export const useNavigation = create<asideNavigationStoreType>((set, get) => ({
+  useNavigation: true,
+  setUseNavigation: () => set({ useNavigation: !get().useNavigation }),
+}));

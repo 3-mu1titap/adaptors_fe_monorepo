@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
-import { PanelLeft } from 'lucide-react';
+import { PanelLeft, PanelLeftClose } from 'lucide-react';
+import * as React from 'react';
 
 import { Button } from '@repo/ui/components/ui/button';
 import { Input } from '@repo/ui/components/ui/input';
@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@repo/ui/components/ui/tooltip';
-import { useIsMobile } from '@repo/ui/hooks/use-mobile';
+import useIsMobile from '@repo/ui/hooks/use-mobile.tsx';
 import { cn } from '@repo/ui/lib/utils';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state';
@@ -213,13 +213,18 @@ const Sidebar = React.forwardRef<
     }
 
     return (
-      <div
+      <aside
         ref={ref}
-        className="group peer hidden md:block text-sidebar-foreground"
+        className="group peer hidden md:block text-sidebar-foreground bg-white z-[100]"
         data-state={state}
         data-collapsible={state === 'collapsed' ? collapsible : ''}
         data-variant={variant}
         data-side={side}
+        style={
+          {
+            boxShadow: '0 0 10px 10px hsl(var(--sidebar-border))',
+          } as React.CSSProperties
+        }
       >
         {/* This is what handles the sidebar gap on desktop */}
         <div
@@ -253,7 +258,7 @@ const Sidebar = React.forwardRef<
             {children}
           </div>
         </div>
-      </div>
+      </aside>
     );
   }
 );
@@ -269,13 +274,14 @@ const SidebarTrigger = React.forwardRef<
     <Button
       ref={ref}
       data-sidebar="trigger"
-      variant="ghost"
+      variant="adaptors"
       size="icon"
       className={cn(
-        `h-9 w-9 absolute z-10 group hidden md:block`,
-        state === 'expanded'
-          ? 'left-[calc(var(--sidebar-width)_-_2.25rem)]'
-          : '-left-1',
+        'hover:text-white',
+        'transition-all ease-linear duration-200 flex items-center gap-2 p-2 text-sidebar-foreground/70 top-8 w-auto',
+        state === 'collapsed'
+          ? 'left-[-1.6rem] translate-x-4 px-4 hover:pl-6'
+          : 'left-[calc(var(--sidebar-width)-3.5rem)] px-4 hover:left-[calc(var(--sidebar-width)-4rem)]',
         className
       )}
       onClick={(event) => {
@@ -283,8 +289,22 @@ const SidebarTrigger = React.forwardRef<
         toggleSidebar();
       }}
       {...props}
+      style={
+        {
+          boxShadow: '5px 2px 5px 1px hsl(var(--sidebar-border))',
+        } as React.CSSProperties
+      }
     >
-      <PanelLeft className="group-hover:text-adaptorsYellow" />
+      {state === 'collapsed' ? (
+        <>
+          <PanelLeft className="hover:text-white hover:white" />
+        </>
+      ) : (
+        <>
+          <PanelLeftClose className="group-hover:text-adaptorsYellow" />
+          <span>닫기</span>
+        </>
+      )}
     </Button>
   );
 });

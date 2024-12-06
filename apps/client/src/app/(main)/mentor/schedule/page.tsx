@@ -18,9 +18,7 @@ export default async function Page() {
     <main className="w-full">
       <CalendarHeader />
       <section className="w-full h-full">
-        <div className="h-full px-4 mb-6 bg-[#FAFAFE]">
-          <CalendarContent scheduleList={scheduleList} />
-        </div>
+        <CalendarContent scheduleList={scheduleList} />
       </section>
     </main>
   );

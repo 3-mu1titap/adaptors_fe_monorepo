@@ -1,4 +1,3 @@
-import React from 'react';
 import { PaymentApproval } from 'src/actions/payment/paymentActions';
 
 async function page({ searchParams }: { searchParams: { pg_token: string } }) {
@@ -30,3 +29,14 @@ async function page({ searchParams }: { searchParams: { pg_token: string } }) {
   );
 }
 export default page;
+
+// 강사님 작성부분
+// 'use client';
+// import { useSearchParams } from 'next/navigation';
+// import React from 'react';
+// function page() {
+//   const searchParams = useSearchParams();
+//   console.log(searchParams.get('pg_token'));
+//   return <div></div>;
+// }
+// export default page;

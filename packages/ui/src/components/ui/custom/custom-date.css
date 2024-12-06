@@ -1,0 +1,54 @@
+.flip-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 40px;
+  height: 60px;
+  perspective: 600px;
+}
+.upper-card,
+.lower-card {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 1.5;
+  transform-origin: center;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+.upper-card {
+  top: 0;
+  transform: rotateX(0deg);
+}
+.lower-card {
+  bottom: 0;
+  transform: rotateX(-90deg);
+}
+.flip-unit .flip .upper-card {
+  animation: flipUp 0.5s forwards;
+}
+.flip-unit .flip .lower-card {
+  animation: flipDown 0.5s forwards;
+}
+@keyframes flipUp {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(90deg);
+  }
+}
+@keyframes flipDown {
+  0% {
+    transform: rotateX(-90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
