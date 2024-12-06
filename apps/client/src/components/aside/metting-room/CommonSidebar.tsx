@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import { CustomTooltip } from '@repo/ui/components/ui/custom/CustomToolTip';
 import {
   Sidebar,
   SidebarContent,
@@ -13,15 +11,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@repo/ui/components/ui/sidebar';
-import { SidebarType } from '../../types/navigation/navigationTypes';
+import {
+  Calendar,
+  LayoutDashboard,
+  MessageSquareHeartIcon,
+  Power,
+  Presentation,
+  UserPenIcon,
+  Zap,
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 import AdaptorsLogoIcon from '../../assets/icons/AdaptorsLogo';
-import OverviewIcon from '../../assets/icons/Overview';
-import CalendarIcon from '../../assets/icons/Calendar';
-import VoltIcon from '../../assets/icons/Volt';
-import MeetingIcon from '../../assets/icons/Meeting';
-import MessagesIcon from '../../assets/icons/Messages';
-import MyCourseIcon from '../../assets/icons/MyCourse';
-import LogOutIcon from '../../assets/icons/LogOut';
+import { SidebarType } from '../../types/navigation/navigationTypes';
 
 function CommonSidebar() {
   const pathname = usePathname();
@@ -32,11 +35,14 @@ function CommonSidebar() {
       return [
         {
           icon: (
-            <OverviewIcon
+            <LayoutDashboard
               color={
                 pathname === `/mentor` ||
                 pathname.startsWith(`/mentor/mentoring`)
+                  ? '#F6D84C'
+                  : '#ACACAC'
               }
+              size={20}
             />
           ),
           label: 'Home',
@@ -46,38 +52,78 @@ function CommonSidebar() {
         },
         {
           icon: (
-            <CalendarIcon color={pathname.startsWith(`/mentor/schedule`)} />
+            <Calendar
+              color={
+                pathname.startsWith(`/mentor/schedule`) ? '#F6D84C' : '#ACACAC'
+              }
+              size={20}
+            />
           ),
           label: 'Schedule',
           isActive: pathname.startsWith(`/mentor/schedule`),
           href: `/mentor/schedule`,
         },
         {
-          icon: <VoltIcon color={pathname.startsWith(`/mentor/volt`)} />,
+          icon: (
+            <Zap
+              color={
+                pathname.startsWith(`/mentor/volt`) ? '#F6D84C' : '#ACACAC'
+              }
+              size={20}
+            />
+          ),
           label: 'Volt',
           isActive: pathname.startsWith(`/mentor/volt`),
           href: `/mentor/volt`,
         },
         {
-          icon: <MeetingIcon color={pathname.startsWith(`/mentor/meeting`)} />,
+          icon: (
+            <Presentation
+              color={
+                pathname.startsWith(`/mentor/meeting`) ? '#F6D84C' : '#ACACAC'
+              }
+              size={20}
+            />
+          ),
           label: 'Meeting',
           isActive: pathname.startsWith(`/mentor/meeting`),
           href: `/mentor/meeting`,
         },
         {
-          icon: <MessagesIcon color={pathname.startsWith(`/mentor/message`)} />,
+          icon: (
+            <MessageSquareHeartIcon
+              color={
+                pathname.startsWith(`/mentor/message`) ? '#F6D84C' : '#ACACAC'
+              }
+              size={20}
+            />
+          ),
           label: 'Message',
           isActive: pathname.startsWith(`/mentor/message`),
           href: `/mentor/message`,
         },
         {
-          icon: <MyCourseIcon color={pathname.startsWith(`/mentor/mypage`)} />,
+          icon: (
+            <UserPenIcon
+              color={
+                pathname.startsWith(`/mentor/mycourse`) ? '#F6D84C' : '#ACACAC'
+              }
+              size={20}
+            />
+          ),
           label: 'My page',
           isActive: pathname.startsWith(`/mentor/mypage`),
           href: `/mentor/mypage`,
         },
         {
-          icon: <LogOutIcon color={pathname.startsWith(`/mentor/logout`)} />,
+          icon: (
+            <Power
+              color={
+                pathname.startsWith(`/mentor/logout`) ? '#F6D84C' : '#ACACAC'
+              }
+              size={20}
+            />
+          ),
           label: 'Log Out',
           isActive: pathname.startsWith(`/mentor/logout`),
           href: '#',
@@ -92,7 +138,9 @@ function CommonSidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <AdaptorsLogoIcon className="w-[256px] mt-10 p-6 flex items-center gap-2" />
+            <CustomTooltip text="Adaptors Logo">
+              <AdaptorsLogoIcon className="w-[180px] mt-0 p-6 flex items-center gap-2" />
+            </CustomTooltip>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -100,30 +148,37 @@ function CommonSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem
-                  className={`cursor-pointer items-center border-l-8 border-transparent hover:border-adaptorsYellow py-4 px-2 ${
-                    item.isActive
-                      ? 'border-adaptorsYellow'
-                      : 'border-transparent'
-                  }`}
-                  key={item.label}
-                >
-                  <SidebarMenuButton asChild>
-                    <Link className="flex items-center gap-4" href={item.href}>
-                      <span className="flex-shrink-0 w-7 h-7">{item.icon}</span>
-                      <span
-                        className={`whitespace-nowrap text-xl ${
-                          item.isActive
-                            ? 'text-adaptorsYellow'
-                            : 'text-adaptorsGray'
-                        }`}
+              {items.map((item, index) => (
+                <CustomTooltip key={index} text={item.label}>
+                  <SidebarMenuItem
+                    className={`w-full cursor-pointer items-center border-l-4 border-transparent hover:border-slate-600 hover:bg-slate-50 py-4 pl-5  transition-all ${
+                      item.isActive
+                        ? 'border-adaptorsYellow'
+                        : 'border-transparent'
+                    }`}
+                    key={item.label}
+                  >
+                    <SidebarMenuButton asChild>
+                      <Link
+                        className="flex items-center justify-start gap-4"
+                        href={item.href}
                       >
-                        {item.label}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                        <span className="flex-shrink-0 w-5 h-5 overflow-hidden object-cover">
+                          {item.icon}
+                        </span>
+                        <span
+                          className={`whitespace-nowrap text-md ${
+                            item.isActive
+                              ? 'text-adaptorsYellow'
+                              : 'text-adaptorsGray'
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </CustomTooltip>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

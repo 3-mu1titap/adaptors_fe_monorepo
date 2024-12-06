@@ -7,11 +7,11 @@ function Mentoring({
   mentoringListData: MentoringDataType[];
 }) {
   return (
-    <main className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+    <section className="px-10 py-5">
       {mentoringListData?.map((mentoring: MentoringDataType, index: number) => (
         <MentoringListCard key={index} mentoring={mentoring} />
       ))}
-    </main>
+    </section>
   );
 }
 

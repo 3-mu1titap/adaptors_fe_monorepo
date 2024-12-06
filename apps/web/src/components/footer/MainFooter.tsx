@@ -3,91 +3,93 @@ import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
 export default function MeinFooter() {
   return (
     <footer className="border-t bg-[#FFF9E7] px-0 md:px-10 ">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-3 lg:grid-cols-6 gap-8">
+      <div className="container mx-auto px-4 sm:px-0 py-12">
+        <div className="md:flex lg:justify-between gap-4 space-y-3 ">
           {/* Newsletter Section */}
-          <div className="col-span-3 space-y-4">
+          <section className=" space-y-4 w-full">
             <div className="flex items-center">
               <AdaptorsLogoIcon className="h-[3rem] text-[#FFD84D] opacity-80" />
             </div>
             <p className="text-sm text-gray-600">
-              멘토링이 필요한 모든 사람을 위한 플랫폼! 어뎁터!!! <br />
-              전문 멘토와 멘티를 연결해 언제 어디서나 온라인으로 멘토링 서비스를
-              받을 수 있습니다. <br />
-              지금 바로 가입하고 나만의 멘토링을 시작하세요!
+              멘토를 만나는 새로운 이름, Adaptors <br />
+              멘토링을 더욱 간편하게 진행하기 위한 다양한 서비스를 지원합니다
+              <br />
+              지금 바로 가입하고 나만의 멘토링을 시작하세요! Adaptors는 모든
+              멘티의 성장을 응원합니다✨
             </p>
-          </div>
+          </section>
 
-          {/* Contact Section */}
-          <div className="space-y-4 col-span-3 md:col-span-1">
-            <h3 className="font-semibold">Contact Us</h3>
-            <div className="space-y-2 text-sm text-gray-600">
-              <p>556 Oxford Street Victoria</p>
-              <p>Book New York</p>
-              <p>+165 955 2554</p>
-              <p>+756 6567 478</p>
-              <p>contact@example.com</p>
+          <section className="md:flex gap-10 w-full space-y-3 md:space-y-0">
+            {/* Contact Section */}
+            <div className="space-y-4 col-span-3 md:col-span-1">
+              <h3 className="font-semibold">Contact Us</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>SPHAROS-5TH</li>
+                <li>Team Multitap</li>
+                <li>부산시 해운대구 APEC로 17</li>
+                <li>adaptors@adaptors.com</li>
+              </ul>
             </div>
-          </div>
-
-          {/* Explore Courses */}
-          <div className="space-y-4 col-span-3 md:col-span-1">
-            <h3 className="font-semibold">Explore Courses</h3>
-            <div className="space-y-2 text-sm">
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Microsoft develop
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Motion art
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Management
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Business
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Art science
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Games
-              </a>
+            {/* Explore Courses */}
+            <div className="space-y-4 col-span-3 md:col-span-1">
+              <h3 className="font-semibold inline-block">Explore</h3>
+              <div className="space-y-2 text-sm">
+                <a href="/" className="block text-gray-600 hover:text-gray-900">
+                  Home
+                </a>
+                <a
+                  href="/Mentoring"
+                  className="block text-gray-600 hover:text-gray-900"
+                >
+                  Mentoring
+                </a>
+                <a
+                  href="/mypage"
+                  className="block text-gray-600 hover:text-gray-900"
+                >
+                  Business
+                </a>
+                <a
+                  href="/mypage/volt"
+                  className="block text-gray-600 hover:text-gray-900"
+                >
+                  Volt
+                </a>
+                <a
+                  href="http://localhost:3001"
+                  className="block text-gray-600 hover:text-gray-900"
+                >
+                  Client
+                </a>
+              </div>
             </div>
-          </div>
-
-          {/* Use Full Links */}
-          <div className="space-y-4 col-span-3 md:col-span-1">
-            <h3 className="font-semibold">Use Full Links</h3>
-            <div className="space-y-2 text-sm">
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                About Us
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Upcoming Events
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Faq Questions
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Privacy Policy
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Gallery
-              </a>
-              <a href="#" className="block text-gray-600 hover:text-gray-900">
-                Contact us
-              </a>
+            {/* Use Full Links */}
+            <div className="space-y-4">
+              <h3 className="font-semibold">Developer</h3>
+              <div className="text-sm flex gap-8 items-start">
+                <ul className="min-w-20 space-y-2 ">
+                  <li className="text-gray-600">Kang Subin</li>
+                  <li className="text-gray-600">Kim Yejin</li>
+                  <li className="text-gray-600">Kim SeongTae</li>
+                  <li className="text-gray-600">Kim Daehee</li>
+                  <li className="text-gray-600">Baek Seungyeop</li>
+                </ul>
+                <ul className="min-w-20 space-y-2 ">
+                  <li className="text-gray-600">Jeong Hunseock</li>
+                  <li className="text-gray-600">Huh Jnghyun</li>
+                  <li className="text-gray-600">Oh Deagwan</li>
+                  <li className="text-gray-600">Seol Chanwoo</li>
+                </ul>
+              </div>
             </div>
-          </div>
+          </section>
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t text-sm text-gray-600">
-          <p>
-            Copyright © 2024. All Rights Reserved | MultiTap & TheUNIONGraphix
-          </p>
-        </div>
       </div>
+      <p className="py-6 pl-4 border-t text-sm text-gray-600">
+        Copyright © 2024. All Rights Reserved | MultiTap & TheUNIONGraphix
+      </p>
     </footer>
   );
 }

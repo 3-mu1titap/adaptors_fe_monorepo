@@ -1,7 +1,7 @@
 import JoinFreeButton from '@components/ui/Button/JoinFreeButton';
+import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
 import { MenuIcon } from 'lucide-react';
 import { useSession } from 'src/app/context/SessionContext';
-import UserProfile from './UserProfile';
 
 function MainHeaderRightMenu({ openSideBar }: { openSideBar: () => void }) {
   const session = useSession();

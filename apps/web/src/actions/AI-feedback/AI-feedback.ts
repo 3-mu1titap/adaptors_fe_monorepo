@@ -12,7 +12,7 @@ export const requestAIFeedback_coverletter = async ({
 }): Promise<any> => {
   'use server';
   const response = await fetch(
-    `http://10.10.10.199:8080/api/v1/ai-feedback/text?industryType=${industryType}&documentType=RESUME`,
+    `${process.env.NEXT_PUBLIC_AI_FEEDBACK}/text?industryType=${industryType}&documentType=RESUME`,
     {
       method: 'POST',
       headers: {
@@ -58,14 +58,11 @@ export const requestAIFeedback_pdf = async ({
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minutes timeout
   try {
-    const response = await fetch(
-      `http://10.10.10.199:8080/api/v1/ai-feedback/pdf`,
-      {
-        method: 'POST',
-        body: formData,
-        signal: controller.signal,
-      }
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AI_FEEDBACK}/pdf`, {
+      method: 'POST',
+      body: formData,
+      signal: controller.signal,
+    });
 
     if (!response.ok) {
       const errorData = await response.json();

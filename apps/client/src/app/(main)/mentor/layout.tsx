@@ -1,18 +1,14 @@
 import React from 'react';
-import {
-  SidebarProvider,
-  SidebarTrigger,
-} from '@repo/ui/components/ui/sidebar';
-import CommonSidebar from '@repo/client/components/aside/metting-room/CommonSidebar';
+
+import MentoringHeader from '@repo/client/components/header/MentoringHeader';
 
 export default function layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <SidebarProvider>
-      <CommonSidebar />
-      <SidebarTrigger />
+    <main className="w-full relative">
+      <MentoringHeader />
       {children}
-    </SidebarProvider>
+    </main>
   );
 }
