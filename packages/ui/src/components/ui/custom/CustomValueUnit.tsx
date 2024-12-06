@@ -1,4 +1,5 @@
 import { formatCount } from '@repo/ui/lib/utils';
+
 export default function CustomValueUnit({
   value,
   unit,
@@ -11,11 +12,9 @@ export default function CustomValueUnit({
   unitSize?: string;
 }) {
   return (
-    <span>
+    <span className=" hidden lg:!block">
       <p className={`font-extrabold ${valueSize}`}>{formatCount(value)}</p>
-      <p
-        className={`text-md hidden sm:block text-[#727272] w-full text-center ${unitSize}`}
-      >
+      <p className={`text-md text-[#727272] w-full text-center ${unitSize}`}>
         {unit}
       </p>
     </span>
