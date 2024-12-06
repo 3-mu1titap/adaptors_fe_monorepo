@@ -1,5 +1,5 @@
 import CustomFitImage from './CustomFitImage';
-import { CustomTooltip } from './CustomTooltip';
+import { CustomToolTip } from './CustomToolTip';
 import CustomLikeButton from './CustomLikeButton';
 import CustomMentorProfilePhoto from './CustomMentorProfilePhoto';
 import CustomNowDate from './CustomNowDate';
@@ -13,7 +13,7 @@ import UserProfile from './UserProfile';
 
 export {
   CustomFitImage,
-  CustomTooltip,
+  CustomToolTip,
   CustomLikeButton,
   CustomMentorProfilePhoto,
   CustomNowDate,

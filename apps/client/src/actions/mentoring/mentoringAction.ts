@@ -3,7 +3,6 @@
 import {
   HashtagDataType,
   MentoringAddFormType,
-  MentoringDataType,
   MentoringSessionDataType,
   MiddleCategoryDataType,
   SessionTimeDataType,
@@ -12,6 +11,7 @@ import {
 } from '@repo/client/components/types/main/mentor/mentoringTypes';
 import { commonResType } from '@repo/client/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
+import { MentoringDataType } from '@repo/ui/types/CommonType.ts';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 

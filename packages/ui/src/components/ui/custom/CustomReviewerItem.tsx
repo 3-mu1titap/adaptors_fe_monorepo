@@ -1,8 +1,7 @@
+import { SessionUser } from '@repo/ui/types/CommonType.ts';
 import CustomValueUnit from './CustomValueUnit.tsx';
 import UserCount from './UserCount.tsx';
 import UserProfile from './UserProfile.tsx';
-
-import { SessionUser } from '@repo/ui/types/CommonType';
 
 function CustomReviewerItem({
   initialUserData,

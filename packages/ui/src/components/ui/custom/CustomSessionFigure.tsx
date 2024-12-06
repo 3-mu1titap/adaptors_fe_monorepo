@@ -1,9 +1,9 @@
-import type { MentoringSession, SessionTime } from '@repo/ui/types/CommonType';
 import { CircleDashed } from 'lucide-react';
 import CustomValueUnit from './CustomValueUnit';
 import { Button } from '../button';
 import CustomReviewerItem from './CustomReviewerItem';
-import { CustomTooltip } from './CustomTooltip';
+import { CustomToolTip } from './CustomToolTip';
+import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType';
 
 export default function CustomSessionFigure({
   session,
@@ -22,7 +22,7 @@ export default function CustomSessionFigure({
   console.log('session: ', session);
 
   return (
-    <CustomTooltip text={mentoringName}>
+    <CustomToolTip text={mentoringName}>
       <figure
         key={session.sessionUuid}
         className="flex flex-row items-center justify-between px-4 sm:px-8 bg-white ring-adaptorsYellow py-4 rounded-lg shadow-sm w-full hover:ring-2 hover:ring-adaptorsYello ring-0 transition-all hover:drop-shadow-lg"
@@ -53,6 +53,6 @@ export default function CustomSessionFigure({
           <Button className="bg-adaptorsYellow">참가하기</Button>
         </div>
       </figure>
-    </CustomTooltip>
+    </CustomToolTip>
   );
 }

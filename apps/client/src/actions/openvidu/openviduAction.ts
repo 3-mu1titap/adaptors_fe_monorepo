@@ -1,7 +1,7 @@
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 async function getSession(sessionId: string) {
-  const response = await fetch(`https://adaptors.store:5555/api/sessions`, {
+  const response = await fetch(`http://43.200.249.170:4443/api/sessions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -11,6 +11,7 @@ async function getSession(sessionId: string) {
     }),
   });
 
+  console.log(response);
   if (!response.ok) {
     throw new Error('Failed to fetch session');
   }
@@ -21,7 +22,7 @@ async function getSession(sessionId: string) {
 
 async function createToken(sessionId: string) {
   const response = await fetch(
-    `https://adaptors.store:5555/api/sessions/${sessionId}/connections`,
+    `https://adaptors.store:4443/api/sessions/${sessionId}/connections`,
     {
       method: 'POST',
       headers: {
