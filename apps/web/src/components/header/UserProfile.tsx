@@ -1,4 +1,4 @@
-import { CustomTooltip } from '@repo/ui/components/ui/custom/CustomToolTip';
+import { CustomToolTip } from '@repo/ui/components/ui/custom/CustomToolTip';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getMyProfileIamge } from 'src/actions/profile/getProfileData';
@@ -17,7 +17,7 @@ function UserProfile({ size }: { size?: number }) {
     fetchProfileImage(); // 비동기 함수 호출
   }, []);
   return (
-    <CustomTooltip text={'profile'}>
+    <CustomToolTip text={'profile'}>
       <div
         className="rounded-full bg-gray-400 overflow-hidden ring-1 drop-shadow-md cursor-pointer"
         style={{
@@ -33,7 +33,7 @@ function UserProfile({ size }: { size?: number }) {
           priority
         />
       </div>
-    </CustomTooltip>
+    </CustomToolTip>
   );
 }
 export default UserProfile;

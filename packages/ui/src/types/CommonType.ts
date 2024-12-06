@@ -58,6 +58,7 @@ export interface MentoringDataType {
   mentoringUuid: string;
   name: string;
   detail: string;
+  description: string;
   mentorUuid: string;
   thumbnailUrl: string;
   isReusable: boolean;

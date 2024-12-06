@@ -1,9 +1,7 @@
-import {
-  MentoringDataType,
-  MentoringSessionDataType,
-} from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
 import MentoringInfoCard from '../session/MentoringInfoCard';
 import MentoringSessionList from '../session/MentoringSessionList';
+import { MentoringDataType } from '@repo/ui/types/CommonType.js';
 
 export default function MentoringContent({
   mentoringInfo,
@@ -19,7 +17,7 @@ export default function MentoringContent({
         description={mentoringInfo.description}
         detail={mentoringInfo.detail}
         thumbnailUrl={mentoringInfo.thumbnailUrl}
-        mentoringCategoryList={mentoringInfo.mentoringCategoryList}
+        mentoringCategoryList={mentoringInfo.categoryList}
       />
       {mentoringSessionData?.length === 0 ? (
         <p>현재 등록된 멘토링 세션이 없습니다.</p>

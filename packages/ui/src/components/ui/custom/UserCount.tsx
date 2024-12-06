@@ -1,4 +1,4 @@
-import { CustomTooltip } from './CustomTooltip';
+import { CustomToolTip } from './CustomToolTip';
 function UserCount({
   size,
   className,
@@ -11,7 +11,7 @@ function UserCount({
   const defaultSize = size || 40;
   const defaultCount = count || 0;
   return (
-    <CustomTooltip text={'profile'}>
+    <CustomToolTip text={'profile'}>
       <div
         className={`rounded-full bg-blue-200 overflow-hidden cursor-pointer flex justify-center items-center text-sm text-blue-700 font-extrabold ${className}`}
         style={{
@@ -21,7 +21,7 @@ function UserCount({
       >
         +{defaultCount}
       </div>
-    </CustomTooltip>
+    </CustomToolTip>
   );
 }
 export default UserCount;

@@ -5,14 +5,13 @@ import SelectPeriod from './exchange/SelectPeriod';
 import TotalExchange from './exchange/TotalExchange';
 import SettleList from './exchange/SettleList';
 import { GetSettleList } from '@repo/client/actions/volt/voltAction';
-import {
-  dateRange,
-  exchangeDataType,
-} from '@repo/client/components/types/main/mypage/myPageTypes';
+import { exchangeDataType } from '@repo/client/components/types/main/mypage/myPageTypes';
+import { DateRange } from 'react-day-picker'; // 동일한 모듈에서 가져오기
+import { formatDate } from '@repo/client/components/utils/dateUtil';
 
 export default function ExchangeHistory() {
   const [period, setPeriod] = useState<string>('오늘');
-  const [dateRange, setDateRange] = useState<dateRange>({
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: new Date(),
     to: new Date(),
   });
@@ -53,16 +52,22 @@ export default function ExchangeHistory() {
             endDate = today.toISOString().split('T')[0].split('-').join('');
             break;
           case '기간 선택':
-            startDate = dateRange.from
-              .toISOString()
-              .split('T')[0]
-              .split('-')
-              .join('');
-            endDate = dateRange.to
-              .toISOString()
-              .split('T')[0]
-              .split('-')
-              .join('');
+            if (dateRange.from && dateRange.to) {
+              startDate = dateRange.from
+                .toISOString()
+                .split('T')[0]
+                .split('-')
+                .join('');
+
+              endDate = dateRange.to
+                .toISOString()
+                .split('T')[0]
+                .split('-')
+                .join('');
+            } else {
+              startDate = formatDate('day', new Date());
+              endDate = formatDate('day', new Date());
+            }
             break;
           default:
             return;
@@ -92,7 +97,7 @@ export default function ExchangeHistory() {
     0
   );
 
-  const handleDateRangeSelect = (range: dateRange | undefined) => {
+  const handleDateRangeSelect = (range: DateRange | undefined) => {
     if (range && range.from && range.to) {
       setDateRange({ from: range.from, to: range.to });
     } else {

@@ -20,11 +20,7 @@ import {
 } from '@repo/ui/components/ui/select';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-
-interface DateRange {
-  from: Date;
-  to: Date;
-}
+import { DateRange } from 'react-day-picker';
 
 export default function SelectPeriod({
   period,

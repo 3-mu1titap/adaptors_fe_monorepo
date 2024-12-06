@@ -1,5 +1,5 @@
 import CustomFitImage from './CustomFitImage';
-import { CustomTooltip } from './CustomTooltip';
+import { CustomToolTip } from './CustomToolTip';
 function UserProfile({
   profileImgUrl,
   size,
@@ -16,7 +16,7 @@ function UserProfile({
     profileImgUrl || 'https://picsum.photos/200/200?random=320';
   const defaultName = name || 'adaptor';
   return (
-    <CustomTooltip text={defaultName}>
+    <CustomToolTip text={defaultName}>
       <div
         className={`rounded-full bg-gray-400 overflow-hidden cursor-pointer ${className}`}
         style={{
@@ -30,7 +30,7 @@ function UserProfile({
           className="object-cover"
         />
       </div>
-    </CustomTooltip>
+    </CustomToolTip>
   );
 }
 export default UserProfile;
