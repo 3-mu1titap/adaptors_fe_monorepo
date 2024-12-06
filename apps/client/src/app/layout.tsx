@@ -1,8 +1,13 @@
+import {
+  SidebarProvider,
+  SidebarTrigger,
+} from '@repo/ui/components/ui/sidebar';
+import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { Inter } from 'next/font/google';
+import CommonSidebar from '../components/aside/metting-room/CommonSidebar';
 import { options } from './api/auth/[...nextauth]/options';
-import '@repo/ui/styles.css';
 import AuthContextProvider from './provider/AuthContextProvider';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -42,7 +47,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <AuthContextProvider isAuth={isAuth} role={role}>
-          {children}
+          <SidebarProvider className="overflow-hidden">
+            <CommonSidebar />
+            <SidebarTrigger className="fixed z-[1000]" />
+            {children}
+          </SidebarProvider>
         </AuthContextProvider>
       </body>
     </html>

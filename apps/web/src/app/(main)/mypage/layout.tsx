@@ -1,10 +1,10 @@
-import React from 'react';
 import CommonSidebar from '@components/aside/CommonSiderbar';
 import {
   SidebarProvider,
   SidebarTrigger,
 } from '@repo/ui/components/ui/sidebar';
-function Layout({ children }: { childredn: React.ReactNode }) {
+import React from 'react';
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-full">
       {/* <Sidebar /> */}

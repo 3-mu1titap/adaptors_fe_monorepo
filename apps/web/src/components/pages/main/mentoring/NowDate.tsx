@@ -6,7 +6,8 @@ const getCurrentTime = () => {
   const hours = now.getHours();
   const period = hours >= 12 ? 'PM' : 'AM';
   const formattedHours = hours % 12 || 12; // 12-hour format
-  return `${period} ${formattedHours}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const seconds = now.getSeconds();
+  return `${period} ${formattedHours}:${String(now.getMinutes()).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 };
 
 const NowDate = () => {
@@ -18,7 +19,7 @@ const NowDate = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(getCurrentTime());
-    }, 60000); // 1분마다 업데이트
+    }, 1000); //1초마다 업데이트
 
     return () => clearInterval(interval); // 컴포넌트가 언마운트될 때 interval 정리
   }, []);
