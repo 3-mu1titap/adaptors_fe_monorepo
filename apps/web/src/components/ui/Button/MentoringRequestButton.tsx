@@ -52,14 +52,14 @@ export default function MentoringRequestButton({
         SessionCancel({
           sessionUuid: sessionUuid,
           deadlineDate: deadlineDate,
-          mentorUuid: mentorUuid,
+          // mentorUuid: mentorUuid,
         });
         setIsRegistered((prev) => !prev);
       } else if (result.isConfirmed && !isRegistered) {
         SessionRequest({
           sessionUuid: sessionUuid,
           mentoringName: mentoringName,
-          mentorUuid: mentorUuid,
+          // mentorUuid: mentorUuid,
         });
         setIsRegistered((prev) => !prev);
       }

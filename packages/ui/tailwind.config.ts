@@ -15,6 +15,14 @@ const config: Pick<Config, 'presets' | 'theme' | 'plugins'> = {
       '4xl': '1.75rem',
       '5xl': '2rem',
     },
+    screens: {
+      'mobile': '440px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         adaptorsYellow: '#F6D84C',

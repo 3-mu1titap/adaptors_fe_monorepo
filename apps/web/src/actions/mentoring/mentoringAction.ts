@@ -3,19 +3,16 @@
 import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
-import { SearchMentoringType } from '@components/types/mentor/mentorType';
-import {
-  MentoringDataType,
-  MentoringResult,
-  SessionCancelType,
-  SessionRequestType,
-} from '../../components/types/mentoring/mentoringTypes';
-import { commonResType } from '../../components/types/ResponseTypes';
 import {
   ApiResponse,
+  MentoringDataType,
+  MentoringResult,
   SearchMentoringListType,
+  SessionCancelType,
+  SessionRequestType,
   pageableType,
 } from '../../components/types/mentoring/mentoringTypes';
+import { commonResType } from '../../components/types/ResponseTypes';
 // 멘토링의 정보 및 세션리스트 정보 조회
 export async function GetMentoringSessionList(
   mentoringUuid: string
@@ -74,7 +71,7 @@ export async function SessionRequest(request: SessionRequestType) {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   // const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
-
+  console.log('request: ', request, 'menteeUuid', menteeUuid);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
