@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import initOpenVidu from '@repo/client/components/utils/initOpenvidu';
 import SubCam from './tracks/SubCam';
 
-export default function GameRoom() {
+export default function MentoringCopy() {
   const [session, setSession] = useState(null);
   const [publisher, setPublisher] = useState(null);
   const [subscriberMap, setSubscriberMap] = useState({});

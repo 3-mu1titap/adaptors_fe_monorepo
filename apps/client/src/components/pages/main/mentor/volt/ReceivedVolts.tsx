@@ -69,7 +69,7 @@ export default function ReceivedVolts({
   };
 
   return (
-    <>
+    <section className="w-full px-10 py-5 mt-[5rem]">
       <Card className="mb-6">
         <CardHeader>
           <CardTitle>총 받은 볼트</CardTitle>
@@ -128,6 +128,6 @@ export default function ReceivedVolts({
           </div>
         </CardContent>
       </Card>
-    </>
+    </section>
   );
 }

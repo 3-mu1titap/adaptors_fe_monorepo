@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@repo/ui/components/ui/tooltip';
-import { useIsMobile } from '@repo/ui/hooks/use-mobile.tsx';
+import useIsMobile from '@repo/ui/hooks/use-mobile.tsx';
 import { cn } from '@repo/ui/lib/utils';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state';

@@ -13,7 +13,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/pages/main/mentor/meeting/Meeting.tsx",
-    "src/components/pages/main/mentor/meeting/Meeting copy.jsx"
+    "src/components/pages/main/mentor/meeting/MeetingCopy.jsx"
   ],
   "exclude": ["node_modules"]
 }

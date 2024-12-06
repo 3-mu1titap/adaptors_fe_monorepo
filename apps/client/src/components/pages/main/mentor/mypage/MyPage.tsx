@@ -20,7 +20,7 @@ export default function MyPage({ userInfo }: { userInfo: Mentor }) {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="w-full px-10 py-5 mt-[5rem]">
       <h1 className="hidden">My Page</h1>
       <Tabs defaultValue="profile">
         <TabsList>
@@ -38,6 +38,6 @@ export default function MyPage({ userInfo }: { userInfo: Mentor }) {
           <MentorSessionList mentorId={mentor.memberRequestDto.accountId} />
         </TabsContent>
       </Tabs>
-    </div>
+    </section>
   );
 }

@@ -7,7 +7,7 @@ interface SearchParams {
 
 function Page({ searchParams }: { searchParams: SearchParams }) {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-red-600">에러 발생</h1>
         <p className="mt-2 text-gray-600">
