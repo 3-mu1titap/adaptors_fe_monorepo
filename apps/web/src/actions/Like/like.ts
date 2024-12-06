@@ -1,15 +1,15 @@
 'use server';
-import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';
 import { commonResType } from '@components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
+import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';
 //좋아요
 export const postLikeReaction = async (targetUuid: string): Promise<number> => {
   'use server';
   const session = await getServerSession(options);
   const uuid = session?.user.uuid;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/${targetUuid}/reaction`,
+    `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/reaction`,
     {
       method: 'POST',
       headers: {
@@ -39,7 +39,7 @@ export const postHateReaction = async (targetUuid: string): Promise<number> => {
   const session = await getServerSession(options);
   const uuid = session?.user.uuid;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/${targetUuid}/reaction`,
+    `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/reaction`,
     {
       method: 'POST',
       headers: {
@@ -67,7 +67,7 @@ export async function GetMentorBlacklist(userUuid: string) {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/black/targetUuid`,
+      `${process.env.MEMBER_URL}/api/v1/member/black/targetUuid`,
       {
         cache: 'no-cache',
         method: 'GET',

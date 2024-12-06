@@ -14,7 +14,7 @@ export const postMentorProfile = async ({
   'use server';
   console.log(profile, uuid);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/mentor/profile`,
+    `${process.env.MEMBER_URL}/api/v1/member/mentor/profile`,
     {
       method: 'POST',
       headers: {
@@ -45,7 +45,7 @@ export const postMenteeProfile = async ({
   uuid: string;
 }): Promise<any> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/mentee/profile`,
+    `${process.env.MEMBER_URL}/api/v1/member/mentee/profile`,
     {
       method: 'POST',
       headers: {
@@ -75,7 +75,7 @@ export const uploadProfileIamge = async ({
   uuid: string;
 }): Promise<any> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/memberInfo/profileImage`,
+    `${process.env.MEMBER_URL}/api/v1/memberInfo/profileImage`,
     {
       method: 'POST',
       headers: {
@@ -95,24 +95,3 @@ export const uploadProfileIamge = async ({
   const data = await response.json();
   return data;
 };
-
-// export async function SessionRequest() {
-//   'use server';
-//   try {
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
-//       {
-//         cache: 'no-cache',
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       }
-//     );
-//     const result = (await res.json()) as commonResType<any>;
-//     return result.result;
-//   } catch (error) {
-//     console.error('멘토링 신청하기: ', error);
-//     return null;
-//   }
-// }

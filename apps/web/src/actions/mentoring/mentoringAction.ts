@@ -23,7 +23,7 @@ export async function GetMentoringSessionList(
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -48,7 +48,7 @@ export async function GetMentoringInfo(mentoringUuid: string) {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring/${mentoringUuid}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring/${mentoringUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -74,7 +74,7 @@ export async function SessionRequest(request: SessionRequestType) {
   console.log('request: ', request, 'menteeUuid', menteeUuid);
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
+      `${process.env.SESSION_REQUEST_URL}/api/v1/session-request-service`,
       {
         cache: 'no-cache',
         method: 'POST',
@@ -101,11 +101,9 @@ export async function SessionCancel(request: SessionCancelType) {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
-  // const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
-
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/session-request-service/api/v1/session-request-service`,
+      `${process.env.SESSION_REQUEST_URL}/api/v1/session-request-service`,
       {
         cache: 'no-cache',
         method: 'PUT',
@@ -139,7 +137,7 @@ export async function GetMentoringNameSearch(
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring-list-pagination/${name}?page=${page}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/${name}?page=${page}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -148,9 +146,7 @@ export async function GetMentoringNameSearch(
         },
       }
     );
-
     const result = (await res.json()) as commonResType<ApiResponse>;
-    // console.log(result, '검색 api 연결 성공!!~~~~~~~~~~~~~');
     return result.result;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
