@@ -34,7 +34,7 @@ export function SearchDialog({
             id="Search"
             type="text"
             placeholder="Search here...."
-            // onChange={(text) => setSearchName(text.target.value.trim())}
+            onChange={(text) => setSearchName(text.target.value.trim())}
             className="text-2xl"
           ></Input>
         </div>

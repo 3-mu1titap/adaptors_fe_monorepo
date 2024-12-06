@@ -1,5 +1,5 @@
 import CustomFitImage from './CustomFitImage';
-import { CustomTooltip } from './CustomTooltip';
+import { CustomToolTip } from './CustomToolTip';
 
 function CustomMentorProfilePhoto({
   profileImgUrl,
@@ -12,14 +12,14 @@ function CustomMentorProfilePhoto({
     profileImgUrl || 'https://picsum.photos/200/200?random=320';
   const defaultMentorNickname = mentorNickname || 'mentor';
   return (
-    <CustomTooltip text={defaultMentorNickname}>
+    <CustomToolTip text={defaultMentorNickname}>
       <div className="aspect-square overflow-hidden rounded-xl">
         <CustomFitImage
           src={defaultProfileImgUrl}
           alt={defaultMentorNickname}
         />
       </div>
-    </CustomTooltip>
+    </CustomToolTip>
   );
 }
 export default CustomMentorProfilePhoto;

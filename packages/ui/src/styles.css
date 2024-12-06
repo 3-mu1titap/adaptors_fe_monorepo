@@ -295,7 +295,7 @@ ul.flip.play li.before .up {
 
 ul.flip.play li.before .up .shadow {
   background: -moz-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
@@ -307,17 +307,17 @@ ul.flip.play li.before .up .shadow {
     color-stop(100%, rgba(0, 0, 0, 1))
   ); */
   background: linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
   background: -o-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
   background: -ms-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
@@ -331,7 +331,7 @@ ul.flip.play li.before .up .shadow {
 
 ul.flip.play li.active .up .shadow {
   background: -moz-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
@@ -343,17 +343,17 @@ ul.flip.play li.active .up .shadow {
     color-stop(100%, rgba(0, 0, 0, 1))
   );
   background: linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
   background: -o-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
   background: -ms-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 1) 100%
   );
@@ -369,7 +369,7 @@ ul.flip.play li.active .up .shadow {
 
 ul.flip.play li.before .down .shadow {
   background: -moz-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
@@ -381,17 +381,17 @@ ul.flip.play li.before .down .shadow {
     color-stop(100%, rgba(0, 0, 0, 0.1))
   );
   background: linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
   background: -o-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
   background: -ms-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
@@ -405,7 +405,7 @@ ul.flip.play li.before .down .shadow {
 
 ul.flip.play li.active .down .shadow {
   background: -moz-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
@@ -417,17 +417,17 @@ ul.flip.play li.active .down .shadow {
     color-stop(100%, rgba(0, 0, 0, 0.1))
   );
   background: linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
   background: -o-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );
   background: -ms-linear-gradient(
-    top,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.1) 100%
   );

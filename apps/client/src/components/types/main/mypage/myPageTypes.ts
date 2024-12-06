@@ -1,8 +1,3 @@
-export interface dateRange {
-  from: Date;
-  to: Date;
-}
-
 export interface exchangeDataType {
   id: number;
   date: string;

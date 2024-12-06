@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-// import './FlipAnimation.css'; // CSS 파일 import
+
 const FlipUnit = ({ value }: { value: number }) => {
   const [previous, setPrevious] = useState(value);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -15,7 +15,7 @@ const FlipUnit = ({ value }: { value: number }) => {
     }
   }, [value, previous]);
   return (
-    <ul className={`flip ${isFlipping ? 'play' : ''}`}>
+    <ul className={`flip ${isFlipping ? 'play' : ''} my-2`}>
       <li className="before">
         <a>
           <div className="up">
@@ -54,7 +54,7 @@ const CustomNowDate = () => {
   }, []);
   return (
     <div className="flip-wrapper flex gap-1 items-center justify-center py-2">
-      <FlipUnit value={hours % 12 || 12} /> {/* 12시간제 */}
+      <FlipUnit value={hours} />
       <FlipUnit value={minutes} />
       <FlipUnit value={seconds} />
     </div>

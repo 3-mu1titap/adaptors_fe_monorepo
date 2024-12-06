@@ -1,14 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  PaymentReadyResType,
-  PaymentReqType,
-} from '@components/types/payment/paymentType';
+import { PaymentReadyResType } from '@components/types/payment/paymentType';
 import { Button } from '@repo/ui/components/ui/button';
 import { PaymentReq } from 'src/actions/payment/paymentActions';
-import { PaymentApproval } from 'src/actions/payment/paymentActions';
-import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import {
   Card,
   CardHeader,
@@ -29,7 +25,7 @@ function Payment() {
     { id: 5, itemName: 'Volt', count: 500, price: 50000 },
   ];
   const router = useRouter();
-  const searchParams = useSearchParams();
+
   const [selectedItem, setSelectedItem] = useState<BoltItem | null>(null);
   const [Quantity, setQuantity] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -57,43 +53,36 @@ function Payment() {
   };
 
   useEffect(() => {
-    // //결제 리다이랙트시 pg_token 값을 찾는다
-    // const pgToken = searchParams.get('pg_token');
-
-    // //pg_token값이 있을경우
-    // if (pgToken) {
-    //   PaymentApprove(pgToken);
-    // }
-
     setTotalCount(Quantity + (selectedItem?.count || 0));
     setTotalMoney(totalCount * 100);
   }, [Quantity, selectedItem, totalCount, pgToken]);
 
-  const data = {
-    cid: 'TC0ONETIME',
-    partnerOrderId: 'string',
-    partnerUserId: '23993e78-b0af-42de-839f-060ae99a8bf5',
-    itemName: selectedItem?.itemName || ' ',
-    quantity: totalCount || 0,
-    totalAmount: totalMoney || 0,
-    taxFreeAmount: 0,
-    approvalUrl: 'http://localhost:3003/payment/payment-confirm',
-    failUrl: 'http://localhost:3003/mypage/volt/payment-fail',
-    cancelUrl: 'http://localhost:3003/mypage/volt/payment-cancel',
-  };
+  const cid = 'TC0ONETIME';
+  const partnerOrderId = 'string';
+  const itemName = selectedItem?.itemName || ' ';
+  const quantity = totalCount || 0;
+  const totalAmount = totalMoney || 0;
+  const taxFreeAmount = 0;
+  const approvalUrl = 'http://localhost:3003/payment/payment-confirm';
+  const failUrl = 'http://localhost:3003/mypage/volt/payment-fail';
+  const cancelUrl = 'http://localhost:3003/mypage/volt/payment-cancel';
 
   const Paymenthandle = async () => {
     try {
-      const res = await PaymentReq(data);
-      console.log(res?.nextRedirectPcUrl, 'url url ');
-      console.log(res?.partnerOrderId, 'order');
-      console.log(res?.tid, 'tid, tid');
+      const res = await PaymentReq(
+        cid,
+        partnerOrderId,
+        itemName,
+        quantity,
+        totalAmount,
+        taxFreeAmount,
+        approvalUrl,
+        failUrl,
+        cancelUrl
+      );
 
       if (res?.nextRedirectPcUrl) {
-        setRes(res);
         router.push(`${res.nextRedirectPcUrl}`);
-
-        console.log('이동합니다!~!~');
       }
     } catch (error) {
       console.error('결제 준비 요청 실패:', error);
@@ -115,7 +104,7 @@ function Payment() {
                 key={item.id}
                 onClick={() => handleItemSelect(item)}
                 variant={selectedItem?.id === item.id ? 'default' : 'outline'}
-                className={`w-full ${selectedItem?.id === item.id ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
+                className={`w-full hover:bg-blue-500 ${selectedItem?.id === item.id ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
               >
                 {item.count}개 ({item.price.toLocaleString()}원)
               </Button>

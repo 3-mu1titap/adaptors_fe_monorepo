@@ -49,7 +49,7 @@ export default async function RootLayout({
         <AuthContextProvider isAuth={isAuth} role={role}>
           <SidebarProvider className="overflow-hidden">
             <CommonSidebar />
-            <SidebarTrigger className="fixed z-[1000]" />
+            <SidebarTrigger className="z-[1000] hidden md:!block md:fixed" />
             {children}
           </SidebarProvider>
         </AuthContextProvider>

@@ -29,3 +29,5 @@ export async function GetMentorMentoringList(
     return [];
   }
 }
+
+//멘토 프로필 소개글 조회

@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomTooltip } from '@repo/ui/components/ui/custom/CustomToolTip';
+import { CustomToolTip } from '@repo/ui/components/ui/custom/CustomToolTip';
 import {
   Sidebar,
   SidebarContent,
@@ -138,9 +138,9 @@ function CommonSidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <CustomTooltip text="Adaptors Logo">
+            <CustomToolTip text="Adaptors Logo">
               <AdaptorsLogoIcon className="w-[180px] mt-0 p-6 flex items-center gap-2" />
-            </CustomTooltip>
+            </CustomToolTip>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -149,7 +149,7 @@ function CommonSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item, index) => (
-                <CustomTooltip key={index} text={item.label}>
+                <CustomToolTip key={index} text={item.label}>
                   <SidebarMenuItem
                     className={`w-full cursor-pointer items-center border-l-4 border-transparent hover:border-slate-600 hover:bg-slate-50 py-4 pl-5  transition-all ${
                       item.isActive
@@ -178,7 +178,7 @@ function CommonSidebar() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                </CustomTooltip>
+                </CustomToolTip>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

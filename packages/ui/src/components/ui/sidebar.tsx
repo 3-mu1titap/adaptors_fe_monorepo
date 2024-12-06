@@ -278,7 +278,7 @@ const SidebarTrigger = React.forwardRef<
       size="icon"
       className={cn(
         'hover:text-white',
-        'transition-all ease-linear duration-200 flex items-center gap-2 p-2 text-sidebar-foreground/70 top-8 w-auto',
+        'transition-all ease-linear duration-200 items-center gap-2 p-2 text-sidebar-foreground/70 top-8 w-auto',
         state === 'collapsed'
           ? 'left-[-1.6rem] translate-x-4 px-4 hover:pl-6'
           : 'left-[calc(var(--sidebar-width)-3.5rem)] px-4 hover:left-[calc(var(--sidebar-width)-4rem)]',
@@ -300,10 +300,10 @@ const SidebarTrigger = React.forwardRef<
           <PanelLeft className="hover:text-white hover:white" />
         </>
       ) : (
-        <>
+        <div className="flex justify-center items-center gap-5">
           <PanelLeftClose className="group-hover:text-adaptorsYellow" />
           <span>닫기</span>
-        </>
+        </div>
       )}
     </Button>
   );
