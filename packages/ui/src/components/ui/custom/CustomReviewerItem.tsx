@@ -2,17 +2,18 @@ import CustomValueUnit from './CustomValueUnit.tsx';
 import UserCount from './UserCount.tsx';
 import UserProfile from './UserProfile.tsx';
 
-interface UserProfileProps {
-  id: number;
-  profileImgUrl: string;
-  name: string;
-}
+import { SessionUser } from '@repo/ui/types/CommonType';
+
 function CustomReviewerItem({
   initialUserData,
   className,
+  userCount,
+  reviewCount,
 }: {
-  initialUserData: UserProfileProps[];
+  initialUserData: SessionUser[];
   className?: string;
+  userCount?: number;
+  reviewCount?: number;
 }) {
   return (
     <div className={`flex justify-start items-center ${className}`}>
@@ -20,28 +21,32 @@ function CustomReviewerItem({
         {initialUserData.map((user) => (
           <li>
             <UserProfile
-              key={user.id}
-              profileImgUrl={user.profileImgUrl}
+              key={user.userUuid}
+              profileImgUrl={user.menteeImageUrl}
               size={40}
-              name={user.name}
+              name={user.userUuid}
               className="mr-[-1.2rem] border-[2px] border-white ring-none"
             />
           </li>
         ))}
-        <li>
-          <UserCount
-            size={40}
-            count={13}
-            className="border-[2px] border-white ring-none"
-          />
-        </li>
+        {userCount && (
+          <li>
+            <UserCount
+              size={40}
+              count={userCount}
+              className="border-[2px] border-white ring-none"
+            />
+          </li>
+        )}
       </ul>
-      <CustomValueUnit
-        value={200823}
-        unit="Reviews"
-        valueSize="text-[1.09rem]"
-        unitSize="text-sm"
-      />
+      {reviewCount && (
+        <CustomValueUnit
+          value={reviewCount}
+          unit="Reviews"
+          valueSize="text-[1.09rem]"
+          unitSize="text-sm"
+        />
+      )}
     </div>
   );
 }
