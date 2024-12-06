@@ -5,3 +5,11 @@ export interface commonResType<T> {
   message: string;
   result: T;
 }
+
+export interface commonRes {
+  HttpStatus: string;
+  isSuccess: boolean;
+  code: number;
+  message: string;
+  result: number;
+}

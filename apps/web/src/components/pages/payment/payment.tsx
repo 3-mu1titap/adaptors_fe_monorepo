@@ -14,7 +14,6 @@ import {
 } from '@repo/ui/components/ui/card';
 import TextTitleSection from '../main/mypage/compoent/TextTitleSection';
 import { BoltItem } from '@components/types/payment/paymentType';
-
 function Payment() {
   const BoltItem = [
     { id: 0, itemName: 'Volt', count: 10, price: 1000 },
