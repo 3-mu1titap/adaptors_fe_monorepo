@@ -1,7 +1,5 @@
-import { commonResType } from '../../components/types/ResponseTypes';
-import { getServerSession } from 'next-auth';
-import { options } from '../../app/api/auth/[...nextauth]/options';
 import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
+import { commonResType } from '../../components/types/ResponseTypes';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
@@ -11,7 +9,7 @@ export async function GetMentorMentoringList(
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/mentoring-query-service/api/v1/mentoring-query-service/mentoring-list?isMentor=${isMentor}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list?isMentor=${isMentor}`,
       {
         cache: 'no-cache',
         method: 'GET',

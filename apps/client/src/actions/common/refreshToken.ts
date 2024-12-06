@@ -1,7 +1,7 @@
 //리프레시토큰
 export const postRefreshToken = async (refreshToken: string, uuid: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth-service/api/v1/auth/refresh-access`,
+    `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/refresh-access`,
     {
       method: 'POST',
       headers: {

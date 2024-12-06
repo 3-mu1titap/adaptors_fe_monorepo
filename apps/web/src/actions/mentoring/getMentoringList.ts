@@ -12,7 +12,7 @@ export async function GetMentoringByCategory({
   bottomCategoryCode?: string;
 }): Promise<SearchMentoringListType[]> {
   'use server';
-
+  console.log('실행됨');
   try {
     // QueryString 생성
     const queryParams = new URLSearchParams({
@@ -29,7 +29,7 @@ export async function GetMentoringByCategory({
     }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_METORING_QUERY}/mentoring/by-category?${queryParams}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring/by-category?${queryParams}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -42,7 +42,6 @@ export async function GetMentoringByCategory({
     const result = (await res.json()) as commonResType<
       SearchMentoringListType[]
     >;
-    // console.log(result.result);
     return result.result;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);

@@ -8,9 +8,9 @@ interface Category {
 export async function getTopCategoryList(): Promise<Category[]> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category-service/api/v1/category/top-categories`,
+      `${process.env.CATEGORY_URL}/api/v1/category/top-categories`,
       {
-        cache: 'no-cache',
+        cache: 'force-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
