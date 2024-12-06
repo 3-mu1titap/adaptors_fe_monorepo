@@ -16,6 +16,7 @@
     "@fullcalendar/interaction": "^6.1.1",
     "@fullcalendar/react": "^6.1.4",
     "@fullcalendar/timegrid": "^6.1.1",
+    "@radix-ui/react-tabs": "^1.1.1",
     "@repo/ui": "*",
     "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
     "@toast-ui/react-editor": "^3.2.3",

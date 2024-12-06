@@ -49,7 +49,4 @@ export interface PaymentApprovalResType {
     total: number;
     tax_free: number;
   };
-  payment_method_type: string;
-  created_at: string;
-  updated_at: string;
 }
