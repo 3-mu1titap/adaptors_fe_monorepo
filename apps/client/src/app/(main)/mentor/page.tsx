@@ -1,21 +1,21 @@
-import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
-import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
-import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
-import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
-import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
-import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
-import CustomSessionList from '@repo/ui/components/ui/custom/CustomSessionList';
-import { Metadata } from 'next';
 import ClientContainer from '@repo/client/components/common/layouts/ClientContainer';
 import { SeparateContainer } from '@repo/client/components/common/layouts/SeperateContainer';
+import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
+import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
+import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
+import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
+import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
+import CustomSessionList from '@repo/ui/components/ui/custom/CustomSessionList';
+import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
+import { Metadata } from 'next';
 
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
 } from '@repo/client/actions/mentoring/mentoringAction';
 import {
-  MentoringResult,
   MentoringDataType,
+  MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default async function Page() {
     '8e68777e-47ae-46c6-a42b-389d459c8f21'
   );
   return (
-    <section className="w-full px-10 py-5 mt-[6rem]">
+    <section className="w-full px-4 lg:px-10 py-5 mt-[6rem]">
       <ClientContainer>
         <SeparateContainer.LeftSide>
           <CustomMentorProfilePhoto profileImgUrl="https://i.pinimg.com/736x/6d/98/bd/6d98bd0a456e85177d8fbd65a54be284.jpg" />
