@@ -1,4 +1,6 @@
+'use client';
 import { cn } from '@repo/ui/lib/utils';
+import { useSearchParams } from 'next/navigation';
 
 interface CommonProps {
   className?: string;
@@ -6,6 +8,8 @@ interface CommonProps {
 }
 
 function ClientContainer({ children, className }: CommonProps) {
+  const query = useSearchParams();
+  console.log(query.get('token'));
   return (
     <div
       className={cn(

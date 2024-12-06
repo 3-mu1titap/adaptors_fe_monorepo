@@ -13,6 +13,7 @@ import {
 } from '@repo/ui/components/ui/sidebar';
 import {
   Calendar,
+  Handshake,
   LayoutDashboard,
   MessageSquareHeartIcon,
   Power,
@@ -36,8 +37,19 @@ function CommonSidebar() {
         {
           icon: (
             <LayoutDashboard
+              color={pathname === `/mentor` ? '#F6D84C' : '#ACACAC'}
+              size={20}
+            />
+          ),
+          label: 'Home',
+          isActive: pathname === `/mentor`,
+          href: `/mentor`,
+        },
+        {
+          icon: (
+            <Handshake
               color={
-                pathname === `/mentor` ||
+                pathname === `/mentoring` ||
                 pathname.startsWith(`/mentor/mentoring`)
                   ? '#F6D84C'
                   : '#ACACAC'
@@ -45,10 +57,9 @@ function CommonSidebar() {
               size={20}
             />
           ),
-          label: 'Home',
-          isActive:
-            pathname === `/mentor` || pathname.startsWith(`/mentor/mentoring`),
-          href: `/mentor`,
+          label: 'Mentoring',
+          isActive: pathname.startsWith(`/mentor/mentoring`),
+          href: `/mentor/mentoring`,
         },
         {
           icon: (
