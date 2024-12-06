@@ -13,10 +13,10 @@ export default function Page() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    // const id = formData.get('id') as string;
-    // const pw = formData.get('password') as string;
-    const id = 'mentor';
-    const pw = 'mentor!';
+    const id = formData.get('id') as string;
+    const pw = formData.get('password') as string;
+    // const id = 'mentor';
+    // const pw = 'mentor!';
 
     try {
       const result = await signIn('credentials', {
