@@ -62,8 +62,8 @@ export default async function MentoringOverview({
         <Image
           src={`${MentoringInfoData?.thumbnailUrl}`}
           alt="Profile"
-          layout="fill" // 부모 크기에 맞게 조정
-          objectFit="contain" // 높이 맞추고 원본 비율 유지
+          layout="fill"
+          objectFit="contain"
           priority
         />
       </div>
@@ -81,9 +81,7 @@ export default async function MentoringOverview({
           </li>
         </ul>
       </div>
-      <div className="py-4 px-6 leading-relaxed">
-        {MentoringInfoData.detail}
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: MentoringInfoData.detail }} />
     </div>
   );
 }

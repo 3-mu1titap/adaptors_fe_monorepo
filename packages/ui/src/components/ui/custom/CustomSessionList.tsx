@@ -19,6 +19,7 @@ function CustomSessionList({
               <CustomSessionFigure
                 session={session}
                 mentoringName={mentoringName.name}
+                key={session.sessionUuid}
               />
             ))}
           </div>

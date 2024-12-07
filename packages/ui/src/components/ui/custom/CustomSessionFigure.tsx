@@ -11,7 +11,6 @@ export default function CustomSessionFigure({
   session: MentoringSession;
   mentoringName: string;
 }) {
-  console.log('mentoringName: ', mentoringName);
   const formatTime = (time: SessionTime | string) => {
     if (typeof time === 'string') {
       return time.endsWith(':00') ? time.slice(0, -3) : time; // 뒤에 ":00" 제거
@@ -22,7 +21,7 @@ export default function CustomSessionFigure({
   return (
     <>
       <figure
-        key={session.sessionUuid}
+        // key={session.sessionUuid}
         className="flex flex-row items-center justify-between px-4 sm:px-8 bg-white ring-adaptorsYellow py-4 rounded-lg shadow-sm w-full hover:ring-2 hover:ring-adaptorsYello ring-0 transition-all hover:drop-shadow-lg"
       >
         <div className="flex items-center gap-1 w-full justify-center flex-col">

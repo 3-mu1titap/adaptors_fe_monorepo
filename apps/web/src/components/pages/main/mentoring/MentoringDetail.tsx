@@ -24,11 +24,15 @@ export default async function MentoringCalendar({
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
     '8e68777e-47ae-46c6-a42b-389d459c8f21'
   );
+  console.log('mentoringSessionList: ', mentoringSessionList);
   // const mentoringSessionList: MentoringResult[] | [] =
   //   await GetMentoringSessionList(mentoringUuid);
   // const MentoringInfoData: MentoringDataType | null =
   //   await GetMentoringInfo(mentoringUuid);
 
+  const filteredList: MentoringResult[] = mentoringDate
+    ? mentoringSessionList.filter((item) => item.startDate === mentoringDate)
+    : mentoringSessionList;
   return (
     <CommonLayout
       type="section"
@@ -48,7 +52,7 @@ export default async function MentoringCalendar({
           <MentoringOverview MentoringInfoData={MentoringInfoData} />
         )}
         <CustomSessionList
-          filteredList={mentoringSessionList}
+          filteredList={filteredList}
           mentoringName={MentoringInfoData}
         />
         <MentoringReviewSection />
