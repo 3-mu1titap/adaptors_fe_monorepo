@@ -10,7 +10,7 @@ async function Page({
   const selectedDate = searchParams.selectedDate || '';
 
   return (
-    <main className="mt-14 py-2 px-4 min-h-screen bg-gray-50">
+    <main className="pt-[7rem] py-2 px-4 min-h-screen bg-gray-50">
       <MentoringDetail
         mentoringDate={selectedDate}
         mentoringUuid={params.mentoringId}

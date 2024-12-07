@@ -1,3 +1,6 @@
+import { CommonLayout } from '@components/common/commomLayout';
+import { SeparateContainer } from '@repo/ui/components/ui/custom/CustomSeparateContainer';
+import CustomSessionList from '@repo/ui/components/ui/custom/CustomSessionList';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
@@ -6,10 +9,9 @@ import {
   MentoringDataType,
   MentoringResult,
 } from '../../../types/mentoring/mentoringTypes';
-import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
+import MentoringOverview from './MentoringOverview';
 import MentoringReviewSection from './review/MentoringReviewSection';
-import SessionList from './SessionList';
 export default async function MentoringCalendar({
   mentoringDate,
   mentoringUuid,
@@ -26,8 +28,13 @@ export default async function MentoringCalendar({
   //   await GetMentoringSessionList(mentoringUuid);
   // const MentoringInfoData: MentoringDataType | null =
   //   await GetMentoringInfo(mentoringUuid);
+
   return (
-    <div className="flex flex-col min-h-screen w-full bg-gray-50 sm:flex-row">
+    <CommonLayout
+      type="section"
+      reative="container"
+      className=" mx-auto flex gap-10 my-4 px-4 md:px-8 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] relative"
+    >
       {/* Left Section */}
       <MentorSection
         mentorUuid={
@@ -35,23 +42,17 @@ export default async function MentoringCalendar({
         }
         mentoringSessionList={mentoringSessionList}
       />
-      {/* Right Section */}
-      <section className="flex-1 mt-6 sm:p-6 w-full">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {MentoringInfoData && (
-            <MentoringOverview MentoringInfoData={MentoringInfoData} />
-          )}
-          {MentoringInfoData && (
-            <SessionList
-              mentoringSessionList={mentoringSessionList}
-              mentoringName={MentoringInfoData.name}
-              mentoringDate={mentoringDate}
-              mentorUuid={MentoringInfoData.mentorUuid}
-            />
-          )}
-          <MentoringReviewSection />
-        </div>
-      </section>
-    </div>
+      {/* Ri Section */}
+      <SeparateContainer.RightSide>
+        {MentoringInfoData && (
+          <MentoringOverview MentoringInfoData={MentoringInfoData} />
+        )}
+        <CustomSessionList
+          filteredList={mentoringSessionList}
+          mentoringName={MentoringInfoData}
+        />
+        <MentoringReviewSection />
+      </SeparateContainer.RightSide>
+    </CommonLayout>
   );
 }

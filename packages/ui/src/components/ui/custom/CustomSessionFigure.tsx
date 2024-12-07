@@ -1,9 +1,8 @@
+import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType';
 import { CircleDashed } from 'lucide-react';
-import CustomValueUnit from './CustomValueUnit';
 import { Button } from '../button';
 import CustomReviewerItem from './CustomReviewerItem';
-import { CustomToolTip } from './CustomToolTip';
-import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType';
+import CustomValueUnit from './CustomValueUnit';
 
 export default function CustomSessionFigure({
   session,
@@ -19,10 +18,9 @@ export default function CustomSessionFigure({
     }
     return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
-  console.log('session: ', session);
 
   return (
-    <CustomToolTip text={mentoringName}>
+    <>
       <figure
         key={session.sessionUuid}
         className="flex flex-row items-center justify-between px-4 sm:px-8 bg-white ring-adaptorsYellow py-4 rounded-lg shadow-sm w-full hover:ring-2 hover:ring-adaptorsYello ring-0 transition-all hover:drop-shadow-lg"
@@ -50,9 +48,9 @@ export default function CustomSessionFigure({
         <div className="w-full flex justify-between md:justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
           <CustomReviewerItem initialUserData={session.sessionUserList} />
           <CustomValueUnit value={session.price} unit="Volt" />
-          <Button className="bg-adaptorsYellow">참가하기</Button>
+          <Button className="bg-adaptorsYellow hover:bg-black">참가하기</Button>
         </div>
       </figure>
-    </CustomToolTip>
+    </>
   );
 }

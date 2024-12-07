@@ -35,7 +35,7 @@ export async function GetMentoringSessionList(
       }
     );
     const result = (await res.json()) as commonResType<MentoringResult[]>;
-    // console.log('멘토링 세션 리스트 조회 : ', result);
+    console.log('멘토링 세션 리스트 조회 : ', result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);
