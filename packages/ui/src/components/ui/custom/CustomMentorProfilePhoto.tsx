@@ -5,19 +5,16 @@ function CustomMentorProfilePhoto({
   profileImgUrl,
   mentorNickname,
 }: {
-  profileImgUrl?: string;
-  mentorNickname?: string;
+  profileImgUrl?: any;
+  mentorNickname?: any;
 }) {
-  const defaultProfileImgUrl =
-    profileImgUrl || 'https://picsum.photos/200/200?random=320';
-  const defaultMentorNickname = mentorNickname || 'mentor';
+  // const defaultProfileImgUrl =
+  //   profileImgUrl || 'https://picsum.photos/200/200?random=320';
+  // const defaultMentorNickname = mentorNickname || 'mentor';
   return (
-    <CustomToolTip text={defaultMentorNickname}>
+    <CustomToolTip text={mentorNickname || undefined}>
       <div className="aspect-square overflow-hidden rounded-xl">
-        <CustomFitImage
-          src={defaultProfileImgUrl}
-          alt={defaultMentorNickname}
-        />
+        <CustomFitImage src={profileImgUrl} alt={mentorNickname} />
       </div>
     </CustomToolTip>
   );
