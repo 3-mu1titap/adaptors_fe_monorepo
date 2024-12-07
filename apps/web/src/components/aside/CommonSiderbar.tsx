@@ -65,7 +65,7 @@ function CommonSidebar() {
   }, [pathname]);
 
   return (
-    <Sidebar className="absolute top-56 h-[35rem]">
+    <Sidebar className="absolute top-28 h-[35rem]">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem></SidebarMenuItem>
@@ -77,8 +77,10 @@ function CommonSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem
-                  className={`cursor-pointer items-center hover:border-adaptorsBlue py-4 px-2 ${
-                    item.isActive ? 'border-adaptorsBlue' : 'border-transparent'
+                  className={`w-full cursor-pointer items-center border-l-4 border-transparent hover:border-slate-600 hover:bg-slate-50 py-4 pl-5  transition-all ${
+                    item.isActive
+                      ? 'border-adaptorsYellow'
+                      : 'border-transparent'
                   }`}
                   key={item.label}
                 >
@@ -87,7 +89,7 @@ function CommonSidebar() {
                       <span
                         className={`whitespace-nowrap text-2xl ${
                           item.isActive
-                            ? 'text-adaptorsBlue'
+                            ? 'text-adaptorsYellow'
                             : 'text-adaptorsGray'
                         }`}
                       >
