@@ -1,30 +1,15 @@
 import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
+import { SessionUser } from '@repo/ui/types/CommonType.js';
 import Image from 'next/image';
 import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
 export default async function MentoringOverview({
   MentoringInfoData,
+  userData,
 }: {
   MentoringInfoData: MentoringDataType;
+  userData: SessionUser[];
 }) {
-  const initialUserData = [
-    {
-      userUuid: '389d459sssc8f21',
-      menteeImageUrl: 'https://picsum.photos/200/200?random=14',
-    },
-    {
-      userUuid: '389d45sd9c8f21',
-      menteeImageUrl: 'https://picsum.photos/200/200?random=23',
-    },
-    {
-      userUuid: '389d459c8f21',
-      menteeImageUrl: 'https://picsum.photos/200/200?random=56',
-    },
-    {
-      userUuid: '389d459dsc8f21',
-      menteeImageUrl: 'https://picsum.photos/200/200?random=78',
-    },
-  ];
   return (
     <div>
       <CustomSessionInfoTags />
@@ -33,7 +18,7 @@ export default async function MentoringOverview({
           {MentoringInfoData?.name}
         </h2>
         <CustomReviewerItem
-          initialUserData={initialUserData}
+          initialUserData={userData}
           className="hidden lg:!flex"
           userCount={30}
           reviewCount={293938}

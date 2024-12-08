@@ -50,7 +50,7 @@ export interface MentoringSession {
 }
 
 export interface SessionUser {
-  userUuid: string;
+  userUuid?: string;
   menteeImageUrl: string;
 }
 

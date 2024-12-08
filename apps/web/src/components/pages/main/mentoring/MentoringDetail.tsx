@@ -24,11 +24,32 @@ export default async function MentoringCalendar({
   const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
     '8e68777e-47ae-46c6-a42b-389d459c8f21'
   );
-  console.log('mentoringSessionList: ', mentoringSessionList);
+  // const userData = await getReviewerProfile(
+  //   '8e68777e-47ae-46c6-a42b-389d459c8f21'
+  // );
   // const mentoringSessionList: MentoringResult[] | [] =
   //   await GetMentoringSessionList(mentoringUuid);
   // const MentoringInfoData: MentoringDataType | null =
   //   await GetMentoringInfo(mentoringUuid);
+  // const data = await getReviewerProfile(mentoringUuid);
+  const userData = [
+    {
+      userUuid: '389d459sssc8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=14',
+    },
+    {
+      userUuid: '389d45sd9c8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=23',
+    },
+    {
+      userUuid: '389d459c8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=56',
+    },
+    {
+      userUuid: '389d459dsc8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=78',
+    },
+  ];
 
   const filteredList: MentoringResult[] = mentoringDate
     ? mentoringSessionList.filter((item) => item.startDate === mentoringDate)
@@ -45,11 +66,15 @@ export default async function MentoringCalendar({
           MentoringInfoData?.mentorUuid ? MentoringInfoData?.mentorUuid : ''
         }
         mentoringSessionList={mentoringSessionList}
+        userData={userData}
       />
       {/* Ri Section */}
       <SeparateContainer.RightSide>
         {MentoringInfoData && (
-          <MentoringOverview MentoringInfoData={MentoringInfoData} />
+          <MentoringOverview
+            MentoringInfoData={MentoringInfoData}
+            userData={userData}
+          />
         )}
         <CustomSessionList
           filteredList={filteredList}
