@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 
 interface CommonProps {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function ClientContainer({ children, className }: CommonProps) {

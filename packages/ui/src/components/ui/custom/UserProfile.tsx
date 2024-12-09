@@ -1,5 +1,6 @@
 import CustomFitImage from './CustomFitImage';
 import { CustomToolTip } from './CustomToolTip';
+
 function UserProfile({
   profileImgUrl,
   size,
