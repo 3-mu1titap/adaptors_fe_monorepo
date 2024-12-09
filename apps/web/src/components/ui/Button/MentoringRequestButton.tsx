@@ -59,7 +59,6 @@ export default function MentoringRequestButton({
         SessionRequest({
           sessionUuid: sessionUuid,
           mentoringName: mentoringName,
-          // mentorUuid: mentorUuid,
         });
         setIsRegistered((prev) => !prev);
       }

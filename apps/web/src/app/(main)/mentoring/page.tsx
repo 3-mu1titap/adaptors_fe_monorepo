@@ -12,14 +12,13 @@ export default async function page({
   if (!searchParams.category) {
     redirect(`/mentoring?category=${categorise[0].topCategoryCode}`);
   }
-
   return (
     <main className="mt-[7rem]">
       {/* <PaperStock /> */}
-      {/* <CategoryAside categoryParam={searchParams.category} />
+      <CategoryAside categoryParam={searchParams.category} />
       {searchParams.category && (
         <ListSection category={searchParams.category} />
-      )} */}
+      )}
     </main>
   );
 }
