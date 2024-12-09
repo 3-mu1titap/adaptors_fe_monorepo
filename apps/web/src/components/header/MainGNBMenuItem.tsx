@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 
 function MainHeaderGNBMenuItem({ menuItem }: { menuItem: MenuType }) {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <Link href={menuItem.href}>
       <li
