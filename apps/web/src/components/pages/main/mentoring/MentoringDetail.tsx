@@ -16,7 +16,7 @@ export default async function MentoringCalendar({
   mentoringDate: string;
   mentoringUuid: string;
   mentoringSessionList: MentoringResult[];
-  MentoringInfoData: MentoringDataType | null;
+  MentoringInfoData: MentoringDataType;
 }) {
   const userData = [
     {

@@ -73,6 +73,7 @@ export async function SessionRequest(request: SessionRequestType) {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
+  const nickName = session?.user.nickName;
   // const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
   console.log('request: ', request, 'menteeUuid', menteeUuid);
   try {
@@ -85,7 +86,10 @@ export async function SessionRequest(request: SessionRequestType) {
           'Content-Type': 'application/json',
           'userUuid': menteeUuid,
         },
-        body: JSON.stringify(request),
+        body: JSON.stringify({
+          nickName: nickName,
+          request,
+        }),
       }
     );
     const result = (await res.json()) as commonResType<any>;

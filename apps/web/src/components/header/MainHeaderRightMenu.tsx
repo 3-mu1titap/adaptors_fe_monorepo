@@ -1,46 +1,77 @@
-'use client';
 import JoinFreeButton from '@components/ui/Button/JoinFreeButton';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
-import { MenuIcon } from 'lucide-react';
-import { useSession } from 'src/app/context/SessionContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@repo/ui/components/ui/dropdown';
+import { CreditCard, User } from 'lucide-react';
 
-function MainHeaderRightMenu({ openSideBar }: { openSideBar: () => void }) {
-  const session = useSession();
-  console.log(session?.isAuth);
-  const handleOpenApp = async () => {
-    const token = 'jasonahn'; // 로그인 토큰
+import HeaderLogoutButton from '@components/ui/Button/HeaderLogoutButton';
+import OpenAppButton from '@components/ui/Button/OpenAppButton';
+import { getServerSession } from 'next-auth';
+import Link from 'next/link';
+import { options } from 'src/app/api/auth/[...nextauth]/options';
+import SideBarButton from './SideBarButton';
 
-    const response = await fetch('/api/openElectronApp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-      console.log(result.message); // Electron 앱이 성공적으로 실행됨
-    } else {
-      console.error(result.error); // 오류 처리
-    }
-  };
-
+async function MainHeaderRightMenu() {
+  const isAuth = await getServerSession(options);
   return (
     <nav>
       <ul className="flex justify-end items-center gap-4">
-        {session?.isAuth ? (
-          <li onClick={() => handleOpenApp()}>
-            <UserProfile size={40} />
+        {isAuth?.user ? (
+          <li>
+            {/* <UserProfile size={40} /> */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <UserProfile size={40} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  {/* 마이페이지/프로필 */}
+                  <DropdownMenuItem>
+                    <Link
+                      href="/mypage/edit"
+                      className="flex items-center gap-2"
+                    >
+                      <User />
+                      <span>Profile</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  {/* 마이페이지/볼트 */}
+                  <DropdownMenuItem>
+                    <Link
+                      href="/mypage/volt"
+                      className="flex items-center gap-2"
+                    >
+                      <CreditCard />
+                      <span>Billing</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  {/* 일렉트론 이동 버튼 */}
+                  <DropdownMenuItem>
+                    <OpenAppButton />
+                  </DropdownMenuItem>
+
+                  {/* 로그아웃 */}
+                  <HeaderLogoutButton />
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+              </DropdownMenuContent>
+            </DropdownMenu>
           </li>
         ) : (
           <li>
             <JoinFreeButton />
           </li>
         )}
-        <li className="block lg:hidden" onClick={openSideBar}>
-          <MenuIcon size={24} />
-        </li>
+        <SideBarButton />
       </ul>
     </nav>
   );

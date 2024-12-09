@@ -1,5 +1,7 @@
 import { commonResType } from '@components/types/ResponseTypes';
 import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
+import { getServerSession } from 'next-auth';
+import { options } from 'src/app/api/auth/[...nextauth]/options';
 
 //카테고리로 멘토링리스트 조회
 export async function GetMentoringByCategory({
@@ -12,7 +14,8 @@ export async function GetMentoringByCategory({
   bottomCategoryCode?: string;
 }): Promise<SearchMentoringListType[]> {
   'use server';
-  console.log('실행됨');
+  const session = await getServerSession(options);
+  const token = session?.user.acessToken;
   try {
     // QueryString 생성
     const queryParams = new URLSearchParams({
