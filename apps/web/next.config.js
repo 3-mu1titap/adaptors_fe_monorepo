@@ -8,7 +8,7 @@ module.exports = {
       'adaptors-bucket.s3.ap-northeast-2.amazonaws.com',
       'i.pinimg.com',
       'picsum.photos',
-      'www.sportschosun.com',
+      'd2v80xjmx68n4w.cloudfront.net',
     ],
   },
   experimental: {

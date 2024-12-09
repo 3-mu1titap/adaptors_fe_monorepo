@@ -1,7 +1,7 @@
 'use client';
+import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { MentoringResult } from '../../../types/mentoring/mentoringTypes';
 
 interface CalendarDay {
   date: number;
@@ -89,7 +89,7 @@ export default function Calendar({
   const handleDateClick = (year: number, month: number, date: number) => {
     const selected = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
     setSelectedDate(selected);
-    router.push(`/mentoring/1?selectedDate=${selected}`);
+    router.push(`/mentoring/1?selectedDate=${selected}`, { scroll: false });
   };
 
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];

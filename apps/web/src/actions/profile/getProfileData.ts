@@ -11,7 +11,7 @@ export const getProfileIamge = async (
   uuid: string
 ): Promise<userProfileType> => {
   const response = await fetch(
-    `${process.env.MEMBER_QUERY_URL}/api/v1/memberInfo/profileImage`,
+    `${process.env.NEXT_PUBLIC_PROFILE_URL}/api/v1/memberInfo/profileImage`,
     {
       method: 'GET',
       headers: {
@@ -36,7 +36,7 @@ export const getMyProfileIamge = async (): Promise<userProfileType> => {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const response = await fetch(
-    `${process.env.MEMBER_QUERY_URL}/api/v1/memberInfo/profileImage`,
+    `${process.env.NEXT_PUBLIC_PROFILE_URL}/api/v1/memberInfo/profileImage`,
     {
       method: 'GET',
       headers: {

@@ -1,7 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
-import { getProfileIamge } from 'src/actions/profile/getProfileData';
 
 // Kakao 프로필 타입 정의
 interface KakaoProfile {
@@ -41,8 +40,6 @@ export const options: NextAuthOptions = {
             }
           );
           const data = await res.json();
-          console.log('전체응답', data);
-
           // 백엔드 응답 구조에 맞게 조건 수정
           if (data.isSuccess && data.result) {
             return data.result;
@@ -131,13 +128,14 @@ export const options: NextAuthOptions = {
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
         session.user.role = token.role;
-        const profileData = await getProfileIamge(token.uuid);
-        session.user.profileImageUrl = profileData.profileImageUrl;
-        session.user.nickName = profileData.nickName;
+        // const profileData = await getProfileIamge(token.uuid);
+        // session.user.profileImageUrl = profileData.profileImageUrl;
+        // session.user.nickName = profileData.nickName;
       }
       // if (token.error) {
       //   session.error = token.error; // 에러 상태를 세션으로 전달
       // }
+      // console.log('role', session.user.role);
       return session;
     },
   },

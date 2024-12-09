@@ -5,7 +5,7 @@ async function page() {
   const mentoringListData = await GetMentoringListByMentor(
     'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb'
   );
-  console.log('=========================', mentoringListData);
+  // console.log('=========================', mentoringListData);
   return <MentoringByMentor mentoringListData={mentoringListData} />;
 }
 

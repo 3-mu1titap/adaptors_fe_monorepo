@@ -14,7 +14,7 @@ export default async function page({
   }
 
   return (
-    <main className="mt-[7rem] lg:flex relative lg:mx-4">
+    <main className="mt-[7rem]">
       {/* <PaperStock /> */}
       {/* <CategoryAside categoryParam={searchParams.category} />
       {searchParams.category && (

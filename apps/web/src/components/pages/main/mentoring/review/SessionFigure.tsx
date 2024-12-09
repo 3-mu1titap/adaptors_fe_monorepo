@@ -1,11 +1,8 @@
 import DottedlineEllipse from '@components/assets/icons/DottedlineEllipse';
-import {
-  MentoringSession,
-  SessionTime,
-} from '@components/types/mentoring/mentoringTypes';
 import Avatars from '@components/ui/Avatars/Avatars';
 import MentoringRequestButton from '@components/ui/Button/MentoringRequestButton';
 import ValueUnit from '@components/ui/Text/ValueUnit';
+import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType.ts';
 
 export default function SessionFigure({
   session,

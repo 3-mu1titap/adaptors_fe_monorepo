@@ -86,3 +86,31 @@ export async function GetMentorBlacklist(userUuid: string) {
   }
 }
 //관심목록 리스트 조회
+
+//타겟 좋아요 유무 조회
+export async function getIsLiked(targetUuid: string): Promise<boolean> {
+  'use server';
+  const session = await getServerSession(options);
+  const uuid = session?.user.uuid;
+  const token = session?.user.accessToken;
+  try {
+    const res = await fetch(
+      `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/like`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': `bearer ${token}`,
+          'userUuid': uuid,
+        },
+      }
+    );
+
+    const result = (await res.json()) as commonResType<boolean>;
+    return result.result;
+  } catch (error) {
+    console.log('좋아요 유무 조회 error', error);
+    return false;
+  }
+}

@@ -17,7 +17,7 @@ function VoltUsageList({ item }: { item?: any }) {
   return (
     <>
       {item && item.isPayment === true ? (
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-y-hidden">
           <div className="flex w-full gap-x-20 ">
             <span className="text-black font-bold text-xl">
               {formatDate(item.date)}

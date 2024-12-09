@@ -37,7 +37,7 @@ export async function GetBestMentorList() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BEST_MENTOR_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
+      `${process.env.BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
       {
         cache: 'no-cache',
         method: 'GET',

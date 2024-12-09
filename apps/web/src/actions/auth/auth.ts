@@ -1,6 +1,9 @@
 'use server';
 
 import { commonResType } from '@components/types/ResponseTypes';
+interface PostUserDataRes {
+  uuid: string;
+}
 
 export async function postUserData(userData: {
   name: string;
@@ -10,23 +13,32 @@ export async function postUserData(userData: {
   password: string;
   phoneNumber: string;
   role: string;
-}): Promise<any> {
+}): Promise<string> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH}/sign-up`, {
-      cache: 'no-cache',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userData: userData,
-      }),
-    });
-    const result = (await res.json()) as commonResType<any[]>;
-    return result.result;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH}api/v1/auth/sign-up`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: userData.name,
+          nickName: userData.nickName,
+          email: userData.email,
+          accountId: userData.accountId,
+          password: userData.password,
+          phoneNumber: userData.phoneNumber,
+          role: userData.role,
+        }),
+      }
+    );
+    const result = (await res.json()) as commonResType<any>;
+    return result.result.uuid;
   } catch (error) {
-    console.error('멘토링 신청하기: ', error);
-    return [];
+    // console.error('회원가입 에러: ', error);
+    return 'error';
   }
 }
 export async function findId(email: string): Promise<any> {
@@ -35,7 +47,7 @@ export async function findId(email: string): Promise<any> {
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/find-id`,
       {
         cache: 'no-cache',
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -47,7 +59,7 @@ export async function findId(email: string): Promise<any> {
     const result = (await res.json()) as commonResType<any[]>;
     return result.result;
   } catch (error) {
-    console.error('멘토링 신청하기: ', error);
+    console.error('아이디 찾기: ', error);
     return [];
   }
 }
@@ -58,7 +70,7 @@ export async function resetPassword(accountId: string): Promise<any> {
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/reset-password`,
       {
         cache: 'no-cache',
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -70,17 +82,17 @@ export async function resetPassword(accountId: string): Promise<any> {
     const result = (await res.json()) as commonResType<any[]>;
     return result.result;
   } catch (error) {
-    console.error('멘토링 신청하기: ', error);
+    console.error('비밀번호 찾기: ', error);
     return [];
   }
 }
-export async function checkAccountId(accountId: string): Promise<any> {
+export async function checkAccountId(accountId: string): Promise<number> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/cheak-accountId`,
       {
         cache: 'no-cache',
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -89,10 +101,10 @@ export async function checkAccountId(accountId: string): Promise<any> {
         }),
       }
     );
-    const result = (await res.json()) as commonResType<any[]>;
-    return result.result;
+    const result = (await res.json()) as commonResType<null>;
+    return result.code;
   } catch (error) {
-    console.error('멘토링 신청하기: ', error);
-    return [];
+    console.error('아이디 중복검사 에러: ', error);
+    return 0;
   }
 }

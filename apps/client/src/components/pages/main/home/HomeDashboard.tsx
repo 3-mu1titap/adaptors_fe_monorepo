@@ -1,20 +1,19 @@
-import React from 'react';
-import type {
-  SessionUser,
-  MentoringResult,
-  MentoringDataType,
-} from '@repo/ui/types/CommonType.ts';
 import { SeparateContainer } from '@repo/client/components/common/layouts/SeperateContainer';
 import {
-  CustomMentorProfilePhoto,
-  CustomReviewerItem,
   CustomLikeButton,
-  CustomShareButton,
-  CustomNowDate,
-  CustomSessionList,
-  CustomSessionInfoTags,
   CustomMentorDescription,
+  CustomMentorProfilePhoto,
+  CustomNowDate,
+  CustomReviewerItem,
+  CustomSessionInfoTags,
+  CustomSessionList,
+  CustomShareButton,
 } from '@repo/ui/components/ui/custom/index';
+import type {
+  MentoringDataType,
+  MentoringResult,
+  SessionUser,
+} from '@repo/ui/types/CommonType.ts';
 interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
@@ -25,7 +24,6 @@ function HomeDashboard({
   MentoringInfoData,
   initialUserData,
 }: HomeDashboardProps) {
-  console.log(MentoringInfoData);
   return (
     <>
       <SeparateContainer.LeftSide>

@@ -1,7 +1,6 @@
-import React from 'react';
 import { Card, CardContent } from '@repo/ui/components/ui/card';
+import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
 import Image from 'next/image';
-import { SearchMentoringListType } from '@components/types/mentoring/mentoringTypes';
 function SearhMentoringCard({ item }: { item: SearchMentoringListType }) {
   return (
     <Card className="max-w-[310px] min-h-[400px] rounded-xl h-auto border border-b-gray-200 flex flex-col items-center justify-center">

@@ -1,16 +1,45 @@
+import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
+import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
+import { MentoringDataType, SessionUser } from '@repo/ui/types/CommonType.ts';
+import { File, User } from 'lucide-react';
 import Image from 'next/image';
-import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
 
 export default function MentoringOverview({
   MentoringInfoData,
+  userData,
 }: {
   MentoringInfoData: MentoringDataType;
+  userData: SessionUser[];
 }) {
+  const SessionInfo = [
+    {
+      id: 1,
+      infoName: 'Session',
+      infoValue: 8,
+      icon: <File size={12} className="text-blue-500" />,
+    },
+    {
+      id: 2,
+      infoName: 'Students',
+      infoValue: 68,
+      icon: <User size={12} className="text-blue-500" />,
+    },
+  ];
   return (
     <div>
-      <h1 className="text-2xl font-bold py-5">{MentoringInfoData?.name}</h1>
-
-      <div className="relative w-full h-[400px] p-5 rounded-xl object-cover overflow-hidden bg-gray-200">
+      <CustomSessionInfoTags />
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5 pb-3 pt-5">
+        <h2 className="text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold leading-tight">
+          {MentoringInfoData?.name}
+        </h2>
+        <CustomReviewerItem
+          initialUserData={userData}
+          className="hidden lg:!flex"
+          userCount={30}
+          reviewCount={293938}
+        />
+      </div>
+      <div className="relative w-full h-[400px] p-5 mt-8 rounded-xl object-cover overflow-hidden bg-gray-200">
         {MentoringInfoData.categoryList && (
           <ul className="flex gap-3 absolute top-5 left-5">
             {MentoringInfoData.categoryList[0]?.topCategoryName && (
@@ -52,9 +81,7 @@ export default function MentoringOverview({
           </li>
         </ul>
       </div>
-      <div className="py-4 px-6 leading-relaxed">
-        {MentoringInfoData.detail}
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: MentoringInfoData.detail }} />
     </div>
   );
 }

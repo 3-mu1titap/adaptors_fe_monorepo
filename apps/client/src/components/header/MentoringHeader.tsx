@@ -1,5 +1,15 @@
+import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
-import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '@repo/ui/components/ui/dropdown';
 import {
   BellDot,
   CreditCard,
@@ -8,17 +18,7 @@ import {
   User,
   Wallet2Icon,
 } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@repo/ui/components/ui/dropdown';
-import { DropdownMenuShortcut } from '@repo/ui/components/ui/dropdown';
-import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
+import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
 
 const initialUserData = [
   {

@@ -1,4 +1,4 @@
-async function uploadFileToS3(file: File, folder: string) {
+async function uploadFileToS3(file: File, folder: string): Promise<string> {
   const formData = new FormData();
   formData.append('fileName', file.name);
   formData.append('fileType', file.type);
@@ -33,7 +33,6 @@ async function uploadFileToS3(file: File, folder: string) {
   }
 
   const data = await res.json();
-  console.log(data);
   return data.imageUrl; // S3에 업로드된 파일의 URL 반환
 }
 

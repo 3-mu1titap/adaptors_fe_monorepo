@@ -16,7 +16,7 @@ async function page() {
 
   return (
     <>
-      <div className="container mx-auto max-w-[80rem] bg-gray-100 h-full">
+      <div className="container mx-auto h-auto max-w-[80rem] bg-gray-100 overflow-y-hidden">
         <div className="flex flex-col  mt-16 mx-auto max-w-[64rem]">
           {/* 볼츠 충전 컴포넌트 */}
           <VoltCharge points={res?.result || undefined} />

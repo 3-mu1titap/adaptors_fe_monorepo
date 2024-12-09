@@ -1,7 +1,5 @@
-import React from 'react';
-
-import MentoringHeader from '@repo/client/components/header/MentoringHeader';
 import ClientContainer from '@repo/client/components/common/layouts/ClientContainer';
+import MentoringHeader from '@repo/client/components/header/MentoringHeader';
 
 export default function layout({
   children,

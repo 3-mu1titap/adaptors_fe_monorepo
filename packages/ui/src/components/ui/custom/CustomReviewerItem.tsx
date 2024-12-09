@@ -15,8 +15,10 @@ function CustomReviewerItem({
   reviewCount?: number;
 }) {
   return (
-    <div className={`flex justify-start items-center ${className}`}>
-      <ul className="flex justify-start items-center">
+    <div
+      className={`flex justify-start items-center ${className} ${initialUserData[0].menteeImageUrl ? `block` : `hidden`}`}
+    >
+      <ul className="flex justify-start items-center mr-1">
         {initialUserData.map((user) => (
           <li>
             <UserProfile
