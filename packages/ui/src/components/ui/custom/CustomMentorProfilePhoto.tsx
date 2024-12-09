@@ -1,5 +1,5 @@
 import CustomFitImage from './CustomFitImage';
-import { CustomToolTip } from './CustomToolTip';
+import { CustomToolTip } from './index';
 function CustomMentorProfilePhoto({
   profileImgUrl,
   mentorNickname,

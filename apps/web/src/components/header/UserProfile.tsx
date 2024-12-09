@@ -1,4 +1,4 @@
-import { CustomToolTip } from '@repo/ui/components/ui/custom/CustomToolTip';
+import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getMyProfileIamge } from 'src/actions/profile/getProfileData';

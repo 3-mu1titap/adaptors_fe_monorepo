@@ -1,7 +1,7 @@
 import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
 import MentoringInfoCard from '../session/MentoringInfoCard';
 import MentoringSessionList from '../session/MentoringSessionList';
-import { MentoringDataType } from '@repo/ui/types/CommonType.js';
+import { MentoringDataType } from '@repo/ui/types/CommonType.ts';
 
 export default function MentoringContent({
   mentoringInfo,

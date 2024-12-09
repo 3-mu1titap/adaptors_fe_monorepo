@@ -247,7 +247,7 @@ ul.flip.play li.before {
 }
 
 ul.flip.play li.active {
-  animation: asd 0.5s 0.5s linear both;
+  animation: asd 0.3s 0.3s linear both;
   z-index: 2;
 }
 
@@ -265,7 +265,7 @@ ul.flip.play li.active {
 
 ul.flip.play li.active .down {
   z-index: 2;
-  animation: turn 0.5s 0.5s linear both;
+  animation: turn 0.3s 0.3s linear both;
 }
 
 @keyframes turn {
@@ -279,7 +279,7 @@ ul.flip.play li.active .down {
 
 ul.flip.play li.before .up {
   z-index: 2;
-  animation: turn2 0.5s linear both;
+  animation: turn2 0.3s linear both;
 }
 
 @keyframes turn2 {

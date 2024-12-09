@@ -1,6 +1,6 @@
 'use client';
 
-import { MenuType } from '@components/types/menu/MenuType';
+import { MenuType } from '@components/types/menu/menuType.ts';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 

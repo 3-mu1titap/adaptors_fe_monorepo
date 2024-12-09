@@ -1,6 +1,6 @@
 'use server';
 
-import {
+import type {
   HashtagDataType,
   MentoringAddFormType,
   MentoringSessionDataType,
@@ -11,7 +11,11 @@ import {
 } from '@repo/client/components/types/main/mentor/mentoringTypes';
 import { commonResType } from '@repo/client/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
-import { MentoringDataType } from '@repo/ui/types/CommonType.ts';
+import {
+  MentoringDataType,
+  MentoringResult,
+  SearchMentoringListType,
+} from '@repo/ui/types/CommonType.ts';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
@@ -115,7 +119,7 @@ export async function PostMentoring(payload: MentoringAddFormType) {
 }
 
 // 멘토의 멘토링 리스트 조회
-export async function GetMentoringList() {
+export async function GetMentoringList(): Promise<MentoringDataType[]> {
   'use server';
   try {
     const res = await fetch(
@@ -130,6 +134,33 @@ export async function GetMentoringList() {
       }
     );
     const result = (await res.json()) as commonResType<MentoringDataType[]>;
+    return result.result;
+  } catch (error) {
+    console.error('멘토링리스트 정보 조회 : ', error);
+    return [];
+  }
+}
+
+export async function GetMentoringListByMentor(
+  mentorUuid: string
+): Promise<SearchMentoringListType[]> {
+  'use server';
+  try {
+    const res = await fetch(
+      `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list?isMentor=true`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'userUuid': mentorUuid,
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<
+      SearchMentoringListType[]
+    >;
+    console.log('mentorlistbymentor', result);
     return result.result;
   } catch (error) {
     console.error('멘토링리스트 정보 조회 : ', error);
@@ -161,7 +192,9 @@ export async function GetMentoringInfo(mentoringUuid: string) {
 }
 
 // 멘토링의 세션리스트 조희
-export async function GetMentoringSessionList(mentoringUuid: string) {
+export async function GetMentoringSessionList(
+  mentoringUuid: string
+): Promise<MentoringResult[]> {
   'use server';
   try {
     const res = await fetch(
@@ -175,9 +208,7 @@ export async function GetMentoringSessionList(mentoringUuid: string) {
         },
       }
     );
-    const result = (await res.json()) as commonResType<
-      MentoringSessionDataType[]
-    >;
+    const result = (await res.json()) as commonResType<MentoringResult[]>;
     console.log(result);
     return result.result;
   } catch (error) {

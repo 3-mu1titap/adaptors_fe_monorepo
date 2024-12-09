@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
-export default async function MentoringOverview({
+
+export default function MentoringOverview({
   MentoringInfoData,
 }: {
   MentoringInfoData: MentoringDataType;
@@ -12,19 +13,19 @@ export default async function MentoringOverview({
       <div className="relative w-full h-[400px] p-5 rounded-xl object-cover overflow-hidden bg-gray-200">
         {MentoringInfoData.categoryList && (
           <ul className="flex gap-3 absolute top-5 left-5">
-            {MentoringInfoData?.categoryList[0]?.topCategoryName && (
+            {MentoringInfoData.categoryList[0]?.topCategoryName && (
               <li className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white">
-                {MentoringInfoData?.categoryList[0].topCategoryName}
+                {MentoringInfoData.categoryList[0].topCategoryName}
               </li>
             )}
-            {MentoringInfoData?.categoryList[0]?.middleCategoryName && (
+            {MentoringInfoData.categoryList[0]?.middleCategoryName && (
               <li className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white">
-                {MentoringInfoData?.categoryList[0].middleCategoryName}
+                {MentoringInfoData.categoryList[0].middleCategoryName}
               </li>
             )}
-            {MentoringInfoData?.categoryList[0]?.bottomCategoryName && (
+            {MentoringInfoData.categoryList[0]?.bottomCategoryName && (
               <li className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white">
-                {MentoringInfoData?.categoryList[0].bottomCategoryName}
+                {MentoringInfoData.categoryList[0].bottomCategoryName}
               </li>
             )}
           </ul>
@@ -32,8 +33,8 @@ export default async function MentoringOverview({
         <Image
           src={`${MentoringInfoData?.thumbnailUrl}`}
           alt="Profile"
-          layout="fill" // 부모 크기에 맞게 조정
-          objectFit="contain" // 높이 맞추고 원본 비율 유지
+          layout="fill"
+          objectFit="contain"
           priority
         />
       </div>

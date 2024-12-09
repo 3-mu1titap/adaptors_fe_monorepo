@@ -1,4 +1,5 @@
-import { CustomToolTip } from './CustomToolTip';
+import { CustomToolTip } from './index';
+
 function UserCount({
   size,
   className,
@@ -24,4 +25,5 @@ function UserCount({
     </CustomToolTip>
   );
 }
+
 export default UserCount;

@@ -14,19 +14,17 @@ function CustomSessionList({
 }) {
   return (
     <div className="space-y-6">
-      {filteredList
-        .map((sessions, index) => (
-          <div key={index} className="space-y-3">
-            <CustomDateBadge date={sessions.startDate} />
-            {sessions.mentoringSessionResponseDtoList.map((session) => (
-              <CustomSessionFigure
-                session={session}
-                mentoringName={mentoringName.name}
-              />
-            ))}
-          </div>
-        ))
-        .slice(0, 2)}
+      {filteredList.map((sessions, index) => (
+        <div key={index} className="space-y-3">
+          <CustomDateBadge date={sessions.startDate} />
+          {sessions.mentoringSessionResponseDtoList.map((session) => (
+            <CustomSessionFigure
+              session={session}
+              mentoringName={mentoringName.name}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

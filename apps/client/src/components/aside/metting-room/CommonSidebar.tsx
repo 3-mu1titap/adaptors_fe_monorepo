@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomToolTip } from '@repo/ui/components/ui/custom/CustomToolTip';
+import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
 import {
   Sidebar,
   SidebarContent,
@@ -150,7 +150,7 @@ function CommonSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <CustomToolTip text="Adaptors Logo">
-              <AdaptorsLogoIcon className="w-[180px] mt-0 p-6 flex items-center gap-2" />
+              <AdaptorsLogoIcon className="w-[180px] mt-0 px-6 py-4 flex items-center gap-2" />
             </CustomToolTip>
           </SidebarMenuItem>
         </SidebarMenu>
