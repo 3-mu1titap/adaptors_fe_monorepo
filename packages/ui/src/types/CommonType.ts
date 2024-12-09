@@ -115,3 +115,10 @@ export interface ApiResponse {
   pageable: pageableType;
   totalPages: number;
 }
+
+export interface TableHeaderPropsType {
+  id: number;
+  name: string;
+  icon?: JSX.Element;
+  onClick?: () => void;
+}

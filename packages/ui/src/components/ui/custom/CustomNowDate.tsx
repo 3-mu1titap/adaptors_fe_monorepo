@@ -10,7 +10,7 @@ const FlipUnit = ({ value }: { value: number }) => {
       const timeout = setTimeout(() => {
         setPrevious(value);
         setIsFlipping(false);
-      }, 500); // 애니메이션 시간과 일치
+      }, 600); // 애니메이션 시간과 일치
       return () => clearTimeout(timeout);
     }
   }, [value, previous]);
@@ -19,20 +19,20 @@ const FlipUnit = ({ value }: { value: number }) => {
       <li className="before">
         <a>
           <div className="up">
-            <div className="inn">{previous}</div>
+            <div className="inn">{previous.toString().padStart(2, '0')}</div>
           </div>
           <div className="down">
-            <div className="inn">{previous}</div>
+            <div className="inn">{previous.toString().padStart(2, '0')}</div>
           </div>
         </a>
       </li>
       <li className="active">
         <a>
           <div className="up">
-            <div className="inn">{value}</div>
+            <div className="inn">{value.toString().padStart(2, '0')}</div>
           </div>
           <div className="down">
-            <div className="inn">{value}</div>
+            <div className="inn">{value.toString().padStart(2, '0')}</div>
           </div>
         </a>
       </li>

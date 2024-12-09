@@ -11,16 +11,18 @@ function ClientContainer({ children, className }: CommonProps) {
   const query = useSearchParams();
   console.log(query.get('token'));
   return (
-    <div
-      className={cn(
-        'flex flex-col lg:flex-row items-start justify-start gap-10',
-        className
-      )}
-      style={{ gridTemplateColumns: '1fr 3fr' }}
-    >
-      {' '}
-      {children}
-    </div>
+    <section className="w-full px-4 lg:px-10 py-5 mt-[7rem]">
+      <div
+        className={cn(
+          'flex flex-col lg:flex-row items-start justify-start gap-10',
+          className
+        )}
+        style={{ gridTemplateColumns: '1fr 3fr' }}
+      >
+        {' '}
+        {children}
+      </div>
+    </section>
   );
 }
 

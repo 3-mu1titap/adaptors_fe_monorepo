@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomToolTip } from '@repo/ui/components/ui/custom/CustomToolTip';
+import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
 import {
   Sidebar,
   SidebarContent,

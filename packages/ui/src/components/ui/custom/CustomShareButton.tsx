@@ -1,5 +1,5 @@
 import { Share2Icon } from 'lucide-react';
-import { CustomToolTip } from './CustomToolTip';
+import { CustomToolTip } from './index';
 
 function CustomShareButton() {
   return (

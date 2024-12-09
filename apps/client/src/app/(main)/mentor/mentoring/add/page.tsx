@@ -12,9 +12,5 @@ export const metadata: Metadata = {
 export default async function Page() {
   const topCategories = await GetTopCategoryList();
   const hashtags = await GetHashTagsList();
-  return (
-    <main className="w-full">
-      <MentoringAddForm topCategories={topCategories} hashtags={hashtags} />
-    </main>
-  );
+  return <MentoringAddForm topCategories={topCategories} hashtags={hashtags} />;
 }

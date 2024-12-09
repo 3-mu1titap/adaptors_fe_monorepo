@@ -96,12 +96,12 @@ export default async function page() {
   ];
   return (
     <CommonLayout className="flex">
-      <MentorSection
+      {/* <MentorSection
         mentorUuid={
           MentoringInfoData?.mentorUuid ? MentoringInfoData?.mentorUuid : ''
         }
         mentoringSessionList={mentoringSessionList}
-      />
+      /> */}
       <MentoringReview comments={comments} />
     </CommonLayout>
   );

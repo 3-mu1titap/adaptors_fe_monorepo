@@ -1,7 +1,8 @@
 'use client';
 import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
-import { CustomToolTip } from '@repo/ui/components/ui/custom/CustomToolTip';
+import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
 import Link from 'next/link';
+
 function MainHeaderLogo() {
   return (
     <CustomToolTip text="Adaptors Logo">

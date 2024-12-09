@@ -7,7 +7,7 @@ interface TooltipProps {
   children: ReactNode; // 툴팁이 감싸는 자식 요소
 }
 
-export function CustomToolTip({ text, children }: TooltipProps) {
+export default function CustomToolTip({ text, children }: TooltipProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({});
   const wrapperRef = useRef<HTMLDivElement | null>(null);

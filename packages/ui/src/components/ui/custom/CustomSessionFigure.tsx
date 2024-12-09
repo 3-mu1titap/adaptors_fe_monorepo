@@ -1,9 +1,7 @@
 import { CircleDashed } from 'lucide-react';
-import CustomValueUnit from './CustomValueUnit';
 import { Button } from '../button';
-import CustomReviewerItem from './CustomReviewerItem';
-import { CustomToolTip } from './CustomToolTip';
-import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType';
+import { CustomToolTip, CustomReviewerItem, CustomValueUnit } from './index';
+import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType.ts';
 
 export default function CustomSessionFigure({
   session,
