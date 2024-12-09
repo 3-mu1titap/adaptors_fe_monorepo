@@ -1,6 +1,7 @@
 import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
 import { SessionUser } from '@repo/ui/types/CommonType.js';
+import { File, User } from 'lucide-react';
 import Image from 'next/image';
 import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
 export default async function MentoringOverview({
@@ -10,6 +11,20 @@ export default async function MentoringOverview({
   MentoringInfoData: MentoringDataType;
   userData: SessionUser[];
 }) {
+  const SessionInfo = [
+    {
+      id: 1,
+      infoName: 'Session',
+      infoValue: 8,
+      icon: <File size={12} className="text-blue-500" />,
+    },
+    {
+      id: 2,
+      infoName: 'Students',
+      infoValue: 68,
+      icon: <User size={12} className="text-blue-500" />,
+    },
+  ];
   return (
     <div>
       <CustomSessionInfoTags />
