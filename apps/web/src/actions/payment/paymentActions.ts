@@ -1,12 +1,13 @@
 'use server';
-import { PaymentReqType } from '@components/types/payment/paymentType';
 import { commonResType } from '@components/types/ResponseTypes';
 import { PaymentReadyResType } from '@components/types/payment/paymentType';
 import { PaymentApprovalReqType } from '@components/types/payment/paymentType';
 import { PaymentApprovalResType } from '@components/types/payment/paymentType';
 import { options } from '../../app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
-
+import { commonRes } from '@components/types/ResponseTypes';
+import { GetMemberPointListDataType } from '@components/types/payment/paymentType';
+import { GetMemberPointListResType } from '@components/types/payment/paymentType';
 //결제준비요청
 export async function PaymentReq(
   cid: string,
@@ -24,7 +25,7 @@ export async function PaymentReq(
   const session = await getServerSession(options);
   console.log(session?.user.uuid, 'userUuid testatast');
   // const partnerUserId = session?.user.uuid;
-  const partnerUserId = 'uuid-0001';
+  const partnerUserId = '459d827a-59b2-43b7-a015-38bde218a3bc';
   const request = {
     cid,
     partnerOrderId,
@@ -79,6 +80,66 @@ export async function PaymentApproval(pg_token: string) {
     return result.result;
   } catch (error) {
     console.log('결제 준비 중', error);
+    return null;
+  }
+}
+
+//결제 후 포인트 조회
+export async function GetMemberPoint() {
+  'use server';
+
+  const session = await getServerSession(options);
+  // const userUuid = session?.user.uuid;
+  const userUuid = '459d827a-59b2-43b7-a015-38bde218a3bc';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/points?userUuid=${userUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const result: commonRes = await res.json();
+    console.log(result.result, '포인트 조회 완료');
+    return result;
+  } catch (error) {
+    console.log('회원 포인트 조회', error);
+    return null;
+  }
+}
+
+//결제 리스트 조회
+export async function GetPointList() {
+  'use server';
+
+  const session = await getServerSession(options);
+  // const userUuid = session?.user.uuid;
+  const menteeUuid = '459d827a-59b2-43b7-a015-38bde218a3bc';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/points/history?menteeUuid=${menteeUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const result = (await res.json()) as commonResType<
+      GetMemberPointListResType[]
+    >;
+    console.log(result.result, '포인트 리스트 조회');
+    return result.result;
+  } catch (error) {
+    console.log('포인트 리스트 조회', error);
     return null;
   }
 }

@@ -50,3 +50,14 @@ export interface PaymentApprovalResType {
     tax_free: number;
   };
 }
+
+//결제 후 포인트 리스트 조회
+export interface GetMemberPointListResType {
+  result: GetMemberPointListDataType[];
+}
+
+export interface GetMemberPointListDataType {
+  point: number;
+  date: Date;
+  isPayment: boolean;
+}

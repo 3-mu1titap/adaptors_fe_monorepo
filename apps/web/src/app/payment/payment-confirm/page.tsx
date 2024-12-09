@@ -16,12 +16,14 @@ async function page({ searchParams }: { searchParams: { pg_token: string } }) {
   }
 
   return (
-    <div className="flex flex-col mt-32 w-[300px] h-[300px] border-2 border-gray-200 justify-center">
-      <div className="flex flex-col">
+    <div className="flex flex-col mt-32 w-full h-full justify-center items-center">
+      <div className="flex flex-col w-[300px] h-[300px] border-2 gap-y-4 border-gray-200 justify-center items-center">
         <span> 결제가 완료되었습니다!.</span>
 
         <Link href="/mypage/volt">
-          <Button className="bg-yellow-200 py-3 mx-4">확인</Button>
+          <Button className="bg-yellow-200 py-3 mx-4 hover:bg-yellow-200">
+            확인
+          </Button>
         </Link>
       </div>
     </div>
