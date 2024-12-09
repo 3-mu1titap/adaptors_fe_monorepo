@@ -1,8 +1,7 @@
-import MentorSection from '@components/pages/main/mentoring/MentorSection';
 import MentoringReview from '@components/pages/main/mentoring/review/MentoringReview';
 
-import { MentoringDataType } from '@components/types/mentoring/mentoringTypes';
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
+import { MentoringDataType } from '@repo/ui/types/CommonType.js';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,

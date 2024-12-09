@@ -1,5 +1,5 @@
-import { SearchMentoringListType } from '@components/types/mentoring/mentoringTypes';
 import { commonResType } from '@components/types/ResponseTypes';
+import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
 
 //카테고리로 멘토링리스트 조회
 export async function GetMentoringByCategory({

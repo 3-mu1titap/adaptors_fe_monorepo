@@ -1,14 +1,10 @@
-import { Metadata } from 'next';
-import MentoringContent from '@repo/client/components/pages/main/mentor/mentoring/detail/MentoringContent';
 import {
   GetMentoringInfo,
-  GetMentoringListByMentor,
   GetMentoringSessionList,
 } from '@repo/client/actions/mentoring/mentoringAction';
-import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
-import MentoringDetailHeader from '@repo/client/components/header/MentoringDetailHeader';
-import MentoringByMentor from '@repo/client/components/pages/main/home/MentoringByMentor';
 import HomeDashboard from '@repo/client/components/pages/main/home/HomeDashboard';
+import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: `Mentoring Detail`,

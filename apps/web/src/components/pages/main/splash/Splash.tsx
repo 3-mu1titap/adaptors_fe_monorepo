@@ -2,22 +2,25 @@
 import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-
+import { useContext, useEffect, useState } from 'react';
+import { SessionContext } from 'src/app/context/SessionContext';
 function Splash() {
   const router = useRouter();
   const [showButton, setShowButton] = useState(false);
+  const { isAuth } = useContext(SessionContext);
 
   const handleStart = () => {
-    router.replace('/login');
+    if (isAuth) {
+      router.replace('/home');
+    } else {
+      router.replace('/login');
+    }
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowButton(true);
     }, 500);
-
-    return () => clearTimeout(timer);
   }, []);
 
   return (

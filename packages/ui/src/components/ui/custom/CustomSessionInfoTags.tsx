@@ -5,7 +5,7 @@ export interface SessionInfo {
   infoValue: number;
   icon: JSX.Element;
 }
-const SessionInfo = [
+const DefaultSessionInfo = [
   {
     id: 1,
     infoName: 'Session',
@@ -25,7 +25,12 @@ const SessionInfo = [
     icon: <ChartColumn size={12} className="text-blue-500" />,
   },
 ];
-function CustomSessionInfoTags() {
+function CustomSessionInfoTags({
+  SessionInfoProps,
+}: {
+  SessionInfoProps?: SessionInfo[];
+}) {
+  const SessionInfo = SessionInfoProps ? SessionInfoProps : DefaultSessionInfo;
   return (
     <div className="flex items-center justify-start gap-3">
       {SessionInfo.map((info) => (

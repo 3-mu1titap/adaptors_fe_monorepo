@@ -1,12 +1,12 @@
 'use client';
-import React from 'react';
+
 import {
-  SearchMentoringListType,
   pageableType,
-} from '@components/types/mentoring/mentoringTypes';
-import SearhMentoringCard from './SearhMentoringCard';
-import { useState, useEffect } from 'react';
+  SearchMentoringListType,
+} from '@repo/ui/types/CommonType.ts';
+import { useEffect, useState } from 'react';
 import { GetMentoringNameSearch } from 'src/actions/mentoring/mentoringAction';
+import SearhMentoringCard from './SearhMentoringCard';
 function SearchMentoring({
   content,
   pageable,
