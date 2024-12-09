@@ -1,4 +1,7 @@
-import { MentoringDataType, MentoringResult } from '@repo/ui/types/CommonType';
+import {
+  MentoringDataType,
+  MentoringResult,
+} from '@repo/ui/types/CommonType.ts';
 import CustomDateBadge from './CustomDateBadge';
 import CustomSessionFigure from './CustomSessionFigure';
 

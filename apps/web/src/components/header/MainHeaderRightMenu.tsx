@@ -6,7 +6,7 @@ import { useSession } from 'src/app/context/SessionContext';
 
 function MainHeaderRightMenu({ openSideBar }: { openSideBar: () => void }) {
   const session = useSession();
-  // console.log(session?.isAuth);
+  console.log(session?.isAuth);
   const handleOpenApp = async () => {
     const token = 'jasonahn'; // 로그인 토큰
 

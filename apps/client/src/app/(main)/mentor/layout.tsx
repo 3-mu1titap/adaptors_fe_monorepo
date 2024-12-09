@@ -1,5 +1,5 @@
+import ClientContainer from '@repo/client/components/common/layouts/ClientContainer';
 import MentoringHeader from '@repo/client/components/header/MentoringHeader';
-import React from 'react';
 
 export default function layout({
   children,
@@ -7,7 +7,7 @@ export default function layout({
   return (
     <main className="w-full relative bg-slate-50">
       <MentoringHeader />
-      {children}
+      <ClientContainer>{children}</ClientContainer>
     </main>
   );
 }

@@ -114,3 +114,10 @@ export interface ApiResponse {
   content: SearchMentoringListType[];
   pageable: pageableType;
 }
+
+export interface TableHeaderPropsType {
+  id: number;
+  name: string;
+  icon?: JSX.Element;
+  onClick?: () => void;
+}

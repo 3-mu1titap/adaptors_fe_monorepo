@@ -16,10 +16,10 @@ export default async function page({
   return (
     <main className="mt-[7rem]">
       {/* <PaperStock /> */}
-      <CategoryAside categoryParam={searchParams.category} />
+      {/* <CategoryAside categoryParam={searchParams.category} />
       {searchParams.category && (
         <ListSection category={searchParams.category} />
-      )}
+      )} */}
     </main>
   );
 }

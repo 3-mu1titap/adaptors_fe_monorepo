@@ -4,7 +4,8 @@ import { SessionUser } from '@repo/ui/types/CommonType.js';
 import { File, User } from 'lucide-react';
 import Image from 'next/image';
 import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
-export default async function MentoringOverview({
+
+export default function MentoringOverview({
   MentoringInfoData,
   userData,
 }: {
@@ -42,19 +43,19 @@ export default async function MentoringOverview({
       <div className="relative w-full h-[400px] p-5 mt-8 rounded-xl object-cover overflow-hidden bg-gray-200">
         {MentoringInfoData.categoryList && (
           <ul className="flex gap-3 absolute top-5 left-5">
-            {MentoringInfoData?.categoryList[0]?.topCategoryName && (
+            {MentoringInfoData.categoryList[0]?.topCategoryName && (
               <li className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white">
-                {MentoringInfoData?.categoryList[0].topCategoryName}
+                {MentoringInfoData.categoryList[0].topCategoryName}
               </li>
             )}
-            {MentoringInfoData?.categoryList[0]?.middleCategoryName && (
+            {MentoringInfoData.categoryList[0]?.middleCategoryName && (
               <li className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white">
-                {MentoringInfoData?.categoryList[0].middleCategoryName}
+                {MentoringInfoData.categoryList[0].middleCategoryName}
               </li>
             )}
-            {MentoringInfoData?.categoryList[0]?.bottomCategoryName && (
+            {MentoringInfoData.categoryList[0]?.bottomCategoryName && (
               <li className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white">
-                {MentoringInfoData?.categoryList[0].bottomCategoryName}
+                {MentoringInfoData.categoryList[0].bottomCategoryName}
               </li>
             )}
           </ul>
