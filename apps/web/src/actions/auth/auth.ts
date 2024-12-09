@@ -14,7 +14,7 @@ export async function postUserData(userData: {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH}/sign-up`, {
       cache: 'no-cache',
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -23,6 +23,7 @@ export async function postUserData(userData: {
       }),
     });
     const result = (await res.json()) as commonResType<any[]>;
+    console.log(result);
     return result.result;
   } catch (error) {
     console.error('회원가입 에러: ', error);
@@ -35,7 +36,7 @@ export async function findId(email: string): Promise<any> {
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/find-id`,
       {
         cache: 'no-cache',
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -58,7 +59,7 @@ export async function resetPassword(accountId: string): Promise<any> {
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/reset-password`,
       {
         cache: 'no-cache',
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
