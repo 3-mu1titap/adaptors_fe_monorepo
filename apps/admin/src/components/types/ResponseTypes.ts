@@ -3,5 +3,5 @@ export interface commonResType<T> {
   isSuccess: boolean;
   code: number;
   message: string;
-  result: T[];
+  result: T;
 }

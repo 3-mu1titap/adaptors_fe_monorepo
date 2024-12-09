@@ -70,18 +70,21 @@ export default function MentoringOverview({
 
       <div className="bg-white p-4 rounded-lg shadow-sm">
         <ul className="flex gap-3 py-3">
-          <li className="bg-adaptorsBlue py-2 px-3 rounded-2xl text-white text-md ">
+          <li className="bg-adaptorsBlue/40 py-2 px-3 rounded-2xl text-white text-md ">
             #해시태그1
           </li>
-          <li className="bg-adaptorsBlue py-2 px-3 rounded-2xl text-white text-md">
+          <li className="bg-adaptorsBlue/40 py-2 px-3 rounded-2xl text-white text-md">
             #해시태그2
           </li>
-          <li className="bg-adaptorsBlue py-2 px-3 rounded-2xl text-white text-md">
+          <li className="bg-adaptorsBlue/40 py-2 px-3 rounded-2xl text-adaptorsBlue text-md">
             #해시태그32398
           </li>
         </ul>
       </div>
-      <div dangerouslySetInnerHTML={{ __html: MentoringInfoData.detail }} />
+      <div
+        dangerouslySetInnerHTML={{ __html: MentoringInfoData.detail }}
+        className="py-3"
+      />
     </div>
   );
 }
