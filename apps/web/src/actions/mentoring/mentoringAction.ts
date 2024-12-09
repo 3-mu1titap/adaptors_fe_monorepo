@@ -1,5 +1,4 @@
 'use server';
-
 import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
@@ -129,10 +128,7 @@ export async function SessionCancel(request: SessionCancelType) {
 export async function GetMentoringNameSearch(
   name: string,
   page: number
-): Promise<{
-  content: SearchMentoringListType[];
-  pageable: pageableType;
-} | null> {
+): Promise<ApiResponse | null> {
   'use server';
 
   try {

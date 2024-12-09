@@ -113,4 +113,5 @@ export interface pageableType {
 export interface ApiResponse {
   content: SearchMentoringListType[];
   pageable: pageableType;
+  totalPages: number;
 }

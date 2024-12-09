@@ -1,5 +1,5 @@
 import CustomFitImage from './CustomFitImage';
-import { CustomToolTip } from './CustomToolTip';
+
 import CustomLikeButton from './CustomLikeButton';
 import CustomMentorProfilePhoto from './CustomMentorProfilePhoto';
 import CustomNowDate from './CustomNowDate';
@@ -10,6 +10,7 @@ import CustomMentorProfile from './CustomMentorProfile';
 import CustomValueUnit from './CustomValueUnit';
 import UserCount from './UserCount';
 import UserProfile from './UserProfile';
+import { CustomToolTip } from './CustomToolTip';
 
 export {
   CustomFitImage,

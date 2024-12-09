@@ -110,6 +110,19 @@ export interface pageableType {
 
 // API 전체 응답 타입 정의
 export interface ApiResponse {
+  json():
+    | {
+        content: SearchMentoringListType[];
+        pageable: pageableType;
+        totalpages: number;
+      }
+    | PromiseLike<{
+        content: SearchMentoringListType[];
+        pageable: pageableType;
+        totalpages: number;
+      } | null>
+    | null;
   content: SearchMentoringListType[];
   pageable: pageableType;
+  totalPages: number;
 }

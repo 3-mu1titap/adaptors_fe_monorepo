@@ -11,7 +11,6 @@ import {
 } from '@repo/ui/components/ui/dialog';
 import { useState, useEffect } from 'react';
 import { Input } from '@repo/ui/components/ui/input';
-import { Label } from '@repo/ui/components/ui/label';
 import Link from 'next/link';
 export function SearchDialog({
   isOpen,
