@@ -14,11 +14,7 @@ import SwiperIndex from '../MainIntro/SwiperIndex';
 import TitleSection from '@components/common/TitleSection';
 import InnerButton from '@components/ui/Button/InnerButton';
 import { TopCategoryListDataType } from '@components/types/Category/CategoryType';
-function PopularMentoringList({
-  categoryList,
-}: {
-  categoryList: TopCategoryListDataType[];
-}) {
+function PopularMentoringList({ categoryList }: { categoryList: any }) {
   const data = courses; // 데이터 복제
   const swiperRef = useRef<any>(null); // Swiper 인스턴스를 참조하기 위한 ref
   const [SlideIndex, setSlideIndex] = useState(0);
@@ -54,16 +50,20 @@ function PopularMentoringList({
       >
         <TitleSection title="인기멘토링" subtitle="POPULAR COURSES" />
         <div className="flex flex-wrap justify-center gap-1 mb-4">
-          {categoryList.map((category, index) => (
-            <InnerButton
-              key={category.id}
-              className="mr-2 py-3 mb-2 opacity-80"
-              title={' ' + category.topCategoryName}
-              onClick={() => console.log('click')}
-              colorType={'secondary'}
-              isDisabled={false}
-            />
-          ))}
+          {categoryList && categoryList.length > 0 ? (
+            categoryList.map((category: TopCategoryListDataType) => (
+              <InnerButton
+                key={category.id}
+                className="mr-2 py-3 mb-2 opacity-80"
+                title={' ' + category.topCategoryName}
+                onClick={() => console.log('click')}
+                colorType={'secondary'}
+                isDisabled={false}
+              />
+            ))
+          ) : (
+            <div>카테고리가 없습니다</div>
+          )}
         </div>
         {/* 좌측 버튼 */}
         <div

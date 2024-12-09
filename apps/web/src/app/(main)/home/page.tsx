@@ -15,13 +15,15 @@ async function Page() {
   const category_res = await getTopCategoryList();
   console.log(category_res, '대카테고리 불러오기');
   return (
-    <CommonLayout className="mt-[7rem]">
-      <MainSearchTag />
-      <MainIntro />
-      <PopularMentoringList categoryList={category_res} />
-      <RecommendMentoring item={res} />
-      <ShareMentoring />
-    </CommonLayout>
+    <>
+      <CommonLayout className="mt-[7rem]">
+        <MainSearchTag />
+        <MainIntro />
+        {category_res && <PopularMentoringList categoryList={category_res} />}
+        <RecommendMentoring item={res} />
+        <ShareMentoring />
+      </CommonLayout>
+    </>
   );
 }
 
