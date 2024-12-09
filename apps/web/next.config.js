@@ -9,6 +9,7 @@ module.exports = {
       'i.pinimg.com',
       'picsum.photos',
       'd2v80xjmx68n4w.cloudfront.net',
+      'www.sportschosun.com',
     ],
   },
   experimental: {

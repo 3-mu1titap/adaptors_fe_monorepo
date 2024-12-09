@@ -1,10 +1,11 @@
 'use client';
+import { options } from '@repo/client/app/api/auth/[...nextauth]/options';
 import { Eye, EyeOff } from 'lucide-react';
+import { getServerSession } from 'next-auth';
 import { getSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-
 export default function LoginForm() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -23,20 +24,21 @@ export default function LoginForm() {
         redirect: false,
       });
 
-      if (result?.error) {
+      if (result?.status == 401) {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
-      } else {
-        const updatedSession = await getSession();
-        if (updatedSession) {
-          const role = updatedSession.user?.role;
-
-          // role에 따라 페이지 라우팅
-          if (role === 'MENTEE') {
-            router.push('/mentee');
-          } else if (role === 'MENTOR') {
-            router.push('/mentor');
-          }
-        }
+      } else if (result?.status == 200) {
+        console.log(result?.status == 200);
+        router.push('/home');
+        // if (updatedSession) {
+        //   const role = updatedSession.user?.role;
+        //   console.log(role);
+        //   // role에 따라 페이지 라우팅
+        //   if (role === 'MENTEE') {
+        //     router.push('/home');
+        //   } else if (role === 'MENTOR') {
+        //     router.push('/home');
+        //   }
+        // }
       }
     } catch (error) {
       console.error(error);

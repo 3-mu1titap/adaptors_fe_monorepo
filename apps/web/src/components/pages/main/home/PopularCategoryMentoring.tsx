@@ -2,6 +2,7 @@ import React from 'react';
 import { PopluarCategoryItemType } from '../../../types/Category/PopularCategoryType';
 import RateViewer from '@components/common/RateViwer';
 import Link from 'next/link';
+import { TopCategoryListDataType } from '@components/types/Category/CategoryType';
 function PopularCategoryMentoring({
   item,
   isRole,

@@ -7,7 +7,7 @@ interface SessionContextType {
 }
 const initialSessionContext: SessionContextType = {
   isAuth: false,
-  role: 'mentee',
+  role: 'MENTEE',
 };
 export const SessionContext = createContext<SessionContextType>(
   initialSessionContext

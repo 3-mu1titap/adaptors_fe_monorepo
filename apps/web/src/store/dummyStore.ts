@@ -137,7 +137,7 @@ export const categories = [
 
 export const courses = [
   {
-    mentorUuId: 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb',
+    mentorUuId: 'fa3e86e0-afea-4a1d-9c93-cbdb642afbd3',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -147,7 +147,7 @@ export const courses = [
   },
 
   {
-    mentorUuId: '1',
+    mentorUuId: 'fa3e86e0-afea-4a1d-9c93-cbdb642afbd3',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -157,7 +157,7 @@ export const courses = [
   },
 
   {
-    mentorUuId: '2',
+    mentorUuId: 'fa3e86e0-afea-4a1d-9c93-cbdb642afbd3',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',
@@ -167,7 +167,7 @@ export const courses = [
   },
 
   {
-    mentorUuId: '3',
+    mentorUuId: 'fa3e86e0-afea-4a1d-9c93-cbdb642afbd3',
     id: 0,
     title: 'Education Software and PHP and JS System Script',
     duration: '55 WEEKS',

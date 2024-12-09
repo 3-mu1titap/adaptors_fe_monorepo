@@ -47,7 +47,7 @@ export async function GetBestMentorList() {
       }
     );
     const result = (await res.json()) as commonResType<BestMentorType[]>;
-    console.log(result.result, '베스트 멘토 리스트 불러오기 성공');
+    // console.log(result.result, '베스트 멘토 리스트 불러오기 성공');
     return result.result;
   } catch (error) {
     console.error('멘토의 멘토링 리스트 조회 : ', error);

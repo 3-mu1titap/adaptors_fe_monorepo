@@ -38,6 +38,7 @@ export default async function RootLayout({
   const session = await getServerSession(options);
   const isAuth = session?.user ? true : false;
   const role = session?.user?.role ?? null;
+  console.log(isAuth, role, 'test test test1');
   return (
     <html lang="en">
       <body className={`${inter.className}`}>

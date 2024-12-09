@@ -131,9 +131,9 @@ export const options: NextAuthOptions = {
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
         session.user.role = token.role;
-        const profileData = await getProfileIamge(token.uuid);
-        session.user.profileImageUrl = profileData.profileImageUrl;
-        session.user.nickName = profileData.nickName;
+        // const profileData = await getProfileIamge(token.uuid);
+        // session.user.profileImageUrl = profileData.profileImageUrl;
+        // session.user.nickName = profileData.nickName;
       }
       // if (token.error) {
       //   session.error = token.error; // 에러 상태를 세션으로 전달
