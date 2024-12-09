@@ -71,13 +71,25 @@ export default function FileUpload({
     }
   };
   const handleNextButton = async () => {
+    if (file) {
+      try {
+        const imageUrl = await uploadFileToS3(file, 'profile');
+        console.log(uuid, imageUrl);
+        uploadProfileIamge({
+          uuid,
+          profileImage: imageUrl,
+        });
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
     if (thumbnailUrl) {
       uploadProfileIamge({
         uuid,
         profileImage: thumbnailUrl,
       });
     }
-    handleButton();
+    // handleButton();
   };
 
   return (
@@ -121,12 +133,14 @@ export default function FileUpload({
           </button>
         </span>
       )}
-      <NextButton
+      {/* <NextButton
         onClick={handleMentoringImg}
         text="프로필 이미지 등록"
         colorType="secondary"
         textColor="text-white"
-      />
+        disabled={!file}
+        className={`${file ? `` : `bg-gray-200 hover:bg-gray-200`}`}
+      /> */}
       <NextButton onClick={handleNextButton} disabled={false} text="next" />
     </div>
   );
