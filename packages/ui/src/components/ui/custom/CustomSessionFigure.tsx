@@ -1,4 +1,4 @@
-import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType';
+import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType.ts';
 import { CircleDashed } from 'lucide-react';
 import { Button } from '../button';
 import CustomReviewerItem from './CustomReviewerItem';
@@ -9,7 +9,7 @@ export default function CustomSessionFigure({
   mentoringName = 'mentoring Name',
 }: {
   session: MentoringSession;
-  mentoringName: string;
+  mentoringName?: string;
 }) {
   const formatTime = (time: SessionTime | string) => {
     if (typeof time === 'string') {

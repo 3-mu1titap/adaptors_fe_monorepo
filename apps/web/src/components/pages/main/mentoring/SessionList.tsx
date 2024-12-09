@@ -1,9 +1,9 @@
 'use client';
 import ChevronText from '@components/ui/Text/ChevronText';
 import DateBadge from '@components/ui/Text/DateBadge';
+import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
-import { MentoringResult } from '../../../types/mentoring/mentoringTypes';
 import SessionFigure from './review/SessionFigure';
 
 export default function SessionList({

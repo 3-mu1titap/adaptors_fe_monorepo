@@ -1,7 +1,7 @@
 'use client';
+import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { MentoringResult } from '../../../types/mentoring/mentoringTypes';
 
 interface CalendarDay {
   date: number;

@@ -1,9 +1,9 @@
-import { SessionUser } from '@components/types/mentoring/mentoringTypes';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@repo/ui/components/ui/avatar';
+import { SessionUser } from '@repo/ui/types/CommonType.ts';
 
 export default function Avatars({
   participate,

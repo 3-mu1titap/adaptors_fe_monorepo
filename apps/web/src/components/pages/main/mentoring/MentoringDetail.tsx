@@ -4,9 +4,9 @@ import CustomSessionList from '@repo/ui/components/ui/custom/CustomSessionList';
 import {
   MentoringDataType,
   MentoringResult,
-} from '../../../types/mentoring/mentoringTypes';
+} from '@repo/ui/types/CommonType.ts';
 import MentoringOverview from './MentoringOverview';
-import MentoringReviewSection from './review/MentoringReviewSection';
+import MentorSection from './MentorSection';
 export default async function MentoringCalendar({
   mentoringDate,
   mentoringUuid,
@@ -18,19 +18,6 @@ export default async function MentoringCalendar({
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType | null;
 }) {
-  // const mentoringSessionList: MentoringResult[] | [] =
-  //   await GetMentoringSessionList('8e68777e-47ae-46c6-a42b-389d459c8f21');
-  // const MentoringInfoData: MentoringDataType | null = await GetMentoringInfo(
-  //   '8e68777e-47ae-46c6-a42b-389d459c8f21'
-  // );
-  // const userData = await getReviewerProfile(
-  //   '8e68777e-47ae-46c6-a42b-389d459c8f21'
-  // );
-  // const mentoringSessionList: MentoringResult[] | [] =
-  //   await GetMentoringSessionList(mentoringUuid);
-  // const MentoringInfoData: MentoringDataType | null =
-  //   await GetMentoringInfo(mentoringUuid);
-  // const data = await getReviewerProfile(mentoringUuid);
   const userData = [
     {
       userUuid: '389d459sssc8f21',
@@ -60,7 +47,7 @@ export default async function MentoringCalendar({
       className=" mx-auto flex gap-10 my-4 px-4 md:px-8 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] relative"
     >
       {/* Left Section */}
-      {/* <MentorSection
+      <MentorSection
         mentorUuid={MentoringInfoData?.mentorUuid || ''}
         mentoringSessionList={mentoringSessionList}
         userData={userData}
@@ -77,7 +64,6 @@ export default async function MentoringCalendar({
           filteredList={filteredList}
           mentoringName={MentoringInfoData}
         />
-        <MentoringReviewSection />
       </SeparateContainer.RightSide>
     </CommonLayout>
   );

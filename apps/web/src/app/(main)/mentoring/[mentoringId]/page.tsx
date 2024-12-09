@@ -1,21 +1,17 @@
 import MentoringDetail from '@components/pages/main/mentoring/MentoringDetail';
+
+import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
 } from '../../../../actions/mentoring/mentoringAction';
-import {
-  MentoringDataType,
-  MentoringResult,
-} from '@components/types/mentoring/mentoringTypes';
 
 async function fetchMentoringData(mentoringUuid: string) {
   const mentoringSessionList: MentoringResult[] =
     await GetMentoringSessionList(mentoringUuid);
-  const MentoringInfoData: MentoringDataType | null =
-    await GetMentoringInfo(mentoringUuid);
+  const MentoringInfoData = await GetMentoringInfo(mentoringUuid);
   return { mentoringSessionList, MentoringInfoData };
 }
-
 async function Page({
   searchParams,
   params,
@@ -25,7 +21,7 @@ async function Page({
 }) {
   const selectedDate = searchParams.selectedDate || '';
   const { mentoringSessionList, MentoringInfoData } = await fetchMentoringData(
-    params.mentoringId
+    '8e68777e-47ae-46c6-a42b-389d459c8f21'
   );
 
   return (

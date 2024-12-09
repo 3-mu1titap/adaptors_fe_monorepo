@@ -10,7 +10,7 @@ function CustomSessionList({
   mentoringName,
 }: {
   filteredList: MentoringResult[];
-  mentoringName: MentoringDataType;
+  mentoringName: MentoringDataType | null;
 }) {
   return (
     <div className="space-y-6">
@@ -21,7 +21,7 @@ function CustomSessionList({
             {sessions.mentoringSessionResponseDtoList.map((session) => (
               <CustomSessionFigure
                 session={session}
-                mentoringName={mentoringName.name}
+                mentoringName={mentoringName?.name}
                 key={session.sessionUuid}
               />
             ))}

@@ -27,7 +27,6 @@ export async function GetSettleList(
       }
     );
     const result = (await res.json()) as commonResType<settleListDataType>;
-    console.log(result);
     return result.result;
   } catch (error) {
     console.error('기간 별 정산 내역 조회 실패 : ', error);

@@ -3,19 +3,18 @@
 import type {
   HashtagDataType,
   MentoringAddFormType,
-  MentoringSessionDataType,
   MiddleCategoryDataType,
   SessionTimeDataType,
   SessionTimeValidationType,
   TopCategoryDataType,
 } from '@repo/client/components/types/main/mentor/mentoringTypes';
 import { commonResType } from '@repo/client/components/types/ResponseTypes';
-import { redirect } from 'next/navigation';
 import {
   MentoringDataType,
   MentoringResult,
   SearchMentoringListType,
 } from '@repo/ui/types/CommonType.ts';
+import { redirect } from 'next/navigation';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
@@ -209,7 +208,6 @@ export async function GetMentoringSessionList(
       }
     );
     const result = (await res.json()) as commonResType<MentoringResult[]>;
-    console.log(result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 정보 조회 : ', error);

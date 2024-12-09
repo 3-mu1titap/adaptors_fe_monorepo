@@ -1,9 +1,8 @@
 import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
-import { SessionUser } from '@repo/ui/types/CommonType.js';
+import { MentoringDataType, SessionUser } from '@repo/ui/types/CommonType.ts';
 import { File, User } from 'lucide-react';
 import Image from 'next/image';
-import { MentoringDataType } from '../../../types/mentoring/mentoringTypes';
 
 export default function MentoringOverview({
   MentoringInfoData,

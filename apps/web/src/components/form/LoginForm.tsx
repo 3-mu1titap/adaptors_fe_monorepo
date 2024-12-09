@@ -25,7 +25,6 @@ export default function LoginForm() {
         password: pw,
         redirect: false,
       });
-      console.log(result);
       if (result?.status == 401) {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
       } else if (result?.status == 200) {
