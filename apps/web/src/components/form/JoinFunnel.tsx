@@ -61,8 +61,7 @@ export default function JoinFunnel({
     };
     const data = await postUserData(combinedFormData);
     setUuid(data);
-    console.log(data);
-    // onNextStep();
+    onNextStep();
   };
 
   const onClickNext = () => {

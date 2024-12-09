@@ -59,35 +59,30 @@ export default function FileUpload({
     setPreview(null);
   };
 
-  const handleMentoringImg = async () => {
-    if (!file) return;
-    try {
-      const res = await uploadFileToS3(file, 'profile');
-      if (res) {
-        setThumbnailUrl(res);
-      }
-    } catch (error) {
-      console.error('Error uploading image:', error);
-    }
-  };
+  // const handleMentoringImg = async () => {
+  //   if (!file) return;
+  //   try {
+  //     const res = await uploadFileToS3(file, 'profile');
+  //     if (res) {
+  //       setThumbnailUrl(res);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error uploading image:', error);
+  //   }
+  // };
   const handleNextButton = async () => {
     if (file) {
       try {
         const imageUrl = await uploadFileToS3(file, 'profile');
         console.log(uuid, imageUrl);
-        uploadProfileIamge({
+        await uploadProfileIamge({
           uuid,
           profileImage: imageUrl,
         });
+        handleButton();
       } catch (error) {
         console.error('Error uploading image:', error);
       }
-    }
-    if (thumbnailUrl) {
-      uploadProfileIamge({
-        uuid,
-        profileImage: thumbnailUrl,
-      });
     }
     // handleButton();
   };

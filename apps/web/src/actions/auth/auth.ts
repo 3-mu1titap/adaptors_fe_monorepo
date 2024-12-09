@@ -1,6 +1,9 @@
 'use server';
 
 import { commonResType } from '@components/types/ResponseTypes';
+interface PostUserDataRes {
+  uuid: string;
+}
 
 export async function postUserData(userData: {
   name: string;
@@ -10,24 +13,32 @@ export async function postUserData(userData: {
   password: string;
   phoneNumber: string;
   role: string;
-}): Promise<any> {
+}): Promise<string> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH}/sign-up`, {
-      cache: 'no-cache',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userData: userData,
-      }),
-    });
-    const result = (await res.json()) as commonResType<any[]>;
-    console.log(result);
-    return result.result;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH}api/v1/auth/sign-up`,
+      {
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: userData.name,
+          nickName: userData.nickName,
+          email: userData.email,
+          accountId: userData.accountId,
+          password: userData.password,
+          phoneNumber: userData.phoneNumber,
+          role: userData.role,
+        }),
+      }
+    );
+    const result = (await res.json()) as commonResType<any>;
+    return result.result.uuid;
   } catch (error) {
-    console.error('회원가입 에러: ', error);
-    return [];
+    // console.error('회원가입 에러: ', error);
+    return 'error';
   }
 }
 export async function findId(email: string): Promise<any> {
