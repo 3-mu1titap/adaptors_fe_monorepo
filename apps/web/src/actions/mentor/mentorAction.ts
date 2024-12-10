@@ -1,4 +1,4 @@
-import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
+import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
 import { commonResType } from '../../components/types/ResponseTypes';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(

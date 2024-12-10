@@ -1,9 +1,10 @@
-import Smile from '@components/assets/icons/Smile';
-import Terrified from '@components/assets/icons/Terrified';
-import { CommonLayout } from '@components/common/commomLayout';
-import { feedbackResult } from '@components/types/AI-feedback/requestTypes';
 import { Badge } from '@repo/ui/components/ui/badge';
+import { CommonLayout } from '../../common/commomLayout';
+import { feedbackResult } from '../../types/AI-feedback/requestTypes';
 import BadgeAndFeedback from './BadgeAndFeedback';
+
+import { Smile } from 'lucide-react';
+import Terrified from '../../assets/icons/Terrified';
 
 export default function FeedbackResult({
   feedback,

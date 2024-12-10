@@ -1,10 +1,11 @@
 'use client';
-import { CommonLayout } from '@components/common/commomLayout';
-import FileUploadForm from '@components/form/FileUploadForm';
-import UploadCoverLetterForm from '@components/form/UploadCoverLetterForm';
-import RadioButton from '@components/ui/radio/RadioButton';
-import ChevronText from '@components/ui/Text/ChevronText';
+
 import { useState } from 'react';
+import { CommonLayout } from '../../common/commomLayout';
+import FileUploadForm from '../../form/FileUploadForm';
+import UploadCoverLetterForm from '../../form/UploadCoverLetterForm';
+import ChevronText from '../../ui/Text/ChevronText';
+import RadioButton from '../../ui/radio/RadioButton';
 
 const industry = [
   { value: 'IT', label: 'IT' },

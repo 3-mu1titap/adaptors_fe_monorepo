@@ -1,6 +1,5 @@
-import React from 'react';
-import { Card, CardContent, CardHeader } from '@repo/ui/components/ui/card';
-import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
+import { Card, CardContent } from '@repo/ui/components/ui/card';
+import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
 import Image from 'next/image';
 
 function CurrentMentoringCard({ item }: { item: MentorMentoringListDataType }) {

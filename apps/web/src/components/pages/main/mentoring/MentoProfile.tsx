@@ -1,8 +1,7 @@
-import LikeButton from '@components/ui/Button/LikeButton';
-import { getProfileIamge } from 'src/actions/profile/getProfileData';
+import { userProfileType } from '@repo/web/components/types/profile/RequestType';
+import LikeButton from '@repo/web/components/ui/Button/LikeButton';
 import Share from '../../../assets/icons/Share';
 import FitImage from '../../../ui/image/fit-image';
-import { userProfileType } from '@components/types/profile/RequestType';
 export default function MentoProfile({
   mentorUuid,
   mentorProfile,

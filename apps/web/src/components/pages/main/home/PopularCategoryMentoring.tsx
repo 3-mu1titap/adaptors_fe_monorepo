@@ -1,7 +1,6 @@
-import React from 'react';
-import { PopluarCategoryItemType } from '../../../types/Category/PopularCategoryType';
-import RateViewer from '@components/common/RateViwer';
+import RateViewer from '@repo/web/components/common/RateViwer';
 import Link from 'next/link';
+import { PopluarCategoryItemType } from '../../../types/Category/PopularCategoryType';
 function PopularCategoryMentoring({
   item,
   isRole,

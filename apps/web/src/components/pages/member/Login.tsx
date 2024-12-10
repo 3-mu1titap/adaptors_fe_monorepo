@@ -1,4 +1,4 @@
-import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
+import AdaptorsLogoIcon from '@repo/web/components/assets/icons/AdaptorsLogo';
 import LoginForm from '../../form/LoginForm';
 import PolicyLinks from './PolicyLinks';
 import Separator from './Separator';

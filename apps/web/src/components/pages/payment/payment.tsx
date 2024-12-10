@@ -1,19 +1,20 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { PaymentReadyResType } from '@components/types/payment/paymentType';
 import { Button } from '@repo/ui/components/ui/button';
-import { PaymentReq } from 'src/actions/payment/paymentActions';
-import { useSession } from 'next-auth/react';
 import {
   Card,
-  CardHeader,
   CardContent,
-  CardTitle,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from '@repo/ui/components/ui/card';
+import {
+  BoltItem,
+  PaymentReadyResType,
+} from '@repo/web/components/types/payment/paymentType';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { PaymentReq } from 'src/actions/payment/paymentActions';
 import TextTitleSection from '../main/mypage/compoent/TextTitleSection';
-import { BoltItem } from '@components/types/payment/paymentType';
 function Payment() {
   const BoltItem = [
     { id: 0, itemName: 'Volt', count: 10, price: 1000 },

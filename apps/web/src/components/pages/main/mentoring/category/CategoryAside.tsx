@@ -1,4 +1,4 @@
-import Thunder from '@components/assets/icons/Thunder';
+import Thunder from '@repo/web/components/assets/icons/Thunder';
 import Link from 'next/link';
 import { getTopCategoryList } from 'src/actions/category/getCategory';
 

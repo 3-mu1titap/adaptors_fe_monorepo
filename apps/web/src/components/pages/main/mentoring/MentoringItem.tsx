@@ -1,5 +1,5 @@
-import RateViewer from '@components/common/RateViwer';
 import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
+import RateViewer from '@repo/web/components/common/RateViwer';
 import Link from 'next/link';
 
 export default function MentoringItem({

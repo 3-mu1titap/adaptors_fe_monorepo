@@ -1,6 +1,6 @@
 'use server';
 
-import { commonResType } from '@components/types/ResponseTypes';
+import { commonResType } from '@repo/web/components/types/ResponseTypes';
 interface PostUserDataRes {
   uuid: string;
 }

@@ -1,8 +1,8 @@
-import CommonSidebar from '@components/aside/CommonSiderbar';
 import {
   SidebarProvider,
   SidebarTrigger,
 } from '@repo/ui/components/ui/sidebar';
+import CommonSidebar from '@repo/web/components/aside/CommonSiderbar';
 import React from 'react';
 function Layout({ children }: { children: React.ReactNode }) {
   return (

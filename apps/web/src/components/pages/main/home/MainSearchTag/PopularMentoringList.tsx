@@ -1,18 +1,18 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import 'swiper/css';
 
 import { cn } from '@repo/ui/lib/utils';
-import { CommonLayout } from '@components/common/commomLayout';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import TitleSection from '@repo/web/components/common/TitleSection';
+import InnerButton from '@repo/web/components/ui/Button/InnerButton';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSession } from 'src/app/context/SessionContext';
 import { categories, courses } from 'src/store/dummyStore';
 import { Autoplay, Navigation } from 'swiper/modules'; // Autoplay, Navigation 모듈 가져오기
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useSession } from 'src/app/context/SessionContext';
-import PopularCategoryMentoring from '../PopularCategoryMentoring';
 import SwiperIndex from '../MainIntro/SwiperIndex';
-import TitleSection from '@components/common/TitleSection';
-import InnerButton from '@components/ui/Button/InnerButton';
+import PopularCategoryMentoring from '../PopularCategoryMentoring';
 
 function PopularMentoringList() {
   const data = courses; // 데이터 복제

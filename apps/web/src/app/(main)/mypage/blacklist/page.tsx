@@ -1,5 +1,4 @@
-import React from 'react';
-import BlackListComponent from '@components/pages/main/mypage/blacklist/page';
+import BlackListComponent from '@repo/web/components/pages/main/mypage/blacklist/page';
 
 function page() {
   return (

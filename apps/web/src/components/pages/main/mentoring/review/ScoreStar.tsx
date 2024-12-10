@@ -1,5 +1,5 @@
-import { EmptyStar } from '@components/assets/icons/EmptyStar';
-import { FullStar } from '@components/assets/icons/FullStar';
+import { EmptyStar } from '@repo/web/components/assets/icons/EmptyStar';
+import { FullStar } from '@repo/web/components/assets/icons/FullStar';
 
 export default function ScoreStar({ score }: { score: number }) {
   const renderStars = () => {

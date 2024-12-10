@@ -1,7 +1,7 @@
-import { CommonLayout } from '@components/common/commomLayout';
-import { AnimatedCategories } from '@components/pages/AI-feedback/Category';
-import UploadSection from '@components/pages/AI-feedback/CoverLetterInputSection';
-import AIFeedbackInfo from '@components/ui/Text/AIFeedbackInfo';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import { AnimatedCategories } from '@repo/web/components/pages/AI-feedback/Category';
+import UploadSection from '@repo/web/components/pages/AI-feedback/CoverLetterInputSection';
+import AIFeedbackInfo from '@repo/web/components/ui/Text/AIFeedbackInfo';
 const categories = [
   { id: 'COVER_LETTER', name: '자기소개서' },
   { id: 'RESUME', name: '이력서' },

@@ -1,7 +1,7 @@
-import AdaptorcConcentImage from '@components/assets/images/AdaptorcConcentImage';
-import IntroCard from '@components/pages/member/IntroCard';
-import Login from '@components/pages/member/Login';
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
+import AdaptorcConcentImage from '@repo/web/components/assets/images/AdaptorcConcentImage';
+import IntroCard from '@repo/web/components/pages/member/IntroCard';
+import Login from '@repo/web/components/pages/member/Login';
 
 export default function page() {
   return (

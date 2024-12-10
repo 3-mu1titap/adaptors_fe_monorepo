@@ -1,6 +1,6 @@
-import Avatars from '@components/ui/Avatars/Avatars';
-import ValueUnit from '@components/ui/Text/ValueUnit';
 import { SessionUser } from '@repo/ui/types/CommonType.js';
+import Avatars from '@repo/web/components/ui/Avatars/Avatars';
+import ValueUnit from '@repo/web/components/ui/Text/ValueUnit';
 
 export default function ParticipateAndUnit({
   maxVisible = 4,

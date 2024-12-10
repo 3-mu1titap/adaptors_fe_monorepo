@@ -1,5 +1,4 @@
-import React from 'react';
-import Payment from '@components/pages/payment/payment';
+import Payment from '@repo/web/components/pages/payment/payment';
 
 function page() {
   return (

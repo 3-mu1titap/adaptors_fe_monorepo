@@ -1,5 +1,4 @@
-import React from 'react';
-import { userProfileType } from '@components/types/profile/RequestType';
+import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import Image from 'next/image';
 function MentorDetailProfile({
   MentorProfile,

@@ -1,4 +1,4 @@
-import { commonResType } from '@components/types/ResponseTypes';
+import { commonResType } from '@repo/web/components/types/ResponseTypes';
 
 // 리뷰조회
 export const getReviewerProfile = async (

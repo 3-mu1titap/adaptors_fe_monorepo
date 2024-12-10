@@ -1,16 +1,16 @@
 'use client';
-import PasswordViewer from '@components/form/PasswordViewer';
-import { Input } from '@components/ui/input/CommonInput';
+import PasswordViewer from '@repo/web/components/form/PasswordViewer';
+import { Input } from '@repo/web/components/ui/input/CommonInput';
 import { useState } from 'react';
 import { z } from 'zod';
 import { checkAccountId } from '../../../actions/auth/auth';
 import { accountFormData, accountSchema } from '../../form/signUpSchema';
 
-import InnerButton from '@components/ui/Button/InnerButton';
-import NextButton from '@components/ui/Button/NextButton';
-import Gutter from '@components/ui/Gutter';
-import TextH2 from '@components/ui/Text/TextH2';
-import ErrorToast from '@components/ui/Toast/ErrorToast';
+import InnerButton from '@repo/web/components/ui/Button/InnerButton';
+import NextButton from '@repo/web/components/ui/Button/NextButton';
+import Gutter from '@repo/web/components/ui/Gutter';
+import TextH2 from '@repo/web/components/ui/Text/TextH2';
+import ErrorToast from '@repo/web/components/ui/Toast/ErrorToast';
 import RadioButton from '../../ui/radio/RadioButton';
 import './index.css';
 

@@ -1,7 +1,7 @@
-import FindIdForm from '@components/form/FindIdForm';
-import AuthFrame from '@components/pages/member/AuthFrame';
-import Links from '@components/pages/member/Links';
-import SignInTitle from '@components/pages/member/SignInTitle';
+import FindIdForm from '@repo/web/components/form/FindIdForm';
+import AuthFrame from '@repo/web/components/pages/member/AuthFrame';
+import Links from '@repo/web/components/pages/member/Links';
+import SignInTitle from '@repo/web/components/pages/member/SignInTitle';
 
 export default function page() {
   return (

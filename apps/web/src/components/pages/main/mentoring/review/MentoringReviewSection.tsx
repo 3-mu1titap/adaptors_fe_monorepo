@@ -2,7 +2,7 @@
 
 import { Card } from '@repo/ui/components/ui/card';
 
-import ChevronText from '@components/ui/Text/ChevronText';
+import ChevronText from '@repo/web/components/ui/Text/ChevronText';
 import Link from 'next/link';
 import MentoringReview from './MentoringReview';
 // import MentoringReview from './MentoringReview';

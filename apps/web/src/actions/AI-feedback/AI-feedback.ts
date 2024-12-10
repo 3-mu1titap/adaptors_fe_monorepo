@@ -1,7 +1,7 @@
 'use server';
 
-import { feedbackResult } from '@components/types/AI-feedback/requestTypes';
-import { commonResType } from '@components/types/ResponseTypes';
+import { feedbackResult } from '@repo/web/components/types/AI-feedback/requestTypes';
+import { commonResType } from '@repo/web/components/types/ResponseTypes';
 
 export const requestAIFeedback_coverletter = async ({
   industryType,

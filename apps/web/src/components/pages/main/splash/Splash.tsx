@@ -1,5 +1,5 @@
 'use client';
-import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
+import AdaptorsLogoIcon from '@repo/web/components/assets/icons/AdaptorsLogo';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';

@@ -1,10 +1,6 @@
 'use client';
-import React from 'react';
-import { CommonLayout } from '@components/common/commomLayout';
-import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
+import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
 import CurrentMentoring from './current/CurrentMentoring';
-import MentorIntro from './MentorIntro';
-import PopularMentoring from './Popular/PopularMentoring';
 function MentorDetail({
   mentorlistItem,
 }: {

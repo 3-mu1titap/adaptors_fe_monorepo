@@ -1,5 +1,5 @@
 'use client';
-import { CommonLayout } from '@components/common/commomLayout';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import { useRef, useState } from 'react';
 import { mainIntroDatas } from 'src/store/dummyStore';
 import 'swiper/css';

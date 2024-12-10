@@ -1,6 +1,6 @@
 'use client';
 
-import { Input } from '@components/ui/input/CommonInput';
+import { Input } from '@repo/web/components/ui/input/CommonInput';
 import { useState } from 'react';
 import { postMentorProfile } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
