@@ -1,21 +1,21 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import { CheckSquare2, X } from 'lucide-react';
+import React, { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Check, CheckCircle, CheckSquare2, X } from 'lucide-react';
-import { Editor } from '@toast-ui/react-editor';
+// import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/toastui-editor.css';
-import color from '@toast-ui/editor-plugin-color-syntax';
-import 'tui-color-picker/dist/tui-color-picker.css';
+// import color from '@toast-ui/editor-plugin-color-syntax';
+import { uploadFileToS3 } from '@repo/admin/actions/common/awsMediaUploader';
+import { PostMentoring } from '@repo/admin/actions/mentoring/mentoringAction';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import 'tui-color-picker/dist/tui-color-picker.css';
 import {
   HashtagDataType,
   MentoringAddFormType,
   MentoringCategory,
   TopCategoryDataType,
 } from '../types/main/mentor/mentoringTypes';
-import { uploadFileToS3 } from '@repo/admin/actions/common/awsMediaUploader';
-import { PostMentoring } from '@repo/admin/actions/mentoring/mentoringAction';
 
 import { CustomFitImage } from '@repo/ui/components/ui/custom/index';
 
@@ -37,7 +37,7 @@ export default function MentoringAddForm({
     hashtagList: [],
   });
 
-  const editorRef = useRef<Editor | null>(null);
+  // const editorRef = useRef<Editor | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -104,13 +104,13 @@ export default function MentoringAddForm({
     });
   };
 
-  const handleEditorChange = () => {
-    const description = editorRef.current?.getInstance().getHTML();
-    setFormData((prevData) => ({
-      ...prevData,
-      detail: description || '',
-    }));
-  };
+  // const handleEditorChange = () => {
+  //   const description = editorRef.current?.getInstance().getHTML();
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     detail: description || '',
+  //   }));
+  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -233,7 +233,7 @@ export default function MentoringAddForm({
       <div className="flex flex-col space-y-3 mb-6">
         <label className="text-xl font-bold px-1">멘토링 상세</label>
         <div className="mb-4">
-          <Editor
+          {/* <Editor
             ref={editorRef}
             placeholder="멘토링 내용을 작성해주세요"
             previewStyle="vertical"
@@ -243,7 +243,7 @@ export default function MentoringAddForm({
             hideModeSwitch={true}
             plugins={[color]}
             onChange={handleEditorChange}
-          />
+          /> */}
         </div>
       </div>
 

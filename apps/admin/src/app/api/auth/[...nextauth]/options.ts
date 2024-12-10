@@ -128,7 +128,7 @@ export const options: NextAuthOptions = {
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
         session.user.role = token.role;
-        // const profileData = await getProfileIamge(token.uuid);
+        // const profileData = await getProfileImage(token.uuid);
         // session.user.profileImageUrl = profileData.profileImageUrl;
         // session.user.nickName = profileData.nickName;
       }

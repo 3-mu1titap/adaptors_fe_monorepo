@@ -1,4 +1,3 @@
-import React from 'react';
 import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
 import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
 import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
@@ -6,19 +5,19 @@ import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem
 import { SeparateContainer } from '@repo/ui/components/ui/custom/CustomSeparateContainer';
 import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
 import { MentoringResult, SessionUser } from '@repo/ui/types/CommonType.ts';
+import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import Calendar from './Calendar';
-import { getProfileIamge } from 'src/actions/profile/getProfileData';
-export default async function MentorSection({
+export default function MentorSection({
   mentorUuid,
   mentoringSessionList,
   userData,
+  mentorData,
 }: {
   mentorUuid: string;
   mentoringSessionList: MentoringResult[];
   userData: SessionUser[];
+  mentorData: userProfileType;
 }) {
-  const mentorData = await getProfileIamge(mentorUuid);
-
   return (
     <>
       <SeparateContainer.LeftSide>
