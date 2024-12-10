@@ -14,24 +14,26 @@ export async function postJoinMeeting(mentoringSessionUuid: string) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickName}`,
-      {
-        cache: 'no-cache',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    console.log(res);
-    return true;
-  } catch (error) {
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickName}`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('Failed to post join');
     return redirect('/error?message=Failed to post join');
   }
+
+  return true;
 }
 
 // 화상회의, 채팅 나가기
@@ -40,24 +42,26 @@ export async function postExitMeeting(mentoringSessionUuid: string) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickName}`,
-      {
-        cache: 'no-cache',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    console.log(res);
-    return true;
-  } catch (error) {
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickName}`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('Failed to post exit');
     return redirect('/error?message=Failed to post exit');
   }
+
+  return true;
 }
 
 // heartbeat 쏘기
@@ -66,23 +70,26 @@ export async function postHeartbeat(mentoringSessionUuid: string) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickName}`,
-      {
-        cache: 'no-cache',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    return true;
-  } catch (error) {
-    return false;
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickName}`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('Failed to post join');
+    return res.ok;
   }
+
+  return res.ok;
 }
 
 // 참가자 관리
@@ -91,25 +98,27 @@ export async function getParticipants(mentoringSessionUuid: string) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/getParticipants/${mentoringSessionUuid}`,
-      {
-        cache: 'no-cache',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    const result = (await res.json()) as commonResType<string[]>;
-    console.log('1111111111111111111111', mentoringSessionUuid);
-    return result.result;
-  } catch (error) {
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/getParticipants/${mentoringSessionUuid}`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('Failed to fetch participants');
     return redirect('/error?message=Failed to fetch participants');
   }
+
+  const result = (await res.json()) as commonResType<string[]>;
+  return result.result;
 }
 
 // 화상회의 종료 후 피드백 작성
@@ -118,23 +127,21 @@ export async function postFeedback(payload: MentoringFeedbackType) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    // api 완성되면 넣기
-    console.log(payload);
-    // const res = await fetch(`${process.env}/api/v1/`, {
-    //   cache: 'no-cache',
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer ${accessToken}`,
-    //     'userUuid': userUuid,
-    //   },
-    //   body: JSON.stringify({
-    //     payload,
-    //   }),
-    // });
-    return true;
-  } catch (error) {
-    return redirect('/error?message=Failed to post Feedback');
-  }
+
+  // API 완성되면 주석 해제
+  console.log(payload);
+  // const res = await fetch(`${process.env}/api/v1/`, {
+  //   cache: 'no-cache',
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${accessToken}`,
+  //     'userUuid': userUuid,
+  //   },
+  //   body: JSON.stringify({
+  //     payload,
+  //   }),
+  // });
+
+  return true; // API가 완성되면 이 부분을 수정해야 함
 }

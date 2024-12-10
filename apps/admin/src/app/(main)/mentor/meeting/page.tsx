@@ -1,5 +1,4 @@
 import Meeting from '@repo/admin/components/pages/main/mentor/meeting/Meeting';
-import MentoringCopy from '@repo/admin/components/pages/main/mentor/meeting/MeetingCopy';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -25,13 +24,30 @@ const mentoringSessionList = [
       nano: 0,
     },
   },
+  {
+    mentoringName: '파이썬 기초 멘토링',
+    sessionUuid: 'ac419217-cb98-4334-8b78-8126aa0e57aa',
+    startDate: '2024-12-04',
+    endDate: '2024-12-04',
+    startTime: {
+      hour: 9,
+      minute: 0,
+      second: 0,
+      nano: 0,
+    },
+    endTime: {
+      hour: 18,
+      minute: 0,
+      second: 0,
+      nano: 0,
+    },
+  },
 ];
 
 export default async function Page() {
   return (
-    <main className="container mx-auto p-4">
-      {/* <Meeting mentoringSessionList={mentoringSessionList} /> */}
-      {/* <MentoringCopy /> */}
+    <main className="container mx-auto">
+      <Meeting mentoringSessionList={mentoringSessionList} />
     </main>
   );
 }

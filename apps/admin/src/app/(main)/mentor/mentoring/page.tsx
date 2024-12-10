@@ -6,7 +6,13 @@ async function page() {
     'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb'
   );
   // console.log('=========================', mentoringListData);
-  return <MentoringByMentor mentoringListData={mentoringListData} />;
+  return (
+    <>
+      {mentoringListData && (
+        <MentoringByMentor mentoringListData={mentoringListData} />
+      )}
+    </>
+  );
 }
 
 export default page;

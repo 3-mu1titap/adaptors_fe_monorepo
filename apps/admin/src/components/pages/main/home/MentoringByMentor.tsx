@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CustomTableHeader,
   CustomTableBody,
@@ -8,6 +8,7 @@ import {
 import type { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
 import { PlusIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+
 const ListHeadItems = [
   {
     id: 1,
@@ -23,14 +24,15 @@ const ListHeadItems = [
   { id: 6, name: 'session' },
   { id: 7, name: '' },
 ];
+
 function MentoringByMentor({
   mentoringListData,
 }: {
   mentoringListData: SearchMentoringListType[];
 }) {
   const router = useRouter();
-  const [checkedId, setCheckedId] = React.useState<string[]>([]);
-  const [allChecked, setAllChecked] = React.useState<boolean>(false);
+  const [checkedId, setCheckedId] = useState<string[]>([]);
+  const [allChecked, setAllChecked] = useState<boolean>(false);
 
   useEffect(() => {
     if (checkedId.length === mentoringListData.length) {

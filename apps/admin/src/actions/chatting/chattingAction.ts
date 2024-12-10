@@ -17,25 +17,27 @@ export async function getChattingData(page: number) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/pagingSearch/${mentoringSessionUuid}?limit=20&pageNumber=${page}`,
-      {
-        cache: 'no-cache',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    const result = (await res.json()) as commonResType<prevChatResType>;
-    return result.result;
-  } catch (error) {
-    console.error('세션의 채팅 리스트 조회 실패 : ', error);
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/pagingSearch/${mentoringSessionUuid}?limit=20&pageNumber=${page}`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('세션의 채팅 리스트 조회 실패');
     return redirect('/error?message=Failed to fetch session chatting');
   }
+
+  const result = (await res.json()) as commonResType<prevChatResType>;
+  return result.result;
 }
 
 // 채팅 보내기
@@ -52,29 +54,30 @@ export async function postChat({
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const payload = {
-      mentoringSessionUuid: mentoringSessionUuid,
-      message: message,
-      messageType: messageType,
-      mediaUrl: mediaUrl ? mediaUrl : '',
-    };
 
-    const res = await fetch(`${process.env.CHATSERVICE_URL}/api/v1/chat`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-        'userUuid': userUuid,
-      },
-      body: JSON.stringify(payload),
-    });
-    return;
-  } catch (error) {
-    console.error('채팅 요청 조회 실패 : ', error);
-    // 에러 message
-    return {};
+  const payload = {
+    mentoringSessionUuid: mentoringSessionUuid,
+    message: message,
+    messageType: messageType,
+    mediaUrl: mediaUrl ? mediaUrl : '',
+  };
+
+  const res = await fetch(`${process.env.CHATSERVICE_URL}/api/v1/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+      'userUuid': userUuid,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    console.error('채팅 요청 조회 실패');
+    return false;
   }
+
+  return true; // 성공적으로 요청을 보낸 경우
 }
 
 // 채팅 보낸 상대의 프로필 이름 정보 가져오기
@@ -82,84 +85,78 @@ export async function getChatProfile({ userUuid }: { userUuid: string }) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
-  try {
-    const res = await fetch(
-      `${process.env.PROFILE_URL}/api/v1/memberInfo/profileImage`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    const result = (await res.json()) as commonResType<chatMemberDataType>;
-    return result.result;
-  } catch (error) {
-    console.error('채팅 상대 프로필 조회 실패 : ', error);
+
+  const res = await fetch(
+    `${process.env.PROFILE_URL}/api/v1/memberInfo/profileImage`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('채팅 상대 프로필 조회 실패');
     return { nickName: '', profileImageUrl: '' };
   }
+
+  const result = (await res.json()) as commonResType<chatMemberDataType>;
+  return result.result;
 }
 
-// 채팅방 입장 todo
-export async function postEnterChat({
-  nickname,
-  // mentoringSessionUuid,
-}: {
-  nickname: string;
-  // mentoringSessionUuid: string;
-}) {
+// 채팅방 입장
+export async function postEnterChat({ nickname }: { nickname: string }) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickname}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    return;
-  } catch (error) {
-    console.error('채팅방 입장 실패 : ', error);
-    return {};
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickname}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('채팅방 입장 실패');
+    return false;
   }
+
+  return true; // 성공적으로 입장한 경우
 }
 
 // 채팅방 퇴장
-export async function postOutChat({
-  nickname,
-  // mentoringSessionUuid,
-}: {
-  nickname: string;
-  // mentoringSessionUuid: string;
-}) {
+export async function postOutChat({ nickname }: { nickname: string }) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickname}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    return;
-  } catch (error) {
-    console.error('채팅방 퇴장장 실패 : ', error);
-    return {};
+
+  const res = await fetch(
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickname}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('채팅방 퇴장 실패');
+    return false;
   }
+
+  return true; // 성공적으로 퇴장한 경우
 }

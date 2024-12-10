@@ -1,5 +1,9 @@
+'use client';
+
 import { SeparateContainer } from '@repo/admin/components/common/layouts/SeperateContainer';
+import { Button } from '@repo/ui/components/ui/button';
 import {
+  CustomButton,
   CustomLikeButton,
   CustomMentorDescription,
   CustomMentorProfilePhoto,
@@ -14,16 +18,36 @@ import type {
   MentoringResult,
   SessionUser,
 } from '@repo/ui/types/CommonType.ts';
+import Link from 'next/link';
+import { MentoringSession, SessionAddModal } from './SessionAddModal';
+import { useState } from 'react';
+
 interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
   initialUserData: SessionUser[];
 }
+
 function HomeDashboard({
   mentoringSessionList,
   MentoringInfoData,
   initialUserData,
 }: HomeDashboardProps) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleOnClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalSubmit = (session: MentoringSession) => {
+    console.log('New mentoring session:', session);
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <SeparateContainer.LeftSide>
@@ -38,14 +62,30 @@ function HomeDashboard({
           <CustomLikeButton count={200823} />
         </div>
         <CustomShareButton />
-        <CustomNowDate />
+        {/* <CustomNowDate /> */}
       </SeparateContainer.LeftSide>
       <SeparateContainer.RightSide>
         <CustomSessionInfoTags />
-        <CustomMentorDescription
-          mentoringInfoData={MentoringInfoData}
-          initialUserData={initialUserData}
-        />
+        {MentoringInfoData && (
+          <>
+            <CustomMentorDescription
+              mentoringInfoData={MentoringInfoData}
+              initialUserData={initialUserData}
+            />
+            <Button
+              onClick={handleOnClick}
+              className="bg-adaptorsYellow hover:bg-black font-bold"
+            >
+              세션 추가하기
+            </Button>
+            <SessionAddModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              onSubmit={handleModalSubmit}
+            />
+          </>
+        )}
+
         <CustomSessionList
           filteredList={mentoringSessionList}
           mentoringName={MentoringInfoData}
@@ -54,4 +94,5 @@ function HomeDashboard({
     </>
   );
 }
+
 export default HomeDashboard;

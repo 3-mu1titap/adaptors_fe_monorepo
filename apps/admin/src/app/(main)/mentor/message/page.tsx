@@ -37,7 +37,7 @@ const userMessageData = [
 export default async function Page() {
   // 채팅 방 데이터 받아오는 api 연결 해야함.
   return (
-    <main className="w-full px-10 py-5 mt-[5rem]">
+    <main className="w-full">
       <Message userMessageData={userMessageData} />
     </main>
   );

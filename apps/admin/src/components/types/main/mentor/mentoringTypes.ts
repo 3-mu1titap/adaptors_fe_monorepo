@@ -41,7 +41,7 @@ export interface SessionTimeValidationType {
 export interface MentoringSessionDateDataType {
   totalCount: number;
   startDate: string;
-  mentoringSessionResponseDtoList: MentoringSessionDataType[];
+  mentoringSessionResponseDtoList: MentoringSession[];
 }
 
 // 멘토링 카테고리 정보

@@ -1,5 +1,5 @@
 'use client';
-import { MenuType } from '@repo/web/components/types/menu/MenuType';
+import { MenuType } from '@repo/web/components/types/menu/menuType';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 

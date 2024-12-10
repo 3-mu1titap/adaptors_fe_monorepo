@@ -6,5 +6,7 @@ const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 export default async function Page() {
   const mentorVoltList: mentorVoltListDataType = await GetMentorVolts();
-  return <ReceivedVolts mentorVoltList={mentorVoltList} />;
+  return (
+    <>{mentorVoltList && <ReceivedVolts mentorVoltList={mentorVoltList} />}</>
+  );
 }

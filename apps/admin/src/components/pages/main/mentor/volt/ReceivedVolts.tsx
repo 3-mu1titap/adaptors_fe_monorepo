@@ -21,7 +21,20 @@ export default function ReceivedVolts({
   const [exchangeAmount, setExchangeAmount] = useState<string>('');
 
   const handleExchange = () => {
-    if (exchangeAmount && mentorVoltList.totalVolt < parseInt(exchangeAmount)) {
+    if (!mentorVoltList) {
+      return Swal.fire({
+        title: '볼트 부족',
+        html: `보유 볼트가 부족합니다.`,
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    }
+    if (
+      exchangeAmount &&
+      mentorVoltList &&
+      mentorVoltList.totalVolt < parseInt(exchangeAmount)
+    ) {
       Swal.fire({
         title: '금액 초과',
         html: `${exchangeAmount}Volt는 가지고 있는<br/> ${mentorVoltList.totalVolt}를 초과하는 Volt입니다.<br/> 다시 입력해주세요.`,
@@ -69,13 +82,15 @@ export default function ReceivedVolts({
   };
 
   return (
-    <section className="w-full px-10 py-5 mt-[5rem]">
+    <section className="w-full">
       <Card className="mb-6">
         <CardHeader>
           <CardTitle>총 받은 볼트</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-4xl font-bold">{mentorVoltList.totalVolt} 볼트</p>
+          <p className="text-4xl font-bold">
+            {mentorVoltList ? mentorVoltList.totalVolt : 0} 볼트
+          </p>
         </CardContent>
       </Card>
 
@@ -85,16 +100,17 @@ export default function ReceivedVolts({
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {mentorVoltList.voltList.map((record) => (
-              <li
-                key={record.id}
-                className="flex justify-between items-center border-b pb-2"
-              >
-                <p className="font-semibold">{record.volt} 볼트</p>
-                <p>{record.sender}</p>
-                <p className="text-md">{formatDate('time', record.date)}</p>
-              </li>
-            ))}
+            {mentorVoltList &&
+              mentorVoltList.voltList.map((record) => (
+                <li
+                  key={record.id}
+                  className="flex justify-between items-center border-b pb-2"
+                >
+                  <p className="font-semibold">{record.volt} 볼트</p>
+                  <p>{record.sender}</p>
+                  <p className="text-md">{formatDate('time', record.date)}</p>
+                </li>
+              ))}
           </ul>
         </CardContent>
       </Card>

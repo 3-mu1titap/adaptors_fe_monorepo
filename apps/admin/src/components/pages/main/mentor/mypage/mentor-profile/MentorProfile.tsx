@@ -6,15 +6,15 @@ interface MentorProfileProps {
 }
 
 export default function MentorProfile({ mentor }: MentorProfileProps) {
-  const { profileImageUrl, memberRequestDto, mentorProfileRequestDto } = mentor;
-
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
-      <MentorProfileContent
-        profileImageUrl={profileImageUrl}
-        memberRequestDto={memberRequestDto}
-        mentorProfileRequestDto={mentorProfileRequestDto}
-      />
+      {mentor && (
+        <MentorProfileContent
+          profileImageUrl={mentor.profileImageUrl}
+          memberRequestDto={mentor.memberRequestDto}
+          mentorProfileRequestDto={mentor.mentorProfileRequestDto}
+        />
+      )}
     </div>
   );
 }
