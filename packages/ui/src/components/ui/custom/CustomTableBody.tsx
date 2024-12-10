@@ -84,7 +84,7 @@ function CustomTableBody({
             <CustomFitImage
               src={data.thumbnailUrl}
               alt={data.name}
-              className="w-16 h-auto overflow-hidden"
+              className="w-16 h-16 overflow-hidden"
             />
           </td>
           <td

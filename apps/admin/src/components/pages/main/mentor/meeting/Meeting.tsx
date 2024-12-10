@@ -1,66 +1,42 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import {
-  LocalVideoTrack,
-  Room,
-  RoomEvent,
-  RemoteTrack,
-  RemoteTrackPublication,
-  RemoteParticipant,
-} from 'livekit-client';
-
-import Tracks from './Tracks';
-import { useUserInfoStore } from '@repo/admin/store/messagesStore';
-import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
-import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
-import {
-  getParticipants,
-  postJoinMeeting,
-} from '@repo/admin/actions/meeting/meetingAction';
+import { OpenVidu } from 'openvidu-browser';
+import React, { useState, useEffect } from 'react';
+import UserVideoComponent from './UserVideoComponent';
+import getToken from '@repo/admin/actions/openvidu/openviduAction';
 import OpenMentoring from './openMentoring/OpenMentoring';
-import MeetingHeader from '../../../../header/MeetingHeader';
-import Participants from './participants/Participants';
-import Chatting from '../../chatting/Chatting';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@repo/ui/components/ui/Dialog';
-import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
-import {
-  MentoringSessionDataType,
-  TodayMentoringSessionDataType,
-} from '@repo/admin/components/types/main/mentor/mentoringTypes';
+} from '@repo/ui/components/ui/dialog';
+import MentoringFeedbackForm from '@repo/admin/components/form/MentoringFeedbackForm';
+import OvTracks from './OvTracks';
+import Participants from './participants/Participants';
+import Chatting from '../../chatting/Chatting';
+import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
+import { useUserInfoStore } from '@repo/admin/store/messagesStore';
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
+import { getParticipants } from '@repo/admin/actions/meeting/meetingAction';
 
-const LIVEKIT_URL =
-  process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
-type TrackInfo = {
-  trackPublication: RemoteTrackPublication;
-  participantIdentity: string;
-};
+interface MeetingProps {
+  mentoringSessionList: any[]; // mentoringSessionList의 타입을 정의합니다. 필요한 경우 더 구체적으로 변경하세요.
+}
 
-export default function Meeting({
-  mentoringSessionList,
-}: {
-  mentoringSessionList: TodayMentoringSessionDataType[];
-}) {
-  const [room, setRoom] = useState<Room | null>(null);
+const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
-  const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
-    undefined
+  const [myUserName, setMyUserName] = useState<string>(
+    'Participant' + Math.floor(Math.random() * 100)
   );
-  const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const [isMicOn, setIsMicOn] = useState(true);
-  const [isCameraOn, setIsCameraOn] = useState(true);
-  const [remoteMuteStatus, setRemoteMuteStatus] = useState<
-    Record<string, { audio: boolean; video: boolean }>
-  >({});
-  const { userInfo, addUserInfo } = useUserInfoStore();
+  const [session, setSession] = useState<any>(undefined);
+  const [mainStreamManager, setMainStreamManager] = useState<any>(undefined);
+  const [publisher, setPublisher] = useState<any>(undefined);
+  const [subscribers, setSubscribers] = useState<any[]>([]);
   const [participants, setParticipants] = useState<participantType[]>([]);
+  const { userInfo, addUserInfo } = useUserInfoStore();
+  const [currentVideoDevice, setCurrentVideoDevice] = useState<any>(undefined);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
   const fetchParticipants = async (userUuid: string) => {
@@ -89,175 +65,133 @@ export default function Meeting({
     if (sessionUuid) {
       fetchParticipantsUuid();
     }
-  }, [room, sessionUuid]);
+  }, [session, sessionUuid]);
 
-  async function joinRoom(sessionUuid: string) {
-    setSessionUuid(sessionUuid);
-    await postJoinMeeting(sessionUuid);
-    const room = new Room();
-    setRoom(room);
+  useEffect(() => {
+    const handleBeforeUnload = () => leaveSession();
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [session]);
 
-    room.on(
-      RoomEvent.TrackSubscribed,
-      (
-        _track: RemoteTrack,
-        publication: RemoteTrackPublication,
-        participant: RemoteParticipant
-      ) => {
-        setRemoteTracks((prev) => [
-          ...prev,
-          {
-            trackPublication: publication,
-            participantIdentity: participant.identity,
-          },
-        ]);
-      }
-    );
-
-    room.on(
-      RoomEvent.TrackUnsubscribed,
-      (_track: RemoteTrack, publication: RemoteTrackPublication) => {
-        setRemoteTracks((prev) =>
-          prev.filter(
-            (track) => track.trackPublication.trackSid !== publication.trackSid
-          )
-        );
-      }
-    );
-
-    try {
-      await room.connect(LIVEKIT_URL, 'cff6324c-566f-4803-8db8-31712b071a6b');
-      await room.localParticipant.enableCameraAndMicrophone();
-      const localVideoTrackPublication =
-        room.localParticipant.videoTrackPublications.values().next().value;
-
-      if (localVideoTrackPublication) {
-        setLocalTrack(localVideoTrackPublication.videoTrack);
-      }
-    } catch (error) {
-      console.log(
-        'There was an error connecting to the room:',
-        (error as Error).message
-      );
-      await leaveRoom();
-    }
-  }
-
-  async function leaveRoom() {
-    await room?.disconnect();
-    setShowFeedbackModal(true);
-    setIsCameraOn(true);
-    setIsMicOn(true);
-    setRoom(null);
-    setLocalTrack(undefined);
-    setRemoteTracks([]);
-  }
-
-  async function toggleScreenSharing() {
-    if (isScreenSharing) {
-      await room?.localParticipant.setScreenShareEnabled(false);
-      setIsScreenSharing(false);
-    } else {
-      await room?.localParticipant.setScreenShareEnabled(true);
-      setIsScreenSharing(true);
-    }
-  }
-
-  async function toggleMicrophone() {
-    if (isMicOn) {
-      await room?.localParticipant.setMicrophoneEnabled(false);
-    } else {
-      await room?.localParticipant.setMicrophoneEnabled(true);
-    }
-    setIsMicOn((prev) => !prev);
-  }
-
-  async function toggleCamera() {
-    if (isCameraOn) {
-      await room?.localParticipant.setCameraEnabled(false);
-    } else {
-      await room?.localParticipant.setCameraEnabled(true);
-    }
-    setIsCameraOn((prev) => !prev);
-  }
-
-  const toggleParticipantMicrophone = async (participantIdentity: string) => {
-    const participant = room?.remoteParticipants.get(participantIdentity);
-    if (participant) {
-      const audioTrackPublication = participant.audioTrackPublications
-        .values()
-        .next().value;
-      if (audioTrackPublication) {
-        const isMuted = remoteMuteStatus[participantIdentity]?.audio; // 현재 음소거 상태 가져오기
-        await audioTrackPublication.setEnabled(!isMuted); // 트랙 활성화/비활성화
-        setRemoteMuteStatus((prev) => ({
-          ...prev,
-          [participantIdentity]: {
-            ...prev[participantIdentity],
-            audio: !isMuted, // 음소거 상태 업데이트
-          },
-        }));
-        console.log(
-          `${participantIdentity} microphone has been ${isMuted ? 'muted' : 'unmuted'}`
-        );
-      }
+  const handleMainVideoStream = (stream: any) => {
+    if (mainStreamManager !== stream) {
+      setMainStreamManager(stream);
     }
   };
 
-  const toggleParticipantCamera = async (participantIdentity: string) => {
-    const participant = room?.remoteParticipants.get(participantIdentity);
-    if (participant) {
-      const videoTrackPublication = participant.videoTrackPublications
-        .values()
-        .next().value;
-      if (videoTrackPublication) {
-        const isMuted = remoteMuteStatus[participantIdentity]?.video; // 현재 음소거 상태 가져오기
-        await videoTrackPublication.track?.setMuted(!isMuted); // 트랙 활성화/비활성화
-        setRemoteMuteStatus((prev) => ({
-          ...prev,
-          [participantIdentity]: {
-            ...prev[participantIdentity],
-            video: !isMuted, // 비디오 음소거 상태 업데이트
-          },
-        }));
-        console.log(
-          `${participantIdentity} video has been ${isMuted ? 'muted' : 'unmuted'}`
+  const deleteSubscriber = (streamManager: any) => {
+    setSubscribers((prevSubscribers) =>
+      prevSubscribers.filter((sub) => sub !== streamManager)
+    );
+  };
+
+  const joinSession = async (sessionUuid: string) => {
+    const OV = new OpenVidu();
+    const newSession = OV.initSession();
+    setSessionUuid(sessionUuid);
+    setSession(newSession);
+
+    newSession.on('streamCreated', (event) => {
+      const subscriber = newSession.subscribe(event.stream, undefined);
+      setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
+    });
+
+    newSession.on('streamDestroyed', (event) => {
+      deleteSubscriber(event.stream.streamManager);
+    });
+
+    newSession.on('exception', (exception) => {
+      console.warn(exception);
+    });
+
+    const token = await getToken('mySessionId');
+    newSession
+      .connect(token, {
+        clientData: myUserName,
+      })
+      .then(async () => {
+        const publisher = await OV.initPublisherAsync(undefined, {
+          audioSource: undefined,
+          videoSource: undefined,
+          publishAudio: true,
+          publishVideo: true,
+          resolution: '640x480',
+          frameRate: 30,
+          insertMode: 'APPEND',
+          mirror: false,
+        });
+
+        newSession.publish(publisher);
+        const devices = await OV.getDevices();
+        const videoDevices = devices.filter(
+          (device) => device.kind === 'videoinput'
         );
-      }
+        const currentVideoDeviceId = publisher.stream
+          .getMediaStream()
+          .getVideoTracks()[0]
+          .getSettings().deviceId;
+        const currentVideoDevice = videoDevices.find(
+          (device) => device.deviceId === currentVideoDeviceId
+        );
+
+        setCurrentVideoDevice(currentVideoDevice);
+        setMainStreamManager(publisher);
+        setPublisher(publisher);
+      })
+      .catch((error) => {
+        console.log(
+          'There was an error connecting to the session:',
+          error.code,
+          error.message
+        );
+      });
+  };
+
+  const leaveSession = () => {
+    if (session) {
+      session.disconnect();
     }
+
+    setSession(undefined);
+    setSubscribers([]);
+    setSessionUuid('');
+    setMyUserName('Participant' + Math.floor(Math.random() * 100));
+    setMainStreamManager(undefined);
+    setPublisher(undefined);
+    setCurrentVideoDevice(undefined);
   };
 
   return (
     <>
-      {!room ? (
+      {session === undefined ? (
         <OpenMentoring
           mentoringSessionList={mentoringSessionList}
-          joinRoom={joinRoom}
+          joinSession={joinSession}
         />
-      ) : (
+      ) : null}
+
+      {session !== undefined ? (
         <>
-          <MeetingHeader participants={participants} />
-          <div className="grid grid-cols-7 h-[90vh]">
+          <div className="grid grid-cols-7 h-[79vh]">
             <div className="col-span-5 bg-[#FAFAFE]">
-              <Tracks
-                leaveRoom={leaveRoom}
-                toggleScreenSharing={toggleScreenSharing}
-                isScreenSharing={isScreenSharing}
-                isCameraOn={isCameraOn}
-                toggleCamera={toggleCamera}
-                toggleMicrophone={toggleMicrophone}
-                isMicrophoneOn={isMicOn}
-                localTrack={localTrack}
-                remoteTracks={remoteTracks}
+              <OvTracks
+                sessionUuid={sessionUuid}
+                leaveSession={leaveSession}
+                mainStreamManager={mainStreamManager}
+                publisher={publisher}
+                handleMainVideoStream={handleMainVideoStream}
+                subscribers={subscribers}
               />
             </div>
             <div className="flex flex-col col-span-2 h-full">
-              <div className="h-[36vh]">
-                <Participants
+              <div className="h-[25vh]">
+                {/* <Participants
                   participants={participants}
                   toggleParticipantMicrophone={toggleParticipantMicrophone}
                   toggleParticipantCamera={toggleParticipantCamera}
-                />
+                /> */}
               </div>
               <div className="h-[54vh]">
                 <Chatting
@@ -268,7 +202,7 @@ export default function Meeting({
             </div>
           </div>
         </>
-      )}
+      ) : null}
       <Dialog open={showFeedbackModal} onOpenChange={setShowFeedbackModal}>
         <DialogHeader className="hidden">
           <DialogTitle>멘토링 피드백</DialogTitle>
@@ -280,4 +214,6 @@ export default function Meeting({
       </Dialog>
     </>
   );
-}
+};
+
+export default Meeting;

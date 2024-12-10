@@ -15,26 +15,28 @@ export async function GetUserInfo() {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.PROFILE_URL}/api/v1/memberInfo/profile`,
-      {
-        cache: 'no-cache',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-        next: { tags: ['updateUserInfo'] },
-      }
-    );
-    const result = (await res.json()) as commonResType<Mentor>;
-    return result.result;
-  } catch (error) {
-    console.error('유저 정보 조회 : ', error);
+
+  const res = await fetch(
+    `${process.env.PROFILE_URL}/api/v1/memberInfo/profile`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+      next: { tags: ['updateUserInfo'] },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('유저 정보 조회 실패');
     return redirect('/error?message=Failed to fetch userInfo');
   }
+
+  const result = (await res.json()) as commonResType<Mentor>;
+  return result.result;
 }
 
 // 유저 기본 정보 수정 API
@@ -44,25 +46,26 @@ async function PutUserBasicInfo(
   payload: any
 ) {
   'use server';
-  try {
-    const res = await fetch(
-      `${process.env.AUTH_URL}/api/v1/auth/change-memberInfo`,
-      {
-        cache: 'no-cache',
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
-    return true;
-  } catch (error) {
-    console.error('유저 기본 정보 수정 : ', error);
+  const res = await fetch(
+    `${process.env.AUTH_URL}/api/v1/auth/change-memberInfo`,
+    {
+      cache: 'no-cache',
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    console.error('유저 기본 정보 수정 실패');
     return false;
   }
+
+  return true;
 }
 
 // 유저 프로필 수정
@@ -72,27 +75,28 @@ async function PutUserProfile(
   profileImageUrl: string
 ) {
   'use server';
-  try {
-    const res = await fetch(
-      `${process.env.USER_URL}/api/v1/member/profile-image`,
-      {
-        cache: 'no-cache',
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-        body: JSON.stringify({
-          profileImageUrl: profileImageUrl,
-        }),
-      }
-    );
-    return true;
-  } catch (error) {
-    console.error('유저 프로필 수정 : ', error);
+  const res = await fetch(
+    `${process.env.USER_URL}/api/v1/member/profile-image`,
+    {
+      cache: 'no-cache',
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+      body: JSON.stringify({
+        profileImageUrl: profileImageUrl,
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    console.error('유저 프로필 수정 실패');
     return false;
   }
+
+  return true;
 }
 
 // 유저의 멘토 소개 수정
@@ -102,25 +106,26 @@ async function PutUserMentorProfile(
   payload: any
 ) {
   'use server';
-  try {
-    const res = await fetch(
-      `${process.env.USER_URL}/api/v1/member/mentor/profile`,
-      {
-        cache: 'no-cache',
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
-    return true;
-  } catch (error) {
-    console.error('유저의 멘토 소개 수정 : ', error);
+  const res = await fetch(
+    `${process.env.USER_URL}/api/v1/member/mentor/profile`,
+    {
+      cache: 'no-cache',
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    console.error('유저의 멘토 소개 수정 실패');
     return false;
   }
+
+  return true;
 }
 
 export async function PutUserTotalInfo({
@@ -133,15 +138,18 @@ export async function PutUserTotalInfo({
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
+
   const basicInfoPayload = {
     nickName: formData.nickName,
     phoneNumber: formData.phoneNumber,
   };
+
   const basicInfoSuccess = await PutUserBasicInfo(
     accessToken,
     userUuid,
     basicInfoPayload
   );
+
   let profileSuccess = true;
   if (imageFile) {
     const profileImageUrl: string = await uploadFileToS3(imageFile, 'profile');
@@ -151,12 +159,14 @@ export async function PutUserTotalInfo({
       profileImageUrl
     );
   }
+
   const userMentorProfilePayload = {
     mentoringField: formData.mentoringField,
     age: formData.age,
     gender: formData.gender,
     jobExperience: formData.jobExperience,
   };
+
   const mentorProfileSuccess = await PutUserMentorProfile(
     accessToken,
     userUuid,

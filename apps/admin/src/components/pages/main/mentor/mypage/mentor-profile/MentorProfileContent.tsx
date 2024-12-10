@@ -37,10 +37,16 @@ export default function MentorProfileContent({
         </div>
         <div>
           <h3 className="font-semibold mb-2">Mentor Profile</h3>
-          <p>Field: {mentorProfileRequestDto.mentoringField}</p>
-          <p>Age: {mentorProfileRequestDto.age}</p>
-          <p>Gender: {mentorProfileRequestDto.gender}</p>
-          <p>Job Experience: {mentorProfileRequestDto.jobExperience}</p>
+          {mentorProfileRequestDto ? (
+            <>
+              <p>Field: {mentorProfileRequestDto.mentoringField}</p>
+              <p>Age: {mentorProfileRequestDto.age}</p>
+              <p>Gender: {mentorProfileRequestDto.gender}</p>
+              <p>Job Experience: {mentorProfileRequestDto.jobExperience}</p>
+            </>
+          ) : (
+            <p>등록된 소개가 없습니다.</p>
+          )}
         </div>
       </div>
     </>

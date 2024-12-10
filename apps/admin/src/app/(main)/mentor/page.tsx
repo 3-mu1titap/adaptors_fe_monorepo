@@ -43,10 +43,14 @@ export default async function Page() {
     '8e68777e-47ae-46c6-a42b-389d459c8f21'
   );
   return (
-    <HomeDashboard
-      initialUserData={initialUserData}
-      mentoringSessionList={mentoringSessionList}
-      MentoringInfoData={MentoringInfoData}
-    />
+    <>
+      {mentoringSessionList && MentoringInfoData && (
+        <HomeDashboard
+          initialUserData={initialUserData}
+          mentoringSessionList={mentoringSessionList}
+          MentoringInfoData={MentoringInfoData}
+        />
+      )}
+    </>
   );
 }

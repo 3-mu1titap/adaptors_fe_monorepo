@@ -19,10 +19,9 @@ function CustomReviewerItem({
       className={`flex justify-start items-center ${className} ${initialUserData[0].menteeImageUrl ? `block` : `hidden`}`}
     >
       <ul className="flex justify-start items-center mr-1">
-        {initialUserData.map((user) => (
-          <li>
+        {initialUserData.map((user, idx) => (
+          <li key={idx}>
             <UserProfile
-              key={user.userUuid}
               profileImgUrl={user.menteeImageUrl}
               size={40}
               name={user.userUuid}

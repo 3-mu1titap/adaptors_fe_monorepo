@@ -3,7 +3,7 @@ import {
   GetMentoringSessionList,
 } from '@repo/admin/actions/mentoring/mentoringAction';
 import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
-import { MentoringSessionDataType } from '@repo/admin/components/types/main/mentor/mentoringTypes';
+import { MentoringResult } from '@repo/ui/types/CommonType.js';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -35,15 +35,19 @@ export default async function Page({
   params: { mentoringUuid: string };
 }) {
   const mentoringUuid = params.mentoringUuid;
-  const mentoringSessionList: MentoringSessionDataType[] =
+  const mentoringSessionList: MentoringResult[] =
     await GetMentoringSessionList(mentoringUuid);
 
   const mentoringInfoData = await GetMentoringInfo(mentoringUuid);
   return (
-    <HomeDashboard
-      initialUserData={initialUserData}
-      mentoringSessionList={mentoringSessionList}
-      MentoringInfoData={mentoringInfoData}
-    />
+    <>
+      {mentoringSessionList && mentoringInfoData && (
+        <HomeDashboard
+          initialUserData={initialUserData}
+          mentoringSessionList={mentoringSessionList}
+          MentoringInfoData={mentoringInfoData}
+        />
+      )}
+    </>
   );
 }

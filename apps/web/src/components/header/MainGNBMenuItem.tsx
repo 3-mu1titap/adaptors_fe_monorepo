@@ -1,7 +1,7 @@
 'use client';
-import { MenuType } from '@repo/web/components/types/menu/MenuType.ts';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { MenuType } from '../types/menu/menuType';
 
 function MainHeaderGNBMenuItem({ menuItem }: { menuItem: MenuType }) {
   const pathname = usePathname();

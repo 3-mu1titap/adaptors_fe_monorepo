@@ -1,3 +1,5 @@
+'use client';
+
 import InnerButton from '@repo/admin/components/ui/Button/InnerButton';
 import { formatDate } from '@repo/admin/components/utils/dateUtil';
 import {
@@ -44,14 +46,14 @@ export function formatTime(time: TimeDataType): string {
 
 export default function OpenMentoring({
   mentoringSessionList,
-  joinRoom,
+  joinSession,
 }: {
   mentoringSessionList: MentoringSessionDataType[];
-  joinRoom: (sessionUuid: string) => Promise<void>;
+  joinSession: (sessionUuid: string) => void;
 }) {
   const handleJoinAttempt = async (session: MentoringSessionDataType) => {
     if (isWithinTenMinutes(session.startDate, session.startTime)) {
-      await joinRoom(session.sessionUuid);
+      await joinSession(session.sessionUuid);
     } else {
       const startTime = new Date(session.startDate);
       startTime.setHours(session.startTime.hour);
@@ -71,7 +73,7 @@ export default function OpenMentoring({
   return (
     <ul className="w-full max-w-4xl mx-auto space-y-6 p-6">
       {mentoringSessionList &&
-        mentoringSessionList.map((session) => {
+        mentoringSessionList.map((session, idx) => {
           const canJoin = isWithinTenMinutes(
             session.startDate,
             session.startTime
@@ -79,7 +81,7 @@ export default function OpenMentoring({
 
           return (
             <Card
-              key={session.sessionUuid}
+              key={idx}
               className="transition-all duration-300 hover:shadow-lg"
             >
               <CardHeader className="pb-2">

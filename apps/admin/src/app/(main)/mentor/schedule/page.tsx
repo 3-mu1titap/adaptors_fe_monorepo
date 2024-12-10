@@ -15,10 +15,10 @@ export default async function Page() {
   // const scheduleList = await GetScheduleList(`2024-12`);
 
   return (
-    <section className="w-full px-10 py-5 mt-[5rem]">
+    <section className="w-full">
       {/* <CalendarHeader /> */}
       <article className="w-full h-full">
-        <CalendarContent scheduleList={scheduleList} />
+        {scheduleList && <CalendarContent scheduleList={scheduleList} />}
       </article>
     </section>
   );

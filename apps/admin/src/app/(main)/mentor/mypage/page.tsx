@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const userInfo = await GetUserInfo();
-  return <MyPage userInfo={userInfo} />;
+  return <>{userInfo && <MyPage userInfo={userInfo} />}</>;
 }
