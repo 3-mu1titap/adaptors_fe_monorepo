@@ -5,18 +5,21 @@ import {
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
-export default async function MentoringCalendar({
+export default function MentoringCalendar({
   mentoringDate,
   mentoringUuid,
   mentoringSessionList,
   MentoringInfoData,
+  mentorData,
 }: {
   mentoringDate: string;
   mentoringUuid: string;
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
+  mentorData: userProfileType;
 }) {
   const userData = [
     {
@@ -51,6 +54,7 @@ export default async function MentoringCalendar({
         mentorUuid={MentoringInfoData?.mentorUuid || ''}
         mentoringSessionList={mentoringSessionList}
         userData={userData}
+        mentorData={mentorData}
       />
       {/* Ri Section */}
       <SeparateContainer.RightSide>

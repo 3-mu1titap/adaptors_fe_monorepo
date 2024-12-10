@@ -1,7 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
-import { getProfileIamge } from 'src/actions/profile/getProfileData';
+import { getProfileImage } from 'src/actions/profile/getProfileData';
 
 // Kakao 프로필 타입 정의
 interface KakaoProfile {
@@ -131,7 +131,7 @@ export const options: NextAuthOptions = {
         session.user.refreshToken = token.refreshToken;
         session.user.uuid = token.uuid;
         session.user.role = token.role;
-        const profileData = await getProfileIamge(token.uuid);
+        const profileData = await getProfileImage(token.uuid);
         session.user.profileImageUrl = profileData.profileImageUrl;
         session.user.nickName = profileData.nickName;
       }

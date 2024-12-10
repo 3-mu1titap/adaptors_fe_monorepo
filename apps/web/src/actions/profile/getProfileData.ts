@@ -7,7 +7,7 @@ interface userProfileType {
   profileImageUrl: string;
 }
 
-export const getProfileIamge = async (
+export const getProfileImage = async (
   uuid: string
 ): Promise<userProfileType> => {
   const response = await fetch(

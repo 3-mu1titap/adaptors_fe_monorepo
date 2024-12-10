@@ -13,17 +13,14 @@ import { CreditCard, User } from 'lucide-react';
 
 import HeaderLogoutButton from '@repo/web/components/ui/Button/HeaderLogoutButton';
 import OpenAppButton from '@repo/web/components/ui/Button/OpenAppButton';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { options } from 'src/app/api/auth/[...nextauth]/options';
 import SideBarButton from './SideBarButton';
 
-async function MainHeaderRightMenu() {
-  const isAuth = await getServerSession(options);
+function MainHeaderRightMenu({ isAuth }: { isAuth: boolean }) {
   return (
     <nav>
       <ul className="flex justify-end items-center gap-4">
-        {isAuth?.user ? (
+        {isAuth ? (
           <li>
             {/* <UserProfile size={40} /> */}
             <DropdownMenu>

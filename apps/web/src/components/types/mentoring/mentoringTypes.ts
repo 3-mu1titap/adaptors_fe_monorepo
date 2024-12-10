@@ -12,6 +12,7 @@ export interface Category {
   topCategoryName: string;
   middleCategoryName: string;
   bottomCategoryName: string | null;
+  id: number;
 }
 export interface SessionRequestType {
   sessionUuid: string;

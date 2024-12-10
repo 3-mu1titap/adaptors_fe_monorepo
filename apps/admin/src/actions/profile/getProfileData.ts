@@ -8,7 +8,7 @@ interface userProfileType {
   profileImageUrl: string;
 }
 
-export const getProfileIamge = async (
+export const getProfileImage = async (
   uuid: string
 ): Promise<userProfileType> => {
   const session = await getServerSession(options);

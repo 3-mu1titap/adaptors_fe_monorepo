@@ -1,13 +1,15 @@
+import { Category } from '@repo/ui/types/CommonType.js';
 import Thunder from '@repo/web/components/assets/icons/Thunder';
-import Link from 'next/link';
-import { getTopCategoryList } from 'src/actions/category/getCategory';
 
-export default async function CategoryAside({
+import Link from 'next/link';
+
+export default function CategoryAside({
   categoryParam,
+  categorise,
 }: {
   categoryParam: string;
+  categorise: Category[];
 }) {
-  const categorise = await getTopCategoryList();
   return (
     <aside className="lg:fixed lg:left-0 static backdrop-blur-lg max-w-[330px] mx-auto ">
       <ul className="lg:min-w-36 pt-10 flex lg:block justify-center lg:justify-normal">

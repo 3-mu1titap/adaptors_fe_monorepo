@@ -1,7 +1,7 @@
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
 import MentorDetail from '@repo/web/components/pages/mentor/MentorDetail';
 import { GetMentorMentoringList } from 'src/actions/mentor/mentorAction';
-import { getProfileIamge } from 'src/actions/profile/getProfileData';
+import { getProfileImage } from 'src/actions/profile/getProfileData';
 
 import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
 import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
@@ -28,7 +28,7 @@ async function page({
   console.log(mentoringlistdata, 'mentorlistDat');
 
   //유저의 닉네임 프로필 조회
-  const UserProfile = await getProfileIamge(userUuId);
+  const UserProfile = await getProfileImage(userUuId);
   console.log(UserProfile, 'userProfile');
 
   return (

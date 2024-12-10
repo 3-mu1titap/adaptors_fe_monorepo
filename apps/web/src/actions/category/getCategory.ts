@@ -1,12 +1,8 @@
+import { Category } from '@repo/ui/types/CommonType.js';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
-interface Category {
-  id: number;
-  topCategoryCode: string;
-  topCategoryName: string;
-  categoryType: string | null; // categoryType이 null일 수 있기 때문에 null 타입 포함
-}
+
 export async function getTopCategoryList(): Promise<Category[]> {
   const session = getServerSession(options);
   // const accessToken = session?.user.accessToken;s

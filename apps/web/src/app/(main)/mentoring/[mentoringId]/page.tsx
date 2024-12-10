@@ -1,6 +1,7 @@
 import MentoringDetail from '@repo/web/components/pages/main/mentoring/MentoringDetail';
 
 import { MentoringResult } from '@repo/ui/types/CommonType.ts';
+import { getProfileImage } from '@repo/web/actions/profile/getProfileData';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
@@ -10,7 +11,10 @@ async function fetchMentoringData(mentoringUuid: string) {
   const mentoringSessionList: MentoringResult[] =
     await GetMentoringSessionList(mentoringUuid);
   const MentoringInfoData = await GetMentoringInfo(mentoringUuid);
-  return { mentoringSessionList, MentoringInfoData };
+  const mentorData = await getProfileImage(
+    MentoringInfoData?.mentorUuid ? MentoringInfoData.mentorUuid : ''
+  );
+  return { mentoringSessionList, MentoringInfoData, mentorData };
 }
 async function Page({
   searchParams,
@@ -20,10 +24,11 @@ async function Page({
   params: { mentoringId: string };
 }) {
   const selectedDate = searchParams.selectedDate || '';
-  const { mentoringSessionList, MentoringInfoData } = await fetchMentoringData(
-    // params.mentoringId
-    '8e68777e-47ae-46c6-a42b-389d459c8f21'
-  );
+  const { mentoringSessionList, MentoringInfoData, mentorData } =
+    await fetchMentoringData(
+      // params.mentoringId
+      '8e68777e-47ae-46c6-a42b-389d459c8f21'
+    );
 
   return (
     <main className="pt-[7rem] py-2 px-4 min-h-screen bg-gray-50">
@@ -33,6 +38,7 @@ async function Page({
           mentoringUuid={params.mentoringId}
           mentoringSessionList={mentoringSessionList}
           MentoringInfoData={MentoringInfoData}
+          mentorData={mentorData}
         />
       )}
     </main>
