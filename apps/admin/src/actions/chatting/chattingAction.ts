@@ -1,19 +1,22 @@
 'use server';
 
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import {
   chatMemberDataType,
   prevChatResType,
-} from '@repo/client/components/types/main/chatting/chattingTypes';
-import { commonResType } from '@repo/client/components/types/ResponseTypes';
+} from '@repo/admin/components/types/main/chatting/chattingTypes';
+import { commonResType } from '@repo/admin/components/types/ResponseTypes';
+import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
-const mentoringUuid = '05b8b889-9798-4f31-88e5-f6b967cb069d';
 const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
 
 // 기존 채팅 데이터 불러오기
 export async function getChattingData(page: number) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/pagingSearch/${mentoringSessionUuid}?limit=20&pageNumber=${page}`,
@@ -22,6 +25,8 @@ export async function getChattingData(page: number) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          'userUuid': userUuid,
         },
       }
     );
@@ -44,6 +49,9 @@ export async function postChat({
   mediaUrl?: string;
 }) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const payload = {
       mentoringSessionUuid: mentoringSessionUuid,
@@ -56,6 +64,7 @@ export async function postChat({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
         'userUuid': userUuid,
       },
       body: JSON.stringify(payload),
@@ -71,6 +80,8 @@ export async function postChat({
 // 채팅 보낸 상대의 프로필 이름 정보 가져오기
 export async function getChatProfile({ userUuid }: { userUuid: string }) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
   try {
     const res = await fetch(
       `${process.env.PROFILE_URL}/api/v1/memberInfo/profileImage`,
@@ -78,6 +89,7 @@ export async function getChatProfile({ userUuid }: { userUuid: string }) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -90,17 +102,18 @@ export async function getChatProfile({ userUuid }: { userUuid: string }) {
   }
 }
 
-// 채팅방 입장
+// 채팅방 입장 todo
 export async function postEnterChat({
-  userUuid,
   nickname,
   // mentoringSessionUuid,
 }: {
-  userUuid: string;
   nickname: string;
   // mentoringSessionUuid: string;
 }) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickname}`,
@@ -108,6 +121,7 @@ export async function postEnterChat({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -121,15 +135,16 @@ export async function postEnterChat({
 
 // 채팅방 퇴장
 export async function postOutChat({
-  userUuid,
   nickname,
   // mentoringSessionUuid,
 }: {
-  userUuid: string;
   nickname: string;
   // mentoringSessionUuid: string;
 }) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickname}`,
@@ -137,6 +152,7 @@ export async function postOutChat({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }

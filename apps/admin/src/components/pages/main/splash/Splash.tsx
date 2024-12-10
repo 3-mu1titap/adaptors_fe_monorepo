@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import AdaptorsLogoIcon from '@repo/client/components/assets/icons/AdaptorsLogo';
+import AdaptorsLogoIcon from '@repo/admin/components/assets/icons/AdaptorsLogo';
 
 function Splash() {
   const router = useRouter();

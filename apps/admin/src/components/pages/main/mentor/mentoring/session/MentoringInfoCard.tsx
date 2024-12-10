@@ -6,8 +6,8 @@ import {
   CardTitle,
 } from '@repo/ui/components/ui/card';
 import { Badge } from '@repo/ui/components/ui/badge';
-import { MentoringCategoryDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
-import FitImage from '@repo/client/components/ui/image/fit-image';
+import { MentoringCategoryDataType } from '@repo/admin/components/types/main/mentor/mentoringTypes';
+import FitImage from '@repo/admin/components/ui/image/fit-image';
 
 interface MentoringInfoProps {
   name: string;

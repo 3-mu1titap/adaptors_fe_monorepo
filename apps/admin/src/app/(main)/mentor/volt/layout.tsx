@@ -1,4 +1,4 @@
-import VoltHeader from '@repo/client/components/header/VoltHeader';
+import VoltHeader from '@repo/admin/components/header/VoltHeader';
 import { Metadata } from 'next';
 import React from 'react';
 

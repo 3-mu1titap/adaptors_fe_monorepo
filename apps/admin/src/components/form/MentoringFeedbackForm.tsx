@@ -16,8 +16,8 @@ import {
   CategoryCodeType,
   CategoryElementsType,
   MentoringFeedbackType,
-} from '@repo/client/components/types/main/meeting/meetingTypes';
-import { postFeedback } from '@repo/client/actions/meeting/meetingAction';
+} from '@repo/admin/components/types/main/meeting/meetingTypes';
+import { postFeedback } from '@repo/admin/actions/meeting/meetingAction';
 
 const categoryElements: CategoryElementsType = {
   면접: [

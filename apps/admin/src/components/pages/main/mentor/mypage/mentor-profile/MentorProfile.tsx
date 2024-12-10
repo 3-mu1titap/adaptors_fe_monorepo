@@ -1,4 +1,4 @@
-import { Mentor } from '@repo/client/components/types/main/mentor/mentorTypes';
+import { Mentor } from '@repo/admin/components/types/main/mentor/mentorTypes';
 import MentorProfileContent from './MentorProfileContent';
 
 interface MentorProfileProps {

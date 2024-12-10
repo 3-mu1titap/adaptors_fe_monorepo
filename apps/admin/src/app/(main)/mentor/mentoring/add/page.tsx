@@ -1,8 +1,8 @@
 import {
   GetHashTagsList,
   GetTopCategoryList,
-} from '@repo/client/actions/mentoring/mentoringAction';
-import MentoringAddForm from '@repo/client/components/form/MentoringAddForm';
+} from '@repo/admin/actions/mentoring/mentoringAction';
+import MentoringAddForm from '@repo/admin/components/form/MentoringAddForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

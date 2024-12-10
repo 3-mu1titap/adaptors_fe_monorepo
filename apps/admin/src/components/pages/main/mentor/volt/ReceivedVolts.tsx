@@ -8,9 +8,9 @@ import {
   CardTitle,
 } from '@repo/ui/components/ui/card';
 import { Input } from '@repo/ui/components/ui/input';
-import InnerButton from '@repo/client/components/ui/Button/InnerButton';
-import { mentorVoltListDataType } from '@repo/client/components/types/main/mypage/myPageTypes';
-import { formatDate } from '@repo/client/components/utils/dateUtil';
+import InnerButton from '@repo/admin/components/ui/Button/InnerButton';
+import { mentorVoltListDataType } from '@repo/admin/components/types/main/mypage/myPageTypes';
+import { formatDate } from '@repo/admin/components/utils/dateUtil';
 import Swal from 'sweetalert2';
 
 export default function ReceivedVolts({

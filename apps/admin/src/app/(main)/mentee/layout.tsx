@@ -3,7 +3,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@repo/ui/components/ui/sidebar';
-import CommonSidebar from '@repo/client/components/aside/metting-room/CommonSidebar';
+import CommonSidebar from '@repo/admin/components/aside/metting-room/CommonSidebar';
 export default function layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

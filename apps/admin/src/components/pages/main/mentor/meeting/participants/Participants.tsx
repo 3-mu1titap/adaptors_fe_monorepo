@@ -6,7 +6,7 @@ import ParticipantsContent from './ParticipantsContent';
 import {
   participantType,
   userType,
-} from '@repo/client/components/types/main/meeting/meetingTypes';
+} from '@repo/admin/components/types/main/meeting/meetingTypes';
 
 function Participants({
   participants,

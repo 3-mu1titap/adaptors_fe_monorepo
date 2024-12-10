@@ -1,15 +1,19 @@
 'use server';
 
-import { MentoringFeedbackType } from '@repo/client/components/types/main/meeting/meetingTypes';
-import { commonResType } from '@repo/client/components/types/ResponseTypes';
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
+import { MentoringFeedbackType } from '@repo/admin/components/types/main/meeting/meetingTypes';
+import { commonResType } from '@repo/admin/components/types/ResponseTypes';
+import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 const nickName = '멘토';
 
 // 화상회의, 채팅 참가하기
 export async function postJoinMeeting(mentoringSessionUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickName}`,
@@ -18,6 +22,7 @@ export async function postJoinMeeting(mentoringSessionUuid: string) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -32,6 +37,9 @@ export async function postJoinMeeting(mentoringSessionUuid: string) {
 // 화상회의, 채팅 나가기
 export async function postExitMeeting(mentoringSessionUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickName}`,
@@ -40,6 +48,7 @@ export async function postExitMeeting(mentoringSessionUuid: string) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -54,6 +63,9 @@ export async function postExitMeeting(mentoringSessionUuid: string) {
 // heartbeat 쏘기
 export async function postHeartbeat(mentoringSessionUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickName}`,
@@ -62,6 +74,7 @@ export async function postHeartbeat(mentoringSessionUuid: string) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -75,13 +88,20 @@ export async function postHeartbeat(mentoringSessionUuid: string) {
 // 참가자 관리
 export async function getParticipants(mentoringSessionUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.CHATSERVICE_URL}/api/v1/chat/getParticipants/${mentoringSessionUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          'userUuid': userUuid,
+        },
       }
     );
     const result = (await res.json()) as commonResType<string[]>;
@@ -92,34 +112,12 @@ export async function getParticipants(mentoringSessionUuid: string) {
   }
 }
 
-// const APPLICATION_SERVER_URL =
-//   'http://43.200.249.170:5555/api/v1/openvidu/generate-token';
-const APPLICATION_SERVER_URL = 'http://localhost:6080';
-
-// openvidu token 받아오기
-export async function getOpenViduToken(
-  roomName: string,
-  participantName: string
-) {
-  'use server';
-  const res = await fetch(`${APPLICATION_SERVER_URL}/token`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // 'userUuid': userUuid,
-    },
-    body: JSON.stringify({ roomName, participantName }),
-  });
-  if (!res.ok) {
-    throw new Error('Failed to get token');
-  }
-  const { token } = await res.json();
-  return token;
-}
-
 // 화상회의 종료 후 피드백 작성
 export async function postFeedback(payload: MentoringFeedbackType) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     // api 완성되면 넣기
     console.log(payload);
@@ -128,6 +126,7 @@ export async function postFeedback(payload: MentoringFeedbackType) {
     //   method: 'POST',
     //   headers: {
     //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${accessToken}`,
     //     'userUuid': userUuid,
     //   },
     //   body: JSON.stringify({

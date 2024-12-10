@@ -1,4 +1,4 @@
-import { exchangeDataType } from '@repo/client/components/types/main/mypage/myPageTypes';
+import { exchangeDataType } from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { Button } from '@repo/ui/components/ui/button';
 import {
   Card,

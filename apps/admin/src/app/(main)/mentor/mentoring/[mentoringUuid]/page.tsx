@@ -1,9 +1,9 @@
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
-} from '@repo/client/actions/mentoring/mentoringAction';
-import HomeDashboard from '@repo/client/components/pages/main/home/HomeDashboard';
-import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+} from '@repo/admin/actions/mentoring/mentoringAction';
+import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
+import { MentoringSessionDataType } from '@repo/admin/components/types/main/mentor/mentoringTypes';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

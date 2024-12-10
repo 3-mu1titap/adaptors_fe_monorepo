@@ -1,4 +1,4 @@
-import Message from '@repo/client/components/pages/main/mentor/message/Message';
+import Message from '@repo/admin/components/pages/main/mentor/message/Message';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

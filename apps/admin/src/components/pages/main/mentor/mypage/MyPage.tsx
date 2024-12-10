@@ -7,7 +7,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@repo/ui/components/ui/tabs';
-import { Mentor } from '@repo/client/components/types/main/mentor/mentorTypes';
+import { Mentor } from '@repo/admin/components/types/main/mentor/mentorTypes';
 import MentorProfile from './mentor-profile/MentorProfile';
 import MentorProfileEdit from './mentor-profile-edit/MentorProfileEdit';
 import MentorSessionList from './MentoringSessionList';

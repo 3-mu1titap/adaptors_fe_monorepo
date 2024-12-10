@@ -1,5 +1,5 @@
-import Meeting from '@repo/client/components/pages/main/mentor/meeting/Meeting';
-import MentoringCopy from '@repo/client/components/pages/main/mentor/meeting/MeetingCopy';
+import Meeting from '@repo/admin/components/pages/main/mentor/meeting/Meeting';
+import MentoringCopy from '@repo/admin/components/pages/main/mentor/meeting/MeetingCopy';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default async function Page() {
   return (
     <main className="container mx-auto p-4">
       {/* <Meeting mentoringSessionList={mentoringSessionList} /> */}
-      <MentoringCopy />
+      {/* <MentoringCopy /> */}
     </main>
   );
 }

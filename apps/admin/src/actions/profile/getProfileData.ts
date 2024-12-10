@@ -1,6 +1,6 @@
 'use server';
 
-import { commonResType } from '@repo/client/components/types/ResponseTypes';
+import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
 interface userProfileType {
@@ -11,13 +11,17 @@ interface userProfileType {
 export const getProfileIamge = async (
   uuid: string
 ): Promise<userProfileType> => {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   const response = await fetch(
     `${process.env.MEMBER_QUERY_URL}/api/v1/memberInfo/profileImage`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'userUuid': uuid,
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
       },
       next: { tags: ['profileUpdate'] },
       cache: 'force-cache',
@@ -35,14 +39,16 @@ export const getProfileIamge = async (
 
 export const getMyProfileIamge = async (): Promise<userProfileType> => {
   const session = await getServerSession(options);
-  const menteeUuid = session?.user.uuid;
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   const response = await fetch(
     `${process.env.MEMBER_QUERY_URL}/api/v1/memberInfo/profileImage`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'userUuid': menteeUuid,
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
       },
     }
   );

@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
-import ClientContainer from '@repo/client/components/common/layouts/ClientContainer';
+import ClientContainer from '@repo/admin/components/common/layouts/ClientContainer';
 
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
-} from '@repo/client/actions/mentoring/mentoringAction';
+} from '@repo/admin/actions/mentoring/mentoringAction';
 
 import type {
   MentoringResult,
   MentoringDataType,
 } from '@repo/ui/types/CommonType.ts';
-import HomeDashboard from '@repo/client/components/pages/main/home/HomeDashboard';
+import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
 
 export const metadata: Metadata = {
   title: `Home`,

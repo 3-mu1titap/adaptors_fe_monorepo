@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import Chatting from '../../chatting/Chatting';
 import ChatSidebar from '../../sidebar/ChatSidebar';
-import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
-import { TimeType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
+import { TimeType } from '@repo/admin/components/types/main/mentor/mentoringTypes';
 
 type Message = {
   id: string;

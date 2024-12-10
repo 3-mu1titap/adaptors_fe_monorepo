@@ -11,9 +11,9 @@ import './CalendarContent.css';
 import {
   ScheduleDataType,
   UserScheduleDataType,
-} from '@repo/client/components/types/main/schedule/scheduleTypes';
+} from '@repo/admin/components/types/main/schedule/scheduleTypes';
 import { useRouter } from 'next/navigation';
-import { GetMentoringUuid } from '@repo/client/actions/schedule/scheduleAction';
+import { GetMentoringUuid } from '@repo/admin/actions/schedule/scheduleAction';
 
 interface CalendarDataType {
   id: string;

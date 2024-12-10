@@ -1,14 +1,20 @@
 'use server';
 
-import { Mentor } from '@repo/client/components/types/main/mentor/mentorTypes';
-import { MentorProfileEditFormType } from '@repo/client/components/types/main/mypage/myPageTypes';
-import { commonResType } from '@repo/client/components/types/ResponseTypes';
+import { Mentor } from '@repo/admin/components/types/main/mentor/mentorTypes';
+import { MentorProfileEditFormType } from '@repo/admin/components/types/main/mypage/myPageTypes';
+import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
 import { uploadFileToS3 } from '../common/awsMediaUploader';
+import { getServerSession } from 'next-auth';
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
+import { revalidateTag } from 'next/cache';
 
 // 유저 정보 조회 API
-export async function GetUserInfo(userUuid: string) {
+export async function GetUserInfo() {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.PROFILE_URL}/api/v1/memberInfo/profile`,
@@ -17,6 +23,7 @@ export async function GetUserInfo(userUuid: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
         next: { tags: ['updateUserInfo'] },
@@ -31,7 +38,11 @@ export async function GetUserInfo(userUuid: string) {
 }
 
 // 유저 기본 정보 수정 API
-async function PutUserBasicInfo(userUuid: string, payload: any) {
+async function PutUserBasicInfo(
+  accessToken: string,
+  userUuid: string,
+  payload: any
+) {
   'use server';
   try {
     const res = await fetch(
@@ -41,6 +52,7 @@ async function PutUserBasicInfo(userUuid: string, payload: any) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
         body: JSON.stringify(payload),
@@ -54,7 +66,11 @@ async function PutUserBasicInfo(userUuid: string, payload: any) {
 }
 
 // 유저 프로필 수정
-async function PutUserProfile(userUuid: string, profileImageUrl: string) {
+async function PutUserProfile(
+  accessToken: string,
+  userUuid: string,
+  profileImageUrl: string
+) {
   'use server';
   try {
     const res = await fetch(
@@ -64,6 +80,7 @@ async function PutUserProfile(userUuid: string, profileImageUrl: string) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
         body: JSON.stringify({
@@ -79,7 +96,11 @@ async function PutUserProfile(userUuid: string, profileImageUrl: string) {
 }
 
 // 유저의 멘토 소개 수정
-async function PutUserMentorProfile(userUuid: string, payload: any) {
+async function PutUserMentorProfile(
+  accessToken: string,
+  userUuid: string,
+  payload: any
+) {
   'use server';
   try {
     const res = await fetch(
@@ -89,6 +110,7 @@ async function PutUserMentorProfile(userUuid: string, payload: any) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
         body: JSON.stringify(payload),
@@ -103,22 +125,31 @@ async function PutUserMentorProfile(userUuid: string, payload: any) {
 
 export async function PutUserTotalInfo({
   formData,
-  userUuid,
   imageFile = null,
 }: {
   formData: MentorProfileEditFormType;
-  userUuid: string;
   imageFile: File | null;
 }) {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   const basicInfoPayload = {
     nickName: formData.nickName,
     phoneNumber: formData.phoneNumber,
   };
-  const basicInfoSuccess = await PutUserBasicInfo(userUuid, basicInfoPayload);
+  const basicInfoSuccess = await PutUserBasicInfo(
+    accessToken,
+    userUuid,
+    basicInfoPayload
+  );
   let profileSuccess = true;
   if (imageFile) {
     const profileImageUrl: string = await uploadFileToS3(imageFile, 'profile');
-    profileSuccess = await PutUserProfile(userUuid, profileImageUrl);
+    profileSuccess = await PutUserProfile(
+      accessToken,
+      userUuid,
+      profileImageUrl
+    );
   }
   const userMentorProfilePayload = {
     mentoringField: formData.mentoringField,
@@ -127,6 +158,7 @@ export async function PutUserTotalInfo({
     jobExperience: formData.jobExperience,
   };
   const mentorProfileSuccess = await PutUserMentorProfile(
+    accessToken,
     userUuid,
     userMentorProfilePayload
   );
@@ -136,5 +168,6 @@ export async function PutUserTotalInfo({
     return false;
   }
 
+  revalidateTag('updateUserInfo');
   return true;
 }

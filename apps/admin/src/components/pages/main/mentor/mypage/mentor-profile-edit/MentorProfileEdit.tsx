@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Mentor } from '@repo/client/components/types/main/mentor/mentorTypes';
-import SubmitButton from '@repo/client/components/ui/Button/SubmitButton';
-import MentorProfileEditForm from '@repo/client/components/form/MentorProfileEditForm';
-import { MentorProfileEditFormType } from '@repo/client/components/types/main/mypage/myPageTypes';
-import { PutUserTotalInfo } from '@repo/client/actions/mypage/mypageAction';
+import { Mentor } from '@repo/admin/components/types/main/mentor/mentorTypes';
+import SubmitButton from '@repo/admin/components/ui/Button/SubmitButton';
+import MentorProfileEditForm from '@repo/admin/components/form/MentorProfileEditForm';
+import { MentorProfileEditFormType } from '@repo/admin/components/types/main/mypage/myPageTypes';
+import { PutUserTotalInfo } from '@repo/admin/actions/mypage/mypageAction';
 
 interface MentorProfileEditProps {
   mentor: Mentor;
@@ -31,7 +31,7 @@ export default function MentorProfileEdit({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await PutUserTotalInfo({ formData, userUuid, imageFile: file });
+    const res = await PutUserTotalInfo({ formData, imageFile: file });
 
     console.log(formData);
     console.log(file);

@@ -1,6 +1,6 @@
 import { OpenVidu } from 'openvidu-browser';
 import { handleStreamCreated, handleStreamDestroyed } from './streamHandler';
-import { getToken } from '@repo/client/actions/openvidu/openviduAction';
+import { getToken } from '@repo/admin/actions/openvidu/openviduAction';
 
 // /** @typedef {import('openvidu-browser').PublisherProperties} PublisherProperties */
 // /** @typedef {import("openvidu-browser").Publisher} Publisher */

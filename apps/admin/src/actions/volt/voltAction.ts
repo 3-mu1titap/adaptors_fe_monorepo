@@ -3,18 +3,19 @@
 import {
   mentorVoltListDataType,
   settleListDataType,
-} from '@repo/client/components/types/main/mypage/myPageTypes';
-import { commonResType } from '@repo/client/components/types/ResponseTypes';
+} from '@repo/admin/components/types/main/mypage/myPageTypes';
+import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
 import { getChatProfile } from '../chatting/chattingAction';
+import { getServerSession } from 'next-auth';
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 
 // 기간 별 정산 내역 API
-export async function GetSettleList(
-  startDate: string,
-  endDate: string,
-  userUuid: string
-) {
+export async function GetSettleList(startDate: string, endDate: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.PAYMENT_URL}/api/v1/payment/settle/points?startDate=${startDate}&endDate=${endDate}&mentorUuid=${userUuid}`,
@@ -23,6 +24,8 @@ export async function GetSettleList(
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          'userUuid': userUuid,
         },
       }
     );
@@ -35,8 +38,11 @@ export async function GetSettleList(
 }
 
 // 받은 볼트 API
-export async function GetMentorVolts(userUuid: string) {
+export async function GetMentorVolts() {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.PAYMENT_URL}/api/v1/payment/settle/mentorUuid=${userUuid}/points`,
@@ -45,6 +51,8 @@ export async function GetMentorVolts(userUuid: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          'userUuid': userUuid,
         },
       }
     );

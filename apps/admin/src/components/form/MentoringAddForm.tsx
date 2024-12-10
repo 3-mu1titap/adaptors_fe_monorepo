@@ -14,8 +14,8 @@ import {
   MentoringCategory,
   TopCategoryDataType,
 } from '../types/main/mentor/mentoringTypes';
-import { uploadFileToS3 } from '@repo/client/actions/common/awsMediaUploader';
-import { PostMentoring } from '@repo/client/actions/mentoring/mentoringAction';
+import { uploadFileToS3 } from '@repo/admin/actions/common/awsMediaUploader';
+import { PostMentoring } from '@repo/admin/actions/mentoring/mentoringAction';
 
 import { CustomFitImage } from '@repo/ui/components/ui/custom/index';
 
