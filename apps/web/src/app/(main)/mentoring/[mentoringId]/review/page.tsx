@@ -1,4 +1,4 @@
-import MentoringReview from '@components/pages/main/mentoring/review/MentoringReview';
+import MentoringReview from '@repo/web/components/pages/main/mentoring/review/MentoringReview';
 
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
 import { MentoringDataType } from '@repo/ui/types/CommonType.js';

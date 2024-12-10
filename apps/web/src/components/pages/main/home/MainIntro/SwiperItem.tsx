@@ -1,4 +1,4 @@
-import { mainIntroDataType } from '@components/types/home/homeResponseType';
+import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import FitImage from '../../../../ui/image/fit-image';
 
 function SwiperItemLayout({ item }: { item: mainIntroDataType }) {

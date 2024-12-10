@@ -1,5 +1,5 @@
 'use server';
-import { commonResType } from '@components/types/ResponseTypes';
+import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
 import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';

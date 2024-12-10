@@ -1,6 +1,6 @@
 'use client';
-import Heart from '@components/assets/icons/Heart';
 import { cn } from '@repo/ui/lib/utils';
+import Heart from '@repo/web/components/assets/icons/Heart';
 import { useState } from 'react';
 import { postLikeReaction } from 'src/actions/Like/like';
 import ValueUnit from '../Text/ValueUnit';

@@ -1,5 +1,5 @@
-import Splash from '@components/pages/main/splash/Splash';
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
+import Splash from '@repo/web/components/pages/main/splash/Splash';
 
 export default function Page() {
   return (

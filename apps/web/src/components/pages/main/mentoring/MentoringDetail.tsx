@@ -1,10 +1,10 @@
-import { CommonLayout } from '@components/common/commomLayout';
 import { SeparateContainer } from '@repo/ui/components/ui/custom/CustomSeparateContainer';
 import CustomSessionList from '@repo/ui/components/ui/custom/CustomSessionList';
 import {
   MentoringDataType,
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
 export default async function MentoringCalendar({

@@ -1,9 +1,9 @@
-import FeedbackResult from '@components/pages/AI-feedback/FeedbackResult';
-import SelectedFile from '@components/pages/AI-feedback/SelectedFile';
-import { feedbackResult } from '@components/types/AI-feedback/requestTypes';
-import ProgressBar from '@components/ui/Progress/ProgressBar';
-import Status from '@components/ui/Progress/Success';
 import { Button } from '@repo/ui/components/ui/button';
+import FeedbackResult from '@repo/web/components/pages/AI-feedback/FeedbackResult';
+import SelectedFile from '@repo/web/components/pages/AI-feedback/SelectedFile';
+import { feedbackResult } from '@repo/web/components/types/AI-feedback/requestTypes';
+import ProgressBar from '@repo/web/components/ui/Progress/ProgressBar';
+import Status from '@repo/web/components/ui/Progress/Success';
 import { Upload } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { requestAIFeedback_pdf } from 'src/actions/AI-feedback/AI-feedback';

@@ -1,4 +1,3 @@
-import JoinFreeButton from '@components/ui/Button/JoinFreeButton';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
 import {
   DropdownMenu,
@@ -9,10 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/ui/dropdown';
+import JoinFreeButton from '@repo/web/components/ui/Button/JoinFreeButton';
 import { CreditCard, User } from 'lucide-react';
 
-import HeaderLogoutButton from '@components/ui/Button/HeaderLogoutButton';
-import OpenAppButton from '@components/ui/Button/OpenAppButton';
+import HeaderLogoutButton from '@repo/web/components/ui/Button/HeaderLogoutButton';
+import OpenAppButton from '@repo/web/components/ui/Button/OpenAppButton';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { options } from 'src/app/api/auth/[...nextauth]/options';

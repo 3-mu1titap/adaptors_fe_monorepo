@@ -1,5 +1,5 @@
 'use client';
-import { Sidebar } from '@components/common/Sidebar';
+import { Sidebar } from '@repo/web/components/common/Sidebar';
 import { MenuIcon } from 'lucide-react';
 import React from 'react';
 export default function SideBarButton() {

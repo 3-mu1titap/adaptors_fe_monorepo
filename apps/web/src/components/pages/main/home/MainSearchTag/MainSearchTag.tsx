@@ -1,9 +1,9 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import SearchIcon from '../../../../assets/icons/Search';
 import { Button } from '@repo/ui/components/ui/button';
-import { SearchDialog } from '@components/common/SearchDialog';
-import { SearchDrawer } from '@components/common/SearchDrawer';
+import { SearchDialog } from '@repo/web/components/common/SearchDialog';
+import { SearchDrawer } from '@repo/web/components/common/SearchDrawer';
+import { useEffect, useRef, useState } from 'react';
+import SearchIcon from '../../../../assets/icons/Search';
 
 function MainSearchTag() {
   const [shortCutKey, setShortCutKey] = useState('⌘K');

@@ -1,7 +1,7 @@
-import TitleSection from '@components/common/TitleSection';
-import RecommendMentoringItem from './RecommendMentoringItem';
-import { CommonLayout } from '@components/common/commomLayout';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import TitleSection from '@repo/web/components/common/TitleSection';
 import { articles } from 'src/store/dummyStore';
+import RecommendMentoringItem from './RecommendMentoringItem';
 export default function RecommendMentoring() {
   return (
     <CommonLayout

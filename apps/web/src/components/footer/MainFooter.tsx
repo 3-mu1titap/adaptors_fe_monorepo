@@ -1,4 +1,4 @@
-import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
+import AdaptorsLogoIcon from '@repo/web/components/assets/icons/AdaptorsLogo';
 
 export default function MeinFooter() {
   return (

@@ -1,4 +1,4 @@
-import XIcon from '@components/assets/icons/X';
+import XIcon from '@repo/web/components/assets/icons/X';
 
 export default function SignUpTitle() {
   return (

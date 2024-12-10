@@ -1,7 +1,7 @@
 import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
 import { MentoringDataType, SessionUser } from '@repo/ui/types/CommonType.ts';
-import { File, User } from 'lucide-react';
+import { Hash } from 'lucide-react';
 import Image from 'next/image';
 
 export default function MentoringOverview({
@@ -16,13 +16,13 @@ export default function MentoringOverview({
       id: 1,
       infoName: 'Session',
       infoValue: 8,
-      icon: <File size={12} className="text-blue-500" />,
+      icon: <Hash size={12} className="text-blue-500" />,
     },
     {
       id: 2,
       infoName: 'Students',
       infoValue: 68,
-      icon: <User size={12} className="text-blue-500" />,
+      icon: <Hash size={12} className="text-blue-500" />,
     },
   ];
   return (
@@ -69,15 +69,18 @@ export default function MentoringOverview({
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow-sm">
-        <ul className="flex gap-3 py-3">
-          <li className="bg-adaptorsBlue/40 py-2 px-3 rounded-2xl text-white text-md ">
-            #해시태그1
+        <ul className="flex gap-1 py-1">
+          <li className=" px-3 rounded-2xl text-adaptorsBlue text-md flex items-center">
+            <Hash size={16} />
+            꼼꼼자기소개서
           </li>
-          <li className="bg-adaptorsBlue/40 py-2 px-3 rounded-2xl text-white text-md">
-            #해시태그2
+          <li className=" px-3 rounded-2xl text-adaptorsBlue text-md flex items-center">
+            <Hash size={16} />
+            꼼꼼자기소개서
           </li>
-          <li className="bg-adaptorsBlue/40 py-2 px-3 rounded-2xl text-adaptorsBlue text-md">
-            #해시태그32398
+          <li className=" px-3 rounded-2xl text-adaptorsBlue text-md flex items-center">
+            <Hash size={16} />
+            꼼꼼자기소개서
           </li>
         </ul>
       </div>

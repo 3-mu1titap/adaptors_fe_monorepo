@@ -1,7 +1,6 @@
-import React from 'react';
-import { MentorMentoringListDataType } from '@components/types/mentor/mentorType';
-import CurrentMentoringCard from './CurrentMentoringCard';
+import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
 import MentorTitleSection from '../compoent/MentorTitleSection';
+import CurrentMentoringCard from './CurrentMentoringCard';
 function CurrentMentoring({ item }: { item: MentorMentoringListDataType[] }) {
   return (
     <div className="py-3 h-auto min-h-[30rem] lg:max-w-[50rem] md:max-w-[40rem] bg-white p-4 rounded-xl mt-10">

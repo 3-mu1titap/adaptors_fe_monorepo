@@ -1,4 +1,4 @@
-import MentoringDetail from '@components/pages/main/mentoring/MentoringDetail';
+import MentoringDetail from '@repo/web/components/pages/main/mentoring/MentoringDetail';
 
 import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import {

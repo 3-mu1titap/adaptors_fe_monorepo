@@ -1,5 +1,5 @@
-import CategoryAside from '@components/pages/main/mentoring/category/CategoryAside';
-import ListSection from '@components/pages/main/mentoring/ListSection';
+import CategoryAside from '@repo/web/components/pages/main/mentoring/category/CategoryAside';
+import ListSection from '@repo/web/components/pages/main/mentoring/ListSection';
 import { redirect } from 'next/navigation';
 import { getTopCategoryList } from 'src/actions/category/getCategory';
 

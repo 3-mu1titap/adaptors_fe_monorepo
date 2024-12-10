@@ -1,6 +1,3 @@
-import React from 'react';
-import TextTitleSection from '../compoent/TextTitleSection';
-import { GetMemberPointListDataType } from '@components/types/payment/paymentType';
 function VoltUsageList({ item }: { item?: any }) {
   const formatDate = (dateString: Date): string => {
     const date = new Date(dateString); // 문자열을 Date 객체로 변환

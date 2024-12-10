@@ -1,11 +1,10 @@
-import React from 'react';
-import ChargePage from '@components/pages/main/mypage/volt/Charge/ChargePage';
-import VoltUsageList from '@components/pages/main/mypage/volt/VoltUsageList';
-import VoltCharge from '@components/pages/main/mypage/volt/Charge/VoltCharge';
-import { GetMemberPoint } from 'src/actions/payment/paymentActions';
-import { GetMemberPointListResType } from '@components/types/payment/paymentType';
-import { GetPointList } from 'src/actions/payment/paymentActions';
-import MentorTitleSection from '@components/pages/mentor/compoent/MentorTitleSection';
+import VoltCharge from '@repo/web/components/pages/main/mypage/volt/Charge/VoltCharge';
+import VoltUsageList from '@repo/web/components/pages/main/mypage/volt/VoltUsageList';
+import MentorTitleSection from '@repo/web/components/pages/mentor/compoent/MentorTitleSection';
+import {
+  GetMemberPoint,
+  GetPointList,
+} from 'src/actions/payment/paymentActions';
 async function page() {
   //회원의 남은 포인트 조회
   const res = await GetMemberPoint();

@@ -6,7 +6,7 @@ import {
 } from '../../../actions/profile/hashtagData';
 import useUserStore from '../../../store/uuidStore';
 
-import NextButton from '@components/ui/Button/NextButton';
+import NextButton from '@repo/web/components/ui/Button/NextButton';
 import CheckboxButton from '../../ui/checkbox/CheckBox';
 
 export default function HashTag({

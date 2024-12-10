@@ -1,7 +1,6 @@
-import { CommonLayout } from '@components/common/commomLayout';
-import ArrowRightIcon from '../../../assets/icons/ArrowRight';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import NextButton from '@repo/web/components/ui/Button/NextButton';
 import FitImage from '../../../ui/image/fit-image';
-import NextButton from '@components/ui/Button/NextButton';
 
 export default function ShareMentoring() {
   return (

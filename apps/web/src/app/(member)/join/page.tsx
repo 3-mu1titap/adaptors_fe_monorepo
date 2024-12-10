@@ -1,7 +1,7 @@
-import JoinFunnel from '@components/form/JoinFunnel';
-import IntroCard from '@components/pages/member/IntroCard';
-import SignUpTitle from '@components/pages/member/SignUpTitle';
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
+import JoinFunnel from '@repo/web/components/form/JoinFunnel';
+import IntroCard from '@repo/web/components/pages/member/IntroCard';
+import SignUpTitle from '@repo/web/components/pages/member/SignUpTitle';
 interface SearchParams {
   [key: string]: string;
 }

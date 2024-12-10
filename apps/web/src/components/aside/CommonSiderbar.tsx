@@ -1,21 +1,19 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@repo/ui/components/ui/sidebar';
-import AdaptorsLogoIcon from '@components/assets/icons/AdaptorsLogo';
-import { SidebarType } from '@components/types/navigation/navigationTypes';
+import { SidebarType } from '@repo/web/components/types/navigation/navigationTypes';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useMemo } from 'react';
 function CommonSidebar() {
   const pathname = usePathname();
   const basePath = pathname.startsWith('/mypage') ? '/mypage' : '/home';

@@ -1,15 +1,14 @@
-import React from 'react';
-import { GetMentorMentoringList } from 'src/actions/mentor/mentorAction';
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
+import MentorDetail from '@repo/web/components/pages/mentor/MentorDetail';
+import { GetMentorMentoringList } from 'src/actions/mentor/mentorAction';
 import { getProfileIamge } from 'src/actions/profile/getProfileData';
-import MentorDetail from '@components/pages/mentor/MentorDetail';
 
-import { SeparateContainer } from '@components/common/layout/SeperateContainer';
 import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
 import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
 import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
 import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
+import { SeparateContainer } from '@repo/web/components/common/layout/SeperateContainer';
 
 async function page({
   params,

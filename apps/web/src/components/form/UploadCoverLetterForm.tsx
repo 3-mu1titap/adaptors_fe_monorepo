@@ -1,9 +1,9 @@
-import FeedbackResult from '@components/pages/AI-feedback/FeedbackResult';
-import { feedbackResult } from '@components/types/AI-feedback/requestTypes';
-import { Input } from '@components/ui/input/CommonInput';
-import ProgressBar from '@components/ui/Progress/ProgressBar';
-import ChevronText from '@components/ui/Text/ChevronText';
 import { Button } from '@repo/ui/components/ui/button';
+import FeedbackResult from '@repo/web/components/pages/AI-feedback/FeedbackResult';
+import { feedbackResult } from '@repo/web/components/types/AI-feedback/requestTypes';
+import { Input } from '@repo/web/components/ui/input/CommonInput';
+import ProgressBar from '@repo/web/components/ui/Progress/ProgressBar';
+import ChevronText from '@repo/web/components/ui/Text/ChevronText';
 import { useState } from 'react';
 import { requestAIFeedback_coverletter } from 'src/actions/AI-feedback/AI-feedback';
 

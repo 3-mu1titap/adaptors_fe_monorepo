@@ -1,8 +1,6 @@
-import React from 'react';
-
+import SearchMentoring from '@repo/web/components/pages/search/SearchMentoring';
+import SearchResult from '@repo/web/components/pages/search/SearchResult';
 import { GetMentoringNameSearch } from 'src/actions/mentoring/mentoringAction';
-import SearchResult from '@components/pages/search/SearchResult';
-import SearchMentoring from '@components/pages/search/SearchMentoring';
 async function page({ params }: { params: { name: string } }) {
   const name = decodeURIComponent(params.name);
   console.log(name, 'searchName test test');

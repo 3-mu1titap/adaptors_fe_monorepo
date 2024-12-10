@@ -1,7 +1,7 @@
 'use client';
 
-import NextButton from '@components/ui/Button/NextButton';
-import { Input } from '@components/ui/input/CommonInput';
+import NextButton from '@repo/web/components/ui/Button/NextButton';
+import { Input } from '@repo/web/components/ui/input/CommonInput';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';

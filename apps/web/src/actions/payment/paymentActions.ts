@@ -1,13 +1,15 @@
 'use server';
-import { commonResType } from '@components/types/ResponseTypes';
-import { PaymentReadyResType } from '@components/types/payment/paymentType';
-import { PaymentApprovalReqType } from '@components/types/payment/paymentType';
-import { PaymentApprovalResType } from '@components/types/payment/paymentType';
-import { options } from '../../app/api/auth/[...nextauth]/options';
+import {
+  commonRes,
+  commonResType,
+} from '@repo/web/components/types/ResponseTypes';
+import {
+  GetMemberPointListResType,
+  PaymentApprovalResType,
+  PaymentReadyResType,
+} from '@repo/web/components/types/payment/paymentType';
 import { getServerSession } from 'next-auth';
-import { commonRes } from '@components/types/ResponseTypes';
-import { GetMemberPointListDataType } from '@components/types/payment/paymentType';
-import { GetMemberPointListResType } from '@components/types/payment/paymentType';
+import { options } from '../../app/api/auth/[...nextauth]/options';
 //결제준비요청
 export async function PaymentReq(
   cid: string,
