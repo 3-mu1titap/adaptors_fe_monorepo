@@ -40,10 +40,14 @@ export default async function Page({
 
   const mentoringInfoData = await GetMentoringInfo(mentoringUuid);
   return (
-    <HomeDashboard
-      initialUserData={initialUserData}
-      mentoringSessionList={mentoringSessionList}
-      MentoringInfoData={mentoringInfoData}
-    />
+    <>
+      {mentoringSessionList && mentoringInfoData && (
+        <HomeDashboard
+          initialUserData={initialUserData}
+          mentoringSessionList={mentoringSessionList}
+          MentoringInfoData={mentoringInfoData}
+        />
+      )}
+    </>
   );
 }

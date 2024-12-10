@@ -18,7 +18,7 @@ export default async function Page() {
     <section className="w-full">
       {/* <CalendarHeader /> */}
       <article className="w-full h-full">
-        <CalendarContent scheduleList={scheduleList} />
+        {scheduleList && <CalendarContent scheduleList={scheduleList} />}
       </article>
     </section>
   );

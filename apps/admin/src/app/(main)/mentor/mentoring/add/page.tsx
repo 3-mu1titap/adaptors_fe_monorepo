@@ -12,5 +12,11 @@ export const metadata: Metadata = {
 export default async function Page() {
   const topCategories = await GetTopCategoryList();
   const hashtags = await GetHashTagsList();
-  return <MentoringAddForm topCategories={topCategories} hashtags={hashtags} />;
+  return (
+    <>
+      {topCategories && hashtags && (
+        <MentoringAddForm topCategories={topCategories} hashtags={hashtags} />
+      )}
+    </>
+  );
 }
