@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import SelectPeriod from './exchange/SelectPeriod';
 import TotalExchange from './exchange/TotalExchange';
 import SettleList from './exchange/SettleList';
-import { GetSettleList } from '@repo/client/actions/volt/voltAction';
-import { exchangeDataType } from '@repo/client/components/types/main/mypage/myPageTypes';
+import { GetSettleList } from '@repo/admin/actions/volt/voltAction';
+import { exchangeDataType } from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { DateRange } from 'react-day-picker'; // 동일한 모듈에서 가져오기
-import { formatDate } from '@repo/client/components/utils/dateUtil';
+import { formatDate } from '@repo/admin/components/utils/dateUtil';
 
 export default function ExchangeHistory() {
   const [period, setPeriod] = useState<string>('오늘');
@@ -73,7 +73,7 @@ export default function ExchangeHistory() {
             return;
         }
 
-        const data = await GetSettleList(startDate, endDate, userUuid);
+        const data = await GetSettleList(startDate, endDate);
         setTotalExchange(data.totalExchange);
         setFilteredData(data.exchangeList);
       } catch (error) {

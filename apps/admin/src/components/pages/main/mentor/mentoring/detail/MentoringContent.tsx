@@ -1,4 +1,4 @@
-import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { MentoringSessionDataType } from '@repo/admin/components/types/main/mentor/mentoringTypes';
 import MentoringInfoCard from '../session/MentoringInfoCard';
 import MentoringSessionList from '../session/MentoringSessionList';
 import { MentoringDataType } from '@repo/ui/types/CommonType.ts';

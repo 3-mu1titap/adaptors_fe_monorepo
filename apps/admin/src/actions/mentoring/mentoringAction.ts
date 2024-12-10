@@ -1,5 +1,6 @@
 'use server';
 
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import type {
   HashtagDataType,
   MentoringAddFormType,
@@ -7,13 +8,14 @@ import type {
   SessionTimeDataType,
   SessionTimeValidationType,
   TopCategoryDataType,
-} from '@repo/client/components/types/main/mentor/mentoringTypes';
-import { commonResType } from '@repo/client/components/types/ResponseTypes';
+} from '@repo/admin/components/types/main/mentor/mentoringTypes';
+import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import {
   MentoringDataType,
   MentoringResult,
   SearchMentoringListType,
 } from '@repo/ui/types/CommonType.ts';
+import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
@@ -95,6 +97,9 @@ export async function GetHashTagsList() {
 // 멘토의 멘토링 생성
 export async function PostMentoring(payload: MentoringAddFormType) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MENTORING_URL}/api/v1/mentoring-service`,
@@ -103,6 +108,7 @@ export async function PostMentoring(payload: MentoringAddFormType) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
         body: JSON.stringify(payload),
@@ -120,6 +126,9 @@ export async function PostMentoring(payload: MentoringAddFormType) {
 // 멘토의 멘토링 리스트 조회
 export async function GetMentoringList(): Promise<MentoringDataType[]> {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list?isMentor=true`,
@@ -128,6 +137,7 @@ export async function GetMentoringList(): Promise<MentoringDataType[]> {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -144,6 +154,8 @@ export async function GetMentoringListByMentor(
   mentorUuid: string
 ): Promise<SearchMentoringListType[]> {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
   try {
     const res = await fetch(
       `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list?isMentor=true`,
@@ -152,6 +164,7 @@ export async function GetMentoringListByMentor(
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': mentorUuid,
         },
       }
@@ -170,6 +183,9 @@ export async function GetMentoringListByMentor(
 // 멘토링 1개에 대한 정보 조회
 export async function GetMentoringInfo(mentoringUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring/${mentoringUuid}`,
@@ -178,6 +194,7 @@ export async function GetMentoringInfo(mentoringUuid: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -195,6 +212,9 @@ export async function GetMentoringSessionList(
   mentoringUuid: string
 ): Promise<MentoringResult[]> {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
@@ -203,6 +223,7 @@ export async function GetMentoringSessionList(
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -222,7 +243,9 @@ export async function PostSessionTimeValidation({
   time: SessionTimeDataType;
 }) {
   'use server';
-  console.log(time);
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MENTORING_URL}/api/v1/mentoring-service/validate-session-time?startDate=${time.startDate}&endDate=${time.endDate}&startTime=${time.startTime}&endTime=${time.endTime}&mentorUuid=${userUuid}`,
@@ -231,6 +254,8 @@ export async function PostSessionTimeValidation({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          'userUuid': userUuid,
         },
       }
     );

@@ -1,4 +1,4 @@
-import { SeparateContainer } from '@repo/client/components/common/layouts/SeperateContainer';
+import { SeparateContainer } from '@repo/admin/components/common/layouts/SeperateContainer';
 import {
   CustomLikeButton,
   CustomMentorDescription,

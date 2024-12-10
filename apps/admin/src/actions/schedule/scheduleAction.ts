@@ -3,16 +3,21 @@
 import {
   MentoringDataType,
   MentoringSessionDataType,
-} from '@repo/client/components/types/main/mentor/mentoringTypes';
+} from '@repo/admin/components/types/main/mentor/mentoringTypes';
 import { redirect } from 'next/navigation';
 import { UserScheduleDataType } from '../../components/types/main/schedule/scheduleTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
+import { getServerSession } from 'next-auth';
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 // 스케쥴 조회
 export async function GetScheduleList(date: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.SCHEDULE_URL}/api/v1/schedule-read/schedule-list?yearMonth=${date}`,
@@ -21,6 +26,7 @@ export async function GetScheduleList(date: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -36,6 +42,9 @@ export async function GetScheduleList(date: string) {
 // 오늘 참여항 멘토링 세션 리스트 조회
 export async function GetTodayMentoringSessionList(date: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.SCHEDULE_URL}/api/v1/schedule-read/today-mentoring-schedule-list?date=${date}`,
@@ -44,6 +53,7 @@ export async function GetTodayMentoringSessionList(date: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }
@@ -63,6 +73,9 @@ export async function GetTodayMentoringSessionList(date: string) {
 // sessionUuid로 mentoringUuid 조회하기
 export async function GetMentoringUuid(sessionUuid: string) {
   'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/session-room/${sessionUuid}`,
@@ -71,6 +84,7 @@ export async function GetMentoringUuid(sessionUuid: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
           'userUuid': userUuid,
         },
       }

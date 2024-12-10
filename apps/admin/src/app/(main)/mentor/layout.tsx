@@ -1,5 +1,5 @@
-import ClientContainer from '@repo/client/components/common/layouts/ClientContainer';
-import MentoringHeader from '@repo/client/components/header/MentoringHeader';
+import ClientContainer from '@repo/admin/components/common/layouts/ClientContainer';
+import MentoringHeader from '@repo/admin/components/header/MentoringHeader';
 
 export default function layout({
   children,

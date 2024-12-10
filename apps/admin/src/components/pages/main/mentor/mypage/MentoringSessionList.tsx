@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { MentoringSession } from '@repo/client/components/types/main/mentor/mentorTypes';
+import { MentoringSession } from '@repo/admin/components/types/main/mentor/mentorTypes';
 
 interface MentorSessionListProps {
   mentorId: string;

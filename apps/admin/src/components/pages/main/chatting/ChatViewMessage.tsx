@@ -7,10 +7,10 @@ import {
 import {
   chatDataType,
   chatMemberDataType,
-} from '@repo/client/components/types/main/chatting/chattingTypes';
-import useUserStore from '@repo/client/store/memberUuidStore';
-import { useUserInfoStore } from '@repo/client/store/messagesStore';
-import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
+} from '@repo/admin/components/types/main/chatting/chattingTypes';
+import useUserStore from '@repo/admin/store/memberUuidStore';
+import { useUserInfoStore } from '@repo/admin/store/messagesStore';
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 
 function ChatViewMessage({ message }: { message: chatDataType }) {
   const { userUuid } = useUserStore();

@@ -1,7 +1,7 @@
 import { RefObject } from 'react';
 import ChatViewMessage from './ChatViewMessage';
-import { chatDataType } from '@repo/client/components/types/main/chatting/chattingTypes';
-import useUserStore from '@repo/client/store/memberUuidStore';
+import { chatDataType } from '@repo/admin/components/types/main/chatting/chattingTypes';
+import useUserStore from '@repo/admin/store/memberUuidStore';
 
 function ChatView({
   handleDrop,

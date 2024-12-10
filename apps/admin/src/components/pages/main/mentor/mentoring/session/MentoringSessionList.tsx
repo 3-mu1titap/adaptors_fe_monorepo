@@ -1,7 +1,7 @@
 import { Badge } from '@repo/ui/components/ui/badge';
 import { format, parseISO } from 'date-fns';
 import MentoringSessionCard from './MentoringSeesionCard';
-import { MentoringSessionDataType } from '@repo/client/components/types/main/mentor/mentoringTypes';
+import { MentoringSessionDataType } from '@repo/admin/components/types/main/mentor/mentoringTypes';
 
 export default function MentoringSessionList({
   dateGroup,

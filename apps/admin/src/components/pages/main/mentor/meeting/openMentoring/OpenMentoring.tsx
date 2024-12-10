@@ -1,5 +1,5 @@
-import InnerButton from '@repo/client/components/ui/Button/InnerButton';
-import { formatDate } from '@repo/client/components/utils/dateUtil';
+import InnerButton from '@repo/admin/components/ui/Button/InnerButton';
+import { formatDate } from '@repo/admin/components/utils/dateUtil';
 import {
   Card,
   CardContent,

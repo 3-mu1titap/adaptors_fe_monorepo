@@ -2,20 +2,20 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
+import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
 import {
   chatDataType,
   prevChatResType,
-} from '@repo/client/components/types/main/chatting/chattingTypes';
+} from '@repo/admin/components/types/main/chatting/chattingTypes';
 import {
   getChattingData,
   postChat,
-} from '@repo/client/actions/chatting/chattingAction';
+} from '@repo/admin/actions/chatting/chattingAction';
 import {
   postExitMeeting,
   postHeartbeat,
-} from '@repo/client/actions/meeting/meetingAction';
-import ChatHeader from '@repo/client/components/header/ChatHeader';
+} from '@repo/admin/actions/meeting/meetingAction';
+import ChatHeader from '@repo/admin/components/header/ChatHeader';
 import ChatView from './ChatView';
 import ChatSender from './ChatSender';
 

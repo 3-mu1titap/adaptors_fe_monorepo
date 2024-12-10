@@ -1,5 +1,5 @@
-import MoreIcon from '@repo/client/components/assets/icons/More';
-import FitImage from '@repo/client/components/ui/image/fit-image';
+import MoreIcon from '@repo/admin/components/assets/icons/More';
+import FitImage from '@repo/admin/components/ui/image/fit-image';
 
 function MeetingProfile() {
   return (

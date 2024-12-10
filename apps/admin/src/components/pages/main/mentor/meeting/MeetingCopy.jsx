@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import initOpenVidu from '@repo/client/components/utils/initOpenvidu';
+import initOpenVidu from '@repo/admin/components/utils/initOpenvidu';
 import SubCam from './tracks/SubCam';
 
 export default function MentoringCopy() {

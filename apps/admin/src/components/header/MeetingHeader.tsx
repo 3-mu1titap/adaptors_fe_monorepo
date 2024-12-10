@@ -1,7 +1,7 @@
 import MeetingTitle from '../pages/main/mentor/meeting/MeetingTitle';
 import MeetingParticipants from '../pages/main/mentor/meeting/MeetingParticipants';
 import MeetingProfile from '../pages/main/mentor/meeting/MeetingProfile';
-import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
+import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
 
 function MeetingHeader({ participants }: { participants: participantType[] }) {
   return (

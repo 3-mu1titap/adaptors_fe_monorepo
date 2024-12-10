@@ -1,5 +1,5 @@
-import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
-import FitImage from '@repo/client/components/ui/image/fit-image';
+import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
+import FitImage from '@repo/admin/components/ui/image/fit-image';
 
 function MeetingParticipants({
   participants,

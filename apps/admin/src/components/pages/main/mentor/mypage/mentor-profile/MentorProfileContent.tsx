@@ -1,8 +1,8 @@
 import {
   MemberInfo,
   MentorProfileInfo,
-} from '@repo/client/components/types/main/mentor/mentorTypes';
-import FitImage from '@repo/client/components/ui/image/fit-image';
+} from '@repo/admin/components/types/main/mentor/mentorTypes';
+import FitImage from '@repo/admin/components/ui/image/fit-image';
 
 export default function MentorProfileContent({
   profileImageUrl,

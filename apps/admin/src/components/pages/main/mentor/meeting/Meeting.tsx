@@ -11,14 +11,13 @@ import {
 } from 'livekit-client';
 
 import Tracks from './Tracks';
-import { useUserInfoStore } from '@repo/client/store/messagesStore';
-import { participantType } from '@repo/client/components/types/main/meeting/meetingTypes';
-import { getChatProfile } from '@repo/client/actions/chatting/chattingAction';
+import { useUserInfoStore } from '@repo/admin/store/messagesStore';
+import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 import {
-  getOpenViduToken,
   getParticipants,
   postJoinMeeting,
-} from '@repo/client/actions/meeting/meetingAction';
+} from '@repo/admin/actions/meeting/meetingAction';
 import OpenMentoring from './openMentoring/OpenMentoring';
 import MeetingHeader from '../../../../header/MeetingHeader';
 import Participants from './participants/Participants';
@@ -34,7 +33,7 @@ import MentoringFeedbackForm from '../../../../form/MentoringFeedbackForm';
 import {
   MentoringSessionDataType,
   TodayMentoringSessionDataType,
-} from '@repo/client/components/types/main/mentor/mentoringTypes';
+} from '@repo/admin/components/types/main/mentor/mentoringTypes';
 
 const LIVEKIT_URL =
   process.env.NEXT_PUBLIC_LIVEKIT_URL || 'ws://localhost:7880/';
@@ -127,10 +126,7 @@ export default function Meeting({
     );
 
     try {
-      const token = await getOpenViduToken('roomName', 'participantName');
-      console.log('token', token);
-      await room.connect(LIVEKIT_URL, token);
-      // await room.connect(LIVEKIT_URL, 'cff6324c-566f-4803-8db8-31712b071a6b');
+      await room.connect(LIVEKIT_URL, 'cff6324c-566f-4803-8db8-31712b071a6b');
       await room.localParticipant.enableCameraAndMicrophone();
       const localVideoTrackPublication =
         room.localParticipant.videoTrackPublications.values().next().value;
