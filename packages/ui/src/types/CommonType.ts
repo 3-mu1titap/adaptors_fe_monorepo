@@ -77,6 +77,12 @@ export interface Category {
   bottomCategoryName: string | null;
   id: number;
 }
+export interface TopCategoryType {
+  id: number;
+  topCategoryCode: string;
+  topCategoryName: string;
+  categoryType: string;
+}
 
 export interface SessionRequestType {
   sessionUuid: string;

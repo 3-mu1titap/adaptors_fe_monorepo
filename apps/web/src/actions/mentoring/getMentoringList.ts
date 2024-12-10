@@ -1,7 +1,8 @@
-import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
+import {
+  Mentoring,
+  MentoringListType,
+} from '@repo/ui/types/MentoringListType.ts';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
-import { getServerSession } from 'next-auth';
-import { options } from 'src/app/api/auth/[...nextauth]/options';
 
 //카테고리로 멘토링리스트 조회
 export async function GetMentoringByCategory({
@@ -12,10 +13,8 @@ export async function GetMentoringByCategory({
   topCategoryCode: string;
   middleCategoryCode?: string;
   bottomCategoryCode?: string;
-}): Promise<SearchMentoringListType[]> {
+}): Promise<Mentoring[]> {
   'use server';
-  const session = await getServerSession(options);
-  const token = session?.user.acessToken;
   try {
     // QueryString 생성
     const queryParams = new URLSearchParams({
@@ -30,11 +29,10 @@ export async function GetMentoringByCategory({
     if (bottomCategoryCode) {
       queryParams.append('bottomCategoryCode', bottomCategoryCode);
     }
-
+    console.log(topCategoryCode);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring/by-category?${queryParams}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-pagination/by-category?${queryParams}`,
       {
-        cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -42,10 +40,8 @@ export async function GetMentoringByCategory({
       }
     );
 
-    const result = (await res.json()) as commonResType<
-      SearchMentoringListType[]
-    >;
-    return result.result;
+    const result = (await res.json()) as commonResType<MentoringListType>;
+    return result.result.content;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
     return [];

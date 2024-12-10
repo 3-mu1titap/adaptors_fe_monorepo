@@ -39,7 +39,7 @@ export default function MentoringCalendar({
       menteeImageUrl: 'https://picsum.photos/200/200?random=78',
     },
   ];
-
+  console.log('MentoringDetail', mentorData);
   const filteredList: MentoringResult[] = mentoringDate
     ? mentoringSessionList.filter((item) => item.startDate === mentoringDate)
     : mentoringSessionList;

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 function CustomFitImage({
   src,
   alt,
@@ -10,14 +9,14 @@ function CustomFitImage({
 }): JSX.Element {
   return (
     <figure className={`${className}`}>
-      <Image
+      {/* <Image
         alt={alt}
         className="object-fit"
         height={800}
         priority
         src={src}
         width={800}
-      />
+      /> */}
     </figure>
   );
 }

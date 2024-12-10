@@ -25,13 +25,10 @@ async function Page({
 }) {
   const selectedDate = searchParams.selectedDate || '';
   const { mentoringSessionList, MentoringInfoData, mentorData } =
-    await fetchMentoringData(
-      // params.mentoringId
-      '8e68777e-47ae-46c6-a42b-389d459c8f21'
-    );
+    await fetchMentoringData(params.mentoringId);
 
   return (
-    <main className="pt-[7rem] py-2 px-4 min-h-screen bg-gray-50">
+    <main className="pt-[7rem] py-2 px-8 min-h-screen bg-gray-50">
       {MentoringInfoData && mentoringSessionList && (
         <MentoringDetail
           mentoringDate={selectedDate}

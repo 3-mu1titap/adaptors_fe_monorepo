@@ -18,6 +18,7 @@ export default function MentorSection({
   userData: SessionUser[];
   mentorData: userProfileType;
 }) {
+  console.log('MentorSection', mentorData);
   return (
     <>
       <SeparateContainer.LeftSide>

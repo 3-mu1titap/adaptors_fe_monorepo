@@ -2,7 +2,7 @@ import { ChartColumn, File, User } from 'lucide-react';
 export interface SessionInfo {
   id: number;
   infoName: string;
-  infoValue: number;
+  infoValue?: number;
   icon: JSX.Element;
 }
 const DefaultSessionInfo = [
