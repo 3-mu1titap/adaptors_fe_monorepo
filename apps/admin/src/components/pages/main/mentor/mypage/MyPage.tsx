@@ -20,7 +20,7 @@ export default function MyPage({ userInfo }: { userInfo: Mentor }) {
   };
 
   return (
-    <section className="w-full px-10 py-5 mt-[5rem]">
+    <section className="w-full">
       <h1 className="hidden">My Page</h1>
       <Tabs defaultValue="profile">
         <TabsList>
@@ -35,7 +35,9 @@ export default function MyPage({ userInfo }: { userInfo: Mentor }) {
           <MentorProfileEdit mentor={mentor} onUpdate={handleProfileUpdate} />
         </TabsContent>
         <TabsContent value="sessions">
-          <MentorSessionList mentorId={mentor.memberRequestDto.accountId} />
+          {mentor && mentor.memberRequestDto && (
+            <MentorSessionList mentorId={mentor.memberRequestDto.accountId} />
+          )}
         </TabsContent>
       </Tabs>
     </section>

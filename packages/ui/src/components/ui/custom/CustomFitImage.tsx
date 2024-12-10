@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 function CustomFitImage({
   src,
   alt,
@@ -12,10 +13,10 @@ function CustomFitImage({
     <figure className={`${className}`}>
       <Image
         alt={alt}
-        className="object-fit"
+        className="cover"
         height={800}
         priority
-        src={src}
+        src={src ? src : '/assets/images/imageDummy.jpg'}
         width={800}
       />
     </figure>

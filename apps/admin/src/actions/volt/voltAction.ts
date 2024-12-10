@@ -16,25 +16,27 @@ export async function GetSettleList(startDate: string, endDate: string) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.PAYMENT_URL}/api/v1/payment/settle/points?startDate=${startDate}&endDate=${endDate}&mentorUuid=${userUuid}`,
-      {
-        cache: 'no-cache',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
-    const result = (await res.json()) as commonResType<settleListDataType>;
-    return result.result;
-  } catch (error) {
-    console.error('기간 별 정산 내역 조회 실패 : ', error);
+
+  const res = await fetch(
+    `${process.env.PAYMENT_URL}/api/v1/payment/settle/points?startDate=${startDate}&endDate=${endDate}&mentorUuid=${userUuid}`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    console.error('기간 별 정산 내역 조회 실패');
     return redirect('/error?message=Failed to fetch settle list');
   }
+
+  const result = (await res.json()) as commonResType<settleListDataType>;
+  return result.result;
 }
 
 // 받은 볼트 API
@@ -43,35 +45,36 @@ export async function GetMentorVolts() {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  try {
-    const res = await fetch(
-      `${process.env.PAYMENT_URL}/api/v1/payment/settle/mentorUuid=${userUuid}/points`,
-      {
-        cache: 'no-cache',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-          'userUuid': userUuid,
-        },
-      }
-    );
 
-    const result = (await res.json()) as commonResType<mentorVoltListDataType>;
+  const res = await fetch(
+    `${process.env.PAYMENT_URL}/api/v1/payment/settle/mentorUuid=${userUuid}/points`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    }
+  );
 
-    const voltListWithNickNames = await Promise.all(
-      result.result.voltList.map(async (volt) => {
-        const member = await getChatProfile({ userUuid: volt.sender });
-        return { ...volt, sender: member.nickName };
-      })
-    );
-
-    return {
-      totalVolt: result.result.totalVolt,
-      voltList: voltListWithNickNames,
-    };
-  } catch (error) {
-    console.error('멘토가 받은 볼트 조회 실패 : ', error);
+  if (!res.ok) {
+    console.error('멘토가 받은 볼트 조회 실패');
     return redirect('/error?message=Failed to fetch mentor volts');
   }
+
+  const result = (await res.json()) as commonResType<mentorVoltListDataType>;
+  if (!result.result) return { totalVolt: 0, voltList: [] };
+
+  const voltListWithNickNames = await Promise.all(
+    result.result.voltList.map(async (volt) => {
+      const member = await getChatProfile({ userUuid: volt.sender });
+      return { ...volt, sender: member.nickName };
+    })
+  );
+
+  return {
+    totalVolt: result.result.totalVolt,
+    voltList: voltListWithNickNames,
+  };
 }
