@@ -1,3 +1,4 @@
+import { GetMentoringByCategory } from '@repo/web/actions/mentoring/getMentoringList';
 import CategoryAside from '@repo/web/components/pages/main/mentoring/category/CategoryAside';
 import ListSection from '@repo/web/components/pages/main/mentoring/ListSection';
 import { redirect } from 'next/navigation';
@@ -9,18 +10,21 @@ export default async function page({
   searchParams: { category: string };
 }) {
   const categorise = await getTopCategoryList();
+  const mentoringListData = await GetMentoringByCategory({
+    topCategoryCode: searchParams.category,
+  });
   if (!searchParams.category) {
-    redirect(`/mentoring?category=${categorise[0].topCategoryCode}`);
+    redirect(`/mentoring?category=${categorise[0]?.topCategoryCode}`);
   }
   return (
-    <main className="mt-[7rem]">
+    <main className="mt-[7rem] px-8">
       {/* <PaperStock /> */}
       <CategoryAside
         categoryParam={searchParams.category}
         categorise={categorise}
       />
       {searchParams.category && (
-        <ListSection category={searchParams.category} />
+        <ListSection mentoringListData={mentoringListData} />
       )}
     </main>
   );

@@ -2,7 +2,7 @@ import { ChartColumn, File, User } from 'lucide-react';
 export interface SessionInfo {
   id: number;
   infoName: string;
-  infoValue: number;
+  infoValue?: number;
   icon: JSX.Element;
 }
 const DefaultSessionInfo = [
@@ -32,7 +32,7 @@ function CustomSessionInfoTags({
 }) {
   const SessionInfo = SessionInfoProps ? SessionInfoProps : DefaultSessionInfo;
   return (
-    <div className="flex items-center justify-start gap-3">
+    <div className="flex items-center justify-start gap-2">
       {SessionInfo.map((info) => (
         <CustomInfo key={info.id} info={info} />
       ))}

@@ -17,7 +17,7 @@ export interface Category {
 export interface SessionRequestType {
   sessionUuid: string;
   mentoringName: string;
-  // nickName: string;
+  mentorUuid: string;
 }
 export interface SessionCancelType {
   sessionUuid: string;
@@ -50,4 +50,20 @@ export interface pageableType {
 export interface ApiResponse {
   content: SearchMentoringListType[];
   pageable: pageableType;
+}
+
+export interface Mentoring {
+  mentoringUuid: string;
+  reviewCount: number | null;
+  averageStar: number | null;
+  totalSaleCount: number | null;
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  isAvailable: boolean;
+  nowSessionCount: number;
+}
+
+export interface Result {
+  content: Mentoring[];
 }

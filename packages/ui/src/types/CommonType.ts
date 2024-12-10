@@ -50,22 +50,38 @@ export interface MentoringSession {
 }
 
 export interface SessionUser {
-  userUuid?: string;
+  nick?: string;
   menteeImageUrl: string;
 }
 
+// export interface MentoringDataType {
+//   mentoringUuid: string;
+//   name: string;
+//   detail: string;
+//   description: string;
+//   mentorUuid: string;
+//   thumbnailUrl: string;
+//   isReusable: boolean;
+//   isDeleted: boolean;
+//   createdAt: string;
+//   updatedAt: string;
+//   categoryList: Category[];
+// }
 export interface MentoringDataType {
-  mentoringUuid: string;
-  name: string;
-  detail: string;
-  description: string;
-  mentorUuid: string;
-  thumbnailUrl: string;
-  isReusable: boolean;
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  categoryList: Category[];
+  mentoringUuid: string; // 멘토링의 고유 식별자
+  name: string; // 멘토링 이름
+  totalReviewCount: number; // 총 리뷰 개수
+  reviewStarAvg: number; // 리뷰 별점 평균
+  totalSaleCount: number; // 총 판매 횟수
+  detail: string; // HTML 형식의 상세 정보
+  mentorUuid: string; // 멘토의 고유 식별자
+  thumbnailUrl: string; // 썸네일 이미지 URL
+  isReusable: boolean; // 재사용 가능한지 여부
+  isDeleted: boolean; // 삭제 여부
+  createdAt: string; // 생성 날짜
+  updatedAt: string; // 수정 날짜
+  categoryList: Category[] | null; // 카테고리 리스트 (null일 수 있음)
+  hashTagList: HashtagDataType[] | null; // 해시태그 리스트 (null일 수 있음)
 }
 
 export interface Category {
@@ -76,6 +92,12 @@ export interface Category {
   middleCategoryName: string;
   bottomCategoryName: string | null;
   id: number;
+}
+export interface TopCategoryType {
+  id: number;
+  topCategoryCode: string;
+  topCategoryName: string;
+  categoryType: string;
 }
 
 export interface SessionRequestType {
@@ -121,4 +143,9 @@ export interface TableHeaderPropsType {
   name: string;
   icon?: JSX.Element;
   onClick?: () => void;
+}
+
+export interface HashtagDataType {
+  hashtagName: string;
+  hashtagId: number;
 }

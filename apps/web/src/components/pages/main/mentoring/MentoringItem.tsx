@@ -1,34 +1,48 @@
-import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
+import CustomSessionInfoTags, {
+  SessionInfo,
+} from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
+import { Mentoring } from '@repo/ui/types/MentoringListType.ts';
 import RateViewer from '@repo/web/components/common/RateViwer';
+import FitImage from '@repo/web/components/ui/image/fit-image';
+import { File, User } from 'lucide-react';
 import Link from 'next/link';
 
-export default function MentoringItem({
-  item,
-}: {
-  item: SearchMentoringListType;
-}) {
+export default function MentoringItem({ item }: { item: Mentoring }) {
+  const SessionInfo: SessionInfo[] = [
+    {
+      id: 1,
+      infoName: 'Session',
+      infoValue: item.nowSessionCount ? item.nowSessionCount : 0,
+      icon: <File size={12} className="text-blue-500" />,
+    },
+    {
+      id: 2,
+      infoName: 'Students',
+      infoValue: item.totalSaleCount ? item.totalSaleCount : 0,
+      icon: <User size={12} className="text-blue-500" />,
+    },
+  ];
   return (
     <Link href={`/mentoring/${item.mentoringUuid}`} className="w-full">
       <div className="bg-white rounded-xl overflow-hidden mx-2 hover:shadow-md ring-1 hover:ring-4 ring-yellow-400 my-3 transition-all">
         <div className="relative">
-          <div className="aspect-video bg-gray-200 py-20" />
-          <span className="absolute top-3 left-3 bg-yellow-400 text-xs font-medium px-2 py-1 rounded-full">
-            {/* {item.duration} 카테고리 들어갈곳*/}
-            면접
-          </span>
+          <FitImage src={item.thumbnailUrl} alt={item.name} />
         </div>
         <div className="p-4">
           <div className="flex items-center gap-1 mb-2">
-            <RateViewer rateData={4.3} size="0.8rem" color={'#ffd84d'} />
-            {/* <span className="text-sm text-gray-500 ml-1">({item.reviews})</span> */}
-            <span className="text-sm text-gray-500 ml-1">120</span>
+            <RateViewer
+              rateData={item.averageStar ? item.averageStar : 0}
+              size="0.8rem"
+              color={'#ffd84d'}
+            />
+            <span className="text-sm text-gray-500 ml-1">
+              ({item.reviewCount ? item.reviewCount : 0})
+            </span>
           </div>
           <div className="">
-            <h3 className="font-medium mb-4 line-clamp-2">{item.name}</h3>
+            <h3 className="font-medium mb-4 line-clamp-2 h-12">{item.name}</h3>
             <div className="flex items-center gap-2 border-t-[1px] border-dotted border-gray-300 pt-2">
-              <div className="w-8 h-8 bg-gray-200 rounded-full py-4" />
-              {/* <span className="text-sm text-gray-600">{item.mentorName}</span> */}
-              <span className="text-sm text-gray-600">이주연</span>
+              <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
             </div>
           </div>
         </div>

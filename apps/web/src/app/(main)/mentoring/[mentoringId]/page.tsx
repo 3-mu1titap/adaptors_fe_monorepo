@@ -3,6 +3,10 @@ import MentoringDetail from '@repo/web/components/pages/main/mentoring/Mentoring
 import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import { getProfileImage } from '@repo/web/actions/profile/getProfileData';
 import {
+  getRevieweList,
+  getReviewerProfile,
+} from '@repo/web/actions/review/mentoringReview';
+import {
   GetMentoringInfo,
   GetMentoringSessionList,
 } from '../../../../actions/mentoring/mentoringAction';
@@ -14,7 +18,15 @@ async function fetchMentoringData(mentoringUuid: string) {
   const mentorData = await getProfileImage(
     MentoringInfoData?.mentorUuid ? MentoringInfoData.mentorUuid : ''
   );
-  return { mentoringSessionList, MentoringInfoData, mentorData };
+  const ReviewerData = await getReviewerProfile(mentoringUuid);
+  const getBestRevieweList = await getRevieweList(mentoringUuid);
+  return {
+    mentoringSessionList,
+    MentoringInfoData,
+    mentorData,
+    ReviewerData,
+    getBestRevieweList,
+  };
 }
 async function Page({
   searchParams,
@@ -24,14 +36,16 @@ async function Page({
   params: { mentoringId: string };
 }) {
   const selectedDate = searchParams.selectedDate || '';
-  const { mentoringSessionList, MentoringInfoData, mentorData } =
-    await fetchMentoringData(
-      // params.mentoringId
-      '8e68777e-47ae-46c6-a42b-389d459c8f21'
-    );
+  const {
+    mentoringSessionList,
+    MentoringInfoData,
+    mentorData,
+    ReviewerData,
+    getBestRevieweList,
+  } = await fetchMentoringData(params.mentoringId);
 
   return (
-    <main className="pt-[7rem] py-2 px-4 min-h-screen bg-gray-50">
+    <main className="pt-[7rem] py-2 px-8 min-h-screen bg-gray-50">
       {MentoringInfoData && mentoringSessionList && (
         <MentoringDetail
           mentoringDate={selectedDate}
@@ -39,6 +53,7 @@ async function Page({
           mentoringSessionList={mentoringSessionList}
           MentoringInfoData={MentoringInfoData}
           mentorData={mentorData}
+          ReviewerData={ReviewerData}
         />
       )}
     </main>

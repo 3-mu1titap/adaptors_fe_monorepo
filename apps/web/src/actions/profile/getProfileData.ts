@@ -1,12 +1,8 @@
 'use server';
+import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
-interface userProfileType {
-  nickName: string;
-  profileImageUrl: string;
-}
-
 export const getProfileImage = async (
   uuid: string
 ): Promise<userProfileType> => {
