@@ -2,11 +2,6 @@
 
 import { Button } from '@repo/ui/components/ui/button';
 import { useState } from 'react';
-import Swal from 'sweetalert2';
-import {
-  SessionCancel,
-  SessionRequest,
-} from '../../../actions/mentoring/mentoringAction';
 
 export default function MentoringRequestButton({
   sessionUuid,
@@ -26,43 +21,45 @@ export default function MentoringRequestButton({
   mentorUuid: string;
 }) {
   const [isRegistered, setIsRegistered] = useState(isParticipating);
+  const [isOpen, setIsOpen] = useState(false);
   const onClickButton = async () => {
-    Swal.fire({
-      toast: true,
-      // icon: 'success',
-      title: isRegistered
-        ? `신청을 취소하시겠습니까?`
-        : `세션을 신청하시겠습니까?`,
-      html: `<p class="text-center">
-      <span style="color: #ff2c2c;">${price}V</span>가 차감됩니다</p>`,
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: '확인',
-      denyButtonText: '취소',
-      customClass: {
-        title: 'text-lg font-semibold text-gray-800 !text-center',
-        actions: '!grid !grid-cols-2 !justify-center',
-        confirmButton:
-          'bg-adaptorsYellow text-black py-2 px-4 rounded hover:bg-amber-500',
-        denyButton:
-          'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
-      },
-    }).then((result) => {
-      if (result.isConfirmed && isRegistered) {
-        SessionCancel({
-          sessionUuid: sessionUuid,
-          deadlineDate: deadlineDate,
-          // mentorUuid: mentorUuid,
-        });
-        setIsRegistered((prev) => !prev);
-      } else if (result.isConfirmed && !isRegistered) {
-        SessionRequest({
-          sessionUuid: sessionUuid,
-          mentoringName: mentoringName,
-        });
-        setIsRegistered((prev) => !prev);
-      }
-    });
+    setIsOpen(true);
+    // Swal.fire({
+    //   toast: true,
+    //   // icon: 'success',
+    //   title: isRegistered
+    //     ? `신청을 취소하시겠습니까?`
+    //     : `세션을 신청하시겠습니까?`,
+    //   html: `<p class="text-center">
+    //   <span style="color: #ff2c2c;">${price}V</span>가 차감됩니다</p>`,
+    //   showDenyButton: true,
+    //   showCancelButton: false,
+    //   confirmButtonText: '확인',
+    //   denyButtonText: '취소',
+    //   customClass: {
+    //     title: 'text-lg font-semibold text-gray-800 !text-center',
+    //     actions: '!grid !grid-cols-2 !justify-center',
+    //     confirmButton:
+    //       'bg-adaptorsYellow text-black py-2 px-4 rounded hover:bg-amber-500',
+    //     denyButton:
+    //       'text-black py-2 px-4 rounded bg-gray-100 hover:bg-gray-300',
+    //   },
+    // }).then((result) => {
+    //   if (result.isConfirmed && isRegistered) {
+    //     SessionCancel({
+    //       sessionUuid: sessionUuid,
+    //       deadlineDate: deadlineDate,
+    //        mentorUuid: mentorUuid,
+    //     });
+    //     setIsRegistered((prev) => !prev);
+    //   } else if (result.isConfirmed && !isRegistered) {
+    //     SessionRequest({
+    //       sessionUuid: sessionUuid,
+    //       mentoringName: mentoringName,
+    //     });
+    //     setIsRegistered((prev) => !prev);
+    //   }
+    // });
   };
 
   return (

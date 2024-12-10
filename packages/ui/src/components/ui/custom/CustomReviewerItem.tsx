@@ -1,4 +1,4 @@
-import { SessionUser } from '@repo/ui/types/CommonType.ts';
+import { ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
 import CustomValueUnit from './CustomValueUnit.tsx';
 import UserCount from './UserCount.tsx';
 import UserProfile from './UserProfile.tsx';
@@ -9,22 +9,23 @@ function CustomReviewerItem({
   userCount,
   reviewCount,
 }: {
-  initialUserData: SessionUser[];
+  initialUserData: ReviewerProfileType[];
   className?: string;
-  userCount?: number;
+  userCount?: number | null;
   reviewCount?: number;
 }) {
+  console.log(initialUserData);
   return (
     <div
-      className={`flex justify-start items-center ${className} ${initialUserData[0].menteeImageUrl ? `block` : `hidden`}`}
+      className={`flex justify-start items-center ${className} ${initialUserData[0].profileImageUrl ? `block` : `hidden`}`}
     >
       <ul className="flex justify-start items-center mr-1">
-        {initialUserData.map((user, idx) => (
+        {initialUserData?.map((user, idx) => (
           <li key={idx}>
             <UserProfile
-              profileImgUrl={user.menteeImageUrl}
+              profileImgUrl={user.profileImageUrl}
               size={40}
-              name={user.userUuid}
+              name={user.nickname}
               className="mr-[-1.2rem] border-[2px] border-white ring-none"
             />
           </li>

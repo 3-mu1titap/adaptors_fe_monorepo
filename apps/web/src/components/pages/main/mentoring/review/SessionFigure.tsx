@@ -1,70 +1,68 @@
+import {
+  CustomReviewerItem,
+  CustomValueUnit,
+} from '@repo/ui/components/ui/custom/index';
 import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType.ts';
-import DottedlineEllipse from '@repo/web/components/assets/icons/DottedlineEllipse';
-import Avatars from '@repo/web/components/ui/Avatars/Avatars';
 import MentoringRequestButton from '@repo/web/components/ui/Button/MentoringRequestButton';
-import ValueUnit from '@repo/web/components/ui/Text/ValueUnit';
+import { CircleDashed } from 'lucide-react';
 
 export default function SessionFigure({
   session,
-  mentoringName,
-  mentorUuid,
+  mentoringName = 'mentoring Name',
+  mentorUuid = '',
 }: {
   session: MentoringSession;
-  mentoringName: string;
-  mentorUuid: string;
+  mentoringName?: string;
+  mentorUuid?: string;
 }) {
   const formatTime = (time: SessionTime | string) => {
     if (typeof time === 'string') {
-      return time.endsWith(':00') ? time.slice(0, -3) : time;
+      return time.endsWith(':00') ? time.slice(0, -3) : time; // 뒤에 ":00" 제거
     }
-
     return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
+
   return (
-    <figure
-      key={session.sessionUuid}
-      className="flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 bg-white py-6 rounded-lg shadow-sm w-full hover:ring-1 hover:ring-adaptorsYellow"
-    >
-      <div className="flex items-center gap-1 w-full justify-center md:flex-col sm:mb-3 ">
-        {/* 시간 */}
-        <time className="text-lg w-full sm:text-xl lg:text-2xl font-semibold flex items-center">
-          {`S ${formatTime(session.startTime)} - E ${formatTime(
-            session.endTime
-          )}`}
-        </time>
-        {!session.isClosed ? (
-          <span className="w-full flex items-center gap-1">
-            <DottedlineEllipse className="hidden sm:block w-4" />
-            <p className="text-lg font-bold ml-1 text-[#FF922E]">
-              남은자리 {session.maxHeadCount - session.nowHeadCount}
-            </p>
-          </span>
-        ) : (
-          <span className="hidden sm:block text-lg font-bold text-yellow-500">
-            마감된 세션
-          </span>
-        )}
-      </div>
-      <div className="w-full flex justify-between md:justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
-        {/* <ParticipateAndUnit participate={session.sessionUserList} unit=''/> */}
-        {session.sessionUserList[0].userUuid && (
-          <Avatars
-            participate={session.sessionUserList}
-            remainingCount={session.sessionUserList.length - 4}
-            size="12"
+    <>
+      <figure
+        // key={session.sessionUuid}
+        className="flex flex-row items-center justify-between px-4 sm:px-8 bg-white ring-adaptorsYellow py-4 rounded-lg shadow-sm w-full hover:ring-2 hover:ring-adaptorsYello ring-0 transition-all hover:drop-shadow-lg"
+      >
+        <div className="flex items-center gap-1 w-full justify-center flex-col">
+          {/* 시간 */}
+          <time className="text-xl md:text-md w-full lg:text-xl xl:text-2xl font-semibold flex items-center">
+            {`S ${formatTime(session.startTime)} - E ${formatTime(
+              session.endTime
+            )}`}
+          </time>
+          {!session.isClosed ? (
+            <span className="w-full flex items-center gap-1">
+              <CircleDashed className="hidden sm:block w-4" />
+              <p className="text-lg font-bold ml-1 text-[#FF922E]">
+                남은자리 {session.maxHeadCount - session.nowHeadCount}
+              </p>
+            </span>
+          ) : (
+            <span className="hidden sm:block text-lg font-bold text-yellow-500">
+              마감된 세션
+            </span>
+          )}
+        </div>
+        <div className="w-full flex justify-between md:justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
+          <CustomReviewerItem initialUserData={session.sessionUserList} />
+          <CustomValueUnit value={session.price} unit="Volt" />
+          {/* <Button className="bg-adaptorsYellow hover:bg-black">참가하기</Button> */}
+          <MentoringRequestButton
+            sessionUuid={session.sessionUuid}
+            mentoringName={mentoringName}
+            deadlineDate={session.deadlineDate}
+            isParticipating={session.isParticipating}
+            price={session.price}
+            isClosed={session.isClosed}
+            mentorUuid={mentorUuid}
           />
-        )}
-        <ValueUnit value={`${session.price}V`} unit="Volt" />
-        <MentoringRequestButton
-          isClosed={session.isClosed}
-          price={session.price}
-          isParticipating={session.isParticipating}
-          sessionUuid={session.sessionUuid}
-          mentoringName={mentoringName || ''}
-          deadlineDate={session.deadlineDate}
-          mentorUuid={mentorUuid}
-        />
-      </div>
-    </figure>
+        </div>
+      </figure>
+    </>
   );
 }

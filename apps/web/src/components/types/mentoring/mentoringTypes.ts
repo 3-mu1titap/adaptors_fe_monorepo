@@ -17,7 +17,7 @@ export interface Category {
 export interface SessionRequestType {
   sessionUuid: string;
   mentoringName: string;
-  // nickName: string;
+  mentorUuid: string;
 }
 export interface SessionCancelType {
   sessionUuid: string;

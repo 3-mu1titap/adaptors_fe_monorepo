@@ -74,7 +74,7 @@ export async function SessionRequest(request: SessionRequestType) {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const nickName = session?.user.nickName;
-  // const menteeUuid = 'b82f9e78-e96f-4b1c-9481-c587236f7d8f';
+
   console.log('request: ', request, 'menteeUuid', menteeUuid);
   try {
     const res = await fetch(
@@ -84,7 +84,8 @@ export async function SessionRequest(request: SessionRequestType) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'userUuid': menteeUuid,
+          'userUuid': session?.user.uuid,
+          'Authorization': `Bearer ${session?.user.accessToken}`,
         },
         body: JSON.stringify({
           nickName: nickName,
@@ -117,6 +118,7 @@ export async function SessionCancel(request: SessionCancelType) {
         headers: {
           'Content-Type': 'application/json',
           'userUuid': menteeUuid,
+          'Authorization': `Bearer ${session?.user.accessToken}`,
         },
         body: JSON.stringify(request),
       }
@@ -127,7 +129,7 @@ export async function SessionCancel(request: SessionCancelType) {
     }
     return result.code;
   } catch (error) {
-    console.error('멘토링 신청하기: ', error);
+    console.error('멘토링 신청취소하기 에러: ', error);
     return null;
   }
 }

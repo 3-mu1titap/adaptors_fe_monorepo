@@ -65,6 +65,7 @@ export default function FileUpload({
   //     const res = await uploadFileToS3(file, 'profile');
   //     if (res) {
   //       setThumbnailUrl(res);
+  //       console.log(res);
   //     }
   //   } catch (error) {
   //     console.error('Error uploading image:', error);
