@@ -28,7 +28,7 @@ interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
   initialUserData: SessionUser[];
-  mentoringUuid: string;
+  mentoringUuid?: string;
 }
 
 function HomeDashboard({
@@ -52,7 +52,7 @@ function HomeDashboard({
   const handleModalSubmit = async (session: MentoringSession) => {
     const payload = {
       ...session,
-      mentoringUuid: mentoringUuid,
+      mentoringUuid: mentoringUuid ? mentoringUuid : '',
     };
     const res: number | false = await PostMentoringSession({ payload });
     if (res) {
