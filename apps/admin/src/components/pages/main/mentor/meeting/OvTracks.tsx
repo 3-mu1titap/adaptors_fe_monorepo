@@ -4,6 +4,7 @@ import { Mic, MicOff, Video, VideoOff, Monitor } from 'lucide-react';
 import { Button } from '@repo/ui/components/ui/button';
 
 export default function OvTracks({
+  mentoringName,
   sessionUuid,
   leaveSession,
   mainStreamManager,
@@ -14,6 +15,7 @@ export default function OvTracks({
   toggleVideo,
   shareScreen,
 }: {
+  mentoringName: string;
   sessionUuid: string;
   leaveSession: () => void;
   mainStreamManager: any;
@@ -46,7 +48,7 @@ export default function OvTracks({
         className="flex justify-between items-center p-4 bg-gray-100"
       >
         <h1 id="session-title" className="text-xl font-bold">
-          {sessionUuid}
+          {mentoringName}
         </h1>
         <div className="flex space-x-2">
           <Button onClick={handleAudioToggle} variant="outline" size="icon">
@@ -72,7 +74,7 @@ export default function OvTracks({
             </div>
           )}
         </div>
-        <div className="w-1/4 p-4 space-y-4 overflow-y-auto">
+        <div className="w-1/4 p-4 space-y-2 overflow-y-auto">
           {!isPublisherMain && publisher && (
             <div
               className="cursor-pointer"
