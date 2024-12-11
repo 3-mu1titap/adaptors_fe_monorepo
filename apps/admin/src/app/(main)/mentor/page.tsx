@@ -18,20 +18,20 @@ export const metadata: Metadata = {
 
 const initialUserData = [
   {
-    userUuid: '389d459sssc8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=14',
+    nick: '389d459sssc8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=14',
   },
   {
-    userUuid: '389d45sd9c8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=23',
+    nick: '389d45sd9c8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=23',
   },
   {
-    userUuid: '389d459c8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=56',
+    nick: '389d459c8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=56',
   },
   {
-    userUuid: '389d459dsc8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=78',
+    nick: '389d459dsc8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=78',
   },
 ];
 

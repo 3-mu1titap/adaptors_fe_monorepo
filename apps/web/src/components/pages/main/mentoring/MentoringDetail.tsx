@@ -27,19 +27,19 @@ export default function MentoringDetail({
   const userData: ReviewerProfileType[] = [
     {
       nickname: '389d459sssc8f21',
-      profileImageUrl: 'https://picsum.photos/200/200?random=14',
+      userImageUrl: 'https://picsum.photos/200/200?random=14',
     },
     {
       nickname: '389d45sd9c8f21',
-      profileImageUrl: 'https://picsum.photos/200/200?random=23',
+      userImageUrl: 'https://picsum.photos/200/200?random=23',
     },
     {
       nickname: '389d459c8f21',
-      profileImageUrl: 'https://picsum.photos/200/200?random=56',
+      userImageUrl: 'https://picsum.photos/200/200?random=56',
     },
     {
       nickname: '389d459dsc8f21',
-      profileImageUrl: 'https://picsum.photos/200/200?random=78',
+      userImageUrl: 'https://picsum.photos/200/200?random=78',
     },
   ];
   console.log('MentoringDetail', mentorData);
@@ -57,18 +57,14 @@ export default function MentoringDetail({
         mentorUuid={MentoringInfoData?.mentorUuid || ''}
         mentoringSessionList={mentoringSessionList}
         mentorData={mentorData}
-        ReviewerData={
-          ReviewerData[0]?.profileImageUrl ? ReviewerData : userData
-        }
+        ReviewerData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
       />
       {/* Ri Section */}
       <SeparateContainer.RightSide>
         {MentoringInfoData && (
           <MentoringOverview
             MentoringInfoData={MentoringInfoData}
-            userData={
-              ReviewerData[0]?.profileImageUrl ? ReviewerData : userData
-            }
+            userData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
           />
         )}
         <SessionList

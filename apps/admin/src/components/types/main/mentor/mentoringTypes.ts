@@ -85,8 +85,8 @@ export interface MentoringAddFormType {
 }
 
 export interface SessionUser {
-  userUuid: string | null;
-  menteeImageUrl: string | null;
+  nick: string | null;
+  userImageUrl: string | null;
 }
 
 export interface MentoringSession {

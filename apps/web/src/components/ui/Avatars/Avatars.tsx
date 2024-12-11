@@ -22,11 +22,8 @@ export default function Avatars({
             key={index}
             className={`h-${size} w-${size} border-4 border-background hover:border-none hover:w-18 hover:h-18 `}
           >
-            {reviewer.menteeImageUrl ? (
-              <AvatarImage
-                src={reviewer.menteeImageUrl}
-                alt={'reviewerImage'}
-              />
+            {reviewer.userImageUrl ? (
+              <AvatarImage src={reviewer.userImageUrl} alt={'reviewerImage'} />
             ) : (
               <AvatarFallback></AvatarFallback>
             )}

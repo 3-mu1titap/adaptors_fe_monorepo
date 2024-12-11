@@ -1,4 +1,7 @@
-import { CustomToolTip } from '@repo/ui/components/ui/custom/index';
+import {
+  CustomReviewerItem,
+  CustomToolTip,
+} from '@repo/ui/components/ui/custom/index';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
 import {
   DropdownMenu,
@@ -22,20 +25,20 @@ import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
 
 const initialUserData = [
   {
-    userUuid: '389d459sssc8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=14',
+    nick: '389d459sssc8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=14',
   },
   {
-    userUuid: '389d45sd9c8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=23',
+    nick: '389d45sd9c8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=23',
   },
   {
-    userUuid: '389d459c8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=56',
+    nick: '389d459c8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=56',
   },
   {
-    userUuid: '389d459dsc8f21',
-    menteeImageUrl: 'https://picsum.photos/200/200?random=78',
+    nick: '389d459dsc8f21',
+    userImageUrl: 'https://picsum.photos/200/200?random=78',
   },
 ];
 
@@ -45,12 +48,12 @@ export default function MentoringHeader() {
       <div className="flex justify-between items-center">
         <AdaptorsLogoIcon className="w-[140px] mt-0 flex items-center gap-2" />
         <div className="flex justify-center items-center gap-2">
-          {/* <CustomReviewerItem
+          <CustomReviewerItem
             initialUserData={initialUserData}
             className="flex lg:!hidden"
             userCount={30}
             reviewCount={293938}
-          /> */}
+          />
           <CustomToolTip text="Wallet 400321">
             <div className="flex items-center gap-1 relative">
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-adaptorsYellow z-10">

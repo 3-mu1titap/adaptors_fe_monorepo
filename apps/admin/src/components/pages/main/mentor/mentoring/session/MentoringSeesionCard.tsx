@@ -8,8 +8,8 @@ import { Card, CardContent } from '@repo/ui/components/ui/card';
 import { format, isBefore, parseISO } from 'date-fns';
 
 interface SessionUser {
-  userUuid: string | null;
-  menteeImageUrl: string | null;
+  nick: string | null;
+  userImageUrl: string | null;
 }
 
 interface MentoringSession {
@@ -66,10 +66,10 @@ const MentoringSessionCard: React.FC<{ session: MentoringSession }> = ({
         </div>
         <div className="flex -space-x-2 overflow-hidden">
           {session.sessionUserList.map((user, index) =>
-            user.menteeImageUrl ? (
+            user.userImageUrl ? (
               <Avatar key={index} className="border-2 border-background">
                 <AvatarImage
-                  src={user.menteeImageUrl}
+                  src={user.userImageUrl}
                   alt={`Mentee ${index + 1}`}
                 />
                 <AvatarFallback>멘티</AvatarFallback>

@@ -1,4 +1,4 @@
 export interface ReviewerProfileType {
   nickname: string;
-  profileImageUrl: string;
+  userImageUrl: string;
 }
