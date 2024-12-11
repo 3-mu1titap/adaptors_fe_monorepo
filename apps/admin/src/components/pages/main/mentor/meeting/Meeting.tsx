@@ -21,6 +21,7 @@ interface MeetingProps {
 
 const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
+  const [mentoringName, setMentoringName] = useState<string>('');
   const [myUserName, setMyUserName] = useState<string>(
     'Participant' + Math.floor(Math.random() * 100)
   );
@@ -57,11 +58,12 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
     );
   };
 
-  const joinSession = async (sessionUuid: string) => {
+  const joinSession = async (session: any) => {
     if (!OV.current) return;
 
     const newSession = OV.current.initSession();
-    setSessionUuid(sessionUuid);
+    setSessionUuid(session.sessionUuid);
+    setMentoringName(session.mentoringName);
     setSession(newSession);
 
     newSession.on('streamCreated', (event) => {
@@ -218,9 +220,10 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
 
       {session !== undefined ? (
         <>
-          <div className="grid grid-cols-7 h-[79vh]">
-            <div className="col-span-5 bg-[#FAFAFE]">
+          <div className="w-full grid grid-cols-7 2xl:grid-cols-5 h-[79vh]">
+            <div className="w-full col-span-5 2xl:col-span-4 bg-[#FAFAFE]">
               <OvTracks
+                mentoringName={mentoringName}
                 sessionUuid={sessionUuid}
                 leaveSession={leaveSession}
                 mainStreamManager={mainStreamManager}
@@ -232,7 +235,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
                 shareScreen={shareScreen}
               />
             </div>
-            <div className="flex flex-col col-span-2 h-full">
+            <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
               <div className="h-[25vh]">
                 <OpenviduParticipants
                   subscribers={subscribers}
