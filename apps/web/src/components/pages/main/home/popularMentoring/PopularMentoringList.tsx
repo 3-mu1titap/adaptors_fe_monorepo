@@ -1,7 +1,6 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import 'swiper/css';
-
 import { cn } from '@repo/ui/lib/utils';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import TitleSection from '@repo/web/components/common/TitleSection';
@@ -12,13 +11,23 @@ import { categories, courses } from 'src/store/dummyStore';
 import { Autoplay, Navigation } from 'swiper/modules'; // Autoplay, Navigation 모듈 가져오기
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperIndex from '../MainIntro/SwiperIndex';
-import PopularCategoryMentoring from '../PopularCategoryMentoring';
-
-function PopularMentoringList() {
+import PopularCategoryMentoring from './PopularCategoryMentoring';
+import { TopCategoryType } from '@repo/ui/types/CommonType.js';
+import { GetPopularMentoringList } from '@repo/web/actions/mentoring/mentoringAction';
+import { Mentoring } from '@repo/web/components/types/mentoring/mentoringTypes';
+function PopularMentoringList({
+  categoryData,
+}: {
+  categoryData: TopCategoryType[];
+}) {
   const data = courses; // 데이터 복제
   const swiperRef = useRef<any>(null); // Swiper 인스턴스를 참조하기 위한 ref
   const [SlideIndex, setSlideIndex] = useState(0);
   const session = useSession();
+
+  const [popularData, setPopularData] = useState<Mentoring[]>([]); // 선택된 카테고리 데이터
+  const [categories, setCategories] = useState<TopCategoryType[]>(categoryData);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null); // 현재 활성 카테고리
   const onSlideIndexChange = (swiper: any) => {
     setSlideIndex(swiper.realIndex);
   };
@@ -41,6 +50,32 @@ function PopularMentoringList() {
     }
   };
 
+  // 카테고리 데이터 가져오기
+  const fetchCategoryData = async (categoryType: string) => {
+    try {
+      const res = await GetPopularMentoringList(categoryType);
+      setPopularData(res || []);
+      // console.log(res, '카테고리로 인기 멘토링 데이터 불러오기');
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+  };
+
+  // 카테고리 클릭 핸들러
+  const handleCategoryClick = (categoryType: string) => {
+    setActiveCategory(categoryType); // 활성 카테고리 설정
+    fetchCategoryData(categoryType); // 데이터 가져오기
+  };
+
+  // 초기 로딩 시 첫 번째 카테고리 데이터 가져오기
+  useEffect(() => {
+    if (categories.length > 0 && !activeCategory) {
+      const initialCategory = categories[0].topCategoryCode;
+      setActiveCategory(initialCategory);
+      fetchCategoryData(initialCategory);
+    }
+  }, [categories, activeCategory]);
+
   return (
     <CommonLayout
       type="section"
@@ -52,10 +87,13 @@ function PopularMentoringList() {
         {categories.map((category, index) => (
           <InnerButton
             key={index}
-            className="mr-2 mb-2 opacity-80"
-            title={category.icon + ' ' + category.name}
-            onClick={() => console.log('click')}
-            colorType={'secondary'}
+            className={cn(
+              'mr-2 mb-2 opacity-80',
+              activeCategory === category.topCategoryCode && 'bg-yellow-400'
+            )}
+            title={category.topCategoryName}
+            onClick={() => handleCategoryClick(category.topCategoryCode)}
+            colorType="secondary"
             isDisabled={false}
           />
         ))}
@@ -125,15 +163,15 @@ function PopularMentoringList() {
           },
         }}
       >
-        {data.map((category, index) => (
+        {popularData.slice(0, 20).map((item, index) => (
           <SwiperSlide key={index}>
-            <PopularCategoryMentoring item={category} isRole={session?.role} />
+            <PopularCategoryMentoring item={item} isRole={session?.role} />
           </SwiperSlide>
         ))}
       </Swiper>
 
       <div className="flex my-10 justify-center">
-        {data.map((_, index) => (
+        {popularData.slice(0, 20).map((_, index) => (
           <SwiperIndex
             key={index}
             slideIndex={SlideIndex}

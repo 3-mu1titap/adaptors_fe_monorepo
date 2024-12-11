@@ -1,7 +1,6 @@
 'use client';
+import { PopularCategoryType } from '@repo/web/components/types/Category/PopularCategoryType';
 import React from 'react';
-import { PopularCategoryType } from '../../../types/Category/PopularCategoryType';
-
 function PopularCategory({ item }: { item: PopularCategoryType }) {
   return (
     <div className={`flex py-3 justify-center bg-slate-100 rounded-lg mx-2`}>

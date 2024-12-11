@@ -1,5 +1,5 @@
 'use server';
-
+import { Mentoring } from '../../components/types/mentoring/mentoringTypes';
 import {
   MentoringDataType,
   MentoringResult,
@@ -159,6 +159,32 @@ export async function GetMentoringNameSearch(
     return result.result;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
+    return null;
+  }
+}
+
+//인기 멘토링 조회
+export async function GetPopularMentoringList(
+  topCategoryCodeList: string
+): Promise<Mentoring[] | null> {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/popular-mentoring-list?topCategoryCodeList=${topCategoryCodeList}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<Mentoring[]>;
+    // console.log(result.result, '인기 멘토링에 대한 겸색 결과 리스트 조회');
+    return result.result;
+  } catch (error) {
+    console.error('에러 조회: ', error);
     return null;
   }
 }
