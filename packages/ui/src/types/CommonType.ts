@@ -70,6 +70,7 @@ export interface SessionUser {
 export interface MentoringDataType {
   mentoringUuid: string; // 멘토링의 고유 식별자
   name: string; // 멘토링 이름
+  description: string;
   totalReviewCount: number; // 총 리뷰 개수
   reviewStarAvg: number; // 리뷰 별점 평균
   totalSaleCount: number; // 총 판매 횟수

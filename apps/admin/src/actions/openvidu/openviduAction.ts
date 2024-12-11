@@ -7,7 +7,7 @@ const basicAuth = 'Basic ' + btoa(`${OPENVIDU_NAME}:${OPENVIDU_KEY}`);
 
 const createToken = async (sessionId: string) => {
   const response = await fetch(
-    `${OPENVIDU_SERVER_URL}/api/sessions/${sessionId}/connections`,
+    `${OPENVIDU_SERVER_URL}/api/v1/openvidu/session/${sessionId}/connection`,
     {
       method: 'POST',
       headers: {
@@ -27,14 +27,17 @@ const createToken = async (sessionId: string) => {
 };
 
 const createSession = async (sessionId: string) => {
-  const response = await fetch(`${OPENVIDU_SERVER_URL}/api/sessions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // 'Authorization': basicAuth, // Authorization 헤더 추가
-    },
-    // body: JSON.stringify({ customSessionId: sessionId }),
-  });
+  const response = await fetch(
+    `${OPENVIDU_SERVER_URL}/api/v1/openvidu/session`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': basicAuth, // Authorization 헤더 추가
+      },
+      // body: JSON.stringify({ customSessionId: sessionId }),
+    }
+  );
 
   if (!response.ok) {
     throw new Error(`Error creating session: ${response.statusText}`);
