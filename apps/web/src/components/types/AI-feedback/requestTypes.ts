@@ -7,12 +7,6 @@ export type Industry_Type =
 
 export type Document_Type = 'RESUME' | 'PORTFOLIO' | 'COVER_LETTER';
 
-// interface AIFeedback {
-//   industryType: Industry_Type;
-//   documentType:Document_Type;
-
-// }
-
 export interface feedbackResult {
   improvements: string;
   strengths: string;

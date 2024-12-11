@@ -78,15 +78,15 @@ function AIChatBot() {
   // URL에서 ?path 이후를 제거하는 함수
   const removeQueryParams = () => {
     const currentUrl = window.location.href;
-    const baseUrl = currentUrl.split('?')[0]; // '?' 이전 부분만 가져옴
-    window.history.replaceState({}, '', baseUrl); // URL을 변경하지만 페이지를 리로드하지 않음
+    const baseUrl = currentUrl.split('?')[0];
+    window.history.replaceState({}, '', baseUrl);
   };
 
   useEffect(() => {
     if (!isDialogOpen) {
-      removeQueryParams(); // 다이얼로그가 닫힐 때 URL 수정
+      removeQueryParams();
     }
-  }, [isDialogOpen]); // 다이얼로그가 닫힐 때만 실행됨
+  }, [isDialogOpen]);
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -97,7 +97,7 @@ function AIChatBot() {
           </CustomToolTip>
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] mobile:min-h-[430px] ">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-[1.15rem]">AI 피드백</DialogTitle>
           <DialogDescription>
