@@ -53,19 +53,19 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchParticipantsUuid = async () => {
-      const participantsUuidData = await getParticipants(sessionUuid);
-      const fetchPromises = participantsUuidData.map((userUuid: string) =>
-        fetchParticipants(userUuid)
-      );
+  // useEffect(() => {
+  //   const fetchParticipantsUuid = async () => {
+  //     const participantsUuidData = await getParticipants(sessionUuid);
+  //     const fetchPromises = participantsUuidData.map((userUuid: string) =>
+  //       fetchParticipants(userUuid)
+  //     );
 
-      await Promise.all(fetchPromises);
-    };
-    if (sessionUuid) {
-      fetchParticipantsUuid();
-    }
-  }, [session, sessionUuid]);
+  //     await Promise.all(fetchPromises);
+  //   };
+  //   if (sessionUuid) {
+  //     fetchParticipantsUuid();
+  //   }
+  // }, [session, sessionUuid]);
 
   useEffect(() => {
     const handleBeforeUnload = () => leaveSession();
@@ -106,7 +106,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
       console.warn(exception);
     });
 
-    const token = await getToken('mySessionId');
+    const token = await getToken('mySessionId2');
     newSession
       .connect(token, {
         clientData: myUserName,
@@ -194,10 +194,10 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
                 /> */}
               </div>
               <div className="h-[54vh]">
-                <Chatting
+                {/* <Chatting
                   participants={participants}
                   mentoringSessionUuid={sessionUuid}
-                />
+                /> */}
               </div>
             </div>
           </div>

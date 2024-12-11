@@ -17,8 +17,8 @@ export default function CustomToolTip({ text, children }: TooltipProps) {
       const offsetX = e.clientX - wrapperRect.left;
       const offsetY = e.clientY - wrapperRect.top;
       setTooltipStyle({
-        top: `${offsetY + 30}px`, // 마우스 포인터 아래에 표시
-        left: `${offsetX + 30}px`, // 마우스 포인터 오른쪽에 표시
+        top: `${offsetY - 30}px`, // 마우스 포인터 아래에 표시
+        left: `${offsetX - 30}px`, // 마우스 포인터 오른쪽에 표시
         transform: 'translate(-60%, -60%)',
       });
     }

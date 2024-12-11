@@ -1,9 +1,6 @@
 import { Button } from '@repo/ui/components/ui/button';
-import FeedbackResult from '@repo/web/components/pages/AI-feedback/FeedbackResult';
 import SelectedFile from '@repo/web/components/pages/AI-feedback/SelectedFile';
 import { feedbackResult } from '@repo/web/components/types/AI-feedback/requestTypes';
-import ProgressBar from '@repo/web/components/ui/Progress/ProgressBar';
-import Status from '@repo/web/components/ui/Progress/Success';
 import { Upload } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { requestAIFeedback_pdf } from 'src/actions/AI-feedback/AI-feedback';
@@ -15,19 +12,16 @@ interface FileWithPreview extends File {
 export default function FileUploadForm({
   job,
   category,
+  setFeedback,
 }: {
   job: string;
   category: string;
+  setFeedback: React.Dispatch<React.SetStateAction<feedbackResult | null>>;
 }) {
   const [file, setFile] = useState<FileWithPreview | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadStatus, setUploadStatus] = useState<
-    'idle' | 'success' | 'error' | 'fileSizeError'
-  >('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [feedback, setFeedback] = useState<feedbackResult | ''>();
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -66,7 +60,6 @@ export default function FileUploadForm({
 
   const addFile = (newFile: File) => {
     if (newFile.size > 5 * 1024 * 1024) {
-      setUploadStatus('fileSizeError'); // 상태를 'fileSizeError'로 설정
       return;
     }
 
@@ -83,7 +76,6 @@ export default function FileUploadForm({
           preview: URL.createObjectURL(newFile),
         })
       );
-      setUploadStatus('idle'); // 파일 추가 시 상태 초기화
     }
   };
 
@@ -108,48 +100,29 @@ export default function FileUploadForm({
       console.error('파일이 없습니다');
       return;
     }
-
     setUploading(true);
-    setUploadProgress(0);
-    setUploadStatus('idle');
 
     try {
       // 서버 요청 및 진행률 동기화
       const base64File = await fileToBase64(file);
-      const uploadStartTime = Date.now();
-
-      const uploadInterval = setInterval(() => {
-        const elapsedTime = Date.now() - uploadStartTime;
-        const estimatedUploadTime = 30000; // 30초 (서버 응답 예상 시간)
-        const progress = Math.min(
-          Math.floor((elapsedTime / estimatedUploadTime) * 100),
-          99
-        );
-        setUploadProgress(progress);
-      }, 300);
-
       const data = await requestAIFeedback_pdf({
         industryType: job,
         documentType: category,
         file: base64File,
       });
 
-      clearInterval(uploadInterval);
-      setUploadProgress(100);
       setUploading(false);
-      setUploadStatus('success');
       setFile(null);
       setFeedback(data);
     } catch (error) {
       console.error('업로드 중 오류 발생:', error);
-      setUploadStatus('error');
       setUploading(false);
     }
   };
 
   return (
     <>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+      <div className="max-w-md mx-auto px-6 bg-white rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
           파일 업로드
         </h2>
@@ -191,12 +164,12 @@ export default function FileUploadForm({
             </Button>
           </>
         )}
-
-        {uploading && <ProgressBar uploadProgress={uploadProgress} />}
-
-        <Status uploadStatus={uploadStatus} />
+        {uploading && (
+          <div className="w-full h-full bg-black/40 absolute top-0 left-0">
+            <div className="loading-spinner mx-auto mt-[200px]"></div>
+          </div>
+        )}
       </div>
-      {feedback && <FeedbackResult feedback={feedback} />}
     </>
   );
 }

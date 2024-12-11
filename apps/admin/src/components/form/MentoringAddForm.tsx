@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckSquare2, ImageIcon, X } from 'lucide-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // import 'react-datepicker/dist/react-datepicker.css';
 // import { Editor } from '@toast-ui/react-editor';
 // import '@toast-ui/editor/toastui-editor.css';
@@ -10,6 +10,8 @@ import { uploadFileToS3 } from '@repo/admin/actions/common/awsMediaUploader';
 import { PostMentoring } from '@repo/admin/actions/mentoring/mentoringAction';
 // import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 // import 'tui-color-picker/dist/tui-color-picker.css';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import {
   HashtagDataType,
   MentoringAddFormType,
@@ -18,7 +20,26 @@ import {
 } from '../types/main/mentor/mentoringTypes';
 
 import FitImage from '../ui/image/fit-image';
-const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
+import { useRouter } from 'next/navigation';
+
+const formats = [
+  'font',
+  'header',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'align',
+  'color',
+  'background',
+  'size',
+  'h1',
+];
 
 export default function MentoringAddForm({
   topCategories,
@@ -27,6 +48,8 @@ export default function MentoringAddForm({
   topCategories: TopCategoryDataType[];
   hashtags: HashtagDataType[];
 }) {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<MentoringAddFormType>({
     name: '',
     description: '',
@@ -35,11 +58,30 @@ export default function MentoringAddForm({
     thumbnailUrl: '',
     sessionList: [],
     categoryList: [],
-    hashtagList: [],
+    hashTagList: [],
   });
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(formData.thumbnailUrl);
   const [isDragging, setIsDragging] = useState(false);
+
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ align: [] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [
+            {
+              color: [],
+            },
+            { background: [] },
+          ],
+        ],
+      },
+    };
+  }, []);
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -111,30 +153,49 @@ export default function MentoringAddForm({
 
   const handleHashtagSelect = (hashtag: HashtagDataType) => {
     setFormData((prevData) => {
-      const isSelected = prevData.hashtagList.some(
-        (cat) => cat.name === hashtag.name
+      const isSelected = prevData.hashTagList.some(
+        (cat) => cat.hashtagId === hashtag.hashtagId
       );
 
       const newHashtagList = isSelected
-        ? prevData.hashtagList.filter((cat) => cat.name !== hashtag.name)
-        : [...prevData.hashtagList, hashtag];
+        ? prevData.hashTagList.filter(
+            (cat) => cat.hashtagId !== hashtag.hashtagId
+          )
+        : [...prevData.hashTagList, hashtag];
 
-      return { ...prevData, hashtagList: newHashtagList };
+      return { ...prevData, hashTagList: newHashtagList };
     });
   };
 
-  // const handleEditorChange = () => {
-  //   const description = editorRef.current?.getInstance().getHTML();
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     detail: description || '',
-  //   }));
-  // };
+  const handleEditorChange = (value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      detail: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    // const res = await PostMentoring(formData, file);
+    console.log(file);
+    if (file) {
+      try {
+        const imageUrl = await uploadFileToS3(file, 'mentoring');
+        const payload = {
+          ...formData,
+          thumbnailUrl: imageUrl,
+        };
+        const res = await PostMentoring({ payload });
+        if (res) {
+          router.push('/mentor/mentoring');
+        } else {
+          alert(
+            '예상치 못한 에러로 멘토링이 생성되지 않았습니다. 다시 시도해주세요.'
+          );
+        }
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -165,11 +226,12 @@ export default function MentoringAddForm({
 
       <div className="flex flex-col space-y-3 mb-6">
         <label className="text-xl font-bold px-1">
-          카테고리를 선택해주세요
+          받고 싶은 멘토링을 선택해주세요
         </label>
         <div className="flex flex-wrap gap-2">
-          {topCategories &&
-            topCategories.map((category, index) => {
+          {topCategories
+            .filter((category) => category.categoryType === 'DOMAIN')
+            .map((category, index) => {
               const isSelected = formData.categoryList.some(
                 (cat) => cat.topCategoryName === category.topCategoryName
               );
@@ -191,7 +253,37 @@ export default function MentoringAddForm({
               );
             })}
         </div>
-        <label className="block text-sm font-medium text-gray-700 px-2 mt-3"></label>
+      </div>
+
+      <div className="flex flex-col space-y-3 mb-6">
+        <label className="text-xl font-bold px-1">
+          직무 카테고리를 선택해주세요
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {topCategories
+            .filter((category) => category.categoryType === 'JOB')
+            .map((category, index) => {
+              const isSelected = formData.categoryList.some(
+                (cat) => cat.topCategoryName === category.topCategoryName
+              );
+
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleCategorySelect(category)}
+                  className={`flex items-center gap-2 py-2 px-2 rounded-md w-fit text-md ${
+                    isSelected
+                      ? '!bg-adaptorsYellow !text-black border-[1px] border-adaptorsYellow'
+                      : '!bg-slate-200 border-[1px] border-slate-500 text-slate-700'
+                  } hover:bg-gray-200`}
+                >
+                  {category.topCategoryName}
+                  {isSelected ? <X size={12} /> : <CheckSquare2 size={12} />}
+                </button>
+              );
+            })}
+        </div>
       </div>
 
       <div className="flex flex-col space-y-3 mb-6">
@@ -201,8 +293,8 @@ export default function MentoringAddForm({
         <div className="flex flex-wrap gap-2">
           {hashtags &&
             hashtags.map((hashtag, index) => {
-              const isSelected = formData.hashtagList.some(
-                (cat) => cat.name === hashtag.name
+              const isSelected = formData.hashTagList.some(
+                (cat) => cat.hashtagId === hashtag.hashtagId
               );
 
               return (
@@ -216,7 +308,7 @@ export default function MentoringAddForm({
                       : '!bg-slate-200 border-[1px] border-slate-500 text-slate-700'
                   } hover:bg-gray-200`}
                 >
-                  {hashtag.name}
+                  {hashtag.hashtagName}
                   {isSelected ? <X size={12} /> : <CheckSquare2 size={12} />}
                 </button>
               );
@@ -280,22 +372,18 @@ export default function MentoringAddForm({
         />
       </div>
 
-      {/* <div className="flex flex-col space-y-3 mb-6">
+      <div className="flex flex-col space-y-3 mb-16">
         <label className="text-xl font-bold px-1">멘토링 상세 설명</label>
         <div className="mb-4">
-          {/* <Editor
-            ref={editorRef}
-            placeholder="멘토링 내용을 작성해주세요"
-            previewStyle="vertical"
-            height="500px"
-            initialEditType="wysiwyg"
-            useCommandShortcut={false}
-            hideModeSwitch={true}
-            plugins={[color]}
+          <ReactQuill
+            theme="snow"
+            modules={modules}
+            formats={formats}
             onChange={handleEditorChange}
+            style={{ height: '450px' }}
           />
         </div>
-      </div> */}
+      </div>
 
       <div className="mb-4">
         <label className="flex items-center">
@@ -315,7 +403,7 @@ export default function MentoringAddForm({
       <div className="mt-6">
         <button
           type="submit"
-          className="w-fit py-3 px-6 border border-transparent rounded-md shadow-sm text-lg font-extrabold text-white bg-adaptorsBlue hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-fit py-3 px-6 border border-transparent rounded-md shadow-sm text-lg font-extrabold text-white bg-adaptorsYellow hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           멘토링 생성
         </button>
