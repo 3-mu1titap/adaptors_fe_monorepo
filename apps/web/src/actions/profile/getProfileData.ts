@@ -81,3 +81,27 @@ export async function GetUserInfo() {
     return redirect('/error?message=Failed to fetch userInfo');
   }
 }
+
+export async function getMentorProfileImage(userUuid: string) {
+  'use server';
+
+  const response = await fetch(
+    `${process.env.MEMBER_QUERY_URL}/api/v1/memberInfo/profileImage`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to post profile image');
+  }
+
+  const data = (await response.json()) as commonResType<userProfileType>;
+  console.log(data, '멘터 정보 불러오기');
+  return data.result;
+}

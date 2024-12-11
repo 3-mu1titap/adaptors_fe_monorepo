@@ -20,3 +20,9 @@ export interface userProfileType {
   nickName: string;
   profileImageUrl: string;
 }
+
+export interface MentorInfoType {
+  mentorUuid: string;
+  nickName: string;
+  profileImageUrl: string;
+}
