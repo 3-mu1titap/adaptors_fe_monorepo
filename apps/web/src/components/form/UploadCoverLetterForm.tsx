@@ -12,30 +12,19 @@ export default function UploadCoverLetterForm({
   job: string;
   setFeedback: React.Dispatch<React.SetStateAction<feedbackResult | null>>;
 }) {
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploading, setuploading] = useState(false);
   const handleSubmitButton = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 폼 제출 방지
-    const uploadStartTime = Date.now();
 
     const formData = new FormData(e.currentTarget);
     const question = formData.get('question');
     const coverLetter = formData.get('coverLetter');
     if (typeof coverLetter === 'string') {
-      const uploadInterval = setInterval(() => {
-        const elapsedTime = Date.now() - uploadStartTime;
-        const estimatedUploadTime = 5000;
-        const progress = Math.min(
-          Math.floor((elapsedTime / estimatedUploadTime) * 100),
-          99
-        );
-        setUploadProgress(progress);
-      }, 300);
+      setuploading(true);
       const data = await requestAIFeedback_coverletter({
         industryType: job,
         coverLetter: question + coverLetter,
       });
-      clearInterval(uploadInterval);
-      setUploadProgress(100);
       setFeedback(data);
     }
   };
@@ -63,11 +52,14 @@ export default function UploadCoverLetterForm({
           variant={'adaptors'}
           className="text-lg my-2 block w-full"
         >
-          {uploadProgress != 0 && uploadProgress != 100
-            ? `분석 중`
-            : `분석하기`}
+          {uploading ? `분석 중` : `분석하기`}
         </Button>
       </form>
+      {uploading && (
+        <div className="w-full h-full bg-black/40 absolute top-0 left-0">
+          <div className="loading-spinner mx-auto mt-[200px]"></div>
+        </div>
+      )}
     </div>
   );
 }
