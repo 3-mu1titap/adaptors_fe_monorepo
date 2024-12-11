@@ -9,7 +9,6 @@ interface CommonProps {
 
 function ClientContainer({ children, className }: CommonProps) {
   const query = useSearchParams();
-  console.log(query.get('token'));
   return (
     <section className="w-full px-4 lg:px-10 py-5 mt-[7rem]">
       <div

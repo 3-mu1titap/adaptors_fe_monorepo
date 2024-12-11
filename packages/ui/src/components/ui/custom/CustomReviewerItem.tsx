@@ -14,7 +14,6 @@ function CustomReviewerItem({
   userCount?: number | null;
   reviewCount?: number;
 }) {
-  console.log(initialUserData);
   return (
     <div
       className={`flex justify-start items-center ${className} ${initialUserData[0].userImageUrl ? `block` : `hidden`}`}

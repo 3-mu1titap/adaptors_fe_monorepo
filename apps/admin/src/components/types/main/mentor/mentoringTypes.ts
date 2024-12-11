@@ -4,6 +4,7 @@ export interface TopCategoryDataType {
   id: number;
   topCategoryCode: string;
   topCategoryName: string;
+  categoryType: string;
 }
 
 export interface MiddleCategoryDataType {
@@ -12,7 +13,7 @@ export interface MiddleCategoryDataType {
 }
 
 export interface HashtagDataType {
-  name: string;
+  hashtagName: string;
   hashtagId: number;
 }
 
@@ -81,7 +82,7 @@ export interface MentoringAddFormType {
   thumbnailUrl: string;
   sessionList: MentoringSession[];
   categoryList: MentoringCategory[];
-  hashtagList: HashtagDataType[];
+  hashTagList: HashtagDataType[];
 }
 
 export interface SessionUser {

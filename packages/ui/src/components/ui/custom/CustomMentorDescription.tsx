@@ -1,6 +1,8 @@
 import { MentoringDataType, SessionUser } from '@repo/ui/types/CommonType.ts';
 import React from 'react';
 import CustomReviewerItem from './CustomReviewerItem';
+import CustomMentorDescriptionHtml from './CustomMentorDescriptionHtml';
+import CustomMentorDescriptionHashtag from './CustomMentorDescriptionHashtag';
 
 function CustomMentorDescription({
   mentoringInfoData,
@@ -22,7 +24,15 @@ function CustomMentorDescription({
           reviewCount={293938}
         />
       </div>
-      <p className="pb-10 text-md break-words">{mentoringInfoData.detail}</p>
+      {mentoringInfoData.description && (
+        <p className="pb-10 text-md break-words">
+          {mentoringInfoData.description}
+        </p>
+      )}
+      <CustomMentorDescriptionHtml detail={mentoringInfoData.detail} />
+      <CustomMentorDescriptionHashtag
+        hashtags={mentoringInfoData.hashTagList}
+      />
     </>
   );
 }

@@ -109,13 +109,13 @@ function Chatting({
 
     eventSource.onerror = (error) => {
       console.error('EventSource 오류:', error);
-      postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
+      // postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
       eventSource.close();
     };
 
     return () => {
       clearInterval(heartbeatInterval);
-      postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
+      // postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
       eventSource.close();
     };
   }, [mentoringSessionUuid]);

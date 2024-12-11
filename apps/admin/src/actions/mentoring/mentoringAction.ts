@@ -18,6 +18,7 @@ import {
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { uploadFileToS3 } from '../common/awsMediaUploader';
+import { revalidateTag } from 'next/cache';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
@@ -91,24 +92,15 @@ export async function GetHashTagsList() {
 }
 
 // 멘토의 멘토링 생성
-export async function PostMentoring(
-  formData: MentoringAddFormType,
-  thumbnailFile: File | null
-) {
+export async function PostMentoring({
+  payload,
+}: {
+  payload: MentoringAddFormType;
+}) {
+  console.log(payload);
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
-  let newPayload = { ...formData, thumbnailUrl: '' };
-
-  if (thumbnailFile) {
-    const mentoringImageUrl: string = await uploadFileToS3(
-      thumbnailFile,
-      'mentoring'
-    );
-    newPayload = { ...newPayload, thumbnailUrl: mentoringImageUrl };
-  }
-
-  console.log(newPayload);
 
   const res = await fetch(
     `${process.env.MENTORING_URL}/api/v1/mentoring-service`,
@@ -120,18 +112,18 @@ export async function PostMentoring(
         'Authorization': `Bearer ${accessToken}`,
         'userUuid': userUuid,
       },
-      body: JSON.stringify(newPayload),
+      body: JSON.stringify(payload),
     }
   );
-
   if (!res.ok) {
     console.error('멘토링 생성 실패');
-    return null;
+    return res.ok;
   }
 
   const result = (await res.json()) as commonResType<null>;
+  revalidateTag('createMentoring');
   console.log('멘토링 생성 성공', result);
-  return result;
+  return res.ok;
 }
 
 // 멘토의 멘토링 리스트 조회
@@ -162,21 +154,23 @@ export async function GetMentoringList(): Promise<MentoringDataType[]> {
   return result.result;
 }
 
-export async function GetMentoringListByMentor(
-  mentorUuid: string
-): Promise<SearchMentoringListType[]> {
+export async function GetMentoringListByMentor(): Promise<
+  SearchMentoringListType[]
+> {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
 
   const res = await fetch(
     `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list?isMentor=true`,
     {
       cache: 'no-cache',
       method: 'GET',
+      next: { tags: ['createMentoring'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
-        'userUuid': mentorUuid,
+        'userUuid': userUuid,
       },
     }
   );
@@ -187,7 +181,6 @@ export async function GetMentoringListByMentor(
   }
 
   const result = (await res.json()) as commonResType<SearchMentoringListType[]>;
-  console.log('mentorlistbymentor', result);
   return result.result;
 }
 
