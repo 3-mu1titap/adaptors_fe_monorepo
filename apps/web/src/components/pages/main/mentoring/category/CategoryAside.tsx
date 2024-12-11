@@ -11,10 +11,10 @@ export default function CategoryAside({
   categorise: TopCategoryType[];
 }) {
   return (
-    <aside className="lg:fixed lg:left-0 static backdrop-blur-lg max-w-[330px] mx-auto ">
-      <ul className="lg:min-w-36 pt-10 flex lg:block justify-center lg:justify-normal">
+    <nav className="backdrop-blur-lg mx-auto ">
+      <ul className="pt-10 flex justify-center lg:justify-normal">
         {categorise
-          ?.filter((category) => category.categoryType === 'DOMAIN')
+          ?.filter((category) => category.categoryType != '')
           .map((category) => (
             <li
               className="text-md mobile:text-lg w-full text-center lg:text-start lg:px-10 mb-10 relative"
@@ -32,6 +32,6 @@ export default function CategoryAside({
             </li>
           ))}
       </ul>
-    </aside>
+    </nav>
   );
 }

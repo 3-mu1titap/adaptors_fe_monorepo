@@ -26,7 +26,6 @@ export default function MentoringOverview({
       icon: <BadgeDollarSign size={12} className="text-blue-500" />,
     },
   ];
-  console.log('MentoringInfoData.categoryList', MentoringInfoData.categoryList);
   return (
     <div>
       <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
