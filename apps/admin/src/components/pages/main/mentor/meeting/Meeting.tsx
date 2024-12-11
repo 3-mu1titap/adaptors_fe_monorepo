@@ -106,7 +106,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
       console.warn(exception);
     });
 
-    const token = await getToken('mySessionId');
+    const token = await getToken('mySessionId2');
     newSession
       .connect(token, {
         clientData: myUserName,
