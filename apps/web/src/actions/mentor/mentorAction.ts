@@ -1,5 +1,6 @@
 import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
 import { commonResType } from '../../components/types/ResponseTypes';
+import { BestMentorType } from '@repo/web/components/types/mentor/mentorType';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
@@ -31,3 +32,27 @@ export async function GetMentorMentoringList(
 }
 
 //멘토 프로필 소개글 조회
+
+//베스트 멘토
+export async function GetBestMentorList() {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<BestMentorType[]>;
+    // console.log(result.result, '베스트 멘토 리스트 불러오기 성공');
+    return result.result;
+  } catch (error) {
+    console.error('멘토의 멘토링 리스트 조회 : ', error);
+    return [];
+  }
+}

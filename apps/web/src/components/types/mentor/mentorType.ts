@@ -20,3 +20,14 @@ export interface SearchMentoringType {
   isAvailable: boolean;
   nowSessionCount: number;
 }
+
+//베스트 멘토
+export interface BestMentorType {
+  mentorUuid: string;
+  nickName: string;
+  profileImageUrl: string;
+  totalReviewCount: number;
+  reviewStarAvg: number;
+  totalLikeCount: number;
+  totalSaleCount: number;
+}
