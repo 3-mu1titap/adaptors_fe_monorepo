@@ -26,6 +26,7 @@ import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 import AdaptorsLogoIcon from '../../assets/icons/AdaptorsLogo';
 import { SidebarType } from '../../types/navigation/navigationTypes';
+import { signOut } from 'next-auth/react';
 
 function CommonSidebar() {
   const pathname = usePathname();
@@ -138,6 +139,7 @@ function CommonSidebar() {
           label: 'Log Out',
           isActive: pathname.startsWith(`/mentor/logout`),
           href: '#',
+          onClick: () => signOut(),
         },
       ];
     }
@@ -170,23 +172,43 @@ function CommonSidebar() {
                     key={item.label}
                   >
                     <SidebarMenuButton asChild>
-                      <Link
-                        className="flex items-center justify-start gap-4"
-                        href={item.href}
-                      >
-                        <span className="flex-shrink-0 w-5 h-5 overflow-hidden object-cover">
-                          {item.icon}
-                        </span>
+                      {item.label === 'Log Out' ? (
                         <span
-                          className={`whitespace-nowrap text-md ${
-                            item.isActive
-                              ? 'text-adaptorsYellow'
-                              : 'text-adaptorsGray'
-                          }`}
+                          className="flex items-center justify-start gap-4"
+                          onClick={item.onClick}
                         >
-                          {item.label}
+                          <span className="flex-shrink-0 w-5 h-5 overflow-hidden object-cover">
+                            {item.icon}
+                          </span>
+                          <span
+                            className={`whitespace-nowrap text-md ${
+                              item.isActive
+                                ? 'text-adaptorsYellow'
+                                : 'text-adaptorsGray'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
                         </span>
-                      </Link>
+                      ) : (
+                        <Link
+                          className="flex items-center justify-start gap-4"
+                          href={item.href}
+                        >
+                          <span className="flex-shrink-0 w-5 h-5 overflow-hidden object-cover">
+                            {item.icon}
+                          </span>
+                          <span
+                            className={`whitespace-nowrap text-md ${
+                              item.isActive
+                                ? 'text-adaptorsYellow'
+                                : 'text-adaptorsGray'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </Link>
+                      )}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </CustomToolTip>
