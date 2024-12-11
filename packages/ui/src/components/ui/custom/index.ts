@@ -15,7 +15,7 @@ import CustomTableHeader from './CustomTableHeader';
 import CustomTableBody from './CustomTableBody';
 import CustomButton from './CustomButton';
 import CustomRadioButton from './CustomRadioButton';
-import CustomToolTip from './CustomTooltip';
+import CustomToolTip from './CustomToolTip';
 
 export {
   CustomFitImage,
