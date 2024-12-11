@@ -55,10 +55,7 @@ export default function MeinFooter() {
                 >
                   Volt
                 </a>
-                <a
-                  href="http://localhost:3001"
-                  className="block text-gray-600 hover:text-gray-900"
-                >
+                <a href="#" className="block text-gray-600 hover:text-gray-900">
                   Client
                 </a>
               </div>
