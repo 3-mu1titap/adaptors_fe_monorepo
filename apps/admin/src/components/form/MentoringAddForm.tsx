@@ -176,20 +176,25 @@ export default function MentoringAddForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(file);
     if (file) {
-      const imageUrl = await uploadFileToS3(file, 'mentoring');
-      console.log(imageUrl);
-      setFormData((prevData) => ({ ...prevData, thumbnailUrl: imageUrl }));
-    }
-
-    const res = await PostMentoring({ formData });
-    if (res) {
-      router.push('/mentor/mentoring');
-    } else {
-      alert(
-        '예상치 못한 에러로 멘토링이 생성되지 않았습니다. 다시 시도해주세요.'
-      );
+      try {
+        const imageUrl = await uploadFileToS3(file, 'mentoring');
+        const payload = {
+          ...formData,
+          thumbnailUrl: imageUrl,
+        };
+        const res = await PostMentoring({ payload });
+        if (res) {
+          router.push('/mentor/mentoring');
+        } else {
+          alert(
+            '예상치 못한 에러로 멘토링이 생성되지 않았습니다. 다시 시도해주세요.'
+          );
+        }
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
     }
   };
 

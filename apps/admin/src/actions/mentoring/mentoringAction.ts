@@ -93,11 +93,11 @@ export async function GetHashTagsList() {
 
 // 멘토의 멘토링 생성
 export async function PostMentoring({
-  formData,
+  payload,
 }: {
-  formData: MentoringAddFormType;
+  payload: MentoringAddFormType;
 }) {
-  console.log(formData);
+  console.log(payload);
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
@@ -112,10 +112,9 @@ export async function PostMentoring({
         'Authorization': `Bearer ${accessToken}`,
         'userUuid': userUuid,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     }
   );
-  console.log(res);
   if (!res.ok) {
     console.error('멘토링 생성 실패');
     return res.ok;
@@ -137,7 +136,6 @@ export async function GetMentoringList(): Promise<MentoringDataType[]> {
     `${process.env.MENTORING_QUERY_URL}/api/v1/mentoring-query-service/mentoring-list?isMentor=true`,
     {
       cache: 'no-cache',
-      next: { tags: ['createMentoring'] },
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -168,6 +166,7 @@ export async function GetMentoringListByMentor(): Promise<
     {
       cache: 'no-cache',
       method: 'GET',
+      next: { tags: ['createMentoring'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
@@ -182,7 +181,6 @@ export async function GetMentoringListByMentor(): Promise<
   }
 
   const result = (await res.json()) as commonResType<SearchMentoringListType[]>;
-  console.log('mentorlistbymentor', result);
   return result.result;
 }
 
