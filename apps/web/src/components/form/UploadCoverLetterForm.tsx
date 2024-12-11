@@ -1,14 +1,17 @@
 import { Button } from '@repo/ui/components/ui/button';
-import FeedbackResult from '@repo/web/components/pages/AI-feedback/FeedbackResult';
-import { feedbackResult } from '@repo/web/components/types/AI-feedback/requestTypes';
 import { Input } from '@repo/web/components/ui/input/CommonInput';
-import ProgressBar from '@repo/web/components/ui/Progress/ProgressBar';
 import ChevronText from '@repo/web/components/ui/Text/ChevronText';
 import { useState } from 'react';
 import { requestAIFeedback_coverletter } from 'src/actions/AI-feedback/AI-feedback';
+import { feedbackResult } from '../types/AI-feedback/requestTypes';
 
-export default function UploadCoverLetterForm({ job }: { job: string }) {
-  const [feedback, setFeedback] = useState<feedbackResult | ''>();
+export default function UploadCoverLetterForm({
+  job,
+  setFeedback,
+}: {
+  job: string;
+  setFeedback: React.Dispatch<React.SetStateAction<feedbackResult | null>>;
+}) {
   const [uploadProgress, setUploadProgress] = useState(0);
   const handleSubmitButton = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 폼 제출 방지
@@ -39,39 +42,32 @@ export default function UploadCoverLetterForm({ job }: { job: string }) {
   return (
     <div>
       <form onSubmit={handleSubmitButton} className="">
-        <fieldset className="md:flex items-start mb-10 lg:pr-20">
+        <fieldset className=" mb-4 ">
           <ChevronText
             text="자기소개서 문항"
             className="py-4 sm:py-2 min-w-44"
           />
           <Input name="question" placeholder="문항을 입력해주세요" />
         </fieldset>
-        <fieldset className="md:flex items-start lg:pr-20">
+        <fieldset className="">
           <ChevronText text="자기소개서" className="py-4 sm:py-2 min-w-44" />
           <textarea
             name="coverLetter"
             placeholder="작성한 자기소개서를 입력해주세요"
             maxLength={1500}
-            className="text-md lg:text-lg leading-relaxed border outline-adaptorsYellow outline-2 rounded-lg focus:border-2 focus:border-adaptorsYellow w-full sm:h-[50vh] lg:min-h-[400px] p-6"
+            className="text-md lg:text-lg leading-relaxed border outline-adaptorsYellow outline-2 rounded-lg focus:border-2 focus:border-adaptorsYellow w-full sm:h-[40vh] p-6"
           ></textarea>
         </fieldset>
         <Button
           type="submit"
           variant={'adaptors'}
-          size={'xl'}
-          className="text-lg mx-auto my-4 block"
+          className="text-lg my-2 block w-full"
         >
           {uploadProgress != 0 && uploadProgress != 100
             ? `분석 중`
             : `분석하기`}
         </Button>
       </form>
-      {uploadProgress > 1 && uploadProgress < 100 && (
-        <ProgressBar uploadProgress={uploadProgress} />
-      )}
-      <div className="w-full flex">
-        {feedback && <FeedbackResult feedback={feedback} />}
-      </div>
     </div>
   );
 }

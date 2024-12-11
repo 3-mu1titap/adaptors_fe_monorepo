@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { CommonLayout } from '../../common/commomLayout';
-import FileUploadForm from '../../form/FileUploadForm';
-import UploadCoverLetterForm from '../../form/UploadCoverLetterForm';
 import ChevronText from '../../ui/Text/ChevronText';
 import RadioButton from '../../ui/radio/RadioButton';
 
@@ -15,7 +13,7 @@ const industry = [
   { value: 'EDUCATION', label: '교육' },
 ];
 
-export default function ploadSection({ category }: { category: string }) {
+export default function UploadSection({ category }: { category: string }) {
   const [job, setJob] = useState<string>('IT');
   const handleRadioChange = (value: string) => {
     setJob(value);
@@ -34,13 +32,13 @@ export default function ploadSection({ category }: { category: string }) {
             classname="gap-4"
           />
         </fieldset>
-        {category === 'COVER_LETTER' && <UploadCoverLetterForm job={job} />}
-        {category === 'RESUME' && (
+        {/* {category === 'COVER_LETTER' && <UploadCoverLetterForm job={job} />} */}
+        {/* {category === 'RESUME' && (
           <FileUploadForm job={job} category={category} />
         )}
         {category === 'PORTFOLIO' && (
           <FileUploadForm job={job} category={category} />
-        )}
+        )} */}
       </CommonLayout>
     </>
   );

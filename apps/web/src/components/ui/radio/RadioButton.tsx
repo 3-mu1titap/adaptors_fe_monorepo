@@ -1,17 +1,5 @@
+import { RadioButtonProps } from '@repo/ui/types/components/RadioButtonType.ts';
 import React from 'react';
-
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface RadioButtonProps {
-  options: Option[];
-  name: string;
-  selectedValue: string;
-  onChange: (value: string) => void;
-  classname?: string;
-}
 
 const RadioButton: React.FC<RadioButtonProps> = ({
   options,

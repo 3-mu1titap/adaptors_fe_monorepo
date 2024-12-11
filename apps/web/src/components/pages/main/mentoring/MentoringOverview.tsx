@@ -26,6 +26,7 @@ export default function MentoringOverview({
       icon: <BadgeDollarSign size={12} className="text-blue-500" />,
     },
   ];
+  console.log('MentoringInfoData.categoryList', MentoringInfoData.categoryList);
   return (
     <div>
       <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
@@ -47,14 +48,20 @@ export default function MentoringOverview({
       <div className="relative w-full h-[400px] mt-8 rounded-xl object-cover overflow-hidden bg-gray-200">
         {MentoringInfoData.categoryList && (
           <ul className="flex gap-3 absolute top-5 left-5">
-            {MentoringInfoData.categoryList.map((item) => (
-              <li
-                key={item.id}
-                className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white"
-              >
-                {item.topCategoryName}
-              </li>
-            ))}
+            {MentoringInfoData.categoryList
+              .filter(
+                (x) =>
+                  x.topCategoryCode != 'TC-B4CD8B59' &&
+                  x.topCategoryCode != 'TC-2A97B0CF'
+              )
+              .map((item) => (
+                <li
+                  key={item.id}
+                  className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white"
+                >
+                  {item.topCategoryName}
+                </li>
+              ))}
           </ul>
         )}
         <FitImage src={`${MentoringInfoData?.thumbnailUrl}`} alt="Profile" />

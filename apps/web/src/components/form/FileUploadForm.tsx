@@ -1,5 +1,4 @@
 import { Button } from '@repo/ui/components/ui/button';
-import FeedbackResult from '@repo/web/components/pages/AI-feedback/FeedbackResult';
 import SelectedFile from '@repo/web/components/pages/AI-feedback/SelectedFile';
 import { feedbackResult } from '@repo/web/components/types/AI-feedback/requestTypes';
 import ProgressBar from '@repo/web/components/ui/Progress/ProgressBar';
@@ -15,9 +14,11 @@ interface FileWithPreview extends File {
 export default function FileUploadForm({
   job,
   category,
+  setFeedback,
 }: {
   job: string;
   category: string;
+  setFeedback: React.Dispatch<React.SetStateAction<feedbackResult | null>>;
 }) {
   const [file, setFile] = useState<FileWithPreview | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -27,7 +28,6 @@ export default function FileUploadForm({
     'idle' | 'success' | 'error' | 'fileSizeError'
   >('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [feedback, setFeedback] = useState<feedbackResult | ''>();
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -149,7 +149,7 @@ export default function FileUploadForm({
 
   return (
     <>
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+      <div className="max-w-md mx-auto px-6 bg-white rounded-lg">
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
           파일 업로드
         </h2>
@@ -196,7 +196,6 @@ export default function FileUploadForm({
 
         <Status uploadStatus={uploadStatus} />
       </div>
-      {feedback && <FeedbackResult feedback={feedback} />}
     </>
   );
 }
