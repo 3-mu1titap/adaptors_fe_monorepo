@@ -2,7 +2,6 @@ export const headerGNBMenuData = [
   { label: 'Home', href: '/home' },
   { label: 'Mentoring', href: '/mentoring' },
   { label: 'Mentor', href: '/mentor' },
-  { label: 'AI', href: '/AI-feedback/COVER_LETTER' },
   { label: 'MyPage', href: '/mypage' },
 ];
 

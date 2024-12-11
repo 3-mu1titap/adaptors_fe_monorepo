@@ -1,3 +1,4 @@
+import { Option } from '@repo/ui/types/components/RadioButtonType.ts';
 export const mainIntroDatas = [
   {
     subtitle: '[취업멘토] 아이돌 취업을 위한 첫걸음 멘토링',
@@ -293,4 +294,17 @@ export const articles = [
     views: 10,
     image: '/placeholder.svg?height=200&width=400',
   },
+];
+
+export const categoryOptions: Option[] = [
+  { value: 'COVER_LETTER', label: '자기소개서' },
+  { value: 'RESUME', label: '이력서' },
+  { value: 'PORTFOLIO', label: '포트폴리오' },
+];
+export const industryOptions: Option[] = [
+  { value: 'IT       ', label: 'IT' },
+  { value: 'MARKETING', label: '마케팅' },
+  { value: 'CONTENT_CREATION', label: '콘텐츠 제작' },
+  { value: 'PROJECT_MANAGEMENT', label: 'PM' },
+  { value: 'EDUCATION', label: '교육' },
 ];
