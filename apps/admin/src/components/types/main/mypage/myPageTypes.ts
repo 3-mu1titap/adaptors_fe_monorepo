@@ -11,6 +11,13 @@ export interface settleListDataType {
   exchangeList: exchangeDataType[];
 }
 
+export interface settleDataType {
+  mentorUuid: string;
+  points: number;
+  account: string;
+  bankCode: string;
+}
+
 export interface mentorVoltDataType {
   id: number;
   volt: number;
