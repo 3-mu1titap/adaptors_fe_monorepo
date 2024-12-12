@@ -1,24 +1,20 @@
-import React from 'react';
-import './UserVideo.css';
-import { StreamManager } from 'openvidu-browser'; // OpenVidu에서 StreamManager 타입을 가져옵니다.
-import OpenViduVideoComponent from './OvVideo';
+'use client';
 
-interface UserVideoComponentProps {
-  streamManager: StreamManager; // StreamManager 타입을 지정합니다.
+import type { StreamManager } from 'openvidu-browser';
+import OpenViduVideo from './OvVideo';
+
+interface UserVideoProps {
+  streamManager: StreamManager;
 }
 
-const UserVideoComponent: React.FC<UserVideoComponentProps> = ({
-  streamManager,
-}) => {
+export default function UserVideo({ streamManager }: UserVideoProps) {
   return (
-    <div>
-      {streamManager !== undefined ? (
-        <div className="streamcomponent">
-          <OpenViduVideoComponent streamManager={streamManager} />
-        </div>
-      ) : null}
-    </div>
+    <>
+      {streamManager && (
+        <figure className="w-full h-full overflow-hidden">
+          <OpenViduVideo streamManager={streamManager} />
+        </figure>
+      )}
+    </>
   );
-};
-
-export default UserVideoComponent;
+}
