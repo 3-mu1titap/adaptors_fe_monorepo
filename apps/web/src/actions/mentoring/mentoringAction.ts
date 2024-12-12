@@ -92,7 +92,6 @@ export async function SessionRequest(request: SessionRequestType) {
         }),
       }
     );
-    console.log(request);
     const result = (await res.json()) as commonResType<any>;
     console.log('멘토링 신청하기 result: ', result);
     if (result.HttpStatus == '200') {

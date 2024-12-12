@@ -137,8 +137,7 @@ export default function Calendar({
   ];
 
   return (
-    <div className="space-y-4">
-      <h2 className="font-3xl text-center">Upcoming 30 Days</h2>
+    <div className="space-y-4 mt-6">
       {generateDaysForMobile().map(({ month, year, days }) => (
         <div key={`${year}-${month}`} className="mb-4">
           <h3 className="text-xl font-semibold mb-2 text-center">
@@ -166,7 +165,7 @@ export default function Calendar({
                 }}
                 className={`
                   z-0 aspect-square flex items-center justify-center rounded-full text-md
-                  ${day.isCurrentMonth ? 'text-black' : 'text-gray-300'}
+                 text-black
                   ${day.hasSession ? 'bg-gray-300' : ''}
                   ${day.isSelected ? 'bg-yellow-400 text-black' : ''}
                   cursor-pointer

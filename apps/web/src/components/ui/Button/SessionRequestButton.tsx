@@ -14,7 +14,7 @@ import {
   SessionCancel,
   SessionRequest,
 } from '@repo/web/actions/mentoring/mentoringAction';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export function SessionRequestButton({
   sessionUuid,
@@ -51,12 +51,11 @@ export function SessionRequestButton({
       if (!result) setIsRegistered((prev) => !prev);
     }
   };
-  useEffect(() => {}, []);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className={`px-6 md:px-10 md:py-6 rounded-[10px] text-md md:text-lg  max-w-24 md:w-28 ${
+          className={`px-6 md:px-10 md:py-6 rounded-[10px] text-md md:text-lg max-w-24 md:w-28 ${
             isRegistered
               ? 'bg-gray-200 text-gray-600 hover:bg-gray-200'
               : 'bg-adaptorsYellow text-white hover:bg-black'
@@ -65,7 +64,7 @@ export function SessionRequestButton({
           {isRegistered ? '취소하기' : '참가하기'}
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-[300px]">
+      <AlertDialogContent className="rounded-md w-[80%] sm:max-w-[300px]">
         <AlertDialogHeader>
           <AlertDialogTitle>{`세션을 ${isRegistered ? '취소' : '신청'}하시겠습니까?`}</AlertDialogTitle>
           <AlertDialogDescription>

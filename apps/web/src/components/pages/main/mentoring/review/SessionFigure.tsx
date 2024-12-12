@@ -48,18 +48,24 @@ export default function SessionFigure({
             </span>
           )}
         </div>
-        <div className="w-full flex justify-between md:justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
+        <div className="w-full flex justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
           <CustomReviewerItem initialUserData={session.sessionUserList} />
           <CustomValueUnit value={session.price} unit="Volt" />
-          <SessionRequestButton
-            sessionUuid={session.sessionUuid}
-            mentoringName={mentoringName}
-            deadlineDate={session.deadlineDate}
-            isParticipating={session.isParticipating}
-            price={session.price}
-            isClosed={session.isClosed}
-            mentorUuid={mentorUuid}
-          />
+          {session.isClosed ? (
+            <div className="px-4  py-3.5 w-24 md:w-28 text-center rounded-md text-md md:text-xl font-medium bg-[#433E3E] text-white">
+              마감
+            </div>
+          ) : (
+            <SessionRequestButton
+              sessionUuid={session.sessionUuid}
+              mentoringName={mentoringName}
+              deadlineDate={session.deadlineDate}
+              isParticipating={session.isParticipating}
+              price={session.price}
+              isClosed={session.isClosed}
+              mentorUuid={mentorUuid}
+            />
+          )}
         </div>
       </figure>
     </>
