@@ -1,4 +1,4 @@
-import { ReviewDto, ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
+import { Review, ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 
 // 리뷰어 프로필 조회
@@ -48,13 +48,14 @@ export const getRevieweList = async (
   }
 
   // 서버에서 받은 데이터 반환
-  const data = (await response.json()) as commonResType<ReviewDto[]>;
+  const data = (await response.json()) as commonResType<string[]>;
+  console.log(data);
   return data.result;
 };
 
 export const getBestRevieweList = async (
   mentoringUuid: string
-): Promise<ReviewDto[]> => {
+): Promise<Review[]> => {
   'use server';
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_REVIEW_QUERY_URL}/api/v1/reviewList/best-review/${mentoringUuid}`,
@@ -73,6 +74,6 @@ export const getBestRevieweList = async (
   }
 
   // 서버에서 받은 데이터 반환
-  const data = (await response.json()) as commonResType<ReviewDto[]>;
+  const data = (await response.json()) as commonResType<Review[]>;
   return data.result;
 };

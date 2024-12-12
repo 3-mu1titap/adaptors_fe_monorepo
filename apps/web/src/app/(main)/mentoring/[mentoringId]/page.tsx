@@ -2,10 +2,7 @@ import MentoringDetail from '@repo/web/components/pages/main/mentoring/Mentoring
 
 import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import { getProfileImage } from '@repo/web/actions/profile/getProfileData';
-import {
-  getBestRevieweList,
-  getReviewerProfile,
-} from '@repo/web/actions/review/mentoringReview';
+import { getReviewerProfile } from '@repo/web/actions/review/mentoringReview';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
@@ -19,13 +16,13 @@ async function fetchMentoringData(mentoringUuid: string) {
     MentoringInfoData?.mentorUuid ? MentoringInfoData.mentorUuid : ''
   );
   const ReviewerData = await getReviewerProfile(mentoringUuid);
-  const bestRevieweList = await getBestRevieweList(mentoringUuid);
+  const getBestRevieweList = await getRevieweList(mentoringUuid);
   return {
     mentoringSessionList,
     MentoringInfoData,
     mentorData,
     ReviewerData,
-    bestRevieweList,
+    getBestRevieweList,
   };
 }
 async function Page({
@@ -41,9 +38,9 @@ async function Page({
     MentoringInfoData,
     mentorData,
     ReviewerData,
-    bestRevieweList,
+    getBestRevieweList,
   } = await fetchMentoringData(params.mentoringId);
-
+  console.log('getBestRevieweList: ', BestRevieweList);
   return (
     <main className="pt-[7rem] py-2 px-4 sm:px-8 min-h-screen bg-gray-50">
       {MentoringInfoData && mentoringSessionList && (
@@ -54,7 +51,6 @@ async function Page({
           MentoringInfoData={MentoringInfoData}
           mentorData={mentorData}
           ReviewerData={ReviewerData}
-          bestRevieweList={bestRevieweList}
         />
       )}
     </main>

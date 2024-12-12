@@ -3,14 +3,13 @@ import {
   MentoringDataType,
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
-import { ReviewDto, ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
+import { ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import ChevronText from '@repo/web/components/ui/Text/ChevronText';
 import MentoringContents from './MentoringContents';
 import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
-import MentoringReview from './review/MentoringReview';
 import SessionList from './SessionList';
 export default function MentoringDetail({
   mentoringDate,
@@ -19,7 +18,6 @@ export default function MentoringDetail({
   MentoringInfoData,
   mentorData,
   ReviewerData,
-  bestRevieweList,
 }: {
   mentoringDate: string;
   mentoringUuid: string;
@@ -27,7 +25,6 @@ export default function MentoringDetail({
   MentoringInfoData: MentoringDataType;
   mentorData: userProfileType;
   ReviewerData: ReviewerProfileType[];
-  bestRevieweList: ReviewDto[];
 }) {
   const userData: ReviewerProfileType[] = [
     {
@@ -77,8 +74,6 @@ export default function MentoringDetail({
           filteredList={filteredList}
           MentoringData={MentoringInfoData}
         />
-        <ChevronText text="리뷰" className="py-3" />
-        <MentoringReview bestRevieweList={bestRevieweList} />
       </SeparateContainer.RightSide>
     </CommonLayout>
   );

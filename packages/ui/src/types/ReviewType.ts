@@ -11,7 +11,7 @@ export interface ReviewRequestDto {
   mentoringUuid: string;
   mentoringSessionUuid: string;
   score: number;
-  wroteAt: string; // ISO 8601 datetime string
+  wroteAt: string;
   deleted: boolean;
 }
 
@@ -20,7 +20,7 @@ export interface MemberRequestDto {
   profileImageUrl: string;
 }
 
-export interface ReviewDto {
+export interface Review {
   id: string;
   reviewRequestDto: ReviewRequestDto;
   memberRequestDto: MemberRequestDto;

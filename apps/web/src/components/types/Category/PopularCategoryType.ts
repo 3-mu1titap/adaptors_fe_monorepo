@@ -1,5 +1,10 @@
 export interface PopularCategoryType {
-  icon: string;
+  icon?: string;
+  name: string;
+  courses: string;
+}
+export interface PopularCategoryType {
+  icon?: string;
   name: string;
   courses: string;
 }
