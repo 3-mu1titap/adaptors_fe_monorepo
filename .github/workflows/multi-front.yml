@@ -22,7 +22,14 @@ jobs:
         with:
           fetch-depth: 1
           token: ${{ secrets.MY_GITHUB_TOKEN }}
-
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'  # GitHub Packages를 사용하는 경우
+          scope: '@repo'
+          
       - name: Create .env files
         run: |
           # admin 앱의 .env 생성

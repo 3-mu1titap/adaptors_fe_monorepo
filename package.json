@@ -51,6 +51,7 @@
     "@fullcalendar/interaction": "^6.1.1",
     "@fullcalendar/react": "^6.1.4",
     "@fullcalendar/timegrid": "^6.1.1",
+    "@radix-ui/react-alert-dialog": "^1.1.2",
     "@repo/ui": "*",
     "@x1mrdonut1x/nouislider-react": "^3.4.3",
     "classnames": "^2.5.1",

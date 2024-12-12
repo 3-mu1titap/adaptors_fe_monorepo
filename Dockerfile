@@ -1,37 +1,14 @@
-# Base image 
-FROM --platform=linux/amd64 node:20 as builder
+FROM --platform=linux/amd64 node:20
 
-# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy only package files first for better caching
-COPY package*.json ./
-COPY turbo.json ./
-COPY apps/admin/package.json ./apps/admin/
-COPY apps/web/package.json ./apps/web/
-COPY packages/ui/package.json ./packages/ui/
-
-# Install dependencies
-RUN npm install --force
-
-# Copy the rest of your application code
+# 모든 파일을 한번에 복사
 COPY . .
 
-# Build the UI package first
-RUN cd packages/ui && npm run build
-
-# Build all applications
+# 의존성 설치 및 빌드
+RUN npm install --force
 RUN npm run build
 
-# Production stage
-FROM --platform=linux/amd64 node:20-slim
-WORKDIR /usr/src/app
-
-# Copy everything from builder
-COPY --from=builder /usr/src/app .
-
-# Expose the ports
 EXPOSE 3000 3003
 
-# Command to run your application
 CMD ["npm", "run", "start"]

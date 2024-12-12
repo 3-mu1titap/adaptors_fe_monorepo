@@ -18,6 +18,7 @@ export interface SessionRequestType {
   sessionUuid: string;
   mentoringName: string;
   mentorUuid: string;
+  volt: number;
 }
 export interface SessionCancelType {
   sessionUuid: string;

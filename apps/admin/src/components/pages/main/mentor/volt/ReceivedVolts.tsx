@@ -12,6 +12,18 @@ import InnerButton from '@repo/admin/components/ui/Button/InnerButton';
 import { mentorVoltListDataType } from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { formatDate } from '@repo/admin/components/utils/dateUtil';
 import Swal from 'sweetalert2';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@repo/ui/components/ui/select';
+import {
+  PostCheckSecondAuthenticationCode,
+  PostSecondAuthenticationCode,
+  PostSettle,
+} from '@repo/admin/actions/volt/voltAction';
 
 export default function ReceivedVolts({
   mentorVoltList,
@@ -19,8 +31,49 @@ export default function ReceivedVolts({
   mentorVoltList: mentorVoltListDataType;
 }) {
   const [exchangeAmount, setExchangeAmount] = useState<string>('');
+  const [verificationCode, setVerificationCode] = useState<string>('');
+  const [isVerificationSent, setIsVerificationSent] = useState<boolean>(false);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [account, setAccount] = useState<string>('');
+  const [selectedBank, setSelectedBank] = useState<string>('');
+
+  const banks = [
+    { value: 'KOREA_SC', label: 'SC 은행' },
+    { value: 'KOREA_SHINHAN', label: '신한은행' },
+    { value: 'KOREA_KB', label: 'KB은행' },
+    { value: 'KOREA_HANA', label: '하나은행' },
+    { value: 'KOREA_IBK', label: 'IBK 은행' },
+    { value: 'KOREA_NH_BANK', label: '농협은행' },
+  ];
+
+  const sendVerificationEmail = async () => {
+    const request = await PostSecondAuthenticationCode();
+    if (request) {
+      setIsVerificationSent(request);
+      Swal.fire({
+        title: '인증 메일 발송',
+        html: '이메일로 인증 코드가 발송되었습니다. 확인해주세요.',
+        icon: 'info',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    }
+  };
+
+  const verifyCode = async (code: string) => {
+    const request = await PostCheckSecondAuthenticationCode(code);
+    if (request) setIsVerified(true);
+    Swal.fire({
+      title: '인증 완료',
+      html: '인증이 완료되었습니다.',
+      icon: 'success',
+      confirmButtonText: '확인',
+      confirmButtonColor: '#F6D84C',
+    });
+  };
 
   const handleExchange = () => {
+    if (!isVerified) return;
     if (!mentorVoltList) {
       return Swal.fire({
         title: '볼트 부족',
@@ -44,16 +97,43 @@ export default function ReceivedVolts({
       });
     } else if (
       parseInt(exchangeAmount) > 100 &&
-      parseInt(exchangeAmount) % 100 === 0
+      parseInt(exchangeAmount) % 100 === 0 &&
+      isVerified
     ) {
+      if (!account || !selectedBank) {
+        Swal.fire({
+          title: '정보 미입력',
+          html: '계좌번호와 은행을 선택해주세요.',
+          icon: 'warning',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#F6D84C',
+        });
+        return;
+      }
       Swal.fire({
         title: '환전',
         html: `${exchangeAmount}Volt 만큼 환전을 진행하시겠습니까?`,
         icon: 'question',
+        showCancelButton: true,
         confirmButtonText: '확인',
+        cancelButtonText: '취소',
         confirmButtonColor: '#F6D84C',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const payload = {
+            mentorUuid: '',
+            points: parseInt(exchangeAmount),
+            account,
+            bankCode: selectedBank,
+          };
+          const request = PostSettle({ payload });
+          setExchangeAmount('');
+          setAccount('');
+          setSelectedBank('');
+          setIsVerified(false);
+          setIsVerificationSent(false);
+        }
       });
-      setExchangeAmount('');
     } else if (parseInt(exchangeAmount) < 100) {
       Swal.fire({
         title: '알림',
@@ -67,6 +147,14 @@ export default function ReceivedVolts({
         title: '알림',
         html: `100Volt 단위로만 환전이 가능합니다.`,
         icon: 'info',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    } else if (!isVerified) {
+      Swal.fire({
+        title: '인증 필요',
+        html: '이메일 인증이 필요합니다.',
+        icon: 'warning',
         confirmButtonText: '확인',
         confirmButtonColor: '#F6D84C',
       });
@@ -125,21 +213,79 @@ export default function ReceivedVolts({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex space-x-4">
-            <Input
-              type="number"
-              step={100}
-              placeholder="환전할 볼트 수"
-              value={exchangeAmount}
-              onChange={(e) => setExchangeAmount(e.target.value)}
-              className="flex-grow !text-xl"
-            />
+          <div className="space-y-4">
+            {isVerificationSent ? (
+              <InnerButton
+                title="재 인증요청"
+                onClick={sendVerificationEmail}
+                isDisabled={false}
+                colorType="secondary"
+                className="w-full !p-2 !text-xl !font-bold"
+              />
+            ) : (
+              <InnerButton
+                title="인증요청"
+                onClick={sendVerificationEmail}
+                isDisabled={false}
+                colorType="secondary"
+                className="w-full !p-2 !text-xl !font-bold"
+              />
+            )}
+            {isVerificationSent && !isVerified && (
+              <div className="flex space-x-4">
+                <Input
+                  type="text"
+                  placeholder="인증 코드 입력"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                  className="flex-grow !text-xl"
+                />
+                <InnerButton
+                  title="확인"
+                  onClick={() => verifyCode(verificationCode)}
+                  isDisabled={false}
+                  colorType="secondary"
+                  className="text-nowrap"
+                />
+              </div>
+            )}
+            {isVerified && (
+              <>
+                <Input
+                  type="number"
+                  step={100}
+                  placeholder="환전할 볼트 수"
+                  value={exchangeAmount}
+                  onChange={(e) => setExchangeAmount(e.target.value)}
+                  className="flex-grow !text-xl"
+                />
+                <Input
+                  type="text"
+                  placeholder="계좌번호 입력"
+                  value={account}
+                  onChange={(e) => setAccount(e.target.value)}
+                  className="!text-xl"
+                />
+                <Select value={selectedBank} onValueChange={setSelectedBank}>
+                  <SelectTrigger className="!text-xl">
+                    <SelectValue placeholder="은행 선택" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {banks.map((bankCode) => (
+                      <SelectItem key={bankCode.value} value={bankCode.value}>
+                        {bankCode.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </>
+            )}
             <InnerButton
               title="환전하기"
               onClick={handleExchange}
-              isDisabled={false}
+              isDisabled={!isVerified}
               colorType="secondary"
-              className="text-nowrap"
+              className="w-full !p-2 !text-xl !font-bold"
             />
           </div>
         </CardContent>

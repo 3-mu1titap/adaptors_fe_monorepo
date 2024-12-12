@@ -13,7 +13,7 @@ const withAuth = async (req: NextRequest, token: boolean) => {
   }
 };
 
-const FALLBACK_URL = '/login';
+const FALLBACK_URL = '/admin/login';
 
 const withOutAuth = async (
   req: NextRequest,

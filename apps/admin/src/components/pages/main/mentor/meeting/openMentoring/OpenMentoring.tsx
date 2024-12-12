@@ -49,11 +49,11 @@ export default function OpenMentoring({
   joinSession,
 }: {
   mentoringSessionList: MentoringSessionDataType[];
-  joinSession: (sessionUuid: string) => void;
+  joinSession: (session: any) => void;
 }) {
   const handleJoinAttempt = async (session: MentoringSessionDataType) => {
     if (isWithinTenMinutes(session.startDate, session.startTime)) {
-      await joinSession(session.sessionUuid);
+      await joinSession(session);
     } else {
       const startTime = new Date(session.startDate);
       startTime.setHours(session.startTime.hour);

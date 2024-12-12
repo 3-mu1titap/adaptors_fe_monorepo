@@ -1,3 +1,4 @@
+'use client';
 import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
 import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
 import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
@@ -21,8 +22,11 @@ export default function MentorSection({
 }) {
   return (
     <>
-      <SeparateContainer.LeftSide>
-        <CustomMentorProfilePhoto profileImgUrl={mentorData.profileImageUrl} />
+      <SeparateContainer.LeftSide className="px-4 mb-10">
+        <CustomMentorProfilePhoto
+          profileImgUrl={mentorData.profileImageUrl}
+          mentorNickname={mentorData.nickName}
+        />
         <h1 className="text-xl font-bold my-3">@ {mentorData.nickName}</h1>
         <div className="flex justify-between items-center w-full mb-3 gap-3">
           <CustomReviewerItem
