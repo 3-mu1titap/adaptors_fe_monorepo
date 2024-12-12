@@ -1,6 +1,7 @@
 'use server';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
+import { revalidateTag } from 'next/cache';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
 import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';
 //좋아요
@@ -14,6 +15,7 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session?.user.accessToken}`,
         'userUuid': uuid,
       },
       body: JSON.stringify({
@@ -44,6 +46,7 @@ export const postHateReaction = async (targetUuid: string): Promise<number> => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session?.user.accessToken}`,
         'userUuid': uuid,
       },
       body: JSON.stringify({
@@ -62,9 +65,10 @@ export const postHateReaction = async (targetUuid: string): Promise<number> => {
   return data.code;
 };
 
-export async function GetMentorBlacklist(userUuid: string) {
+export async function GetMentorBlacklist() {
   'use server';
-
+  const session = await getServerSession(options);
+  const uuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MEMBER_URL}/api/v1/member/black/targetUuid`,
@@ -73,12 +77,14 @@ export async function GetMentorBlacklist(userUuid: string) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'userUuid': userUuid,
+          'Authorization': `Bearer ${session?.user.accessToken}`,
+          'userUuid': uuid,
         },
       }
     );
 
     const result = (await res.json()) as commonResType<BlakcListTargetType[]>;
+    revalidateTag('likeStatus');
     return result.result;
   } catch (error) {
     console.log('블랙리스트 멘토 Uuid 조회', error);
@@ -92,22 +98,24 @@ export async function getIsLiked(targetUuid: string): Promise<boolean> {
   'use server';
   const session = await getServerSession(options);
   const uuid = session?.user.uuid;
-  const token = session?.user.accessToken;
   try {
     const res = await fetch(
       `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/like`,
       {
-        cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'token': `bearer ${token}`,
+          'Authorization': `Bearer ${session?.user.accessToken}`,
           'userUuid': uuid,
+        },
+        next: {
+          tags: ['likeStatus'],
         },
       }
     );
 
     const result = (await res.json()) as commonResType<boolean>;
+    console.log('요청됨');
     return result.result;
   } catch (error) {
     console.log('좋아요 유무 조회 error', error);

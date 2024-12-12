@@ -23,7 +23,7 @@ interface CommentThreadProps {
 export default function MentoringReview({ comments }: { comments: Review[] }) {
   return (
     <div className="px-4 py-2 bg-adaptorsYellow/10">
-      {bestRevieweList?.map((comment) => (
+      {comments?.map((comment) => (
         <div key={comment.id} className="flex gap-3 my-8 bg-[#FEFAEA]">
           <Avatar className="h-8 w-8">
             <AvatarImage
