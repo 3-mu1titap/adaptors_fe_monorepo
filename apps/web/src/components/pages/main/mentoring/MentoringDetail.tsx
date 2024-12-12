@@ -6,6 +6,7 @@ import {
 import { ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import { userProfileType } from '@repo/web/components/types/profile/RequestType';
+import MentoringContents from './MentoringContents';
 import MentoringOverview from './MentoringOverview';
 import MentorSection from './MentorSection';
 import SessionList from './SessionList';
@@ -49,7 +50,7 @@ export default function MentoringDetail({
     <CommonLayout
       type="section"
       reative="container"
-      className=" mx-auto flex gap-10 my-4 px-4 md:px-8 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] relative"
+      className=" mx-auto sm:flex gap-10 my-4 px-1 sm:px-4 md:px-8 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] relative"
     >
       {/* Left Section */}
       <MentorSection
@@ -66,6 +67,7 @@ export default function MentoringDetail({
             userData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
           />
         )}
+        <MentoringContents content={MentoringInfoData.detail} />
         <SessionList
           filteredList={filteredList}
           MentoringData={MentoringInfoData}

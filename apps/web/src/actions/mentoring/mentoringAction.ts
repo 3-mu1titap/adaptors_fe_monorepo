@@ -1,5 +1,4 @@
 'use server';
-import { Mentoring } from '../../components/types/mentoring/mentoringTypes';
 import {
   MentoringDataType,
   MentoringResult,
@@ -9,6 +8,7 @@ import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
 import {
   ApiResponse,
+  Mentoring,
   SearchMentoringListType,
   SessionCancelType,
   SessionRequestType,
@@ -22,7 +22,7 @@ export async function GetMentoringSessionList(
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
-
+  console.log('token :', session?.user.accessToken);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
@@ -74,8 +74,6 @@ export async function SessionRequest(request: SessionRequestType) {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const nickName = session?.user.nickName;
-
-  console.log('request: ', request, 'menteeUuid', menteeUuid);
   try {
     const res = await fetch(
       `${process.env.SESSION_REQUEST_URL}/api/v1/session-request-service`,
@@ -89,6 +87,7 @@ export async function SessionRequest(request: SessionRequestType) {
         },
         body: JSON.stringify({
           nickName: nickName,
+          volt: 100,
           request,
         }),
       }
