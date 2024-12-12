@@ -61,3 +61,45 @@ export interface prevChatDataStoreType {
   messageNumber: number;
   messages: chatDataType[];
 }
+
+type Message = {
+  id: string;
+  content: string;
+  timestamp: string;
+  sender: string;
+};
+
+interface chatRequestDtoType {
+  memberUuid: string;
+  message: string;
+  sentAt: string;
+}
+
+interface chatRequestDtoCustomType {
+  userUuid: string;
+  nickname: string;
+  profileImageUrl: string;
+  message: string;
+  sendAt: string;
+}
+
+interface mentoringRequestDtoType {
+  mentoringUuid: string;
+  mentoringName: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface userMessageDataType {
+  id: string;
+  chatRequestDto: chatRequestDtoType;
+  mentoringRequestDto: mentoringRequestDtoType;
+}
+
+export interface userMessageCustomDataType {
+  id: string;
+  chatRequestDto: chatRequestDtoCustomType;
+  mentoringRequestDto: mentoringRequestDtoType;
+}

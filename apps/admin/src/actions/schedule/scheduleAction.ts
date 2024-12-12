@@ -14,14 +14,20 @@ import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 // 스케쥴 조회
-export async function GetScheduleList(date: string) {
+export async function GetScheduleList({
+  startDate,
+  endDate,
+}: {
+  startDate: string;
+  endDate: string;
+}) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.SCHEDULE_URL}/api/v1/schedule-read/schedule-list?yearMonth=${date}`,
+    `${process.env.SCHEDULE_URL}/api/v1/schedule-read/schedule-list?startDate=${startDate}&endDate=${endDate}`,
     {
       cache: 'no-cache',
       method: 'GET',
@@ -32,13 +38,13 @@ export async function GetScheduleList(date: string) {
       },
     }
   );
-  console.log(res);
   if (!res.ok) {
     console.error('유저 스케쥴 리스트 조회 실패');
     return { userUuid: 'string', yearMonth: 'string', scheduleLists: [] };
   }
 
   const result = (await res.json()) as commonResType<UserScheduleDataType>;
+  console.log(result);
   return result.result;
 }
 
