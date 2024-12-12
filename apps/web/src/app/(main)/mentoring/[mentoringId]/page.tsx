@@ -3,7 +3,7 @@ import MentoringDetail from '@repo/web/components/pages/main/mentoring/Mentoring
 import { MentoringResult } from '@repo/ui/types/CommonType.ts';
 import { getProfileImage } from '@repo/web/actions/profile/getProfileData';
 import {
-  getRevieweList,
+  getBestRevieweList,
   getReviewerProfile,
 } from '@repo/web/actions/review/mentoringReview';
 import {
@@ -19,13 +19,13 @@ async function fetchMentoringData(mentoringUuid: string) {
     MentoringInfoData?.mentorUuid ? MentoringInfoData.mentorUuid : ''
   );
   const ReviewerData = await getReviewerProfile(mentoringUuid);
-  const getBestRevieweList = await getRevieweList(mentoringUuid);
+  const bestRevieweList = await getBestRevieweList(mentoringUuid);
   return {
     mentoringSessionList,
     MentoringInfoData,
     mentorData,
     ReviewerData,
-    getBestRevieweList,
+    bestRevieweList,
   };
 }
 async function Page({
@@ -41,7 +41,7 @@ async function Page({
     MentoringInfoData,
     mentorData,
     ReviewerData,
-    getBestRevieweList,
+    bestRevieweList,
   } = await fetchMentoringData(params.mentoringId);
 
   return (
@@ -54,6 +54,7 @@ async function Page({
           MentoringInfoData={MentoringInfoData}
           mentorData={mentorData}
           ReviewerData={ReviewerData}
+          bestRevieweList={bestRevieweList}
         />
       )}
     </main>

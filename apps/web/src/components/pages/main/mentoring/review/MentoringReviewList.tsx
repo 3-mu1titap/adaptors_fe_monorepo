@@ -5,7 +5,7 @@ import {
 } from '@repo/ui/components/ui/avatar';
 import { ReviewDto } from '@repo/ui/types/ReviewType.js';
 import ScoreStar from './ScoreStar';
-export default function MentoringReview({
+export default function MentoringReviewList({
   bestRevieweList,
 }: {
   bestRevieweList: ReviewDto[];
