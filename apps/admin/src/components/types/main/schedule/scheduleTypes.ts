@@ -11,8 +11,6 @@ export interface ScheduleDataType {
 }
 
 export interface UserScheduleDataType {
-  userUuid: string;
-  yearMonth: string;
   scheduleLists: ScheduleDataType[];
 }
 
