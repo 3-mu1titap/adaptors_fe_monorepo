@@ -21,9 +21,13 @@ export default function ListSection({
       </div>
     );
   return (
-    <section className="mx-auto mobile:w-full mobile:px-10 md:px-16 lg:px-36 grid mobile:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-10">
+    <section className="mx-auto mobile:w-full grid mobile:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-10">
       {mentoringListData.map((mentoring) => (
-        <MentoringItem item={mentoring} key={mentoring.mentoringUuid} />
+        <MentoringItem
+          item={mentoring}
+          key={mentoring.mentoringUuid}
+          isLoading={!mentoringListData ? true : false}
+        />
       ))}
     </section>
   );
