@@ -32,7 +32,7 @@ export async function GetScheduleList(date: string) {
       },
     }
   );
-
+  console.log(res);
   if (!res.ok) {
     console.error('유저 스케쥴 리스트 조회 실패');
     return { userUuid: 'string', yearMonth: 'string', scheduleLists: [] };

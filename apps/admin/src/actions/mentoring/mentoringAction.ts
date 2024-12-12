@@ -19,6 +19,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { uploadFileToS3 } from '../common/awsMediaUploader';
 import { revalidateTag } from 'next/cache';
+import { MentoringSession } from '@repo/admin/components/pages/main/home/SessionAddModal';
 
 const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
@@ -126,6 +127,41 @@ export async function PostMentoring({
   return res.ok;
 }
 
+// 멘토의 멘토링 일괄 생성
+export async function PostMentoringSession({
+  payload,
+}: {
+  payload: MentoringSession;
+}) {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
+
+  const res = await fetch(
+    `${process.env.MENTORING_URL}/api/v1/mentoring-service/batch-session`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+  console.log(res);
+  if (!res.ok) {
+    console.error('멘토링 세션 일괄 생성 실패');
+    return res.ok;
+  }
+
+  const result = (await res.json()) as commonResType<number>;
+  revalidateTag('createMentoringSession');
+  console.log('멘토링 세션 일괄 생성 성공', result);
+  return result.result;
+}
+
 // 멘토의 멘토링 리스트 조회
 export async function GetMentoringList(): Promise<MentoringDataType[]> {
   const session = await getServerSession(options);
@@ -195,6 +231,7 @@ export async function GetMentoringInfo(mentoringUuid: string) {
     {
       cache: 'no-cache',
       method: 'GET',
+      next: { tags: ['createMentoringSession'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
@@ -225,6 +262,7 @@ export async function GetMentoringSessionList(
     {
       cache: 'no-cache',
       method: 'GET',
+      next: { tags: ['createMentoringSession'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,

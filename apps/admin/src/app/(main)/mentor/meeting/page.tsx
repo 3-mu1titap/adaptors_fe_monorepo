@@ -45,9 +45,5 @@ const mentoringSessionList = [
 ];
 
 export default async function Page() {
-  return (
-    <main className="container mx-auto">
-      <Meeting mentoringSessionList={mentoringSessionList} />
-    </main>
-  );
+  return <Meeting mentoringSessionList={mentoringSessionList} />;
 }

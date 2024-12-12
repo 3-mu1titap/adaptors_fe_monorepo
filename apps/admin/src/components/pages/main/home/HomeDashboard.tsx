@@ -21,18 +21,24 @@ import type {
 import Link from 'next/link';
 import { MentoringSession, SessionAddModal } from './SessionAddModal';
 import { useState } from 'react';
+import { PostMentoringSession } from '@repo/admin/actions/mentoring/mentoringAction';
+import { useRouter } from 'next/navigation';
 
 interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
   initialUserData: SessionUser[];
+  mentoringUuid?: string;
 }
 
 function HomeDashboard({
   mentoringSessionList,
   MentoringInfoData,
   initialUserData,
+  mentoringUuid,
 }: HomeDashboardProps) {
+  const router = useRouter();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleOnClick = () => {
@@ -43,9 +49,19 @@ function HomeDashboard({
     setIsModalOpen(false);
   };
 
-  const handleModalSubmit = (session: MentoringSession) => {
-    console.log('New mentoring session:', session);
-    setIsModalOpen(false);
+  const handleModalSubmit = async (session: MentoringSession) => {
+    const payload = {
+      ...session,
+      mentoringUuid: mentoringUuid ? mentoringUuid : '',
+    };
+    const res: number | false = await PostMentoringSession({ payload });
+    if (res) {
+      alert(`총 ${res}개의 세션이 생성되었습니다.`);
+      setIsModalOpen(false);
+      router.refresh();
+    } else {
+      alert('세션 생성 실패');
+    }
   };
 
   return (
