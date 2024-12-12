@@ -8,6 +8,8 @@ import { Button } from '@repo/ui/components/ui/button';
 import { Input } from '@repo/ui/components/ui/input';
 import { ScrollArea } from '@repo/ui/components/ui/scroll-area';
 import { Dispatch, SetStateAction } from 'react';
+import { userMessageCustomDataType } from '@repo/admin/components/types/main/chatting/chattingTypes';
+import CustomToolTip from '@repo/ui/components/ui/custom/CustomToolTip';
 
 // Types
 type Chat = {
@@ -21,35 +23,12 @@ type Chat = {
 export default function ChatSidebar({
   selectedChat,
   setSelectedChat,
+  userMessageData,
 }: {
   selectedChat: string | null;
   setSelectedChat: Dispatch<SetStateAction<string | null>>;
+  userMessageData: userMessageCustomDataType[] | null;
 }) {
-  // Sample data
-  const chats: Chat[] = [
-    {
-      id: '1',
-      name: 'Nia Hillyer',
-      avatar: '/placeholder.svg?height=40&width=40',
-      lastMessage: 'How do you do?',
-      timestamp: '2:09 PM',
-    },
-    {
-      id: '2',
-      name: 'Sean Freeman',
-      avatar: '/placeholder.svg?height=40&width=40',
-      lastMessage: 'I was wondering...',
-      timestamp: '12:09 PM',
-    },
-    {
-      id: '3',
-      name: 'Alma Clarke',
-      avatar: '/placeholder.svg?height=40&width=40',
-      lastMessage: "I've forgotten how it felt before",
-      timestamp: '1:44 PM',
-    },
-  ];
-
   return (
     <div className="w-80 border-r flex flex-col">
       {/* Profile Header */}
@@ -86,33 +65,43 @@ export default function ChatSidebar({
 
       {/* Chat List */}
       <ScrollArea className="flex-1">
-        {chats.map((chat) => (
-          <button
-            key={chat.id}
-            onClick={() => setSelectedChat(chat.id)}
-            className={`w-full flex items-center gap-3 p-4 hover:bg-accent transition-colors ${
-              selectedChat === chat.id ? 'bg-accent' : ''
-            }`}
-          >
-            <div className="relative">
-              <Avatar>
-                <AvatarImage src={chat.avatar} alt={chat.name} />
-                <AvatarFallback>{chat.name[0]}</AvatarFallback>
-              </Avatar>
-            </div>
-            <div className="flex-1 text-left">
-              <div className="flex justify-between">
-                <span className="font-medium">{chat.name}</span>
-                <span className="text-xs text-muted-foreground">
-                  {chat.timestamp}
-                </span>
+        {userMessageData &&
+          userMessageData.map((chat) => (
+            <button
+              key={chat.id}
+              onClick={() => setSelectedChat(chat.id)}
+              className={`w-full flex items-center gap-3 p-4 hover:bg-accent transition-colors ${
+                selectedChat === chat.id ? 'bg-accent' : ''
+              }`}
+            >
+              <div className="relative">
+                <CustomToolTip text={chat.chatRequestDto.nickname}>
+                  <Avatar>
+                    <AvatarImage
+                      src={chat.chatRequestDto.profileImageUrl}
+                      alt={chat.chatRequestDto.nickname}
+                    />
+                    <AvatarFallback>
+                      {chat.chatRequestDto.nickname}
+                    </AvatarFallback>
+                  </Avatar>
+                </CustomToolTip>
               </div>
-              <p className="text-sm text-muted-foreground truncate">
-                {chat.lastMessage}
-              </p>
-            </div>
-          </button>
-        ))}
+              <div className="flex-1 text-left">
+                <div className="grid grid-cols-5">
+                  <span className="col-span-4 font-medium text-md text-ellipsis whitespace-nowrap">
+                    {chat.mentoringRequestDto.mentoringName}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {chat.chatRequestDto.sendAt}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground truncate">
+                  {chat.chatRequestDto.message}
+                </p>
+              </div>
+            </button>
+          ))}
       </ScrollArea>
     </div>
   );

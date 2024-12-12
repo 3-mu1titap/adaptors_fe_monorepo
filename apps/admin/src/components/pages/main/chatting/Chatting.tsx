@@ -20,11 +20,11 @@ import ChatView from './ChatView';
 import ChatSender from './ChatSender';
 
 function Chatting({
-  participants,
   mentoringSessionUuid,
+  token,
 }: {
-  participants: participantType[];
   mentoringSessionUuid: string;
+  token: any;
 }) {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
@@ -87,9 +87,13 @@ function Chatting({
   };
 
   useEffect(() => {
-    const chatServiceUrl = `http://43.200.249.170:8000/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    console.log(mentoringSessionUuid);
+    const chatServiceUrl = `http://api.adaptors.site/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
 
     const eventSource = new EventSourcePolyfill(chatServiceUrl, {
+      headers: {
+        Authorization: `Baerer ${token}`,
+      },
       heartbeatTimeout: 86400000,
     });
 
@@ -162,7 +166,6 @@ function Chatting({
 
   return (
     <div className="flex flex-col w-full h-full">
-      <ChatHeader participants={participants} />
       <ChatView
         handleDrop={handleDrop}
         messages={messages}
