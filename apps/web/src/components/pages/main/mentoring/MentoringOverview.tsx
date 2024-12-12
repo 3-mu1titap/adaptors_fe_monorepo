@@ -26,7 +26,7 @@ export default function MentoringOverview({
       icon: <BadgeDollarSign size={12} className="text-blue-500" />,
     },
   ];
-  console.log('MentoringInfoData.categoryList', MentoringInfoData.categoryList);
+  // console.log('MentoringInfoData.categoryList', MentoringInfoData.categoryList);
   return (
     <div>
       <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
@@ -80,10 +80,6 @@ export default function MentoringOverview({
           ))}
         </ul>
       </div>
-      <div
-        dangerouslySetInnerHTML={{ __html: MentoringInfoData.detail }}
-        className="py-3"
-      />
     </div>
   );
 }

@@ -26,7 +26,7 @@ export const requestAIFeedback_coverletter = async ({
   // 서버 응답 처리
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to post hash tags');
+    throw new Error(errorData.message || 'Failed to post coverletter');
   }
 
   // 서버에서 받은 데이터 반환

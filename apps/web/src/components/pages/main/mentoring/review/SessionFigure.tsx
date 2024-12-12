@@ -3,7 +3,7 @@ import {
   CustomValueUnit,
 } from '@repo/ui/components/ui/custom/index';
 import { MentoringSession, SessionTime } from '@repo/ui/types/CommonType.ts';
-import MentoringRequestButton from '@repo/web/components/ui/Button/MentoringRequestButton';
+import { SessionRequestButton } from '@repo/web/components/ui/Button/SessionRequestButton';
 import { CircleDashed } from 'lucide-react';
 
 export default function SessionFigure({
@@ -51,8 +51,7 @@ export default function SessionFigure({
         <div className="w-full flex justify-between md:justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
           <CustomReviewerItem initialUserData={session.sessionUserList} />
           <CustomValueUnit value={session.price} unit="Volt" />
-          {/* <Button className="bg-adaptorsYellow hover:bg-black">참가하기</Button> */}
-          <MentoringRequestButton
+          <SessionRequestButton
             sessionUuid={session.sessionUuid}
             mentoringName={mentoringName}
             deadlineDate={session.deadlineDate}

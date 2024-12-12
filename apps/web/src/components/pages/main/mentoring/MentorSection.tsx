@@ -19,7 +19,7 @@ export default function MentorSection({
   mentorData: userProfileType;
   ReviewerData: ReviewerProfileType[];
 }) {
-  console.log('MentorSection', mentorData);
+  // console.log('MentorSection', mentorData);
   return (
     <>
       <SeparateContainer.LeftSide>
