@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 export default async function Page() {
   // 채팅 방 데이터 받아오는 api 연결 해야함.
   const session = await getServerSession(options);
-  const token = session?.user.token;
+  const user = session?.user;
   const userMessageData = await getChattingList();
   return (
     <main className="w-full">
-      <Message userMessageData={userMessageData} token={token} />
+      <Message userMessageData={userMessageData} user={user} />
     </main>
   );
 }

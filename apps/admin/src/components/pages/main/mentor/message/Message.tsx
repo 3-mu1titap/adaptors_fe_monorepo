@@ -9,10 +9,10 @@ import { userMessageCustomDataType } from '@repo/admin/components/types/main/cha
 
 export default function Message({
   userMessageData,
-  token,
+  user,
 }: {
   userMessageData: userMessageCustomDataType[] | null;
-  token: any;
+  user: any;
 }) {
   const [participants, setParticipants] = useState<participantType[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
@@ -28,9 +28,7 @@ export default function Message({
 
       {/* Right Content */}
       <div className="flex-1 flex flex-col px-4 py-1">
-        {selectedChat ? (
-          <Chatting token={token} mentoringSessionUuid={selectedChat} />
-        ) : (
+        {selectedChat === null ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <MessageCircle className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
@@ -40,6 +38,19 @@ export default function Message({
               </p>
             </div>
           </div>
+        ) : (
+          userMessageData?.map((chatData) => {
+            if (selectedChat === chatData.id) {
+              return (
+                <Chatting
+                  key={chatData.id}
+                  user={user}
+                  mentoringSessionUuid={chatData.id}
+                />
+              );
+            }
+            return null; // 일치하지 않는 경우 null 반환
+          })
         )}
       </div>
     </div>

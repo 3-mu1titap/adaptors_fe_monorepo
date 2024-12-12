@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@repo/ui/lib/utils';
-import { useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface CommonProps {
   className?: string;
@@ -8,7 +8,9 @@ interface CommonProps {
 }
 
 function ClientContainer({ children, className }: CommonProps) {
-  const query = useSearchParams();
+  const path = usePathname();
+  if (path === '/mentor/meeting')
+    return <section className="w-full h-full mt-[5rem]">{children}</section>;
   return (
     <section className="w-full px-4 lg:px-10 py-5 mt-[7rem]">
       <div

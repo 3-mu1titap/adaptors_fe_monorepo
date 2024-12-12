@@ -3,7 +3,7 @@
 import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 
-const OPENVIDU_SERVER_URL = process.env.NEXT_PUBLIC_OPENVIDU_SERVER_URL;
+const OPENVIDU_SERVER_URL = process.env.NEXT_PUBLIC_OPENVIDU_URL;
 const OPENVIDU_NAME = process.env.NEXT_PUBLIC_OPENVIDU_NAME;
 const OPENVIDU_KEY = process.env.NEXT_PUBLIC_OPENVIDU_KEY;
 

@@ -14,12 +14,14 @@ import {
 import MentoringFeedbackForm from '@repo/admin/components/form/MentoringFeedbackForm';
 import OvTracks from './OvTracks';
 import OpenviduParticipants from './participants/OpenviduParticipants';
+import Chatting from '../../chatting/Chatting';
 
 interface MeetingProps {
   mentoringSessionList: any[];
+  user: any;
 }
 
-const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
+const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
   const [mentoringName, setMentoringName] = useState<string>('');
   const [myUserName, setMyUserName] = useState<string>(
@@ -31,6 +33,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState<any>(undefined);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [isScreenSharing, setIsScreenSharing] = useState<boolean>(false);
 
   const OV = useRef<OpenVidu>();
 
@@ -88,7 +91,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
         videoSource: undefined,
         publishAudio: true,
         publishVideo: true,
-        resolution: '640x480',
+        resolution: '1280x720',
         frameRate: 30,
         insertMode: 'APPEND',
         mirror: false,
@@ -196,13 +199,33 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
   const shareScreen = async () => {
     if (publisher && OV.current) {
       try {
-        const screenPublisher = await OV.current.initPublisherAsync(undefined, {
-          videoSource: 'screen',
-        });
-        await session.unpublish(publisher);
-        await session.publish(screenPublisher);
-        setPublisher(screenPublisher);
-        setMainStreamManager(screenPublisher);
+        if (isScreenSharing) {
+          // 화면 공유를 종료하는 경우
+          const videoDeviceId = currentVideoDevice?.deviceId; // 기존 비디오 장치 ID 저장
+          const videoSource = videoDeviceId ? videoDeviceId : undefined; // 비디오 장치가 있을 경우 사용
+
+          await session.unpublish(publisher);
+          const newPublisher = await OV.current.initPublisherAsync(undefined, {
+            videoSource: videoSource,
+          });
+          await session.publish(newPublisher);
+          setPublisher(newPublisher);
+          setMainStreamManager(newPublisher);
+        } else {
+          // 화면 공유를 시작하는 경우
+          const screenPublisher = await OV.current.initPublisherAsync(
+            undefined,
+            {
+              videoSource: 'screen',
+            }
+          );
+          await session.unpublish(publisher);
+          await session.publish(screenPublisher);
+          setPublisher(screenPublisher);
+          setMainStreamManager(screenPublisher);
+        }
+
+        setIsScreenSharing((prev) => !prev); // 화면 공유 상태 토글
       } catch (error) {
         console.error('Error sharing screen:', error);
       }
@@ -220,8 +243,8 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
 
       {session !== undefined ? (
         <>
-          <div className="w-full grid grid-cols-7 2xl:grid-cols-5 h-[79vh]">
-            <div className="w-full col-span-5 2xl:col-span-4 bg-[#FAFAFE]">
+          <div className="w-full h-full grid grid-cols-7 2xl:grid-cols-5">
+            <div className="w-full h-full col-span-5 2xl:col-span-4 bg-[#FAFAFE] overflow-y-auto">
               <OvTracks
                 mentoringName={mentoringName}
                 sessionUuid={sessionUuid}
@@ -247,7 +270,9 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
                   participantToggleVideo={participantToggleVideo}
                 />
               </div>
-              <div className="h-[54vh]"></div>
+              <div className="h-[54vh] border-t">
+                <Chatting user={user} mentoringSessionUuid={sessionUuid} />
+              </div>
             </div>
           </div>
         </>
