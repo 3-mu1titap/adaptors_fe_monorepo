@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
 import {
   chatDataType,
   prevChatResType,
@@ -15,16 +14,15 @@ import {
   postExitMeeting,
   postHeartbeat,
 } from '@repo/admin/actions/meeting/meetingAction';
-import ChatHeader from '@repo/admin/components/header/ChatHeader';
 import ChatView from './ChatView';
 import ChatSender from './ChatSender';
 
 function Chatting({
   mentoringSessionUuid,
-  token,
+  user,
 }: {
   mentoringSessionUuid: string;
-  token: any;
+  user: string;
 }) {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
@@ -45,6 +43,7 @@ function Chatting({
           message: selectedFile.name,
           messageType: 'MEDIA',
           mediaUrl: URL.createObjectURL(selectedFile),
+          mentoringSessionUuid: mentoringSessionUuid,
         });
         setSelectedFile(null);
         if (fileInputRef.current) {
@@ -57,6 +56,7 @@ function Chatting({
           message: newMessage,
           messageType: 'TEXT',
           mediaUrl: '',
+          mentoringSessionUuid: mentoringSessionUuid,
         });
       }
 
@@ -87,18 +87,16 @@ function Chatting({
   };
 
   useEffect(() => {
-    console.log(mentoringSessionUuid);
-    const chatServiceUrl = `http://api.adaptors.site/chat-service/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    const chatServiceUrl = `${process.env.NEXT_PUBLIC_CHAT_URL}/api/v1/chat/real-time/${mentoringSessionUuid}`;
 
-    const eventSource = new EventSourcePolyfill(chatServiceUrl, {
-      headers: {
-        Authorization: `Baerer ${token}`,
-      },
+    const EventSource = EventSourcePolyfill;
+
+    const eventSource = new EventSource(chatServiceUrl, {
       heartbeatTimeout: 86400000,
     });
 
     const heartbeatInterval = setInterval(async () => {
-      await postHeartbeat('ac419217-cb98-4334-8b78-8126aa0e57aa');
+      await postHeartbeat(mentoringSessionUuid);
     }, 30000);
 
     eventSource.onopen = async () => {};
@@ -113,20 +111,23 @@ function Chatting({
 
     eventSource.onerror = (error) => {
       console.error('EventSource 오류:', error);
-      // postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
+      // postExitMeeting(mentoringSessionUuid);
       eventSource.close();
     };
 
     return () => {
       clearInterval(heartbeatInterval);
-      // postExitMeeting('ac419217-cb98-4334-8b78-8126aa0e57aa');
+      // postExitMeeting(mentoringSessionUuid);
       eventSource.close();
     };
   }, [mentoringSessionUuid]);
 
   const getMessageData = async (page: number) => {
     try {
-      const prevMessages = (await getChattingData(page)) as prevChatResType;
+      const prevMessages = (await getChattingData({
+        page: page,
+        mentoringSessionUuid: mentoringSessionUuid,
+      })) as prevChatResType;
 
       if (!prevMessages.hasNext) {
         setIsNext(false);
@@ -171,6 +172,7 @@ function Chatting({
         messages={messages}
         messagesEndRef={messagesEndRef}
         handleScroll={handleScroll}
+        user={user}
       />
       <ChatSender
         handleSendMessage={handleSendMessage}
