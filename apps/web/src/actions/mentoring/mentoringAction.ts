@@ -140,6 +140,7 @@ export async function GetMentoringNameSearch(
 ): Promise<{
   content: SearchMentoringListType[];
   pageable: pageableType;
+  totalPages: number;
 } | null> {
   'use server';
 
