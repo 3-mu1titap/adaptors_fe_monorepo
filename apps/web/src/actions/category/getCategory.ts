@@ -10,6 +10,7 @@ export async function getTopCategoryList(): Promise<TopCategoryType[]> {
         headers: {
           'Content-Type': 'application/json',
         },
+        cache: 'force-cache',
       }
     );
     const result = (await res.json()) as commonResType<any>;

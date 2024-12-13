@@ -12,7 +12,6 @@ export const postMentorProfile = async ({
   uuid: string;
 }): Promise<any> => {
   'use server';
-  console.log(profile, uuid);
   const response = await fetch(
     `${process.env.MEMBER_URL}/api/v1/member/mentor/profile`,
     {

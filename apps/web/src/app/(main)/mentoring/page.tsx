@@ -26,7 +26,7 @@ export default async function page({
   });
 
   return (
-    <main className="mt-[9.5rem] px-8 pb-3 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] container mx-auto">
+    <main className="mt-[9.5rem] pb-3 xl:max-w-[1140px] lg:max-w-[1024px] sm:max-w-[600px] mobile:max-w-[400px] max-w-[320px] container mx-auto">
       <CategoriesSection
         categoryParam={searchParams.category}
         categories={categories}
