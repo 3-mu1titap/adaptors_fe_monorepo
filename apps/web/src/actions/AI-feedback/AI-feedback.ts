@@ -9,10 +9,10 @@ export const requestAIFeedback_coverletter = async ({
 }: {
   industryType: string;
   coverLetter: string;
-}): Promise<any> => {
+}): Promise<feedbackResult> => {
   'use server';
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AI_FEEDBACK}/api/v1/ai-feedback/text?industryType=${industryType}&documentType=RESUME`,
+    `${process.env.NEXT_PUBLIC_AI_FEEDBACK}/api/v1/ai-feedback/text?industryType=${industryType}&documentType=COVER_LETTER`,
     {
       method: 'POST',
       headers: {
@@ -28,7 +28,6 @@ export const requestAIFeedback_coverletter = async ({
     const errorData = await response.json();
     throw new Error(errorData.message || 'Failed to post coverletter');
   }
-
   // 서버에서 받은 데이터 반환
   const data = (await response.json()) as commonResType<feedbackResult>;
   console.log(data.result);
