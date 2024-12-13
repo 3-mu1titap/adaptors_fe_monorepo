@@ -31,3 +31,8 @@ export interface BestMentorType {
   totalLikeCount: number;
   totalSaleCount: number;
 }
+
+//모든 멘토 조회 res
+export interface MentorListType {
+  mentorUuid: string[];
+}

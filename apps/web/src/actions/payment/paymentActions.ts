@@ -26,8 +26,7 @@ export async function PaymentReq(
 
   const session = await getServerSession(options);
   console.log(session?.user.uuid, 'userUuid testatast');
-  // const partnerUserId = session?.user.uuid;
-  const partnerUserId = '459d827a-59b2-43b7-a015-38bde218a3bc';
+  const partnerUserId = session?.user.uuid;
   const request = {
     cid,
     partnerOrderId,
@@ -43,17 +42,18 @@ export async function PaymentReq(
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/ready`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/v1/payment/ready`,
       {
         cache: 'no-cache',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.user.accessToken}`,
         },
         body: JSON.stringify(request),
       }
     );
-
+    console.log(res);
     const result = (await res.json()) as commonResType<PaymentReadyResType>;
     console.log('결제 준비 result: ', result);
     return result.result;
@@ -68,7 +68,7 @@ export async function PaymentApproval(pg_token: string) {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/approve?pg_token=${pg_token}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/approve?pg_token=${pg_token}`,
       {
         cache: 'no-cache',
         method: 'POST',
@@ -96,7 +96,7 @@ export async function GetMemberPoint() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/points?userUuid=${userUuid}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/member-service/api/v1/member/points?userUuid=${userUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -125,7 +125,7 @@ export async function GetPointList() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/points/history?menteeUuid=${menteeUuid}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/points/history?menteeUuid=${menteeUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',

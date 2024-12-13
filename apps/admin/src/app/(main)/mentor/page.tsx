@@ -3,6 +3,7 @@ import ClientContainer from '@repo/admin/components/common/layouts/ClientContain
 
 import {
   GetMentoringInfo,
+  GetMentoringListByMentor,
   GetMentoringSessionList,
 } from '@repo/admin/actions/mentoring/mentoringAction';
 
@@ -11,6 +12,7 @@ import type {
   MentoringDataType,
 } from '@repo/ui/types/CommonType.ts';
 import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: `Home`,
@@ -36,11 +38,13 @@ const initialUserData = [
 ];
 
 export default async function Page() {
+  const mentoringListData = await GetMentoringListByMentor();
+  if (mentoringListData.length === 0) return redirect('/mentor/mentoring');
   const mentoringSessionList = await GetMentoringSessionList(
-    '8e68777e-47ae-46c6-a42b-389d459c8f21'
+    mentoringListData[0].mentoringUuid
   );
   const MentoringInfoData: MentoringDataType = await GetMentoringInfo(
-    '8e68777e-47ae-46c6-a42b-389d459c8f21'
+    mentoringListData[0].mentoringUuid
   );
   return (
     <>

@@ -29,15 +29,13 @@ export default function MyPage({ userInfo }: { userInfo: Mentor }) {
           <TabsTrigger value="sessions">Mentoring Sessions</TabsTrigger>
         </TabsList>
         <TabsContent value="profile">
-          <MentorProfile mentor={mentor} />
+          <MentorProfile mentor={userInfo} />
         </TabsContent>
         <TabsContent value="edit">
           <MentorProfileEdit mentor={mentor} onUpdate={handleProfileUpdate} />
         </TabsContent>
         <TabsContent value="sessions">
-          {mentor && mentor.memberRequestDto && (
-            <MentorSessionList mentorId={mentor.memberRequestDto.accountId} />
-          )}
+          {mentor && mentor.memberRequestDto && <MentorSessionList />}
         </TabsContent>
       </Tabs>
     </section>

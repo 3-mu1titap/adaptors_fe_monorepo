@@ -22,6 +22,8 @@ import {
   Wallet2Icon,
 } from 'lucide-react';
 import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
+import AdaptorsAlarm from '../alarm/AdaptorsAlarm';
+import AdaptorsAlarmHeader from '../alarm/AdaptorsAlarmHeader';
 
 const initialUserData = [
   {
@@ -42,11 +44,14 @@ const initialUserData = [
   },
 ];
 
-export default function MentoringHeader() {
+export default function MentoringHeader({ user }: { user: any }) {
   return (
     <header className="fixed top-0 left-0 w-full py-6 px-4 lg:px-10 border-b-[1px] border-[#F3F3F3] bg-white z-[10]">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ">
         <AdaptorsLogoIcon className="w-[140px] mt-0 flex items-center gap-2" />
+        <div>
+          <AdaptorsAlarm user={user} />
+        </div>
         <div className="flex justify-center items-center gap-2">
           <CustomReviewerItem
             initialUserData={initialUserData}
@@ -65,12 +70,7 @@ export default function MentoringHeader() {
             </div>
           </CustomToolTip>
           <CustomToolTip text="Notifications">
-            <div className="flex items-center gap-1 relative">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-50 border-slate-200 border-[1px]">
-                <BellDot className="w-5 h-5 text-black" />
-              </div>
-              <p className="text-sm w-3 h-3 rounded-full bg-adaptorsYellow animate-caret-blink top-[0] absolute right-0"></p>
-            </div>
+            <AdaptorsAlarmHeader />
           </CustomToolTip>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

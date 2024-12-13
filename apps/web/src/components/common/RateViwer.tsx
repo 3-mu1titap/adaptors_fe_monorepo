@@ -31,7 +31,7 @@ export default function RateViewer({
       w-fit
     `}
       style={{
-        fontSize: size || '1.4rem',
+        fontSize: size || '1.0rem',
       }}
     >
       <div className="star-rating__background">★★★★★</div>

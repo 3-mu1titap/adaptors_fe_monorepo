@@ -1,7 +1,11 @@
 import { Option } from '@repo/ui/types/components/RadioButtonType.ts';
 export const mainIntroDatas = [
   {
-    subtitle: '[취업멘토] 아이돌 취업을 위한 첫걸음 멘토링',
+    category: [
+      { id: 1, categoryName: 'It' },
+      { id: 2, categoryName: '디자인' },
+      { id: 3, categoryName: '개발' },
+    ],
     title: '방탄과 함께하는\n아이돌 멘토링',
     mentoringUuid: '1',
     content:
@@ -25,7 +29,11 @@ export const mainIntroDatas = [
     ],
   },
   {
-    subtitle: '[취업멘토] 성공적인 기업 취업 멘토링',
+    category: [
+      { id: 1, categoryName: '의료 보건' },
+      { id: 2, categoryName: '프론트' },
+      { id: 3, categoryName: '개발' },
+    ],
     title: '삼성과 함께하는\n취업 전략',
     mentoringUuid: '2',
     content:
@@ -49,7 +57,11 @@ export const mainIntroDatas = [
     ],
   },
   {
-    subtitle: '[취업멘토] 글로벌 기업 취업 멘토링',
+    category: [
+      { id: 1, categoryName: '의료 보건' },
+      { id: 2, categoryName: '프론트' },
+      { id: 3, categoryName: '개발' },
+    ],
     title: '구글과 함께하는\n글로벌 취업 멘토링',
     mentoringUuid: '3',
     content:
@@ -73,7 +85,11 @@ export const mainIntroDatas = [
     ],
   },
   {
-    subtitle: '[취업멘토] IT 개발자 취업 멘토링',
+    category: [
+      { id: 1, categoryName: '의료 보건' },
+      { id: 2, categoryName: '프론트' },
+      { id: 3, categoryName: '개발' },
+    ],
     title: '카카오와 함께하는\nIT 취업 멘토링',
     mentoringUuid: '4',
     content:
@@ -97,7 +113,11 @@ export const mainIntroDatas = [
     ],
   },
   {
-    subtitle: '[취업멘토] 예술가를 위한 취업 멘토링',
+    category: [
+      { id: 1, categoryName: '의료 보건' },
+      { id: 2, categoryName: '프론트' },
+      { id: 3, categoryName: '개발' },
+    ],
     title: '예술과 함께하는\n창작 멘토링',
     mentoringUuid: '5',
     content:

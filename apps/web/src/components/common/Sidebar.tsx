@@ -2,7 +2,7 @@
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { headerGNBMenuData } from 'src/store/initialStore';
-
+import Link from 'next/link';
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
@@ -47,9 +47,11 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
         <div className="flex flex-col gap-2 px-4 z-50">
           {data.map((menu) => (
-            <p key={menu.label} className="text-sm font-bold">
-              {menu.label}
-            </p>
+            <Link href={menu.href}>
+              <p key={menu.label} className="text-sm font-bold">
+                {menu.label}
+              </p>
+            </Link>
           ))}
         </div>
       </aside>

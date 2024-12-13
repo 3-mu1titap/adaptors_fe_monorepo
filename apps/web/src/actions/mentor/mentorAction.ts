@@ -1,6 +1,7 @@
 import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
 import { commonResType } from '../../components/types/ResponseTypes';
 import { BestMentorType } from '@repo/web/components/types/mentor/mentorType';
+import { MentorListType } from '@repo/web/components/types/mentor/mentorType';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
@@ -39,7 +40,7 @@ export async function GetBestMentorList() {
 
   try {
     const res = await fetch(
-      `${process.env.BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
+      `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -53,6 +54,30 @@ export async function GetBestMentorList() {
     return result.result;
   } catch (error) {
     console.error('멘토의 멘토링 리스트 조회 : ', error);
+    return [];
+  }
+}
+
+//모든 멘토 리스트 조회
+export async function GetMentorList() {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/mentor`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<MentorListType>;
+    // console.log(result.result, '멘토 리스트 불러오기 성공');
+    return result.result.mentorUuid;
+  } catch (error) {
+    console.error('error : ', error);
     return [];
   }
 }

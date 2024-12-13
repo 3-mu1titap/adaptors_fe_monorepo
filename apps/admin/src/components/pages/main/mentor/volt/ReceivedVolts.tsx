@@ -173,7 +173,7 @@ export default function ReceivedVolts({
     <section className="w-full">
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>총 받은 볼트</CardTitle>
+          <CardTitle>보유한 볼트</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-4xl font-bold">
