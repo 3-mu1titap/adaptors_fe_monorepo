@@ -1,10 +1,11 @@
 'use client';
 import { Button } from '@repo/ui/components/ui/button';
+import useMobile from '@repo/ui/hooks/use-mobile.tsx';
 import { cn } from '@repo/ui/lib/utils';
 import { TopCategoryType } from '@repo/ui/types/CommonType.js';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 
 export default function CategoriesSection({
   categoryParam,
@@ -19,10 +20,7 @@ export default function CategoriesSection({
 }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState<number>(
-    typeof window !== 'undefined' ? window.innerWidth : 0
-  );
-
+  const isMobile = useMobile();
   const handleCategoryClick = (activeCategory: string) => {
     router.replace(`/mentoring?category=${activeCategory}&page=1`);
   };
@@ -31,31 +29,7 @@ export default function CategoriesSection({
     setIsOpen((prev) => !prev);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const getSliceNumber = (): number => {
-    if (isOpen) {
-      return categories.length;
-    }
-    if (windowWidth > 770) {
-      return categories.length;
-    } else if (windowWidth > 440) {
-      return 12;
-    } else {
-      return 7;
-    }
-  };
-
-  const sliceNumber = getSliceNumber();
+  const sliceNumber = !isOpen && isMobile ? 7 : categories.length;
 
   return (
     <>

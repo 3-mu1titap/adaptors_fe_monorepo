@@ -79,7 +79,6 @@ export async function SessionRequest(
   const menteeUuid = session?.user.uuid;
   const nickName = session?.user.nickName;
   const image = session?.user.profileImageUrl;
-  console.log(request);
   try {
     const res = await fetch(
       `${process.env.SESSION_REQUEST_URL}/api/v1/session-request-service`,
@@ -102,11 +101,9 @@ export async function SessionRequest(
       }
     );
     const result = (await res.json()) as commonResType<any>;
-    console.log('멘토링 신청하기 result: ', result);
     if (res.ok) {
       revalidateTag('session-request');
     }
-    console.log(result.code);
     return result.code;
   } catch (error) {
     console.error('멘토링 신청하기: ', error);

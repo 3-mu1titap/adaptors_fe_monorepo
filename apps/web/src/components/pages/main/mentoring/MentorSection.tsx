@@ -5,6 +5,7 @@ import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
 import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
 import { SeparateContainer } from '@repo/ui/components/ui/custom/CustomSeparateContainer';
 import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
+import useIsMobile from '@repo/ui/hooks/use-mobile.tsx';
 import {
   MentoringDataType,
   MentoringResult,
@@ -32,28 +33,33 @@ export default function MentorSection({
     await postLikeReaction(MentoringInfoData.mentorUuid);
     setIsLiked((prev) => !prev);
   };
+  const isMobile = useIsMobile();
   return (
     <>
-      <SeparateContainer.LeftSide className="px-4 mb-10">
-        <CustomMentorProfilePhoto
-          profileImgUrl={mentorData.profileImageUrl}
-          mentorNickname={mentorData.nickName}
-        />
-        <h1 className="text-xl font-bold my-3">@ {mentorData.nickName}</h1>
-        <div className="flex justify-between items-center w-full mb-3 gap-3">
-          <CustomReviewerItem
-            initialUserData={ReviewerData}
-            userCount={MentoringInfoData?.totalReviewCount ?? null}
-            reviewCount={MentoringInfoData?.totalReviewCount ?? 0}
-          />
-          <CustomLikeButton
-            count={200823}
-            handler={handleLikeButton}
-            isCheck={isLiked}
-          />
-        </div>
-        <CustomShareButton />
-        <CustomNowDate />
+      <SeparateContainer.LeftSide className="px-4 mb-10 w-full max-w-[340px] mobile:max-x-[500px] sm:max-w-[340px] mx-auto">
+        {!isMobile && (
+          <>
+            <CustomMentorProfilePhoto
+              profileImgUrl={mentorData.profileImageUrl}
+              mentorNickname={mentorData.nickName}
+            />
+            <h1 className="text-xl font-bold my-3">@ {mentorData.nickName}</h1>
+            <div className="flex justify-between items-center w-full mb-3 gap-3">
+              <CustomReviewerItem
+                initialUserData={ReviewerData}
+                userCount={MentoringInfoData?.totalReviewCount ?? null}
+                reviewCount={MentoringInfoData?.totalReviewCount ?? 0}
+              />
+              <CustomLikeButton
+                count={200823}
+                handler={handleLikeButton}
+                isCheck={isLiked}
+              />
+            </div>
+            <CustomShareButton />
+            <CustomNowDate />
+          </>
+        )}
         <Calendar mentoringSessionList={mentoringSessionList} />
       </SeparateContainer.LeftSide>
     </>
