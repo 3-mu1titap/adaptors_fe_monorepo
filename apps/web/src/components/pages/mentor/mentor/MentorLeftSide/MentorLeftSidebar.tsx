@@ -6,15 +6,16 @@ import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
 import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
 import { getProfileImage } from '@repo/web/actions/profile/getProfileData';
 import { SeparateContainer } from '@repo/web/components/common/layout/SeperateContainer';
-import { MentorInfoType } from '@repo/web/components/types/profile/RequestType';
+import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 
 function MentorLeftSidebar({ userUuid }: { userUuid: string }) {
-  const [UserInfo, setUserInfo] = useState<MentorInfoType | null>(null);
+  const [UserInfo, setUserInfo] = useState<userProfileType | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const UserProfile = await getProfileImage(userUuid);
+
         setUserInfo(UserProfile);
       } catch (err) {
         console.log('Failed to fetch user profile');
