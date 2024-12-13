@@ -39,3 +39,39 @@ export interface MentorProfileEditFormType {
   gender: string;
   jobExperience: string;
 }
+
+export interface SessionHistoryType {
+  mentoringName: string;
+  sessionUuid: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+  price: number;
+  maxHeadCount: number;
+  minHeadCount: number;
+  nowHeadCount: number;
+  status: string;
+  updatedAt: Date;
+}
+
+export interface MentorSessionHistoryType {
+  content: SessionHistoryType[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: [];
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: [];
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}

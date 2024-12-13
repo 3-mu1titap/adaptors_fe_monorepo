@@ -23,7 +23,7 @@ interface CommentThreadProps {
 export default function MentoringReview({ comments }: { comments: Review[] }) {
   return (
     <div className="px-4 py-2 bg-adaptorsYellow/10">
-      {comments.map((comment) => (
+      {comments?.map((comment) => (
         <div key={comment.id} className="flex gap-3 my-8 bg-[#FEFAEA]">
           <Avatar className="h-8 w-8">
             <AvatarImage
@@ -42,7 +42,10 @@ export default function MentoringReview({ comments }: { comments: Review[] }) {
               <span className="text-md text-muted-foreground">
                 at {comment.reviewRequestDto.wroteAt}
               </span>
-              <ScoreStar score={5} />
+              <span className="text-md text-muted-foreground">
+                at {comment.reviewRequestDto.wroteAt}
+              </span>
+              <ScoreStar score={comment.reviewRequestDto.score} />
             </div>
             <p className="text-lg mt-1">
               {comment.reviewRequestDto.reviewComment}

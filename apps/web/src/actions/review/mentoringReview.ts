@@ -29,7 +29,7 @@ export const getReviewerProfile = async (
 
 export const getRevieweList = async (
   mentoringUuid: string
-): Promise<string[]> => {
+): Promise<Review[]> => {
   'use server';
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_REVIEW_QUERY_URL}/api/v1/reviewList/review-list/${mentoringUuid}`,
@@ -48,7 +48,7 @@ export const getRevieweList = async (
   }
 
   // 서버에서 받은 데이터 반환
-  const data = (await response.json()) as commonResType<string[]>;
+  const data = (await response.json()) as commonResType<Review[]>;
   console.log(data);
   return data.result;
 };

@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from '@repo/ui/components/ui/select';
 import { addDays, parse, isAfter, differenceInMinutes } from 'date-fns';
+import { X } from 'lucide-react';
 
 export interface TimeRange {
   startTime: string;
@@ -172,7 +173,7 @@ export function SessionAddModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[40rem] max-h-[80vh] overflow-y-auto p-10">
         <DialogHeader>
           <DialogTitle>멘토링 세션 추가</DialogTitle>
         </DialogHeader>
@@ -217,14 +218,10 @@ export function SessionAddModal({
               <div key={index} className="border p-4 rounded relative">
                 <h4 className="mb-2">시간 범위 {index + 1}</h4>
                 {session.timeRangeVos.length > 1 && (
-                  <Button
-                    type="button"
+                  <X
+                    className="absolute top-2 right-2 cursor-pointer text-red-500 rounded-full"
                     onClick={() => removeTimeRange(index)}
-                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full"
-                    aria-label={`Delete time range ${index + 1}`}
-                  >
-                    X
-                  </Button>
+                  />
                 )}
                 <div className="grid grid-cols-5 items-center gap-4">
                   <Label htmlFor={`startTime-${index}`} className="text-right">
@@ -341,7 +338,7 @@ export function SessionAddModal({
                 </div>
                 <div className="mt-2">
                   <Label>요일</Label>
-                  <div className="flex flex-wrap gap-2 mt-1">
+                  <div className="flex flex-wrap gap-4 mt-1">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
@@ -363,11 +360,11 @@ export function SessionAddModal({
                             e.target.checked ? allDays : []
                           );
                         }}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label
                         htmlFor={`ALL-${index}`}
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                       >
                         ALL
                       </label>
@@ -396,11 +393,11 @@ export function SessionAddModal({
                               newDayList
                             );
                           }}
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
                           htmlFor={`${day}-${index}`}
-                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                         >
                           {day}
                         </label>
@@ -413,7 +410,7 @@ export function SessionAddModal({
             <Button
               type="button"
               onClick={addTimeRange}
-              className="bg-adaptorsYellow hover:bg-black font-bold"
+              className="bg-adaptorsYellow hover:bg-black font-bold !text-lg"
             >
               시간 범위 추가
             </Button>
@@ -421,7 +418,7 @@ export function SessionAddModal({
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-adaptorsYellow hover:bg-black font-bold"
+              className="bg-adaptorsYellow hover:bg-black font-bold !text-lg"
             >
               멘토링 세션 추가
             </Button>

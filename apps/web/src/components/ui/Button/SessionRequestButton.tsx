@@ -14,6 +14,8 @@ import {
   SessionCancel,
   SessionRequest,
 } from '@repo/web/actions/mentoring/mentoringAction';
+import { useSession } from '@repo/web/app/context/SessionContext';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export function SessionRequestButton({
@@ -34,22 +36,28 @@ export function SessionRequestButton({
   mentorUuid: string;
 }) {
   const [isRegistered, setIsRegistered] = useState(isParticipating);
+  const session = useSession();
+  const isLogin = session.isAuth;
+  const router = useRouter();
   const onClickButton = async () => {
     if (isRegistered) {
-      const result = SessionCancel({
+      const result = await SessionCancel({
         sessionUuid: sessionUuid,
         deadlineDate: deadlineDate,
       });
-      if (!result) setIsRegistered((prev) => !prev);
+      if (result == 200) setIsRegistered((prev) => !prev);
     } else {
-      const result = SessionRequest({
+      const result = await SessionRequest({
         sessionUuid: sessionUuid,
         mentoringName: mentoringName,
         mentorUuid: mentorUuid,
         volt: price,
       });
-      if (!result) setIsRegistered((prev) => !prev);
+      if (result == 200) setIsRegistered((prev) => !prev);
     }
+  };
+  const handleAuth = () => {
+    router.push('/login');
   };
   return (
     <AlertDialog>
@@ -64,25 +72,45 @@ export function SessionRequestButton({
           {isRegistered ? '취소하기' : '참가하기'}
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="rounded-md w-[80%] sm:max-w-[300px]">
-        <AlertDialogHeader>
-          <AlertDialogTitle>{`세션을 ${isRegistered ? '취소' : '신청'}하시겠습니까?`}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {!isRegistered
-              ? `참가하기 클릭 시 세션 참가가 확정되며 ${price}V가 차감됩니다`
-              : `환불은 영업일 기준 최대 7일 소요됩니다`}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>취소하기</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={onClickButton}
-            className="bg-black hover:bg-adaptorsYellow hover:text-black"
-          >
-            참가하기
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      {isLogin ? (
+        <AlertDialogContent className="rounded-md w-[80%] sm:max-w-[300px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>{`세션을 ${isRegistered ? '취소' : '신청'}하시겠습니까?`}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {!isRegistered
+                ? `참가하기 클릭 시 세션 참가가 확정되며 ${price}V가 차감됩니다`
+                : `환불은 영업일 기준 최대 7일 소요됩니다`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>닫기</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={onClickButton}
+              className="bg-black hover:bg-adaptorsYellow hover:text-black"
+            >
+              {`${isRegistered ? '세션 신청 취소하기' : '세션 신청하기'}`}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      ) : (
+        <AlertDialogContent className="rounded-md w-[80%] sm:max-w-[300px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>로그인이 필요한 서비스입니다</AlertDialogTitle>
+            <AlertDialogDescription>
+              로그인 하시겠습니까? 확인 버튼 클릭 시 로그인 페이지로 이동합니다.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>취소하기</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleAuth}
+              className="bg-black hover:bg-adaptorsYellow hover:text-black"
+            >
+              로그인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      )}
     </AlertDialog>
   );
 }

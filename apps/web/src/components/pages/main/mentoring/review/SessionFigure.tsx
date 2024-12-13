@@ -21,7 +21,6 @@ export default function SessionFigure({
     }
     return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
-
   return (
     <>
       <figure

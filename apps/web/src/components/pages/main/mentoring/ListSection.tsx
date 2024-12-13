@@ -9,7 +9,7 @@ export default function ListSection({
   if (!mentoringListData)
     return (
       <div
-        className="min-w-64 min-h-svh mx-auto text-center"
+        className="min-w-64 min-h-svh mx-auto text-center mt-20"
         style={{ height: `calc(100% - 456.51px)` }}
       >
         {/* <FitImage

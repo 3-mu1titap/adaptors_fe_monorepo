@@ -39,12 +39,12 @@ export default function MentoringOverview({
           userCount={
             MentoringInfoData.totalReviewCount > 4
               ? MentoringInfoData.totalReviewCount - 4
-              : null
+              : 0
           }
           reviewCount={MentoringInfoData.totalReviewCount}
         />
       </div>
-      <div className="relative sm:w-full sm:h-[400px] mt-8 rounded-xl object-cover overflow-hidden bg-gray-200">
+      <div className="relative sm:w-full mt-8 rounded-xl object-cover overflow-hidden bg-gray-200">
         {MentoringInfoData.categoryList && (
           <ul className="flex flex-wrap gap-3 absolute top-5 left-5 w-full">
             {MentoringInfoData.categoryList
@@ -71,9 +71,9 @@ export default function MentoringOverview({
           {MentoringInfoData?.hashTagList?.map((item) => (
             <li
               key={item.hashtagId}
-              className=" px-3 rounded-2xl text-adaptorsBlue text-md flex items-center"
+              className=" px-3 rounded-2xl text-adaptorsBlue text-sm flex items-center"
             >
-              <Hash size={16} />
+              <Hash size={10} />
               {item.hashtagName}
             </li>
           ))}
