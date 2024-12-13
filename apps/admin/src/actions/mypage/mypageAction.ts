@@ -1,7 +1,10 @@
 'use server';
 
 import { Mentor } from '@repo/admin/components/types/main/mentor/mentorTypes';
-import { MentorProfileEditFormType } from '@repo/admin/components/types/main/mypage/myPageTypes';
+import {
+  MentorProfileEditFormType,
+  MentorSessionHistoryType,
+} from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { redirect } from 'next/navigation';
 import { uploadFileToS3 } from '../common/awsMediaUploader';
@@ -180,4 +183,38 @@ export async function PutUserTotalInfo({
 
   revalidateTag('updateUserInfo');
   return true;
+}
+
+// 멘토링 세션 참여 내역 조회 (페이지 네이션)
+export async function GetSessionHistory({
+  page,
+  includeCancelled,
+}: {
+  page: number;
+  includeCancelled: boolean;
+}) {
+  'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
+
+  const res = await fetch(
+    `${process.env.SCHEDULE_QUERY_URL}/api/v1/session-user-history-read/?page=${page}&size=20&includeCancelled=${includeCancelled}`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+  if (!res.ok) {
+    console.error('유저 세션 히스토리 정보 조회 실패');
+    return redirect('/error?message=Failed to fetch mentoring session history');
+  }
+
+  const result = (await res.json()) as commonResType<MentorSessionHistoryType>;
+  return result.result;
 }

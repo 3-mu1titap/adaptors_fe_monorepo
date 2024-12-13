@@ -61,12 +61,10 @@ export async function GetMentorVolts() {
 
   if (!res.ok) {
     console.error('멘토가 받은 볼트 조회 실패');
-    return redirect('/error?message=Failed to fetch mentor volts');
+    return { totalVolt: 0, voltList: [] };
   }
 
   const result = (await res.json()) as commonResType<mentorVoltListDataType>;
-  if (!result.result) return { totalVolt: 0, voltList: [] };
-
   const voltListWithNickNames = await Promise.all(
     result.result.voltList.map(async (volt) => {
       const member = await getChatProfile({ userUuid: volt.sender });
@@ -100,8 +98,6 @@ export async function PostSettle({ payload }: { payload: settleDataType }) {
     return res.ok;
   }
 
-  console.log('2차 인증번호 발송 성공');
-
   return res.ok;
 }
 
@@ -126,8 +122,6 @@ export async function PostSecondAuthenticationCode() {
     console.error('2차 인증번호 발송 실패');
     return res.ok;
   }
-
-  console.log('2차 인증번호 발송 성공');
 
   return res.ok;
 }
@@ -155,7 +149,6 @@ export async function PostCheckSecondAuthenticationCode(code: string) {
   }
 
   const result = (await res.json()) as commonResType<boolean | null>;
-  console.log('2차 인증번호 체크 성공', result);
   return result.result;
 }
 
@@ -182,6 +175,5 @@ export async function PostDeleteAuthenticationCode() {
   }
 
   const result = (await res.json()) as commonResType<boolean | null>;
-  console.log('인증 지우기 성공', result);
   return res.ok;
 }

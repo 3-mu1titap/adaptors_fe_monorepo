@@ -7,7 +7,7 @@ interface MentorProfileProps {
 
 export default function MentorProfile({ mentor }: MentorProfileProps) {
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
       {mentor && (
         <MentorProfileContent
           profileImageUrl={mentor.profileImageUrl}

@@ -12,8 +12,6 @@ interface MentorProfileEditProps {
   onUpdate: (updatedMentor: Mentor) => void;
 }
 
-const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
-
 export default function MentorProfileEdit({
   mentor,
   onUpdate,

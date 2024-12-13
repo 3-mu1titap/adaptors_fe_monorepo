@@ -4,11 +4,6 @@ import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 
 const OPENVIDU_SERVER_URL = process.env.NEXT_PUBLIC_OPENVIDU_URL;
-const OPENVIDU_NAME = process.env.NEXT_PUBLIC_OPENVIDU_NAME;
-const OPENVIDU_KEY = process.env.NEXT_PUBLIC_OPENVIDU_KEY;
-
-// Basic Auth 인코딩
-const basicAuth = 'Basic ' + btoa(`${OPENVIDU_NAME}:${OPENVIDU_KEY}`);
 
 const createToken = async (sessionId: string) => {
   const session = await getServerSession(options);
@@ -19,7 +14,7 @@ const createToken = async (sessionId: string) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'userUuid': userUuid, // Authorization 헤더 추가
+        'userUuid': userUuid,
       },
     }
   );
@@ -29,7 +24,6 @@ const createToken = async (sessionId: string) => {
   }
 
   const data = await response.text();
-  console.log('2222', data);
   return data; // The token
 };
 
@@ -40,9 +34,7 @@ const createSession = async (sessionId: string) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': basicAuth, // Authorization 헤더 추가
       },
-      // body: JSON.stringify({ customSessionId: sessionId }),
     }
   );
 
@@ -51,7 +43,6 @@ const createSession = async (sessionId: string) => {
   }
 
   const data = await response.text();
-  console.log('11111', data);
   return data; // The sessionId
 };
 

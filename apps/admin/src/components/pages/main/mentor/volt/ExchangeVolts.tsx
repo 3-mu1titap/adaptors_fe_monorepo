@@ -17,7 +17,6 @@ export default function ExchangeHistory() {
   });
   const [totalExchange, setTotalExchange] = useState<number>(0);
   const [filteredData, setFilteredData] = useState<exchangeDataType[]>([]);
-  const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
   useEffect(() => {
     const fetchData = async () => {

@@ -2,7 +2,6 @@
 
 import {
   MentoringDataType,
-  MentoringSessionDateDataType,
   TodayMentoringSessionDataType,
 } from '@repo/admin/components/types/main/mentor/mentoringTypes';
 import { redirect } from 'next/navigation';
@@ -10,8 +9,6 @@ import { UserScheduleDataType } from '../../components/types/main/schedule/sched
 import { commonResType } from '../../components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
-
-const userUuid = 'eb5465c9-432f-49ee-b4d4-236b0d9ecdcb';
 
 // 스케쥴 조회
 export async function GetScheduleList({
@@ -38,14 +35,12 @@ export async function GetScheduleList({
       },
     }
   );
-  console.log(res);
   if (!res.ok) {
     console.error('유저 스케쥴 리스트 조회 실패');
     return { userUuid: 'string', yearMonth: 'string', scheduleLists: [] };
   }
 
   const result = (await res.json()) as commonResType<UserScheduleDataType>;
-  console.log(result);
   return result.result;
 }
 
@@ -79,7 +74,6 @@ export async function GetTodayMentoringSessionList(date: string) {
   const result = (await res.json()) as commonResType<
     TodayMentoringSessionDataType[]
   >;
-  console.log('오참멘', result);
   return result.result;
 }
 
