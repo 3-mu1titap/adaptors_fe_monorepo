@@ -12,7 +12,6 @@ export const postMentorProfile = async ({
   uuid: string;
 }): Promise<any> => {
   'use server';
-  console.log(profile, uuid);
   const response = await fetch(
     `${process.env.MEMBER_URL}/api/v1/member/mentor/profile`,
     {
@@ -74,6 +73,7 @@ export const uploadProfileIamge = async ({
   profileImage: string;
   uuid: string;
 }): Promise<any> => {
+  console.log('uuid', uuid);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_PROFILE_URL}/api/v1/memberInfo/profileImage`,
     {
@@ -88,7 +88,7 @@ export const uploadProfileIamge = async ({
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to post profile image');
+    throw new Error(errorData.message || '서버로 프로필 등록');
   }
 
   // 서버에서 받은 데이터 반환

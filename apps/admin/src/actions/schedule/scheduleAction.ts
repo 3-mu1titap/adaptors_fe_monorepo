@@ -27,7 +27,7 @@ export async function GetScheduleList({
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.SCHEDULE_URL}/api/v1/schedule-read/schedule-list?startDate=${startDate}&endDate=${endDate}`,
+    `${process.env.SCHEDULE_QUERY_URL}/api/v1/schedule-read/schedule-list?startDate=${startDate}&endDate=${endDate}`,
     {
       cache: 'no-cache',
       method: 'GET',
@@ -38,6 +38,7 @@ export async function GetScheduleList({
       },
     }
   );
+  console.log(res);
   if (!res.ok) {
     console.error('유저 스케쥴 리스트 조회 실패');
     return { userUuid: 'string', yearMonth: 'string', scheduleLists: [] };
@@ -56,7 +57,7 @@ export async function GetTodayMentoringSessionList(date: string) {
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.SCHEDULE_URL}/api/v1/schedule-read/today-mentoring-schedule-list?date=${date}`,
+    `${process.env.SCHEDULE_QUERY_URL}/api/v1/schedule-read/today-mentoring-schedule-list?date=${date}`,
     {
       cache: 'no-cache',
       method: 'GET',
@@ -78,6 +79,7 @@ export async function GetTodayMentoringSessionList(date: string) {
   const result = (await res.json()) as commonResType<
     TodayMentoringSessionDataType[]
   >;
+  console.log('오참멘', result);
   return result.result;
 }
 

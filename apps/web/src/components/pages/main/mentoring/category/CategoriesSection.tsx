@@ -1,71 +1,101 @@
 'use client';
+import { Button } from '@repo/ui/components/ui/button';
+import { cn } from '@repo/ui/lib/utils';
 import { TopCategoryType } from '@repo/ui/types/CommonType.js';
-import ChevronText from '@repo/web/components/ui/Text/ChevronText';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+import { ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
 export default function CategoriesSection({
   categoryParam,
-  categorise,
-  type = 'DOMAIN',
-  flip = false,
+  categories,
   text,
 }: {
   categoryParam: string;
-  categorise: TopCategoryType[];
+  categories: TopCategoryType[];
   type?: string;
   flip?: boolean;
   text: string;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false); // 상태 관리
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState<number>(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  );
 
-  const toggleExpanded = () => {
-    setIsExpanded((prev) => !prev);
+  const handleCategoryClick = (activeCategory: string) => {
+    router.replace(`/mentoring?category=${activeCategory}&page=1`);
   };
 
-  const filteredCategories = categorise.filter(
-    (category) => category.categoryType === type
-  );
+  const handleChevronButton = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const getSliceNumber = (): number => {
+    if (isOpen) {
+      return categories.length;
+    }
+    if (windowWidth > 770) {
+      return categories.length;
+    } else if (windowWidth > 440) {
+      return 12;
+    } else {
+      return 7;
+    }
+  };
+
+  const sliceNumber = getSliceNumber();
 
   return (
     <>
-      <ChevronText text={text} />
-      <nav className="backdrop-blur-lg mx-auto w-full max">
-        <div
-          className={`relative transition-all duration-300 ${
-            isExpanded ? 'max-h-full' : 'max-h-[70px]'
-          } overflow-hidden`}
-        >
-          <ul className="pt-6 flex justify-center gap-5 flex-wrap">
-            {filteredCategories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/mentoring?category=${category.topCategoryCode}`}
-                className={`bg-black hover:bg-adaptorsYellow/50 rounded-3xl text-white py-2 px-5 text-md ${
-                  category.topCategoryCode === categoryParam
-                    ? `text-extrabold`
-                    : ``
-                }`}
-              >
-                {category.topCategoryName}
-              </Link>
+      <h2 className={`text-[1rem] font-semibold flex gap-2 items-center mb-6`}>
+        <ChevronRight
+          className={`w-5 transform transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
+          onClick={handleChevronButton}
+        />
+        {text}
+      </h2>
+      <Suspense
+        fallback={
+          <div className="flex flex-wrap">
+            {[...Array(24)].map((_, index) => (
+              <div
+                key={index}
+                className="w-[80px] h-[40px] bg-gray-300 animate-pulse mb-2 mr-2"
+              ></div>
             ))}
-          </ul>
+          </div>
+        }
+      >
+        <div className="backdrop-blur-lg mx-auto w-full px-auto mb-8">
+          {categories.slice(0, sliceNumber).map((category, index) => (
+            <Button
+              key={index}
+              className={cn(
+                'mr-2 mb-2 opacity-80 bg-black hover:bg-yellow-500 text-sm',
+                categoryParam === category.topCategoryCode &&
+                  'bg-adaptorsYellow font-extrabold text-black'
+              )}
+              title={category.topCategoryName}
+              onClick={() => handleCategoryClick(category.topCategoryCode)}
+            >
+              {`${category.imageUrl ? category.imageUrl : ''} 
+            ${category.topCategoryName}`}
+            </Button>
+          ))}
         </div>
-        {filteredCategories.length > 1 && flip && (
-          <button
-            onClick={toggleExpanded}
-            className="mt-2 w-full flex justify-center mx-auto px-4"
-          >
-            {!isExpanded ? (
-              <ChevronDown size={20} color="black" />
-            ) : (
-              <ChevronUp size={20} color="black" />
-            )}
-          </button>
-        )}
-      </nav>
+      </Suspense>
     </>
   );
 }

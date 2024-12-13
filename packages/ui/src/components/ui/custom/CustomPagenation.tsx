@@ -43,7 +43,7 @@ const CustomPagination: React.FC<PaginationProps> = ({
     <Pagination>
       <PaginationContent>
         {/* 이전 버튼 */}
-        {currentPage != 0 && (
+        {currentPage != 1 && (
           <PaginationItem>
             <PaginationPrevious
               href={`?category=${categoryCode}&page=${currentPage - 3}`}
@@ -71,11 +71,13 @@ const CustomPagination: React.FC<PaginationProps> = ({
         )}
 
         {/* 다음 버튼 */}
-        <PaginationItem>
-          <PaginationNext
-            href={`?category=${categoryCode}&page=${currentPage + 3}`}
-          />
-        </PaginationItem>
+        {currentPage != totalPages && (
+          <PaginationItem>
+            <PaginationNext
+              href={`?category=${categoryCode}&page=${currentPage + 3}`}
+            />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );

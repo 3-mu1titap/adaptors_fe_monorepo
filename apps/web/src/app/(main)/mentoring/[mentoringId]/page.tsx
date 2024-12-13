@@ -49,7 +49,6 @@ async function Page({
     BestRevieweList,
     isCheck,
   } = await fetchMentoringData(params.mentoringId);
-  // console.log('getBestRevieweList: ', BestRevieweList);
   return (
     <main className="pt-[7rem] py-2 px-4 sm:px-8 min-h-screen bg-gray-50">
       {MentoringInfoData && mentoringSessionList && (

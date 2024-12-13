@@ -74,7 +74,7 @@ export default function MeinFooter() {
                 <ul className="min-w-20 space-y-2 ">
                   <li className="text-gray-600">Jeong Hunseock</li>
                   <li className="text-gray-600">Huh Jnghyun</li>
-                  <li className="text-gray-600">Oh Deagwan</li>
+                  <li className="text-gray-600">Ou Deagwan</li>
                   <li className="text-gray-600">Seol Chanwoo</li>
                 </ul>
               </div>

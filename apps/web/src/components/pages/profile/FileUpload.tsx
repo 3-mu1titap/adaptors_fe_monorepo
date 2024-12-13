@@ -1,7 +1,7 @@
+import { uploadProfileIamge } from '@repo/web/actions/profile/profile';
 import { ImageIcon, X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { uploadFileToS3 } from '../../../actions/common/awsMediaUploader';
-import { uploadProfileIamge } from '../../../actions/profile/profile';
 import useUserStore from '../../../store/uuidStore';
 import NextButton from '../../ui/Button/NextButton';
 import FitImage from '../../ui/image/fit-image';
@@ -75,7 +75,6 @@ export default function FileUpload({
     if (file) {
       try {
         const imageUrl = await uploadFileToS3(file, 'profile');
-        console.log(uuid, imageUrl);
         await uploadProfileIamge({
           uuid,
           profileImage: imageUrl,
@@ -85,7 +84,6 @@ export default function FileUpload({
         console.error('Error uploading image:', error);
       }
     }
-    // handleButton();
   };
 
   return (

@@ -20,29 +20,19 @@ export async function GetMentoringByCategory({
   'use server';
   try {
     // QueryString 생성
-    const queryParams = new URLSearchParams({
-      topCategoryCode,
-    });
+    // const queryParams = new URLSearchParams({
+    //   topCategoryCode,
+    // });
 
-    // 선택적 파라미터 추가
-    if (middleCategoryCode) {
-      queryParams.append('middleCategoryCode', middleCategoryCode);
-    }
-
-    if (bottomCategoryCode) {
-      queryParams.append('bottomCategoryCode', bottomCategoryCode);
-    }
-    if (page) {
-      queryParams.append('page', page);
-    }
-    if (size) {
-      queryParams.append('size', size);
-    }
-    // if (sort) {
-    //   queryParams.append('sort', sort);
+    // if (page) {
+    //   queryParams.append('page', page);
     // }
+    // if (size) {
+    //   queryParams.append('size', size);
+    // }
+
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-pagination/by-category?${queryParams}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-pagination/by-category?topCategoryCode=${topCategoryCode}&page=${parseInt(page) - 1}&size=${size ? size : 20}`,
       {
         method: 'GET',
         headers: {

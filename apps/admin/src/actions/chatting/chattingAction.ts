@@ -11,10 +11,14 @@ import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-const mentoringSessionUuid = 'ac419217-cb98-4334-8b78-8126aa0e57aa';
-
 // 기존 채팅 데이터 불러오기
-export async function getChattingData(page: number) {
+export async function getChattingData({
+  page,
+  mentoringSessionUuid,
+}: {
+  page: number;
+  mentoringSessionUuid: string;
+}) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
@@ -32,7 +36,6 @@ export async function getChattingData(page: number) {
       },
     }
   );
-
   if (!res.ok) {
     console.error('세션의 채팅 리스트 조회 실패');
     return redirect('/error?message=Failed to fetch session chatting');
@@ -47,10 +50,12 @@ export async function postChat({
   message,
   messageType,
   mediaUrl,
+  mentoringSessionUuid,
 }: {
   message: string;
   messageType: 'TEXT' | 'MEDIA' | 'FILE' | 'NOTICE';
   mediaUrl?: string;
+  mentoringSessionUuid: string;
 }) {
   'use server';
   const session = await getServerSession(options);
@@ -110,7 +115,13 @@ export async function getChatProfile({ userUuid }: { userUuid: string }) {
 }
 
 // 채팅방 입장
-export async function postEnterChat({ nickname }: { nickname: string }) {
+export async function postEnterChat({
+  nickname,
+  mentoringSessionUuid,
+}: {
+  nickname: string;
+  mentoringSessionUuid: string;
+}) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
@@ -137,7 +148,13 @@ export async function postEnterChat({ nickname }: { nickname: string }) {
 }
 
 // 채팅방 퇴장
-export async function postOutChat({ nickname }: { nickname: string }) {
+export async function postOutChat({
+  nickname,
+  mentoringSessionUuid,
+}: {
+  nickname: string;
+  mentoringSessionUuid: string;
+}) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
