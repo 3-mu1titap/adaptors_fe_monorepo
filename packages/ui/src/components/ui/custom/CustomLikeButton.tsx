@@ -32,7 +32,7 @@ export default function CustomLikeButton({
       </div>
       <CustomValueUnit
         value={count}
-        unit="is Good"
+        unit="likes"
         valueSize="text-[1.09rem]"
         unitSize="text-sm"
       />

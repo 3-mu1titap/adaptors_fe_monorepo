@@ -21,12 +21,16 @@ export default function MentorSection({
   mentorData,
   ReviewerData,
   isCheck,
+  totalLikeCount = 0,
+  totalReviewCount = 0,
 }: {
   MentoringInfoData: MentoringDataType;
   mentoringSessionList: MentoringResult[];
   mentorData: userProfileType;
   ReviewerData: ReviewerProfileType[];
   isCheck: boolean;
+  totalLikeCount?: number;
+  totalReviewCount?: number;
 }) {
   const [isLiked, setIsLiked] = useState(isCheck);
   const handleLikeButton = async () => {
@@ -51,7 +55,7 @@ export default function MentorSection({
                 reviewCount={MentoringInfoData?.totalReviewCount ?? 0}
               />
               <CustomLikeButton
-                count={200823}
+                count={totalLikeCount}
                 handler={handleLikeButton}
                 isCheck={isLiked}
               />

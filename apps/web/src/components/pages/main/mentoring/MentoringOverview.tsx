@@ -40,11 +40,7 @@ export default function MentoringOverview({
         <CustomReviewerItem
           initialUserData={userData}
           className="hidden lg:!flex"
-          userCount={
-            MentoringInfoData.totalReviewCount > 4
-              ? MentoringInfoData.totalReviewCount - 4
-              : 0
-          }
+          userCount={MentoringInfoData.totalReviewCount}
           reviewCount={MentoringInfoData.totalReviewCount}
         />
       </div>

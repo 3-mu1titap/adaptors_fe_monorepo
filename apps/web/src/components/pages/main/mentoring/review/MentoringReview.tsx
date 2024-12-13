@@ -5,16 +5,6 @@ import {
 } from '@repo/ui/components/ui/avatar';
 import { Review } from '@repo/ui/types/ReviewType.js';
 import RateViewer from '@repo/web/components/common/RateViwer';
-interface Comment {
-  id: string;
-  author: {
-    name: string;
-    avatar: string;
-    nickname: string;
-  };
-  content: string;
-  timestamp: string;
-}
 
 export default function MentoringReview({ comments }: { comments: Review[] }) {
   return (
