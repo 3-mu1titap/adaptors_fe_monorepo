@@ -7,9 +7,7 @@ function VoltCharge({ points }: { points: any }) {
       <div className="flex flex-col items-start p-10 gap-y-3 ">
         <span className="text-2xl font-bold text-black">남은 볼트</span>
 
-        <span className="text-4xl font-bold">
-          {points.toLocaleString('ko-kr')} 볼트
-        </span>
+        <span className="text-4xl font-bold">{points} 볼트</span>
       </div>
 
       <div className="flex mr-10 justify-center items-center">
