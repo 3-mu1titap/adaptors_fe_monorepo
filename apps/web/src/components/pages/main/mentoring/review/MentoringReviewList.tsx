@@ -16,11 +16,11 @@ interface Comment {
   timestamp: string;
 }
 
-interface CommentThreadProps {
-  comments?: Comment[];
-}
-
-export default function MentoringReview({ comments }: { comments: Review[] }) {
+export default function MentoringReviewPagination({
+  comments,
+}: {
+  comments: Review[];
+}) {
   return (
     <div className="px-4 py-2 bg-adaptorsYellow/10">
       {comments?.map((comment) => (

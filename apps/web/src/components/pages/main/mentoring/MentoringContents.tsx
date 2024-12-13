@@ -14,7 +14,7 @@ export default function MentoringContents({ content }: { content: string }) {
     <section className="relative w-full">
       <div
         dangerouslySetInnerHTML={{ __html: content }}
-        className={`py-3 overflow-hidden transition-all duration-300 ${
+        className={`overflow-hidden transition-all duration-300 ${
           isExpanded ? 'max-h-[9999px]' : 'max-h-[300px] sm:max-h-[500px]'
         }`}
       />

@@ -19,6 +19,7 @@ export default function MentoringDetail({
   mentorData,
   ReviewerData,
   BestRevieweList,
+  isCheck,
 }: {
   mentoringDate: string;
   mentoringUuid: string;
@@ -27,6 +28,7 @@ export default function MentoringDetail({
   mentorData: userProfileType;
   ReviewerData: ReviewerProfileType[];
   BestRevieweList: Review[];
+  isCheck: boolean;
 }) {
   const userData: ReviewerProfileType[] = [
     {
@@ -57,7 +59,8 @@ export default function MentoringDetail({
     >
       {/* Left Section */}
       <MentorSection
-        mentorUuid={MentoringInfoData?.mentorUuid || ''}
+        isCheck={isCheck}
+        MentoringInfoData={MentoringInfoData}
         mentoringSessionList={mentoringSessionList}
         mentorData={mentorData}
         ReviewerData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}

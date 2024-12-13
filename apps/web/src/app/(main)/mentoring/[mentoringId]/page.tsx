@@ -1,6 +1,7 @@
 import MentoringDetail from '@repo/web/components/pages/main/mentoring/MentoringDetail';
 
 import { MentoringResult } from '@repo/ui/types/CommonType.ts';
+import { getIsLiked } from '@repo/web/actions/Like/like';
 import { getProfileImage } from '@repo/web/actions/profile/getProfileData';
 import {
   getBestRevieweList,
@@ -20,12 +21,16 @@ async function fetchMentoringData(mentoringUuid: string) {
   );
   const ReviewerData = await getReviewerProfile(mentoringUuid);
   const BestRevieweList = await getBestRevieweList(mentoringUuid);
+  const isCheck = await getIsLiked(
+    MentoringInfoData?.mentorUuid ? MentoringInfoData.mentorUuid : ''
+  );
   return {
     mentoringSessionList,
     MentoringInfoData,
     mentorData,
     ReviewerData,
     BestRevieweList,
+    isCheck,
   };
 }
 async function Page({
@@ -42,6 +47,7 @@ async function Page({
     mentorData,
     ReviewerData,
     BestRevieweList,
+    isCheck,
   } = await fetchMentoringData(params.mentoringId);
   return (
     <main className="pt-[7rem] py-2 px-4 sm:px-8 min-h-screen bg-gray-50">
@@ -54,6 +60,7 @@ async function Page({
           mentorData={mentorData}
           ReviewerData={ReviewerData}
           BestRevieweList={BestRevieweList}
+          isCheck={isCheck}
         />
       )}
     </main>
