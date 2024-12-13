@@ -40,6 +40,7 @@ export default function MentoringItem({
             <FitImage
               src={item?.thumbnailUrl || ''}
               alt={item?.name || 'Placeholder'}
+              className="h-[40%]"
             />
           )}
         </div>

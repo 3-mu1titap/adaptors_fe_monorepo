@@ -1,20 +1,21 @@
 'use client';
-import { useRef, useState, useEffect } from 'react';
-import 'swiper/css';
+import { Skeleton } from '@repo/ui/components/ui/skeleton';
 import { cn } from '@repo/ui/lib/utils';
-import { CommonLayout } from '@repo/web/components/common/commomLayout';
-import TitleSection from '@repo/web/components/common/TitleSection';
-import InnerButton from '@repo/web/components/ui/Button/InnerButton';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useSession } from 'src/app/context/SessionContext';
-import { categories, courses } from 'src/store/dummyStore';
-import { Autoplay, Navigation } from 'swiper/modules'; // Autoplay, Navigation 모듈 가져오기
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperIndex from '../MainIntro/SwiperIndex';
-import PopularCategoryMentoring from './PopularCategoryMentoring';
 import { TopCategoryType } from '@repo/ui/types/CommonType.js';
 import { GetPopularMentoringList } from '@repo/web/actions/mentoring/mentoringAction';
+import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import TitleSection from '@repo/web/components/common/TitleSection';
 import { Mentoring } from '@repo/web/components/types/mentoring/mentoringTypes';
+import InnerButton from '@repo/web/components/ui/Button/InnerButton';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { useSession } from 'src/app/context/SessionContext';
+import { courses } from 'src/store/dummyStore';
+import 'swiper/css';
+import { Autoplay, Navigation } from 'swiper/modules'; // Autoplay, Navigation 모듈 가져오기
+import { Swiper, SwiperSlide } from 'swiper/react';
+import MentoringItem from '../../mentoring/MentoringItem';
+import SwiperIndex from '../MainIntro/SwiperIndex';
 function PopularMentoringList({
   categoryData,
 }: {
@@ -165,7 +166,12 @@ function PopularMentoringList({
       >
         {popularData.slice(0, 20).map((item, index) => (
           <SwiperSlide key={index}>
-            <PopularCategoryMentoring item={item} isRole={session?.role} />
+            <Suspense fallback={<Skeleton className="w-[200px] h-[500px]" />}>
+              <MentoringItem
+                item={item}
+                isLoading={popularData ? false : true}
+              />
+            </Suspense>
           </SwiperSlide>
         ))}
       </Swiper>
