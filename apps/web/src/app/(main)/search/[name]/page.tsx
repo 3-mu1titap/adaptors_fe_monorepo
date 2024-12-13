@@ -8,16 +8,18 @@ async function page({ params }: { params: { name: string } }) {
   const searchMentoringlistData = await GetMentoringNameSearch(name, 0);
   // console.log(searchMentoringlistData, 'search data data data data');
   return (
-    <div className="container mx-auto max-w-[80rem] mt-32">
-      <SearchResult searchResultName={name} />
-      <SearchMentoring
-        content={searchMentoringlistData?.content || []}
-        pageable={
-          searchMentoringlistData?.pageable || { pageNumber: 0, pageSize: 20 }
-        }
-        name={name}
-      />
-    </div>
+    <section className="container mx-auto max-w-[64rem] mt-32">
+      <div className="mx-auto lg:max-w-[64rem] md:max-w-[48rem] sm-max-w-[23rem]">
+        <SearchMentoring
+          totalpage={searchMentoringlistData?.totalPages || 0}
+          content={searchMentoringlistData?.content || []}
+          pageable={
+            searchMentoringlistData?.pageable || { pageNumber: 0, pageSize: 20 }
+          }
+          name={name}
+        />
+      </div>
+    </section>
   );
 }
 

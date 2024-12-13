@@ -1,4 +1,6 @@
 'use server';
+
+import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import {
   MentoringDataType,
   MentoringResult,
@@ -150,6 +152,7 @@ export async function GetMentoringNameSearch(
 ): Promise<{
   content: SearchMentoringListType[];
   pageable: pageableType;
+  totalPages: number;
 } | null> {
   'use server';
 
@@ -194,6 +197,29 @@ export async function GetPopularMentoringList(
     return result.result;
   } catch (error) {
     console.error('에러 조회: ', error);
+    return null;
+  }
+}
+
+//메인 멘토링 리스트 조회
+export async function getMainMentoringList() {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/main/list`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<mainIntroDataType[]>;
+    return result.result;
+  } catch (error) {
+    console.error('error: ', error);
     return null;
   }
 }

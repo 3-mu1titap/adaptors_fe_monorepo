@@ -1,15 +1,18 @@
 'use client';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import { useRef, useState } from 'react';
-import { mainIntroDatas } from 'src/store/dummyStore';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules'; // Autoplay 모듈 가져오기
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper/types';
 import SwiperIndex from './SwiperIndex';
 import SwiperItemLayout from './SwiperItem';
-
-export default function MainIntro() {
+import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
+export default function MainIntro({
+  mainIntroDatas,
+}: {
+  mainIntroDatas: mainIntroDataType[];
+}) {
   const [SlideIndex, setSlideIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 

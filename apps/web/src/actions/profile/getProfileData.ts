@@ -5,6 +5,7 @@ import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
+import { userIntroductionType } from '@repo/web/components/types/profile/RequestType';
 export const getProfileImage = async (
   uuid: string
 ): Promise<userProfileType> => {
@@ -80,4 +81,55 @@ export async function GetUserInfo() {
     console.error('유저 정보 조회 : ', error);
     return redirect('/error?message=Failed to fetch userInfo');
   }
+}
+
+export async function getMentorProfileImage(userUuid: string) {
+  'use server';
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_PROFILE_URL}/api/v1/memberInfo/profileImage`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to post profile image');
+  }
+
+  const data = (await response.json()) as commonResType<userProfileType>;
+  console.log(data, '멘터 정보 불러오기');
+  return data.result;
+}
+
+//소개글 조회
+export async function getMentorIntroduction(userUuid: string) {
+  'use server';
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_MEMBER_URL}/api/v1/member/introduction`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'userUuid': userUuid,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to post profile image');
+  }
+
+  const data = (await response.json()) as commonResType<userIntroductionType>;
+  // console.log(data, '소개글 불러오기');
+  return data.result;
 }

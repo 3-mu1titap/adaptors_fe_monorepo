@@ -136,6 +136,7 @@ export interface pageableType {
 
 // API 전체 응답 타입 정의
 export interface ApiResponse {
+  totalPages: number;
   content: SearchMentoringListType[];
   pageable: pageableType;
 }
