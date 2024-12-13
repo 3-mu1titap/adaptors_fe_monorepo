@@ -3,6 +3,13 @@ import {
   MentorProfileInfo,
 } from '@repo/admin/components/types/main/mentor/mentorTypes';
 import FitImage from '@repo/admin/components/ui/image/fit-image';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/ui/card';
+import { Mail, Phone, User, Briefcase, Calendar, Users } from 'lucide-react';
 
 export default function MentorProfileContent({
   profileImageUrl,
@@ -14,41 +21,72 @@ export default function MentorProfileContent({
   mentorProfileRequestDto: MentorProfileInfo;
 }) {
   return (
-    <>
-      <div className="flex items-center mb-4">
-        <div className="w-[10rem] h-[10rem] overflow-hidden">
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col items-center mb-8">
+        <div className="w-48 h-48 mb-4 overflow-hidden">
           <FitImage
-            className="w-full h-auto overflow-hidden rounded-full border-4 border-white"
+            className="w-full h-full object-cover rounded-full border-4 border-white shadow-lg"
             src={profileImageUrl}
             alt={memberRequestDto.name}
           />
         </div>
-        <div>
-          <h2 className="text-xl font-semibold">{memberRequestDto.name}</h2>
-          <p className="text-gray-600">@{memberRequestDto.nickName}</p>
-        </div>
+        <h2 className="text-3xl font-bold text-gray-800">
+          {memberRequestDto.name}
+        </h2>
+        <p className="text-xl text-gray-600">@{memberRequestDto.nickName}</p>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <h3 className="font-semibold mb-2">Contact Information</h3>
-          <p>Email: {memberRequestDto.email}</p>
-          <p>Phone: {memberRequestDto.phoneNumber}</p>
-          <p>Account ID: {memberRequestDto.accountId}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Mentor Profile</h3>
-          {mentorProfileRequestDto ? (
-            <>
-              <p>Field: {mentorProfileRequestDto.mentoringField}</p>
-              <p>Age: {mentorProfileRequestDto.age}</p>
-              <p>Gender: {mentorProfileRequestDto.gender}</p>
-              <p>Job Experience: {mentorProfileRequestDto.jobExperience}</p>
-            </>
-          ) : (
-            <p>등록된 소개가 없습니다.</p>
-          )}
-        </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">연락처 정보</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center">
+              <Mail className="w-5 h-5 mr-2 text-gray-500" />
+              <span>{memberRequestDto.email}</span>
+            </div>
+            <div className="flex items-center">
+              <Phone className="w-5 h-5 mr-2 text-gray-500" />
+              <span>{memberRequestDto.phoneNumber}</span>
+            </div>
+            <div className="flex items-center">
+              <User className="w-5 h-5 mr-2 text-gray-500" />
+              <span>계정 ID: {memberRequestDto.accountId}</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">멘토 프로필</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {mentorProfileRequestDto ? (
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <Briefcase className="w-5 h-5 mr-2 text-gray-500" />
+                  <span>분야: {mentorProfileRequestDto.mentoringField}</span>
+                </div>
+                <div className="flex items-center">
+                  <Calendar className="w-5 h-5 mr-2 text-gray-500" />
+                  <span>나이: {mentorProfileRequestDto.age}세</span>
+                </div>
+                <div className="flex items-center">
+                  <Users className="w-5 h-5 mr-2 text-gray-500" />
+                  <span>성별: {mentorProfileRequestDto.gender}</span>
+                </div>
+                <div className="flex items-center">
+                  <Briefcase className="w-5 h-5 mr-2 text-gray-500" />
+                  <span>경력: {mentorProfileRequestDto.jobExperience}</span>
+                </div>
+              </div>
+            ) : (
+              <p className="text-gray-500 italic">등록된 소개가 없습니다.</p>
+            )}
+          </CardContent>
+        </Card>
       </div>
-    </>
+    </div>
   );
 }
