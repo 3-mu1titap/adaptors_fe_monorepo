@@ -1,11 +1,13 @@
 'use server';
 import { Mentee } from '@repo/web/components/types/mentee/MenteeType';
-import { userProfileType } from '@repo/web/components/types/profile/RequestType';
+import {
+  userIntroductionType,
+  userProfileType,
+} from '@repo/web/components/types/profile/RequestType';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
-import { userIntroductionType } from '@repo/web/components/types/profile/RequestType';
 export const getProfileImage = async (
   uuid: string
 ): Promise<userProfileType> => {
@@ -103,7 +105,6 @@ export async function getMentorProfileImage(userUuid: string) {
   }
 
   const data = (await response.json()) as commonResType<userProfileType>;
-  console.log(data, '멘터 정보 불러오기');
   return data.result;
 }
 
