@@ -11,11 +11,6 @@ export default async function page({
   searchParams: { category: string; page: string };
 }) {
   const categories = await getTopCategoryList();
-  const mentoringListData = await GetMentoringByCategory({
-    topCategoryCode: searchParams.category,
-    size: '20',
-    page: searchParams.page,
-  });
   if (!searchParams.category) {
     redirect(`/mentoring?category=${categories[0]?.topCategoryCode}&page=1`);
   } else if (!searchParams.page) {
@@ -24,8 +19,14 @@ export default async function page({
     redirect(`/mentoring?category=${categories[0]?.topCategoryCode}&page=1`);
   }
 
+  const mentoringListData = await GetMentoringByCategory({
+    topCategoryCode: searchParams.category,
+    size: '20',
+    page: searchParams.page,
+  });
+
   return (
-    <main className="mt-[7rem] px-8 pb-3 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] container mx-auto">
+    <main className="mt-[9.5rem] px-8 pb-3 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] container mx-auto">
       <CategoriesSection
         categoryParam={searchParams.category}
         categories={categories}
