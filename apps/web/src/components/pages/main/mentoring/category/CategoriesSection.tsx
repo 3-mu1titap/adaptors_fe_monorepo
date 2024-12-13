@@ -1,70 +1,44 @@
 'use client';
+import { Button } from '@repo/ui/components/ui/button';
+import { cn } from '@repo/ui/lib/utils';
 import { TopCategoryType } from '@repo/ui/types/CommonType.js';
 import ChevronText from '@repo/web/components/ui/Text/ChevronText';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function CategoriesSection({
   categoryParam,
-  categorise,
-  type = 'DOMAIN',
-  flip = false,
+  categories,
   text,
 }: {
   categoryParam: string;
-  categorise: TopCategoryType[];
+  categories: TopCategoryType[];
   type?: string;
   flip?: boolean;
   text: string;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false); // 상태 관리
-
-  const toggleExpanded = () => {
-    setIsExpanded((prev) => !prev);
+  const router = useRouter();
+  const handleCategoryClick = (activeCategory: string) => {
+    router.replace(`/mentoring?category=${activeCategory}`);
   };
-
-  const filteredCategories = categorise.filter(
-    (category) => category.categoryType === type
-  );
-
   return (
     <>
-      <ChevronText text={text} />
-      <nav className="backdrop-blur-lg mx-auto w-full max">
-        <div
-          className={`relative transition-all duration-300 ${
-            isExpanded ? 'max-h-full' : 'max-h-[70px]'
-          } overflow-hidden`}
-        >
-          <ul className="pt-6 flex justify-center gap-5 flex-wrap">
-            {filteredCategories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/mentoring?category=${category.topCategoryCode}`}
-                className={`bg-black hover:bg-adaptorsYellow/50 rounded-3xl text-white py-2 px-5 text-md ${
-                  category.topCategoryCode === categoryParam
-                    ? `text-extrabold`
-                    : ``
-                }`}
-              >
-                {category.topCategoryName}
-              </Link>
-            ))}
-          </ul>
-        </div>
-        {filteredCategories.length > 1 && flip && (
-          <button
-            onClick={toggleExpanded}
-            className="mt-2 w-full flex justify-center mx-auto px-4"
-          >
-            {!isExpanded ? (
-              <ChevronDown size={20} color="black" />
-            ) : (
-              <ChevronUp size={20} color="black" />
+      <ChevronText text={text} className="mb-6" />
+      <nav className="backdrop-blur-lg mx-auto w-full px-auto">
+        {categories.map((category, index) => (
+          <Button
+            key={index}
+            className={cn(
+              'mr-2 mb-2 opacity-80 bg-black hover:bg-yellow-500 text-sm',
+              categoryParam === category.topCategoryCode &&
+                'bg-adaptorsYellow font-extrabold text-black'
             )}
-          </button>
-        )}
+            title={category.topCategoryName}
+            onClick={() => handleCategoryClick(category.topCategoryCode)}
+          >
+            {`${category.imageUrl ? category.imageUrl : ''} 
+            ${category.topCategoryName}`}
+          </Button>
+        ))}
       </nav>
     </>
   );

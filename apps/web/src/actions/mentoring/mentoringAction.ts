@@ -76,7 +76,7 @@ export async function SessionRequest(
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const nickName = session?.user.nickName;
-  const image = session?.user.profil;
+  const image = session?.user.profileImageUrl;
   console.log(request);
   try {
     const res = await fetch(
@@ -94,7 +94,7 @@ export async function SessionRequest(
           mentorUuid: request.mentorUuid,
           volt: 100,
           nickName: nickName,
-          userImageUrl: '',
+          userImageUrl: image,
           mentoringName: request.mentoringName,
         }),
       }

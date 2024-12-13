@@ -99,6 +99,7 @@ export interface TopCategoryType {
   topCategoryCode: string;
   topCategoryName: string;
   categoryType: string;
+  imageUrl?: string;
 }
 
 export interface SessionRequestType {
