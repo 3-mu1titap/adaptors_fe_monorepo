@@ -23,6 +23,7 @@ export async function GetMentoringSessionList(
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   console.log('token :', session?.user.accessToken);
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
@@ -33,7 +34,6 @@ export async function GetMentoringSessionList(
           'Content-Type': 'application/json',
           'userUuid': menteeUuid,
         },
-        next: { tags: ['session-request'] },
       }
     );
     const result = (await res.json()) as commonResType<MentoringResult[]>;
@@ -69,11 +69,15 @@ export async function GetMentoringInfo(
 }
 
 //멘토링 참가신청
-export async function SessionRequest(request: SessionRequestType) {
+export async function SessionRequest(
+  request: SessionRequestType
+): Promise<number> {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const nickName = session?.user.nickName;
+  const image = session?.user.profileImageUrl;
+  console.log(request);
   try {
     const res = await fetch(
       `${process.env.SESSION_REQUEST_URL}/api/v1/session-request-service`,
@@ -82,29 +86,35 @@ export async function SessionRequest(request: SessionRequestType) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'userUuid': session?.user.uuid,
+          'userUuid': menteeUuid,
           'Authorization': `Bearer ${session?.user.accessToken}`,
         },
         body: JSON.stringify({
-          nickName: nickName,
+          sessionUuid: request.sessionUuid,
+          mentorUuid: request.mentorUuid,
           volt: 100,
-          request,
+          nickName: nickName,
+          userImageUrl: image,
+          mentoringName: request.mentoringName,
         }),
       }
     );
     const result = (await res.json()) as commonResType<any>;
     console.log('멘토링 신청하기 result: ', result);
-    if (result.HttpStatus == '200') {
+    if (res.ok) {
       revalidateTag('session-request');
     }
+    console.log(result.code);
     return result.code;
   } catch (error) {
     console.error('멘토링 신청하기: ', error);
-    return null;
+    return 404;
   }
 }
 //멘토링 참가 취소
-export async function SessionCancel(request: SessionCancelType) {
+export async function SessionCancel(
+  request: SessionCancelType
+): Promise<number> {
   'use server';
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
@@ -122,14 +132,14 @@ export async function SessionCancel(request: SessionCancelType) {
         body: JSON.stringify(request),
       }
     );
-    const result = (await res.json()) as commonResType<any>;
-    if (result.HttpStatus == '200') {
+    const result = (await res.json()) as commonResType<null>;
+    if (res.ok) {
       revalidateTag('session-request');
     }
     return result.code;
   } catch (error) {
     console.error('멘토링 신청취소하기 에러: ', error);
-    return null;
+    return 404;
   }
 }
 

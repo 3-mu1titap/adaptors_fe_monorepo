@@ -104,7 +104,7 @@ export default function JoinFunnel({
             <FileUpload handleButton={onNextStep} />
           </Funnel.Step>
           <Funnel.Step name="profile">
-            {account.role != 'MENTOR' ? (
+            {account.role == 'MENTOR' ? (
               <MentorProfile handleButtton={onNextStep} />
             ) : (
               <MenteeProfile handleButton={onNextStep} />
