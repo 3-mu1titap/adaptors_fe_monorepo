@@ -29,19 +29,19 @@ function BestMentorCard({
         </div>
 
         <div className="flex flex-col items-center gap-2 mt-8">
-          <div className="w-[85px] h-[85px] rounded-full overflow-hidden">
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
             <FitImage
-              className={`object-contain ${item.profileImageUrl === 'none' ? 'bg-gray-200' : ''}`}
+              className={`object-contain ${item.profileImageUrl === 'none' ? 'bg-gray-400' : ' '}`}
               src={item.profileImageUrl === 'none' ? '' : item.profileImageUrl}
               alt=""
             />
           </div>
-          <span className="text-xl font-bold text-gray-600">
+          <span className="text-xl font-bold mt-4 text-gray-600">
             {item.nickName}
           </span>
         </div>
 
-        <div className="flex p-4 mt-5 items-center gap-x-8 justify-center">
+        <div className="flex mt-5 items-center gap-x-7 justify-center">
           <div className="flex flex-col mb-2 justify-start gap-y-1">
             <RateViewer
               rateData={item.reviewStarAvg}
@@ -53,7 +53,7 @@ function BestMentorCard({
             </span>
           </div>
 
-          <div className="flex flex-col mt-2  mb-2 justify-center gap-y-1">
+          <div className="flex flex-col mt-2 mb-2 justify-center gap-y-1">
             <HeartIcon className="w-[19px] h-[19px] " />
             <span className="text-sm text-gray-500 text-center">
               ({item.totalLikeCount})

@@ -6,6 +6,7 @@ import MainSearchTag from '@repo/web/components/pages/main/home/MainSearchTag/Ma
 import PopularMentoringList from '@repo/web/components/pages/main/home/popularMentoring/PopularMentoringList';
 import ShareMentoring from '@repo/web/components/pages/main/home/ShareMentoring';
 import BestMentoringList from '@repo/web/components/pages/main/home/bestMentor/BestMentorList';
+import { getMainMentoringList } from '@repo/web/actions/mentoring/mentoringAction';
 async function Page() {
   //베스트 멘토 조회
   const res = await GetBestMentorList();
@@ -15,14 +16,19 @@ async function Page() {
   const category_res = await getTopCategoryList();
   // console.log(category_res, '대카테고리 불러오기');
 
+  //메인 멘토링 리스트 조회
+  const main_List = await getMainMentoringList();
+  console.log(main_List, '---------------------------');
   return (
-    <CommonLayout className="mt-[7rem]">
-      <MainSearchTag />
-      <MainIntro />
-      <PopularMentoringList categoryData={category_res} />
-      <BestMentoringList item={res} />
-      <ShareMentoring />
-    </CommonLayout>
+    <>
+      <CommonLayout className="mt-[7rem]">
+        <MainSearchTag />
+        {main_List && <MainIntro mainIntroDatas={main_List} />}
+        <PopularMentoringList categoryData={category_res} />
+        <BestMentoringList item={res} />
+        <ShareMentoring />
+      </CommonLayout>
+    </>
   );
 }
 
