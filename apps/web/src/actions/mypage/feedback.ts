@@ -1,9 +1,15 @@
 import { FeedbackElements } from '@repo/ui/types/Feedback.ts';
 import { options } from '@repo/web/app/api/auth/[...nextauth]/options';
+import {
+  FeedbackDto,
+  MentoringFeedback,
+} from '@repo/web/components/types/feedback/feedbackResType';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 //멘티 마이페이지에서 피드백 조회
-export async function getFeedbackScore(categoryCode: string) {
+export async function getFeedbackScore(
+  categoryCode: string
+): Promise<MentoringFeedback[]> {
   'use server';
   const session = await getServerSession(options);
   try {
@@ -17,22 +23,21 @@ export async function getFeedbackScore(categoryCode: string) {
           'userUuid': session?.user.uuid,
           'Authorization': `Bearer ${session?.user.accessToken}`,
         },
-        body: JSON.stringify({
-          categoryCode,
-        }),
       }
     );
-    const result = (await res.json()) as commonResType<any>;
-    console.log('멘티 마이페이지 피드백 조회 result: ', result);
-    return result.code;
+    const result = (await res.json()) as commonResType<MentoringFeedback[]>;
+    console.log('피드백 히스토리 조회: ', result.result);
+    return result.result;
   } catch (error) {
     console.error('멘티 마이페이지 피드백 조회: ', error);
-    return null;
+    return [];
   }
 }
 
 //피드백 그래프 조회
-export async function getFeedbackGraph(categoryCode: string) {
+export async function getFeedbackGraph(
+  categoryCode: string
+): Promise<FeedbackDto | null> {
   'use server';
   const session = await getServerSession(options);
 
@@ -47,14 +52,11 @@ export async function getFeedbackGraph(categoryCode: string) {
           'userUuid': session?.user.uuid,
           'Authorization': `Bearer ${session?.user.accessToken}`,
         },
-        body: JSON.stringify({
-          categoryCode,
-        }),
       }
     );
-    const result = (await res.json()) as commonResType<any>;
-    console.log('멘티 마이페이지 피드백 조회 result: ', result);
-    return result.code;
+    const result = (await res.json()) as commonResType<FeedbackDto>;
+    console.log('그래프 조회 result: ', result.result);
+    return result.result;
   } catch (error) {
     console.error('멘티 마이페이지 피드백 조회: ', error);
     return null;
@@ -62,31 +64,30 @@ export async function getFeedbackGraph(categoryCode: string) {
 }
 
 //피드백 요소 조회
-export async function getFeedbackElements(categoryCode: string) {
+export async function getFeedbackElements(
+  categoryCode: string
+): Promise<FeedbackElements[] | []> {
   'use server';
   const session = await getServerSession(options);
 
   try {
     const res = await fetch(
-      `${process.env.FEEDBACK_QUERY_URL}/api/v1/feedback-record/feedback-graph/${categoryCode}`,
+      `${process.env.FEEDBACK_SCORE_URL}/api/v1/feedback-score/${categoryCode}`,
       {
         cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'userUuid': session?.user.uuid,
-          'Authorization': `Bearer ${session?.user.accessToken}`,
+          // 'Authorization': `Bearer ${session?.user.accessToken}`,
         },
-        body: JSON.stringify({
-          categoryCode,
-        }),
       }
     );
-    const result = (await res.json()) as commonResType<FeedbackElements>;
-    console.log('멘티 마이페이지 피드백 조회 result: ', result);
-    return result.code;
+    const result = (await res.json()) as commonResType<FeedbackElements[]>;
+    console.log('피드백 요소 조회: ', result.result);
+    return result.result;
   } catch (error) {
-    console.error('멘티 마이페이지 피드백 조회: ', error);
-    return null;
+    console.error('멘티 마이페이지 피드백 조회 볼팡이: ', error);
+    return [];
   }
 }

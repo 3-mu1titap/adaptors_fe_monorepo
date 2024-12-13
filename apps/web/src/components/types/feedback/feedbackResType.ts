@@ -1,4 +1,4 @@
-interface ScoreType {
+export interface ScoreType {
   element1: number;
   element2: number;
   element3: number;
@@ -7,7 +7,7 @@ interface ScoreType {
   mentoringDate: string;
 }
 
-interface FeedbackFirstLastScoreDto {
+export interface FeedbackFirstLastScoreDto {
   id: string;
   firstScore: ScoreType;
   lastScore: ScoreType;
@@ -18,7 +18,7 @@ export interface FeedbackDto {
   feedbackContent: string;
 }
 
-interface MentoringFeedback {
+export interface MentoringFeedback {
   mentorNickName: string;
   mentoringSessionUuid: string;
   mentoringDate: string;
