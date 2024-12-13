@@ -1,21 +1,21 @@
-import { Card, CardContent } from '@repo/ui/components/ui/card';
 import { SearchMentoringListType } from '@repo/ui/types/CommonType.ts';
 import Image from 'next/image';
 function SearhMentoringCard({ item }: { item: SearchMentoringListType }) {
   return (
-    <Card className="max-w-[310px] min-h-[400px] rounded-xl h-auto border border-b-gray-200 flex flex-col items-center justify-center">
-      <CardContent className="flex flex-col justify-center space-y-4">
-        {item.thumbnailUrl && (
-          <div className="relative w-[285px] h-[200px] rounded-xl overflow-hidden mb-4">
+    <li className="rounded-xl h-auto border border-b-gray-200 flex flex-col items-center justify-center">
+      <div className="flex flex-col justify-center space-y-4">
+        <div>
+          {item.thumbnailUrl && (
             <Image
-              fill
+              width={16}
+              height={9}
+              layout="responsive"
               alt="dummy"
               src={`${item.thumbnailUrl}`}
               className="object-cover"
             />
-          </div>
-        )}
-
+          )}
+        </div>
         <div className="flex flex-col">
           <span className="text-xl font-bold self-center">{item.name}</span>
           <span className="text-md text-black text-center mt-2">
@@ -32,8 +32,8 @@ function SearhMentoringCard({ item }: { item: SearchMentoringListType }) {
             </button>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </li>
   );
 }
 

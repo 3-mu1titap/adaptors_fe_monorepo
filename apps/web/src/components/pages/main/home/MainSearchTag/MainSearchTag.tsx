@@ -69,7 +69,7 @@ function MainSearchTag() {
         </div>
       </div>
 
-      <div className="flex justify-center gap-4 mt-4">
+      {/* <div className="flex justify-center gap-4 mt-4">
         {['#멘토링', '#아이돌멘토링', '#오디션', '#케팝'].map((tag) => (
           <button
             key={tag}
@@ -78,7 +78,7 @@ function MainSearchTag() {
             {tag}
           </button>
         ))}
-      </div>
+      </div> */}
       {isMobile ? (
         <SearchDrawer isOpen={isOpen} openCloser={() => setIsOpen(false)} />
       ) : (

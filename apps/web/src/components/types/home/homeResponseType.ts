@@ -1,5 +1,5 @@
 export interface mainIntroDataType {
-  subtitle: string;
+  category: CategoryType[];
   title: string;
   mentoringUuid: string;
   content: string;
@@ -8,4 +8,9 @@ export interface mainIntroDataType {
     src: string;
     description: string;
   }[];
+}
+
+export interface CategoryType {
+  id: number;
+  categoryName: string;
 }

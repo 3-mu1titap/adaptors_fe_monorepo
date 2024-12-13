@@ -34,7 +34,7 @@ function SearchMentoring({
   return (
     <>
       {Content && pageable && Content.length > 0 ? (
-        <ul className="mt-10 grid gap-y-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-auto gap-x-8 max-w-[80rem] justify-items-stretch">
+        <ul className="mt-10 grid gap-y-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto justify-items-stretch">
           {Content.map((item, index) => (
             <SearhMentoringCard item={item} key={index} />
           ))}

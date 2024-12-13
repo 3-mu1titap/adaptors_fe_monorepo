@@ -1,15 +1,19 @@
 import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import FitImage from '../../../../ui/image/fit-image';
-
 function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
   return (
     <article className="grid grid-cols-1 md:grid-cols-2 px-4 justify-between items-center">
       <div className="flex flex-col items-center md:items-start order-2 md:order-1">
-        {/* 버튼 */}
-        <div className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5">
-          {item.subtitle}
+        <div className="flex gap-x-1">
+          {item.category.map((category) => (
+            <span
+              key={category.id}
+              className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5"
+            >
+              {category.categoryName}
+            </span>
+          ))}
         </div>
-
         {/* 제목 */}
         <h2 className="text-center md:text-start text-ellipsis whitespace-pre-line text-[2rem] md:text-[3rem] font-extrabold leading-none">
           {item.title}

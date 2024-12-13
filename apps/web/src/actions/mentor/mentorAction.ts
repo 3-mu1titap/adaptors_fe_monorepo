@@ -40,7 +40,7 @@ export async function GetBestMentorList() {
 
   try {
     const res = await fetch(
-      `${process.env.BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
+      `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list?limit=${10}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -74,7 +74,7 @@ export async function GetMentorList() {
       }
     );
     const result = (await res.json()) as commonResType<MentorListType>;
-    console.log(result.result, '멘토 리스트 불러오기 성공');
+    // console.log(result.result, '멘토 리스트 불러오기 성공');
     return result.result.mentorUuid;
   } catch (error) {
     console.error('error : ', error);

@@ -43,7 +43,7 @@ export async function PaymentReq(
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/ready`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/ready`,
       {
         cache: 'no-cache',
         method: 'POST',
@@ -68,7 +68,7 @@ export async function PaymentApproval(pg_token: string) {
   'use server';
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/approve?pg_token=${pg_token}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/approve?pg_token=${pg_token}`,
       {
         cache: 'no-cache',
         method: 'POST',
@@ -96,7 +96,7 @@ export async function GetMemberPoint() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/member-service/api/v1/member/points?userUuid=${userUuid}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/member-service/api/v1/member/points?userUuid=${userUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -125,7 +125,7 @@ export async function GetPointList() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-service/api/v1/payment/points/history?menteeUuid=${menteeUuid}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/points/history?menteeUuid=${menteeUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',

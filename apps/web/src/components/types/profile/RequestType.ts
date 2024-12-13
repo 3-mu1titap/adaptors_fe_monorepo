@@ -26,3 +26,7 @@ export interface MentorInfoType {
   nickName: string;
   profileImageUrl: string;
 }
+
+export interface userIntroductionType {
+  content: string;
+}
