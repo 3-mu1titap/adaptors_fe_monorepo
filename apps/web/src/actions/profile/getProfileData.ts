@@ -103,7 +103,7 @@ export async function getMentorProfileImage(userUuid: string) {
   }
 
   const data = (await response.json()) as commonResType<userProfileType>;
-  console.log(data, '멘터 정보 불러오기');
+  // console.log(data, '멘터 정보 불러오기');
   return data.result;
 }
 

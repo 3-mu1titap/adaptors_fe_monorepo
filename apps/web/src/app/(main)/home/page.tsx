@@ -18,7 +18,7 @@ async function Page() {
 
   //메인 멘토링 리스트 조회
   const main_List = await getMainMentoringList();
-  console.log(main_List, '---------------------------');
+  // console.log(main_List, '---------------------------');
   return (
     <>
       <CommonLayout className="mt-[7rem]">

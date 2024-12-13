@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from 'react';
 import { GetMentoringNameSearch } from 'src/actions/mentoring/mentoringAction';
 import SearhMentoringCard from './SearhMentoringCard';
+import MentoringItem from '../main/mentoring/MentoringItem';
 function SearchMentoring({
   totalpage,
   content,
@@ -28,6 +29,7 @@ function SearchMentoring({
       setContent(res?.content || []);
     } catch (error) {
       console.error('Error fetching mentoring data:', error);
+      setContent([]);
     }
   };
   useEffect(() => {
@@ -38,7 +40,11 @@ function SearchMentoring({
       {Content && pageable && Content.length > 0 ? (
         <ul className="mt-10 grid gap-y-20 gap-x-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {Content.map((item, index) => (
-            <SearhMentoringCard item={item} key={index} />
+            <MentoringItem
+              item={item}
+              key={index}
+              isLoading={Content ? false : true}
+            />
           ))}
         </ul>
       ) : (

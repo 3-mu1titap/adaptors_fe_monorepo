@@ -21,10 +21,8 @@ function PopularMentoringList({
 }: {
   categoryData: TopCategoryType[];
 }) {
-  const data = courses; // 데이터 복제
   const swiperRef = useRef<any>(null); // Swiper 인스턴스를 참조하기 위한 ref
   const [SlideIndex, setSlideIndex] = useState(0);
-  const session = useSession();
 
   const [popularData, setPopularData] = useState<Mentoring[]>([]); // 선택된 카테고리 데이터
   const [categories, setCategories] = useState<TopCategoryType[]>(categoryData);
@@ -58,7 +56,7 @@ function PopularMentoringList({
       setPopularData(res || []);
       // console.log(res, '카테고리로 인기 멘토링 데이터 불러오기');
     } catch (error) {
-      console.error('Error fetching category data:', error);
+      // console.error('Error fetching category data:', error);
     }
   };
 

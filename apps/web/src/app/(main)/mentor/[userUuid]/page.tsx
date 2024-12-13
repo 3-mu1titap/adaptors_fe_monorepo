@@ -39,7 +39,7 @@ async function page({
 
   //유저의 수강평 조회
   const review = await getMentorReview(userUuId);
-  console.log(review, '조회 성공');
+  // console.log(review, '조회 성공');
 
   return (
     <SeparateContainer.RightSide className="flex flex-col justify-center border-l-0 border-gray-200">

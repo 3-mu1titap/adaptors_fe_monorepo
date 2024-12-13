@@ -31,8 +31,8 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
 
   // 서버에서 받은 데이터 반환
   const data = await response.json();
-  console.log('좋아요요청성공', data.code);
-  return data.code;
+  // console.log('좋아요요청성공', data.code);
+  return data.isSuccess;
 };
 
 //블랙리스트
