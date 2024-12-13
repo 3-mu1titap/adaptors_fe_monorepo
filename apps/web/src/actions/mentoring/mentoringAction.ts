@@ -1,10 +1,10 @@
 'use server';
 
-import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import {
   MentoringDataType,
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
+import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
@@ -190,7 +190,6 @@ export async function GetPopularMentoringList(
       }
     );
     const result = (await res.json()) as commonResType<Mentoring[]>;
-    // console.log(result.result, '인기 멘토링에 대한 겸색 결과 리스트 조회');
     return result.result;
   } catch (error) {
     console.error('에러 조회: ', error);

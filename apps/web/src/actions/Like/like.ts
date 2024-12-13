@@ -31,6 +31,7 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
 
   // 서버에서 받은 데이터 반환
   const data = await response.json();
+  revalidateTag('likeStatus');
   return data.code;
 };
 
@@ -101,6 +102,7 @@ export async function getIsLiked(targetUuid: string): Promise<boolean> {
     const res = await fetch(
       `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/like`,
       {
+        cache: 'force-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

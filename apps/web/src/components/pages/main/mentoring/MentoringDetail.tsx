@@ -1,9 +1,10 @@
 import { SeparateContainer } from '@repo/ui/components/ui/custom/CustomSeparateContainer';
+import { MentorBatchData } from '@repo/ui/types/batchDataType/MenterBatchData.ts';
 import {
   MentoringDataType,
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
-import { Review, ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
+import { Review, ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import MentoringContents from './MentoringContents';
@@ -19,6 +20,7 @@ export default function MentoringDetail({
   ReviewerData,
   BestRevieweList,
   isCheck,
+  MentorBatchData,
 }: {
   mentoringDate: string;
   mentoringSessionList: MentoringResult[];
@@ -27,6 +29,7 @@ export default function MentoringDetail({
   ReviewerData: ReviewerProfileType[];
   BestRevieweList: Review[];
   isCheck: boolean;
+  MentorBatchData: MentorBatchData | null;
 }) {
   const userData: ReviewerProfileType[] = [
     {
@@ -62,6 +65,8 @@ export default function MentoringDetail({
         mentoringSessionList={mentoringSessionList}
         mentorData={mentorData}
         ReviewerData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
+        totalLikeCount={MentorBatchData?.totalLikeCount}
+        totalReviewCount={MentorBatchData?.totalReviewCount}
       />
       {/* Ri Section */}
       <SeparateContainer.RightSide className="w-full">

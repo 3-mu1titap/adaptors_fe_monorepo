@@ -1,7 +1,10 @@
-import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
+import { MentorBatchData } from '@repo/ui/types/batchDataType/MenterBatchData.ts';
+import {
+  BestMentorType,
+  MentorListType,
+  MentorMentoringListDataType,
+} from '@repo/web/components/types/mentor/mentorType';
 import { commonResType } from '../../components/types/ResponseTypes';
-import { BestMentorType } from '@repo/web/components/types/mentor/mentorType';
-import { MentorListType } from '@repo/web/components/types/mentor/mentorType';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
@@ -79,5 +82,31 @@ export async function GetMentorList() {
   } catch (error) {
     console.error('error : ', error);
     return [];
+  }
+}
+
+//멘토 집계 데이터 조회
+export async function getMentorBatchData(
+  mentorUuid: string
+): Promise<MentorBatchData | null> {
+  'use server';
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/${mentorUuid}`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<MentorBatchData>;
+    // console.log(result.result, '베스트 멘토 리스트 불러오기 성공');
+    return result.result;
+  } catch (error) {
+    console.error('멘토의 멘토링 리스트 조회 : ', error);
+    return null;
   }
 }
