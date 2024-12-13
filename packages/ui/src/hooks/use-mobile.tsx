@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 440;
 
 export default function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(

@@ -4,7 +4,7 @@ import {
   AvatarImage,
 } from '@repo/ui/components/ui/avatar';
 import { Review } from '@repo/ui/types/ReviewType.js';
-import ScoreStar from './ScoreStar';
+import RateViewer from '@repo/web/components/common/RateViwer';
 interface Comment {
   id: string;
   author: {
@@ -16,41 +16,43 @@ interface Comment {
   timestamp: string;
 }
 
-interface CommentThreadProps {
-  comments?: Comment[];
-}
-
 export default function MentoringReview({ comments }: { comments: Review[] }) {
   return (
     <div className="px-4 py-2 bg-adaptorsYellow/10">
       {comments?.map((comment) => (
-        <div key={comment.id} className="flex gap-3 my-8 bg-[#FEFAEA]">
-          <Avatar className="h-8 w-8">
-            <AvatarImage
-              src={comment.memberRequestDto.profileImageUrl}
-              alt={comment.memberRequestDto.nickName}
-            />
-            <AvatarFallback>
-              {comment.memberRequestDto.profileImageUrl}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-medium">
-                {comment.memberRequestDto.nickName}
-              </span>
-              <span className="text-md text-muted-foreground">
-                at {comment.reviewRequestDto.wroteAt}
-              </span>
-              <span className="text-md text-muted-foreground">
-                at {comment.reviewRequestDto.wroteAt}
-              </span>
-              <ScoreStar score={comment.reviewRequestDto.score} />
+        <div key={comment.id} className=" my-8 px-2 bg-[#FEFAEA]">
+          <div className="flex flex-wrap justify-between gap-2 w-full">
+            {/* 프로필 이름 별점 */}
+            <div className="flex gap-2 items-end justify-between w-full">
+              {/* 프로필 이름 */}
+              <div className="flex gap-2 w-full">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage
+                    src={comment.memberRequestDto.profileImageUrl}
+                    alt={comment.memberRequestDto.nickName}
+                  />
+                  <AvatarFallback>
+                    {comment.memberRequestDto.profileImageUrl}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-lg font-medium leading-4 flex items-end pb-1.5">
+                  {comment.memberRequestDto.nickName}
+                </span>
+              </div>
+              <RateViewer
+                rateData={comment.reviewRequestDto.score || 0}
+                size="0.8rem"
+                color={'#ffd84d'}
+              />
             </div>
-            <p className="text-lg mt-1">
-              {comment.reviewRequestDto.reviewComment}
-            </p>
           </div>
+          <p className="text-lg mt-4 pl-2 w-full relative">
+            {comment.reviewRequestDto.reviewComment}
+            <br />
+            <span className="text-md text-muted-foreground absolute right-3 mt-2">
+              at {comment.reviewRequestDto.wroteAt.split('T')[0]}
+            </span>
+          </p>
         </div>
       ))}
     </div>

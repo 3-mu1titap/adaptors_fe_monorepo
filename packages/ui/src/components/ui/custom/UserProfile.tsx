@@ -13,7 +13,8 @@ function UserProfile({
 }) {
   const defaultSize = size || 40;
   const defaultProfileImgUrl =
-    profileImgUrl || 'https://picsum.photos/200/200?random=320';
+    profileImgUrl ||
+    'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1733832486599-thunderProfile.png';
   const defaultName = name || 'adaptor';
   return (
     <div

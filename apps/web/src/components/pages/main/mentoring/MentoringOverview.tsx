@@ -3,7 +3,7 @@ import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionIn
 import { MentoringDataType } from '@repo/ui/types/CommonType.ts';
 import { ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
 import FitImage from '@repo/web/components/ui/image/fit-image';
-import { BadgeDollarSign, Hash, MessageSquareCode } from 'lucide-react';
+import { BadgeDollarSign, MessageSquareCode } from 'lucide-react';
 
 export default function MentoringOverview({
   MentoringInfoData,
@@ -30,9 +30,13 @@ export default function MentoringOverview({
     <div>
       <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5 pb-3 pt-5">
-        <h2 className="text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold leading-tight">
+        <div className="text-lg md:text-2xl lg:text-2xl xl:text-3xl font-bold leading-tight border-l-[5px] border-l-adaptorsYellow pl-5">
           {MentoringInfoData?.name}
-        </h2>
+          <br />
+          <h3 className="text-sm md:text-md lg:text-lg font-medium leading-tight">
+            {MentoringInfoData.description}
+          </h3>
+        </div>
         <CustomReviewerItem
           initialUserData={userData}
           className="hidden lg:!flex"
@@ -67,14 +71,13 @@ export default function MentoringOverview({
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow-sm">
-        <ul className="flex gap-1 py-1">
+        <ul className="flex flex-wrap gap-y-1 py-1">
           {MentoringInfoData?.hashTagList?.map((item) => (
             <li
               key={item.hashtagId}
-              className=" px-3 rounded-2xl text-adaptorsBlue text-sm flex items-center"
+              className=" px-3 rounded-2xl text-adaptorsYellow text-sm mobile:text-md md:text-lg flex items-center"
             >
-              <Hash size={10} />
-              {item.hashtagName}
+              #{item.hashtagName}
             </li>
           ))}
         </ul>

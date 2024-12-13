@@ -52,6 +52,7 @@ export interface MentoringSession {
 export interface SessionUser {
   nick?: string;
   userImageUrl: string;
+  menteeImageUrl?: string;
 }
 
 // export interface MentoringDataType {

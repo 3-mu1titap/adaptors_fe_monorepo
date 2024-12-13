@@ -54,7 +54,6 @@ async function Page({
       {MentoringInfoData && mentoringSessionList && (
         <MentoringDetail
           mentoringDate={selectedDate}
-          mentoringUuid={params.mentoringId}
           mentoringSessionList={mentoringSessionList}
           MentoringInfoData={MentoringInfoData}
           mentorData={mentorData}

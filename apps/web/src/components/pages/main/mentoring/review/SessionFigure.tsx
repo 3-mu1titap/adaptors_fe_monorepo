@@ -21,6 +21,7 @@ export default function SessionFigure({
     }
     return `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`;
   };
+  console.log('sessionFigure', session.sessionUserList);
   return (
     <>
       <figure
@@ -47,8 +48,18 @@ export default function SessionFigure({
             </span>
           )}
         </div>
-        <div className="w-full flex justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
-          <CustomReviewerItem initialUserData={session.sessionUserList} />
+        <div
+          className={`w-full flex justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20`}
+        >
+          {session.nowHeadCount != 0 && (
+            <>
+              <CustomReviewerItem
+                initialUserData={session.sessionUserList}
+                userCount={session.nowHeadCount}
+                text="now"
+              />
+            </>
+          )}
           <CustomValueUnit value={session.price} unit="Volt" />
           {session.isClosed ? (
             <div className="px-4  py-3.5 w-24 md:w-28 text-center rounded-md text-md md:text-xl font-medium bg-[#433E3E] text-white">
