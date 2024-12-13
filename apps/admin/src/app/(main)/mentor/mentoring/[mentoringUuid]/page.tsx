@@ -46,6 +46,7 @@ export default async function Page({
           initialUserData={initialUserData}
           mentoringSessionList={mentoringSessionList}
           MentoringInfoData={mentoringInfoData}
+          mentoringUuid={mentoringUuid}
         />
       )}
     </>

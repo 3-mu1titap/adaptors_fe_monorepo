@@ -1,5 +1,9 @@
+import { GetTodayMentoringSessionList } from '@repo/admin/actions/schedule/scheduleAction';
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import Meeting from '@repo/admin/components/pages/main/mentor/meeting/Meeting';
+import { getDate } from '@repo/admin/components/utils/dateUtil';
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 
 export const metadata: Metadata = {
   title: `Mentoring Meeting`,
@@ -45,9 +49,10 @@ const mentoringSessionList = [
 ];
 
 export default async function Page() {
-  return (
-    <main className="container mx-auto">
-      <Meeting mentoringSessionList={mentoringSessionList} />
-    </main>
-  );
+  // const mentoringSessionList = await GetTodayMentoringSessionList(
+  //   getDate({ type: false })
+  // );
+  const session = await getServerSession(options);
+  const user = session?.user;
+  return <Meeting mentoringSessionList={mentoringSessionList} user={user} />;
 }

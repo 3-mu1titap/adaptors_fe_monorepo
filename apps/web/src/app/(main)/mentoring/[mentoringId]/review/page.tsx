@@ -1,5 +1,3 @@
-import MentoringReview from '@repo/web/components/pages/main/mentoring/review/MentoringReview';
-
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
 import { MentoringDataType } from '@repo/ui/types/CommonType.js';
 import {
@@ -101,7 +99,7 @@ export default async function page() {
         }
         mentoringSessionList={mentoringSessionList}
       /> */}
-      <MentoringReview comments={comments} />
+      {/* <MentoringReview comments={comments} /> */}
     </CommonLayout>
   );
 }

@@ -3,6 +3,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@repo/ui/components/ui/avatar';
+import { Review } from '@repo/ui/types/ReviewType.js';
 import ScoreStar from './ScoreStar';
 interface Comment {
   id: string;
@@ -19,27 +20,33 @@ interface CommentThreadProps {
   comments?: Comment[];
 }
 
-export default function MentoringReview({ comments = [] }: CommentThreadProps) {
+export default function MentoringReview({ comments }: { comments: Review[] }) {
   return (
     <div className="px-4 py-2 bg-adaptorsYellow/10">
       {comments.map((comment) => (
         <div key={comment.id} className="flex gap-3 my-8 bg-[#FEFAEA]">
           <Avatar className="h-8 w-8">
             <AvatarImage
-              src={comment.author.avatar}
-              alt={comment.author.name}
+              src={comment.memberRequestDto.profileImageUrl}
+              alt={comment.memberRequestDto.nickName}
             />
-            <AvatarFallback>{comment.author.name[0]}</AvatarFallback>
+            <AvatarFallback>
+              {comment.memberRequestDto.profileImageUrl}
+            </AvatarFallback>
           </Avatar>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <span className="text-xl font-medium">{comment.author.name}</span>
+              <span className="text-xl font-medium">
+                {comment.memberRequestDto.nickName}
+              </span>
               <span className="text-md text-muted-foreground">
-                at {comment.timestamp}
+                at {comment.reviewRequestDto.wroteAt}
               </span>
               <ScoreStar score={5} />
             </div>
-            <p className="text-lg mt-1">{comment.content}</p>
+            <p className="text-lg mt-1">
+              {comment.reviewRequestDto.reviewComment}
+            </p>
           </div>
         </div>
       ))}

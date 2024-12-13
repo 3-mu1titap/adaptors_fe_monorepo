@@ -2,6 +2,7 @@
 
 import {
   mentorVoltListDataType,
+  settleDataType,
   settleListDataType,
 } from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { commonResType } from '@repo/admin/components/types/ResponseTypes';
@@ -77,4 +78,110 @@ export async function GetMentorVolts() {
     totalVolt: result.result.totalVolt,
     voltList: voltListWithNickNames,
   };
+}
+
+// 정산 요청
+export async function PostSettle({ payload }: { payload: settleDataType }) {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
+
+  const res = await fetch(`${process.env.PAYMENT_URL}/api/v1/settle`, {
+    cache: 'no-cache',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ ...payload, mentorUuid: userUuid }),
+  });
+  if (!res.ok) {
+    console.error('2차 인증번호 발송 실패');
+    return res.ok;
+  }
+
+  console.log('2차 인증번호 발송 성공');
+
+  return res.ok;
+}
+
+// 2차 인증번호 발송
+export async function PostSecondAuthenticationCode() {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
+
+  const res = await fetch(
+    `${process.env.PAYMENT_URL}/api/v1/settle/send/random-number?userUuid=${userUuid}`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    console.error('2차 인증번호 발송 실패');
+    return res.ok;
+  }
+
+  console.log('2차 인증번호 발송 성공');
+
+  return res.ok;
+}
+
+// 2차 인증번호 확인
+export async function PostCheckSecondAuthenticationCode(code: string) {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
+
+  const res = await fetch(
+    `${process.env.PAYMENT_URL}/api/v1/settle/check/random-number?userUuid=${userUuid}&insertedNumber${code}`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    console.error('2차 인증번호 체크 실패');
+    return res.ok;
+  }
+
+  const result = (await res.json()) as commonResType<boolean | null>;
+  console.log('2차 인증번호 체크 성공', result);
+  return result.result;
+}
+
+// 2차인증 후 이동 후 인증 지우기
+export async function PostDeleteAuthenticationCode() {
+  const session = await getServerSession(options);
+  const accessToken = session?.user.accessToken;
+  const userUuid = session?.user.uuid;
+
+  const res = await fetch(
+    `${process.env.PAYMENT_URL}/api/v1/settle/redirect-page?userUuid=${userUuid}`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    console.error('인증 지우기 실패');
+    return res.ok;
+  }
+
+  const result = (await res.json()) as commonResType<boolean | null>;
+  console.log('인증 지우기 성공', result);
+  return res.ok;
 }

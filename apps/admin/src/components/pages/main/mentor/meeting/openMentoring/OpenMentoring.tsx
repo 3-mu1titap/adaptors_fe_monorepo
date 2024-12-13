@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/ui/card';
-import { Video, Clock, Calendar } from 'lucide-react';
+import { Video, Clock, Calendar, Divide } from 'lucide-react';
 import Swal from 'sweetalert2';
 
 export interface TimeDataType {
@@ -49,11 +49,11 @@ export default function OpenMentoring({
   joinSession,
 }: {
   mentoringSessionList: MentoringSessionDataType[];
-  joinSession: (sessionUuid: string) => void;
+  joinSession: (session: any) => void;
 }) {
   const handleJoinAttempt = async (session: MentoringSessionDataType) => {
     if (isWithinTenMinutes(session.startDate, session.startTime)) {
-      await joinSession(session.sessionUuid);
+      await joinSession(session);
     } else {
       const startTime = new Date(session.startDate);
       startTime.setHours(session.startTime.hour);
@@ -72,13 +72,12 @@ export default function OpenMentoring({
 
   return (
     <ul className="w-full max-w-4xl mx-auto space-y-6 p-6">
-      {mentoringSessionList &&
+      {mentoringSessionList.length > 0 ? (
         mentoringSessionList.map((session, idx) => {
           const canJoin = isWithinTenMinutes(
             session.startDate,
             session.startTime
           );
-
           return (
             <Card
               key={idx}
@@ -130,7 +129,10 @@ export default function OpenMentoring({
               </CardContent>
             </Card>
           );
-        })}
+        })
+      ) : (
+        <li>오늘 참여할 멘토링이 없습니다.</li>
+      )}
     </ul>
   );
 }

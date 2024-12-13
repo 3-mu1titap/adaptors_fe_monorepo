@@ -1,8 +1,7 @@
 'use client';
 
 import { OpenVidu } from 'openvidu-browser';
-import React, { useState, useEffect } from 'react';
-import UserVideoComponent from './UserVideoComponent';
+import React, { useState, useEffect, useRef } from 'react';
 import getToken from '@repo/admin/actions/openvidu/openviduAction';
 import OpenMentoring from './openMentoring/OpenMentoring';
 import {
@@ -14,19 +13,17 @@ import {
 } from '@repo/ui/components/ui/dialog';
 import MentoringFeedbackForm from '@repo/admin/components/form/MentoringFeedbackForm';
 import OvTracks from './OvTracks';
-import Participants from './participants/Participants';
+import OpenviduParticipants from './participants/OpenviduParticipants';
 import Chatting from '../../chatting/Chatting';
-import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
-import { useUserInfoStore } from '@repo/admin/store/messagesStore';
-import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
-import { getParticipants } from '@repo/admin/actions/meeting/meetingAction';
 
 interface MeetingProps {
-  mentoringSessionList: any[]; // mentoringSessionList의 타입을 정의합니다. 필요한 경우 더 구체적으로 변경하세요.
+  mentoringSessionList: any[];
+  user: any;
 }
 
-const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
+const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
+  const [mentoringName, setMentoringName] = useState<string>('');
   const [myUserName, setMyUserName] = useState<string>(
     'Participant' + Math.floor(Math.random() * 100)
   );
@@ -34,38 +31,15 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
   const [mainStreamManager, setMainStreamManager] = useState<any>(undefined);
   const [publisher, setPublisher] = useState<any>(undefined);
   const [subscribers, setSubscribers] = useState<any[]>([]);
-  const [participants, setParticipants] = useState<participantType[]>([]);
-  const { userInfo, addUserInfo } = useUserInfoStore();
   const [currentVideoDevice, setCurrentVideoDevice] = useState<any>(undefined);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [isScreenSharing, setIsScreenSharing] = useState<boolean>(false);
 
-  const fetchParticipants = async (userUuid: string) => {
-    const existingProfile = userInfo.find((user) => user.userUuid === userUuid);
-    if (!existingProfile) {
-      const participantsData = await getChatProfile({ userUuid: userUuid });
-      const newUserInfo = {
-        userUuid: userUuid,
-        nickname: participantsData.nickName,
-        profileImageUrl: participantsData.profileImageUrl,
-      };
-      addUserInfo(newUserInfo);
-      setParticipants((prev) => [...prev, newUserInfo]);
-    }
-  };
+  const OV = useRef<OpenVidu>();
 
-  // useEffect(() => {
-  //   const fetchParticipantsUuid = async () => {
-  //     const participantsUuidData = await getParticipants(sessionUuid);
-  //     const fetchPromises = participantsUuidData.map((userUuid: string) =>
-  //       fetchParticipants(userUuid)
-  //     );
-
-  //     await Promise.all(fetchPromises);
-  //   };
-  //   if (sessionUuid) {
-  //     fetchParticipantsUuid();
-  //   }
-  // }, [session, sessionUuid]);
+  useEffect(() => {
+    OV.current = new OpenVidu();
+  }, []);
 
   useEffect(() => {
     const handleBeforeUnload = () => leaveSession();
@@ -87,10 +61,12 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
     );
   };
 
-  const joinSession = async (sessionUuid: string) => {
-    const OV = new OpenVidu();
-    const newSession = OV.initSession();
-    setSessionUuid(sessionUuid);
+  const joinSession = async (session: any) => {
+    if (!OV.current) return;
+
+    const newSession = OV.current.initSession();
+    setSessionUuid(session.sessionUuid);
+    setMentoringName(session.mentoringName);
     setSession(newSession);
 
     newSession.on('streamCreated', (event) => {
@@ -106,47 +82,42 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
       console.warn(exception);
     });
 
-    const token = await getToken('mySessionId2');
-    newSession
-      .connect(token, {
-        clientData: myUserName,
-      })
-      .then(async () => {
-        const publisher = await OV.initPublisherAsync(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: true,
-          publishVideo: true,
-          resolution: '640x480',
-          frameRate: 30,
-          insertMode: 'APPEND',
-          mirror: false,
-        });
+    try {
+      const token = await getToken('se23ss23232gggg');
+      await newSession.connect(token, { clientData: myUserName });
 
-        newSession.publish(publisher);
-        const devices = await OV.getDevices();
-        const videoDevices = devices.filter(
-          (device) => device.kind === 'videoinput'
-        );
-        const currentVideoDeviceId = publisher.stream
-          .getMediaStream()
-          .getVideoTracks()[0]
-          .getSettings().deviceId;
-        const currentVideoDevice = videoDevices.find(
-          (device) => device.deviceId === currentVideoDeviceId
-        );
-
-        setCurrentVideoDevice(currentVideoDevice);
-        setMainStreamManager(publisher);
-        setPublisher(publisher);
-      })
-      .catch((error) => {
-        console.log(
-          'There was an error connecting to the session:',
-          error.code,
-          error.message
-        );
+      const publisher = await OV.current.initPublisherAsync(undefined, {
+        audioSource: undefined,
+        videoSource: undefined,
+        publishAudio: true,
+        publishVideo: true,
+        resolution: '1280x720',
+        frameRate: 30,
+        insertMode: 'APPEND',
+        mirror: false,
       });
+
+      newSession.publish(publisher);
+
+      const devices = await OV.current.getDevices();
+      const videoDevices = devices.filter(
+        (device) => device.kind === 'videoinput'
+      );
+
+      const currentVideoDeviceId = publisher.stream
+        .getMediaStream()
+        .getVideoTracks()[0]
+        .getSettings().deviceId;
+      const currentVideoDevice = videoDevices.find(
+        (device) => device.deviceId === currentVideoDeviceId
+      );
+
+      setCurrentVideoDevice(currentVideoDevice);
+      setMainStreamManager(publisher);
+      setPublisher(publisher);
+    } catch (error) {
+      console.log('There was an error connecting to the session:', error);
+    }
   };
 
   const leaveSession = () => {
@@ -163,6 +134,104 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
     setCurrentVideoDevice(undefined);
   };
 
+  const toggleAudio = () => {
+    if (publisher) {
+      publisher.publishAudio(!publisher.stream.audioActive);
+    }
+  };
+
+  const toggleVideo = () => {
+    if (publisher) {
+      publisher.publishVideo(!publisher.stream.videoActive);
+    }
+  };
+
+  const participantToggleAudio = (connection: any) => {
+    if (publisher && publisher.stream.connection === connection) {
+      publisher.publishAudio(!publisher.stream.audioActive);
+      setPublisher({
+        ...publisher,
+        stream: {
+          ...publisher.stream,
+          audioActive: !publisher.stream.audioActive,
+        },
+      });
+    } else {
+      const updatedSubscribers = subscribers.map((sub) => {
+        if (sub.stream.connection === connection) {
+          sub.subscribeToAudio(!sub.stream.audioActive);
+          return {
+            ...sub,
+            stream: { ...sub.stream, audioActive: !sub.stream.audioActive },
+          };
+        }
+        return sub;
+      });
+      setSubscribers(updatedSubscribers);
+    }
+  };
+
+  const participantToggleVideo = (connection: any) => {
+    if (publisher && publisher.stream.connection === connection) {
+      publisher.publishVideo(!publisher.stream.videoActive);
+      setPublisher({
+        ...publisher,
+        stream: {
+          ...publisher.stream,
+          videoActive: !publisher.stream.videoActive,
+        },
+      });
+    } else {
+      const updatedSubscribers = subscribers.map((sub) => {
+        if (sub.stream.connection === connection) {
+          sub.subscribeToVideo(!sub.stream.videoActive);
+          return {
+            ...sub,
+            stream: { ...sub.stream, videoActive: !sub.stream.videoActive },
+          };
+        }
+        return sub;
+      });
+      setSubscribers(updatedSubscribers);
+    }
+  };
+
+  const shareScreen = async () => {
+    if (publisher && OV.current) {
+      try {
+        if (isScreenSharing) {
+          // 화면 공유를 종료하는 경우
+          const videoDeviceId = currentVideoDevice?.deviceId; // 기존 비디오 장치 ID 저장
+          const videoSource = videoDeviceId ? videoDeviceId : undefined; // 비디오 장치가 있을 경우 사용
+
+          await session.unpublish(publisher);
+          const newPublisher = await OV.current.initPublisherAsync(undefined, {
+            videoSource: videoSource,
+          });
+          await session.publish(newPublisher);
+          setPublisher(newPublisher);
+          setMainStreamManager(newPublisher);
+        } else {
+          // 화면 공유를 시작하는 경우
+          const screenPublisher = await OV.current.initPublisherAsync(
+            undefined,
+            {
+              videoSource: 'screen',
+            }
+          );
+          await session.unpublish(publisher);
+          await session.publish(screenPublisher);
+          setPublisher(screenPublisher);
+          setMainStreamManager(screenPublisher);
+        }
+
+        setIsScreenSharing((prev) => !prev); // 화면 공유 상태 토글
+      } catch (error) {
+        console.error('Error sharing screen:', error);
+      }
+    }
+  };
+
   return (
     <>
       {session === undefined ? (
@@ -174,30 +243,35 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList }) => {
 
       {session !== undefined ? (
         <>
-          <div className="grid grid-cols-7 h-[79vh]">
-            <div className="col-span-5 bg-[#FAFAFE]">
+          <div className="w-full h-full grid grid-cols-7 2xl:grid-cols-5">
+            <div className="w-full h-full col-span-5 2xl:col-span-4 bg-[#FAFAFE] overflow-y-auto">
               <OvTracks
+                mentoringName={mentoringName}
                 sessionUuid={sessionUuid}
                 leaveSession={leaveSession}
                 mainStreamManager={mainStreamManager}
                 publisher={publisher}
                 handleMainVideoStream={handleMainVideoStream}
                 subscribers={subscribers}
+                toggleAudio={toggleAudio}
+                toggleVideo={toggleVideo}
+                shareScreen={shareScreen}
               />
             </div>
-            <div className="flex flex-col col-span-2 h-full">
+            <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
               <div className="h-[25vh]">
-                {/* <Participants
-                  participants={participants}
-                  toggleParticipantMicrophone={toggleParticipantMicrophone}
-                  toggleParticipantCamera={toggleParticipantCamera}
-                /> */}
+                <OpenviduParticipants
+                  subscribers={subscribers}
+                  publisher={publisher}
+                  handleMainVideoStream={handleMainVideoStream}
+                  toggleAudio={toggleAudio}
+                  toggleVideo={toggleVideo}
+                  participantToggleAudio={participantToggleAudio}
+                  participantToggleVideo={participantToggleVideo}
+                />
               </div>
-              <div className="h-[54vh]">
-                {/* <Chatting
-                  participants={participants}
-                  mentoringSessionUuid={sessionUuid}
-                /> */}
+              <div className="h-[54vh] border-t">
+                <Chatting user={user} mentoringSessionUuid={sessionUuid} />
               </div>
             </div>
           </div>
