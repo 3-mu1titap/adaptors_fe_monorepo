@@ -4,7 +4,6 @@ import { mentorVoltListDataType } from '@repo/admin/components/types/main/mypage
 
 export default async function Page() {
   const mentorVoltList: mentorVoltListDataType = await GetMentorVolts();
-  console.log(mentorVoltList);
   return (
     <>{mentorVoltList && <ReceivedVolts mentorVoltList={mentorVoltList} />}</>
   );

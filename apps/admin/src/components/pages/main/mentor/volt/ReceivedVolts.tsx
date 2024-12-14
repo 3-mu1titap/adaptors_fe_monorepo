@@ -62,18 +62,38 @@ export default function ReceivedVolts({
 
   const verifyCode = async (code: string) => {
     const request = await PostCheckSecondAuthenticationCode(code);
-    if (request) setIsVerified(true);
-    Swal.fire({
-      title: '인증 완료',
-      html: '인증이 완료되었습니다.',
-      icon: 'success',
-      confirmButtonText: '확인',
-      confirmButtonColor: '#F6D84C',
-    });
+    console.log(request);
+    if (request) {
+      setIsVerified(true);
+      Swal.fire({
+        title: '인증 완료',
+        html: '인증이 완료되었습니다.',
+        icon: 'success',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    } else {
+      Swal.fire({
+        title: '인증 실패',
+        html: '인증에 실패하였습니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+    }
   };
 
   const handleExchange = () => {
-    if (!isVerified) return;
+    if (!isVerified) {
+      Swal.fire({
+        title: '인증 필요',
+        html: '이메일 인증이 필요합니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#F6D84C',
+      });
+      return;
+    }
     if (!mentorVoltList) {
       return Swal.fire({
         title: '볼트 부족',
@@ -147,14 +167,6 @@ export default function ReceivedVolts({
         title: '알림',
         html: `100Volt 단위로만 환전이 가능합니다.`,
         icon: 'info',
-        confirmButtonText: '확인',
-        confirmButtonColor: '#F6D84C',
-      });
-    } else if (!isVerified) {
-      Swal.fire({
-        title: '인증 필요',
-        html: '이메일 인증이 필요합니다.',
-        icon: 'warning',
         confirmButtonText: '확인',
         confirmButtonColor: '#F6D84C',
       });
