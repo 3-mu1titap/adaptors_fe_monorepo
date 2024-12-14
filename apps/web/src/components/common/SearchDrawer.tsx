@@ -39,7 +39,7 @@ export function SearchDrawer({
     setValue(term);
     const fetchData = async () => {
       const data = await getSuggestedName(term); // term 전달
-      console.log(data);
+      // console.log(data);
       setSuggestedName(data);
     };
     fetchData();

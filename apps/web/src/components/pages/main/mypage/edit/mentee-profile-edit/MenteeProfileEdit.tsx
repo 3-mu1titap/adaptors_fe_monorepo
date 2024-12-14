@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import SubmitButton from '@repo/web/components/ui/Button/SubmitButton';
+import { PutUserTotalInfo } from '@repo/web/actions/mentee/mypageAction';
+import MenteeProfileEditForm from '@repo/web/components/form/MenteeProfileEditForm';
 import {
   Mentee,
   MenteeProfileEditFormType,
 } from '@repo/web/components/types/mentee/MenteeType';
-import MenteeProfileEditForm from '@repo/web/components/form/MenteeProfileEditForm';
-import { PutUserTotalInfo } from '@repo/web/actions/mentee/mypageAction';
+import SubmitButton from '@repo/web/components/ui/Button/SubmitButton';
+import { useState } from 'react';
 
 interface MenteeProfileEditProps {
   mentee: Mentee;
@@ -35,9 +35,6 @@ export default function MentorProfileEdit({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await PutUserTotalInfo({ formData, imageFile: file });
-
-    console.log(formData);
-    console.log(file);
   };
 
   return (

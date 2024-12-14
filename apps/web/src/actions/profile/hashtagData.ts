@@ -61,7 +61,7 @@ export const addTagList = async (
     }
   );
 
-  console.log(JSON.stringify(hashtags));
+  // console.log(JSON.stringify(hashtags));
 
   // 서버 응답 처리
   if (!response.ok) {

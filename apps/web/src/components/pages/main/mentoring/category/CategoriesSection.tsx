@@ -32,7 +32,7 @@ export default function CategoriesSection({
   const sliceNumber = !isOpen && isMobile ? 7 : categories.length;
 
   return (
-    <>
+    <div className="mx-auto w-full mb-10 max-w-[1024px]">
       <h2 className={`text-[1rem] font-semibold flex gap-2 items-center mb-6`}>
         <ChevronRight
           className={`w-5 transform transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
@@ -70,6 +70,6 @@ export default function CategoriesSection({
           ))}
         </div>
       </Suspense>
-    </>
+    </div>
   );
 }

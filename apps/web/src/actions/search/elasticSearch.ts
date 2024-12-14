@@ -24,7 +24,6 @@ export const getSuggestedName = async (inputWord: string): Promise<any> => {
     }
 
     const data = (await response.json()) as commonResType<result>;
-    console.log(data.result.suggestedNames);
     return data.result.suggestedNames || [];
   } catch (error) {
     console.error('Fetch error:', error);
