@@ -25,8 +25,22 @@ export interface SessionCancelType {
   deadlineDate: string;
 }
 
-export interface SearchMentoringListType {
+// 검색 res
+export interface SearchResult {
+  spellingCorrection: string;
+  searchResults: SearchResults;
+}
+
+export interface SearchResults {
+  content: MentoringContent[];
+  pageable: Pageable;
+  totalPages: number;
+}
+export interface MentoringContent {
   mentoringUuid: string;
+  reviewCount: number;
+  averageStar: number;
+  totalSaleCount: number;
   name: string;
   description: string;
   thumbnailUrl: string;
@@ -34,24 +48,9 @@ export interface SearchMentoringListType {
   nowSessionCount: number;
 }
 
-export interface pageableType {
+export interface Pageable {
   pageNumber: number;
   pageSize: number;
-  sort?: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
-  offset?: number;
-  paged?: boolean;
-  unpaged?: boolean;
-}
-
-// API 전체 응답 타입 정의
-export interface ApiResponse {
-  totalPages: number;
-  content: SearchMentoringListType[];
-  pageable: pageableType;
 }
 
 export interface Mentoring {

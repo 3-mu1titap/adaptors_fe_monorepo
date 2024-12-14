@@ -13,7 +13,8 @@ export async function getTopCategoryList(): Promise<TopCategoryType[]> {
         cache: 'force-cache',
       }
     );
-    const result = (await res.json()) as commonResType<any>;
+    const result = (await res.json()) as commonResType<TopCategoryType[]>;
+
     return result.result;
   } catch (error) {
     console.error('카테고리 조회 에러: ', error);

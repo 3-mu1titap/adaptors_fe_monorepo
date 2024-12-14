@@ -12,6 +12,7 @@ import {
   SuggestedNames,
 } from '@repo/web/actions/search/elasticSearch';
 import { Search } from 'lucide-react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

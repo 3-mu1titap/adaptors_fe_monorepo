@@ -7,7 +7,7 @@ export interface Mentoring {
   description: string;
   thumbnailUrl: string;
   isAvailable: boolean;
-  nowSessionCount: number;
+  nowSessionCount: number | null;
 }
 
 export interface Pageable {

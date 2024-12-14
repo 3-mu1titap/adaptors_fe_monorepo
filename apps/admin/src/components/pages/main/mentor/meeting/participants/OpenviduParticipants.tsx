@@ -22,16 +22,16 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
   participantToggleVideo,
 }) => {
   return (
-    <div className="h-full overflow-y-auto p-4">
-      <h3 className="text-lg font-semibold mb-4">Participants</h3>
-      <ul className="space-y-4">
+    <div className="h-full overflow-y-auto p-2">
+      <h3 className="text-lg font-semibold mb-2">Participants</h3>
+      <ul className="space-y-2">
         {publisher && (
           <li className="flex items-center justify-between">
             <button
               onClick={() => handleMainVideoStream(publisher)}
-              className="flex items-center space-x-2 hover:bg-gray-100 rounded p-2"
+              className="flex items-center space-x-2 hover:bg-gray-100 rounded p-2 text-md"
             >
-              <span className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+              <span className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white">
                 {publisher.stream.connection.data.split('"')[1].charAt(0)}
               </span>
               <span>
@@ -42,6 +42,7 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               <Button
                 size="icon"
                 variant="outline"
+                className="h-8 w-8"
                 onClick={() => toggleAudio()}
                 title={publisher.stream.audioActive ? 'Mute' : 'Unmute'}
               >
@@ -54,6 +55,7 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               <Button
                 size="icon"
                 variant="outline"
+                className="h-8 w-8"
                 onClick={() => toggleVideo()}
                 title={
                   publisher.stream.videoActive
@@ -76,7 +78,7 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               onClick={() => handleMainVideoStream(sub)}
               className="flex items-center space-x-2 hover:bg-gray-100 rounded p-2"
             >
-              <span className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white">
+              <span className="w-6 h-6 bg-gray-500 rounded-full flex items-center justify-center text-white text-md">
                 {sub.stream.connection.data.split('"')[1].charAt(0)}
               </span>
               <span>{sub.stream.connection.data.split('"')[1]}</span>
@@ -85,6 +87,7 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               <Button
                 size="icon"
                 variant="outline"
+                className="h-8 w-8"
                 onClick={() => participantToggleAudio(sub.stream.connection)}
                 title={sub.stream.audioActive ? 'Mute' : 'Unmute'}
               >
@@ -97,6 +100,7 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               <Button
                 size="icon"
                 variant="outline"
+                className="h-8 w-8"
                 onClick={() => participantToggleVideo(sub.stream.connection)}
                 title={
                   sub.stream.videoActive ? 'Disable video' : 'Enable video'
