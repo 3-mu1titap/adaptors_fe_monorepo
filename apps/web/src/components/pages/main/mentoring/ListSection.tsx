@@ -21,7 +21,7 @@ export default function ListSection({
       </div>
     );
   return (
-    <section className="mx-auto mobile:w-full grid mobile:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-10 gap-x-2 gap-y-4">
+    <section className="mx-auto w-full  grid mobile:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10 gap-x-2 gap-y-4 max-w-[1024px]">
       {mentoringListData.map((mentoring) => (
         <MentoringItem
           item={mentoring}

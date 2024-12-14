@@ -49,7 +49,7 @@ export const getRevieweList = async (
 
   // 서버에서 받은 데이터 반환
   const data = (await response.json()) as commonResType<Review[]>;
-  console.log(data);
+  // console.log(data);
   return data.result;
 };
 

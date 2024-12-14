@@ -4,7 +4,6 @@ import CustomSessionInfoTags, {
 import { Skeleton } from '@repo/ui/components/ui/skeleton';
 import { Mentoring } from '@repo/ui/types/MentoringListType.ts';
 import RateViewer from '@repo/web/components/common/RateViwer';
-import ListLikeButton from '@repo/web/components/ui/Button/ListLikeButton';
 import FitImage from '@repo/web/components/ui/image/fit-image';
 import { File, User } from 'lucide-react';
 import Link from 'next/link';
@@ -47,10 +46,10 @@ export default function MentoringItem({
         </div>
         <div className="p-4 relative">
           <div className="flex items-center gap-1 mb-2">
-            <ListLikeButton
+            {/* <ListLikeButton
               mentoringUuid={item?.mentoringUuid}
               className="absolute top-4 right-4"
-            />
+            /> */}
             {isLoading ? (
               <>
                 <Skeleton className="w-20 h-4 bg-gray-200" />

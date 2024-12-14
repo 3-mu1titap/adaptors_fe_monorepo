@@ -1,19 +1,22 @@
 'use client';
 
-import { Button } from '@repo/ui/components/ui/button';
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
 } from '@repo/ui/components/ui/drawer';
 import { Input } from '@repo/ui/components/ui/input';
-import { DialogFooter } from '@repo/ui/components/ui/dialog';
-import { useState } from 'react';
+import {
+  getSuggestedName,
+  SuggestedNames,
+} from '@repo/web/actions/search/elasticSearch';
+import { Search } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 export function SearchDrawer({
   isOpen,
@@ -22,40 +25,93 @@ export function SearchDrawer({
   isOpen: boolean;
   openCloser: () => void;
 }) {
-  const [name, setSearchName] = useState('');
+  const [value, setValue] = useState('');
+  const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
+    { name: '검색어를 입력해주세요' },
+  ]);
+  const router = useRouter();
+
+  const handleSearch = useDebouncedCallback((term) => {
+    if (!term) {
+      setSuggestedName([{ name: '검색어를 입력해주세요' }]);
+      return;
+    }
+    setValue(term);
+    const fetchData = async () => {
+      const data = await getSuggestedName(term); // term 전달
+      // console.log(data);
+      setSuggestedName(data);
+    };
+    fetchData();
+  }, 300);
+
+  const routeToSearchPage = () => {
+    if (value) {
+      router.push(`/search/${value}`);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const term = (e.target as HTMLInputElement).value;
+      handleSearch(term);
+
+      if (term.trim()) {
+        router.push(`/search/${value}`);
+      }
+    }
+  };
+
   return (
     <Drawer open={isOpen} onOpenChange={openCloser} direction="top">
-      <DrawerContent className="border-none">
-        <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader>
-            <DrawerTitle className="text-md text-black font-bold">
-              search
-            </DrawerTitle>
-            <DrawerDescription className="text-lg text-black">
-              원하시는 멘토링을 검색해주세요!
-            </DrawerDescription>
-          </DrawerHeader>
-
-          <div className="mt-4">
+      <DrawerContent className="border-none h-[90%]">
+        <DrawerHeader>
+          <DrawerTitle className="text-md text-black font-bold">
+            search
+          </DrawerTitle>
+          <DrawerDescription className="text-lg text-black">
+            Search Mentoring here!
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="mt-4 h-full">
+          <div className="relative px-4">
             <Input
               id="Search"
               type="text"
               placeholder="Search here...."
-              onChange={(text) => setSearchName(text.target.value.trim())}
-              className="text-xl"
-            ></Input>
+              onKeyDown={handleKeyDown}
+              onChange={(e) => {
+                handleSearch(e.target.value);
+              }}
+              className="text-md"
+              autoFocus
+            />
+            <Search
+              className="absolute right-6 top-2.5"
+              color="#A09F9F"
+              size={18}
+              strokeWidth={1}
+              onClick={routeToSearchPage}
+            />
           </div>
-
-          <DialogFooter className="flex mt-4 ml-40 py-4">
-            <Link href={`/search/${encodeURIComponent(name)}`}>
-              <Button
-                className="bg-yellow-200 hover:bg-black hover:text-white self-center"
-                type="submit"
-              >
-                Save changes
-              </Button>
-            </Link>
-          </DialogFooter>
+          {suggestedName && (
+            <ul className="mt-[2px] max-h-[420px] overflow-y-scroll py-5 px-4">
+              {Array.isArray(suggestedName) ? (
+                suggestedName.map((item, index) => (
+                  <li
+                    className={`px-2 py-3 hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40  border-b-[1px] text-md ${item.name === '검색어를 입력해주세요' ? 'border-none text-center text-gray-400' : ''}`}
+                    key={index}
+                  >
+                    <Link href={`/search/${item.name}?isSuggestName=true`}>
+                      {item.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li></li>
+              )}
+            </ul>
+          )}
         </div>
       </DrawerContent>
     </Drawer>

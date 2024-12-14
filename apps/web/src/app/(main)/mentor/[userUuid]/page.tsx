@@ -1,17 +1,11 @@
-import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
 import { GetMentorMentoringList } from 'src/actions/mentor/mentorAction';
 import { getProfileImage } from 'src/actions/profile/getProfileData';
 
-import CustomLikeButton from '@repo/ui/components/ui/custom/CustomLikeButton';
-import CustomMentorProfilePhoto from '@repo/ui/components/ui/custom/CustomMentorProfilePhoto';
-import CustomNowDate from '@repo/ui/components/ui/custom/CustomNowDate';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
-import CustomShareButton from '@repo/ui/components/ui/custom/CustomShareButton';
+import { getMentorReview } from '@repo/web/actions/review/mentorReview';
 import { SeparateContainer } from '@repo/web/components/common/layout/SeperateContainer';
-import { getMentorIntroduction } from 'src/actions/profile/getProfileData';
 import CurrentMentoring from '@repo/web/components/pages/mentor/current/CurrentMentoring';
 import ReviewSection from '@repo/web/components/pages/mentor/review/ReviewSection';
-import { getMentorReview } from '@repo/web/actions/review/mentorReview';
 
 async function page({
   params,
