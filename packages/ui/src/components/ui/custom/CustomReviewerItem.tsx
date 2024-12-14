@@ -8,23 +8,24 @@ function CustomReviewerItem({
   className,
   userCount = 0,
   reviewCount = 0,
+  text = 'Reviews',
 }: {
-  initialUserData: SessionUser[];
+  initialUserData?: SessionUser[];
   className?: string;
   userCount?: number;
   reviewCount?: number;
+  text?: string;
 }) {
+  // if (!initialUserData||!initialUserData[0].userImageUrl) return;
   return (
-    <div
-      className={`flex justify-start items-center ${className} ${initialUserData[0].userImageUrl ? `block` : `hidden`}`}
-    >
+    <div className={`flex justify-start items-center ${className}`}>
       <ul
         className={`flex justify-start items-center ${userCount > 4 ? 'mr-1' : ''}`}
       >
         {initialUserData?.map((user, idx) => (
           <li key={idx}>
             <UserProfile
-              profileImgUrl={user.userImageUrl}
+              profileImgUrl={initialUserData[idx].menteeImageUrl}
               size={40}
               name={user.nick ? user.nick : ''}
               className={`mr-[-1.2rem] border-[2px] border-white ring-none`}
@@ -41,8 +42,8 @@ function CustomReviewerItem({
       </ul>
       {reviewCount >= 0 && (
         <CustomValueUnit
-          value={reviewCount}
-          unit="Reviews"
+          value={userCount}
+          unit={text}
           valueSize="text-[1.09rem]"
           unitSize="text-sm"
         />

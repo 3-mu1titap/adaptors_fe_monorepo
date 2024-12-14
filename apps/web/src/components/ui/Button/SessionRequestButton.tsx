@@ -97,7 +97,8 @@ export function SessionRequestButton({
           <AlertDialogHeader>
             <AlertDialogTitle>로그인이 필요한 서비스입니다</AlertDialogTitle>
             <AlertDialogDescription>
-              로그인 하시겠습니까? 확인 버튼 클릭 시 로그인 페이지로 이동합니다.
+              {`로그인 버튼 클릭 시 로그인 페이지로
+              이동합니다.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -1,12 +1,12 @@
 import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
 import { getTopCategoryList } from '@repo/web/actions/category/getCategory';
 import { GetBestMentorList } from '@repo/web/actions/mentor/mentorAction';
+import { getMainMentoringList } from '@repo/web/actions/mentoring/mentoringAction';
+import BestMentoringList from '@repo/web/components/pages/main/home/bestMentor/BestMentorList';
 import MainIntro from '@repo/web/components/pages/main/home/MainIntro/MainIntro';
 import MainSearchTag from '@repo/web/components/pages/main/home/MainSearchTag/MainSearchTag';
 import PopularMentoringList from '@repo/web/components/pages/main/home/popularMentoring/PopularMentoringList';
 import ShareMentoring from '@repo/web/components/pages/main/home/ShareMentoring';
-import BestMentoringList from '@repo/web/components/pages/main/home/bestMentor/BestMentorList';
-import { getMainMentoringList } from '@repo/web/actions/mentoring/mentoringAction';
 async function Page() {
   //베스트 멘토 조회
   const res = await GetBestMentorList();

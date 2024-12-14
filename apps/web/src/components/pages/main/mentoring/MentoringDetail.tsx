@@ -1,9 +1,10 @@
 import { SeparateContainer } from '@repo/ui/components/ui/custom/CustomSeparateContainer';
+import { MentorBatchData } from '@repo/ui/types/batchDataType/MenterBatchData.ts';
 import {
   MentoringDataType,
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
-import { Review, ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
+import { Review, ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
 import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import MentoringContents from './MentoringContents';
@@ -13,22 +14,22 @@ import MentoringReviewSection from './review/MentoringReviewSection';
 import SessionList from './SessionList';
 export default function MentoringDetail({
   mentoringDate,
-  mentoringUuid,
   mentoringSessionList,
   MentoringInfoData,
   mentorData,
   ReviewerData,
   BestRevieweList,
   isCheck,
+  MentorBatchData,
 }: {
   mentoringDate: string;
-  mentoringUuid: string;
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
   mentorData: userProfileType;
   ReviewerData: ReviewerProfileType[];
   BestRevieweList: Review[];
   isCheck: boolean;
+  MentorBatchData: MentorBatchData | null;
 }) {
   const userData: ReviewerProfileType[] = [
     {
@@ -55,7 +56,7 @@ export default function MentoringDetail({
     <CommonLayout
       type="section"
       reative="container"
-      className=" mx-auto sm:flex gap-10 my-4 px-1 sm:px-4 md:px-8 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] sm:max-w-[90%] relative"
+      className="mx-auto sm:flex gap-10 my-4 px-1 sm:px-4 md:px-8 xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] max-w-[90%] relative"
     >
       {/* Left Section */}
       <MentorSection
@@ -64,9 +65,11 @@ export default function MentoringDetail({
         mentoringSessionList={mentoringSessionList}
         mentorData={mentorData}
         ReviewerData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
+        totalLikeCount={MentorBatchData?.totalLikeCount}
+        totalReviewCount={MentorBatchData?.totalReviewCount}
       />
       {/* Ri Section */}
-      <SeparateContainer.RightSide>
+      <SeparateContainer.RightSide className="w-full">
         {MentoringInfoData && (
           <MentoringOverview
             MentoringInfoData={MentoringInfoData}

@@ -8,7 +8,7 @@ export default function ScoreStar({ score }: { score: number }) {
       if (i <= Math.floor(score)) {
         // Full star
         stars.push(
-          <div key={i} className="relative w-5 h-5">
+          <div key={i} className="relative w-3 h-3">
             <FullStar />
           </div>
         );
@@ -16,7 +16,7 @@ export default function ScoreStar({ score }: { score: number }) {
         // Partial star
         const percentage = Math.round((score - Math.floor(score)) * 100);
         stars.push(
-          <div key={i} className="relative w-5 h-5">
+          <div key={i} className="relative w-3 h-3">
             <EmptyStar />
             <div
               className="absolute top-0 left-0 overflow-hidden"
@@ -29,7 +29,7 @@ export default function ScoreStar({ score }: { score: number }) {
       } else {
         // Empty star
         stars.push(
-          <div key={i} className="relative w-5 h-5">
+          <div key={i} className="relative w-3 h-3">
             <EmptyStar />
           </div>
         );

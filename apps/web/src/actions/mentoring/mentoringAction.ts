@@ -1,10 +1,10 @@
 'use server';
 
-import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import {
   MentoringDataType,
   MentoringResult,
 } from '@repo/ui/types/CommonType.ts';
+import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
@@ -30,7 +30,6 @@ export async function GetMentoringSessionList(
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
       {
-        cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +78,6 @@ export async function SessionRequest(
   const menteeUuid = session?.user.uuid;
   const nickName = session?.user.nickName;
   const image = session?.user.profileImageUrl;
-  console.log(request);
   try {
     const res = await fetch(
       `${process.env.SESSION_REQUEST_URL}/api/v1/session-request-service`,
@@ -102,11 +100,9 @@ export async function SessionRequest(
       }
     );
     const result = (await res.json()) as commonResType<any>;
-    console.log('멘토링 신청하기 result: ', result);
     if (res.ok) {
       revalidateTag('session-request');
     }
-    console.log(result.code);
     return result.code;
   } catch (error) {
     console.error('멘토링 신청하기: ', error);
@@ -154,9 +150,6 @@ export async function GetMentoringNameSearch(
   searchResults: SearchResults;
 } | null> {
   'use server';
-
-  // console.log(name, 'ffffffffffffffffffffffff');
-  const word = name;
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/elasticsearch/${name}?word=${word}&page=${page}`,
@@ -183,7 +176,7 @@ export async function GetPopularMentoringList(
   topCategoryCodeList: string
 ): Promise<Mentoring[] | null> {
   'use server';
-
+  const session = getServerSession(options);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/popular-mentoring-list?topCategoryCodeList=${topCategoryCodeList}`,
@@ -196,7 +189,6 @@ export async function GetPopularMentoringList(
       }
     );
     const result = (await res.json()) as commonResType<Mentoring[]>;
-    // console.log(result.result, '인기 멘토링에 대한 겸색 결과 리스트 조회');
     return result.result;
   } catch (error) {
     console.error('에러 조회: ', error);
@@ -207,6 +199,7 @@ export async function GetPopularMentoringList(
 //메인 멘토링 리스트 조회
 export async function getMainMentoringList() {
   'use server';
+  const session = getServerSession(options);
 
   try {
     const res = await fetch(
@@ -220,6 +213,7 @@ export async function getMainMentoringList() {
       }
     );
     const result = (await res.json()) as commonResType<mainIntroDataType[]>;
+    console.log(result);
     return result.result;
   } catch (error) {
     console.error('error: ', error);

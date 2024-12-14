@@ -14,7 +14,7 @@ export async function getTopCategoryList(): Promise<TopCategoryType[]> {
       }
     );
     const result = (await res.json()) as commonResType<any>;
-
+    console.log(result.result);
     return result.result;
   } catch (error) {
     console.error('카테고리 조회 에러: ', error);

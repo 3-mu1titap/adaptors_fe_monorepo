@@ -31,8 +31,8 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
 
   // 서버에서 받은 데이터 반환
   const data = await response.json();
-  // console.log('좋아요요청성공', data.code);
-  return data.isSuccess;
+  revalidateTag('likeStatus');
+  return data.code;
 };
 
 //블랙리스트
@@ -102,6 +102,7 @@ export async function getIsLiked(targetUuid: string): Promise<boolean> {
     const res = await fetch(
       `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/like`,
       {
+        cache: 'force-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +116,6 @@ export async function getIsLiked(targetUuid: string): Promise<boolean> {
     );
 
     const result = (await res.json()) as commonResType<boolean>;
-    console.log('요청됨');
     return result.result;
   } catch (error) {
     console.log('좋아요 유무 조회 error', error);

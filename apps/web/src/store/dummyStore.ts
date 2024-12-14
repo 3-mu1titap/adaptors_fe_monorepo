@@ -322,7 +322,7 @@ export const categoryOptions: Option[] = [
   { value: 'PORTFOLIO', label: '포트폴리오' },
 ];
 export const industryOptions: Option[] = [
-  { value: 'IT       ', label: 'IT' },
+  { value: 'IT', label: 'IT' },
   { value: 'MARKETING', label: '마케팅' },
   { value: 'CONTENT_CREATION', label: '콘텐츠 제작' },
   { value: 'PROJECT_MANAGEMENT', label: 'PM' },
