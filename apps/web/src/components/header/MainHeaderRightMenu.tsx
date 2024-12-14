@@ -14,7 +14,6 @@ import { CreditCard, User } from 'lucide-react';
 import HeaderLogoutButton from '@repo/web/components/ui/Button/HeaderLogoutButton';
 import OpenAppButton from '@repo/web/components/ui/Button/OpenAppButton';
 import Link from 'next/link';
-import SideBarButton from './SideBarButton';
 
 function MainHeaderRightMenu({ isAuth }: { isAuth: boolean }) {
   return (
@@ -68,7 +67,6 @@ function MainHeaderRightMenu({ isAuth }: { isAuth: boolean }) {
             <JoinFreeButton />
           </li>
         )}
-        <SideBarButton />
       </ul>
     </nav>
   );

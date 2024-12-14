@@ -30,7 +30,6 @@ export async function GetMentoringSessionList(
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/session-list?mentoringUuid=${mentoringUuid}`,
       {
-        cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -39,6 +38,7 @@ export async function GetMentoringSessionList(
       }
     );
     const result = (await res.json()) as commonResType<MentoringResult[]>;
+    console.log(result.result);
     return result.result;
   } catch (error) {
     console.error('멘토링 세션 리스트 조회 : ', error);
@@ -152,7 +152,7 @@ export async function GetMentoringNameSearch(
   totalPages: number;
 } | null> {
   'use server';
-
+  const session = getServerSession(options);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/${name}?page=${page}`,
@@ -177,7 +177,7 @@ export async function GetPopularMentoringList(
   topCategoryCodeList: string
 ): Promise<Mentoring[] | null> {
   'use server';
-
+  const session = getServerSession(options);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/popular-mentoring-list?topCategoryCodeList=${topCategoryCodeList}`,
@@ -200,6 +200,7 @@ export async function GetPopularMentoringList(
 //메인 멘토링 리스트 조회
 export async function getMainMentoringList() {
   'use server';
+  const session = getServerSession(options);
 
   try {
     const res = await fetch(
@@ -213,6 +214,7 @@ export async function getMainMentoringList() {
       }
     );
     const result = (await res.json()) as commonResType<mainIntroDataType[]>;
+    console.log(result);
     return result.result;
   } catch (error) {
     console.error('error: ', error);

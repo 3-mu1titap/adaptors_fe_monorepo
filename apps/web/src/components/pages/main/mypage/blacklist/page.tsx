@@ -1,4 +1,4 @@
-import React from 'react';
+import { CommonLayout } from '@repo/ui/components/ui/commomLayout';
 import BlackListCard from './BlackListCard';
 function BlackListComponent() {
   const mentorlist = [
@@ -16,17 +16,19 @@ function BlackListComponent() {
     { id: 8, mentorthumnail: ' ', mentorname: '홍기동이' },
   ];
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-col  max-w-screen-xl">
-        <h1 className="text-3xl font-bold py-12 px-20">블랙리스트 목록</h1>
+    <CommonLayout className="container mx-auto w-full px-6">
+      <div className="flex flex-col  max-w-screen-xl w-full">
+        <h1 className="text-3xl font-bold py-12 px-20 mt-20 w-full mx-auto text-center">
+          블랙리스트 목록
+        </h1>
 
-        <ul className="flex flex-col max-w-screen-xl gap-y-4 sm:max-w-[11rem] sm:min-w-[10rem]">
+        <ul className="flex flex-col max-w-screen-xl gap-y-4  sm:min-w-[10rem] w-full">
           {mentorlist.map((item) => (
             <BlackListCard CardItem={item} />
           ))}
         </ul>
       </div>
-    </div>
+    </CommonLayout>
   );
 }
 
