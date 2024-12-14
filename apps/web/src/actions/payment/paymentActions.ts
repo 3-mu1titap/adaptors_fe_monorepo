@@ -91,8 +91,7 @@ export async function GetMemberPoint() {
   'use server';
 
   const session = await getServerSession(options);
-  // const userUuid = session?.user.uuid;
-  const userUuid = '459d827a-59b2-43b7-a015-38bde218a3bc';
+  const userUuid = session?.user.uuid;
 
   try {
     const res = await fetch(
@@ -102,6 +101,7 @@ export async function GetMemberPoint() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.user.accessToken}`,
         },
       }
     );

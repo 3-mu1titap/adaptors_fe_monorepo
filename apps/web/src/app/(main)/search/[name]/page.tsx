@@ -1,14 +1,10 @@
+import MainSearchTag from '@repo/web/components/pages/main/home/MainSearchTag/MainSearchTag';
 import SearchMentoring from '@repo/web/components/pages/search/SearchMentoring';
 import { GetMentoringNameSearch } from 'src/actions/mentoring/mentoringAction';
-import MainSearchTag from '@repo/web/components/pages/main/home/MainSearchTag/MainSearchTag';
 async function page({ params }: { params: { name: string } }) {
   const name = decodeURIComponent(params.name);
 
   const searchMentoringlistData = await GetMentoringNameSearch(name, 0);
-  // console.log(
-  //   searchMentoringlistData?.searchResults,
-  //   'search data data data data'
-  // );
   return (
     <>
       <section className="container mx-auto max-w-[64rem] mt-32">

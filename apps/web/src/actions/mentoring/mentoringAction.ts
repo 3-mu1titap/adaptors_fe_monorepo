@@ -14,7 +14,6 @@ import {
   SearchResults,
   SessionCancelType,
   SessionRequestType,
-  MentoringContent,
 } from '../../components/types/mentoring/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 // 멘토링의 정보 및 세션리스트 정보 조회
@@ -164,7 +163,6 @@ export async function GetMentoringNameSearch(
     );
     const result = (await res.json()) as commonResType<SearchResult>;
 
-    // console.log(result, '-------------------------------------------------');
     return result.result;
   } catch (error) {
     // console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);

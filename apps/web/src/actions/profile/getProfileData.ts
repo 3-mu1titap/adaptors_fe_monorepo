@@ -77,7 +77,6 @@ export async function GetUserInfo() {
       }
     );
     const result = (await res.json()) as commonResType<Mentee>;
-    console.log(result.result, '유저 정보 조회');
     return result.result;
   } catch (error) {
     console.error('유저 정보 조회 : ', error);
