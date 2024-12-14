@@ -80,17 +80,6 @@ function CommonSidebar() {
         },
         {
           icon: (
-            <UserX
-              color={pathname === `/mypage/blacklist` ? '#F6D84C' : '#ACACAC'}
-              size={20}
-            />
-          ),
-          label: 'BlackList',
-          isActive: pathname.startsWith(`/mypage/blacklist`),
-          href: `/mypage/blacklist`,
-        },
-        {
-          icon: (
             <Banknote
               color={pathname === `/mypage/volt` ? '#F6D84C' : '#ACACAC'}
               size={20}
