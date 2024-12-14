@@ -9,12 +9,12 @@ import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 import { options } from '../../app/api/auth/[...nextauth]/options';
 import {
-  ApiResponse,
   Mentoring,
-  SearchMentoringListType,
+  SearchResult,
+  SearchResults,
   SessionCancelType,
   SessionRequestType,
-  pageableType,
+  MentoringContent,
 } from '../../components/types/mentoring/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 // 멘토링의 정보 및 세션리스트 정보 조회
@@ -150,15 +150,16 @@ export async function GetMentoringNameSearch(
   name: string,
   page: number
 ): Promise<{
-  content: SearchMentoringListType[];
-  pageable: pageableType;
-  totalPages: number;
+  spellingCorrection: string;
+  searchResults: SearchResults;
 } | null> {
   'use server';
 
+  // console.log(name, 'ffffffffffffffffffffffff');
+  const word = name;
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/${name}?page=${page}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/elasticsearch/${name}?word=${word}&page=${page}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -167,7 +168,9 @@ export async function GetMentoringNameSearch(
         },
       }
     );
-    const result = (await res.json()) as commonResType<ApiResponse>;
+    const result = (await res.json()) as commonResType<SearchResult>;
+
+    // console.log(result, '-------------------------------------------------');
     return result.result;
   } catch (error) {
     // console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);

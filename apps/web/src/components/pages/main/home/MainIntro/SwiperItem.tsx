@@ -13,7 +13,7 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
           {item.categoryList.map((category, index) => (
             <span
               key={index}
-              className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5"
+              className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5 cursor-default"
             >
               {category.topCategoryName}
             </span>
@@ -42,7 +42,7 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
           {item.hashTagList.map((tag, index) => (
             <button
               key={index}
-              className="md:px-2  py-1 rounded-full text-sm md:text-md text-gray-600 bg-slate-100"
+              className="md:px-2  py-1 rounded-full text-sm md:text-md text-gray-600 bg-slate-100 cursor-default"
             >
               #{tag.hashtagName}
             </button>
