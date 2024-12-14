@@ -43,16 +43,11 @@ export default async function RootLayout({
   const session = await getServerSession(options);
   const isAuth = session?.user ? true : false;
   const role = session?.user?.role ?? null;
-  console.log('role??: ', role);
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
         <AuthContextProvider isAuth={isAuth} role={role}>
-          <SidebarProvider className="overflow-hidden">
-            <CommonSidebar />
-            <SidebarTrigger className="z-[1000] hidden md:!block md:fixed" />
-            {children}
-          </SidebarProvider>
+          {children}
         </AuthContextProvider>
       </body>
     </html>

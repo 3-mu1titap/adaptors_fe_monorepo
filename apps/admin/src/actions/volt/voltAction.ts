@@ -37,6 +37,7 @@ export async function GetSettleList(startDate: string, endDate: string) {
   }
 
   const result = (await res.json()) as commonResType<settleListDataType>;
+  console.log(result.result.exchangeList);
   return result.result;
 }
 
@@ -84,7 +85,7 @@ export async function PostSettle({ payload }: { payload: settleDataType }) {
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
 
-  const res = await fetch(`${process.env.PAYMENT_URL}/api/v1/settle`, {
+  const res = await fetch(`${process.env.PAYMENT_URL}/api/v1/payment/settle`, {
     cache: 'no-cache',
     method: 'POST',
     headers: {
@@ -93,6 +94,7 @@ export async function PostSettle({ payload }: { payload: settleDataType }) {
     },
     body: JSON.stringify({ ...payload, mentorUuid: userUuid }),
   });
+  console.log(res);
   if (!res.ok) {
     console.error('2차 인증번호 발송 실패');
     return res.ok;
@@ -108,7 +110,7 @@ export async function PostSecondAuthenticationCode() {
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.PAYMENT_URL}/api/v1/settle/send/random-number?userUuid=${userUuid}`,
+    `${process.env.PAYMENT_URL}/api/v1/payment/settle/send/random-number?userUuid=${userUuid}`,
     {
       cache: 'no-cache',
       method: 'POST',
@@ -118,6 +120,7 @@ export async function PostSecondAuthenticationCode() {
       },
     }
   );
+  console.log(res);
   if (!res.ok) {
     console.error('2차 인증번호 발송 실패');
     return res.ok;
@@ -133,7 +136,7 @@ export async function PostCheckSecondAuthenticationCode(code: string) {
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.PAYMENT_URL}/api/v1/settle/check/random-number?userUuid=${userUuid}&insertedNumber${code}`,
+    `${process.env.PAYMENT_URL}/api/v1/payment/settle/check/random-number?userUuid=${userUuid}&insertedNumber=${code}`,
     {
       cache: 'no-cache',
       method: 'POST',
@@ -143,6 +146,7 @@ export async function PostCheckSecondAuthenticationCode(code: string) {
       },
     }
   );
+  console.log(res);
   if (!res.ok) {
     console.error('2차 인증번호 체크 실패');
     return res.ok;
@@ -159,7 +163,7 @@ export async function PostDeleteAuthenticationCode() {
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.PAYMENT_URL}/api/v1/settle/redirect-page?userUuid=${userUuid}`,
+    `${process.env.PAYMENT_URL}/api/v1/payment/settle/redirect-page?userUuid=${userUuid}`,
     {
       cache: 'no-cache',
       method: 'POST',

@@ -5,11 +5,19 @@ import SelectPeriod from './exchange/SelectPeriod';
 import TotalExchange from './exchange/TotalExchange';
 import SettleList from './exchange/SettleList';
 import { GetSettleList } from '@repo/admin/actions/volt/voltAction';
-import { exchangeDataType } from '@repo/admin/components/types/main/mypage/myPageTypes';
+import {
+  exchangeDataType,
+  mentorVoltListDataType,
+} from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { DateRange } from 'react-day-picker'; // 동일한 모듈에서 가져오기
 import { formatDate } from '@repo/admin/components/utils/dateUtil';
+import Exchange from './exchange/Exchange';
 
-export default function ExchangeHistory() {
+export default function ExchangeHistory({
+  mentorVoltList,
+}: {
+  mentorVoltList: mentorVoltListDataType;
+}) {
   const [period, setPeriod] = useState<string>('오늘');
   const [dateRange, setDateRange] = useState<DateRange>({
     from: new Date(),
@@ -120,12 +128,14 @@ export default function ExchangeHistory() {
       />
 
       {!filteredData ? (
-        <p>기간을 선택해주세요.</p>
+        <p className="mb-6">기간을 선택해주세요.</p>
       ) : !totalExchange ? (
-        <p>환전 내역이 없습니다.</p>
+        <p className="mb-6">환전 내역이 없습니다.</p>
       ) : (
         <SettleList filteredData={filteredData} />
       )}
+
+      <Exchange mentorVoltList={mentorVoltList} />
     </>
   );
 }
