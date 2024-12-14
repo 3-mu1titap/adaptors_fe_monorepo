@@ -115,11 +115,14 @@ export interface SessionCancelType {
 
 export interface SearchMentoringListType {
   mentoringUuid: string;
+  reviewCount: number | null;
+  averageStar: number | null;
+  totalSaleCount: number | null;
   name: string;
   description: string;
   thumbnailUrl: string;
   isAvailable: boolean;
-  nowSessionCount: number;
+  nowSessionCount: number | null;
 }
 
 export interface pageableType {

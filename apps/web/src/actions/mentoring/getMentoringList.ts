@@ -1,5 +1,7 @@
 import { MentoringListResult } from '@repo/ui/types/MentoringListType.ts';
+import { options } from '@repo/web/app/api/auth/[...nextauth]/options';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
+import { getServerSession } from 'next-auth';
 
 //카테고리로 멘토링리스트 조회
 export async function GetMentoringByCategory({

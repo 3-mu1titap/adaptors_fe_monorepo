@@ -86,7 +86,7 @@ export default function BestMentoringList({
             spaceBetween={8}
             slidesPerView={1.5}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            autoplay={{ delay: 6000, disableOnInteraction: false }}
             navigation={{
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',

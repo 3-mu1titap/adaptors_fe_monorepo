@@ -14,7 +14,7 @@ function layout({
 
   return (
     <CommonLayout className="h-full container mx-auto max-w-[64rem]">
-      <div className="flex flex-col sm:flex-col sm:max-w-[28rem] md:flex-col md:maw-w-[42rem] lg:flex-row lg:max-w-[64rem] mx-auto mt-32 overflow-x-hidden">
+      <div className="flex flex-col sm:flex-col max-w-[330px] sm:max-w-[28rem] md:flex-col md:maw-w-[42rem] lg:flex-row lg:max-w-[64rem] mx-auto mt-32 overflow-x-hidden">
         <SeparateContainer.LeftSide className="flex flex-col max-w-[16rem]">
           <MentorLeftSidebar userUuid={userUuId} />
         </SeparateContainer.LeftSide>

@@ -1,6 +1,11 @@
 import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import FitImage from '../../../../ui/image/fit-image';
+
+import { Button } from '@repo/ui/components/ui/button';
+import Link from 'next/link';
+
 function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
+  const mentoringUuId = item.mentoringUuid;
   return (
     <article className="grid grid-cols-1 md:grid-cols-2 px-4 justify-between items-center">
       <div className="flex flex-col items-center md:items-start order-2 md:order-1">
@@ -8,7 +13,7 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
           {item.categoryList.map((category, index) => (
             <span
               key={index}
-              className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5"
+              className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5 cursor-default"
             >
               {category.topCategoryName}
             </span>
@@ -26,19 +31,18 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
 
         {/* 버튼들 */}
         <div className="flex flex-row gap-2 md:gap-4 mt-10 mb-10">
-          <button className="bg-[#FFD84D] text-white px-6 py-2 rounded-xl font-medium hover:bg-[#FFD84D]/90 text-md">
-            Get Mentoring
-          </button>
-          <button className="border-2 border-[#FFD84D] text-[#FFD84D] px-6 py-2 rounded-xl font-medium hover:bg-[#FFD84D]/10 text-md">
-            More Info
-          </button>
+          <Link href={`/mentoring/${mentoringUuId}`}>
+            <Button className="bg-[#FFD84D] text-white px-20 py-7 rounded-xl font-medium hover:bg-[#FFD84D]/90 text-xl">
+              자세히보기
+            </Button>
+          </Link>
         </div>
 
         <div className="flex w-full gap-x-1 justify-center md:justify-start">
           {item.hashTagList.map((tag, index) => (
             <button
               key={index}
-              className="md:px-2  py-1 rounded-full text-sm md:text-md text-gray-600 hover:bg-gray-100"
+              className="md:px-2  py-1 rounded-full text-sm md:text-md text-gray-600 bg-slate-100 cursor-default"
             >
               #{tag.hashtagName}
             </button>
