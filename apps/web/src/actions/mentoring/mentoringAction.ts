@@ -150,6 +150,7 @@ export async function GetMentoringNameSearch(
   searchResults: SearchResults;
 } | null> {
   'use server';
+  const word = name;
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/elasticsearch/${name}?word=${word}&page=${page}`,
@@ -213,7 +214,7 @@ export async function getMainMentoringList() {
       }
     );
     const result = (await res.json()) as commonResType<mainIntroDataType[]>;
-    console.log(result);
+    // console.log(result);
     return result.result;
   } catch (error) {
     console.error('error: ', error);
