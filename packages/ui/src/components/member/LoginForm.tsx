@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Input } from '../ui/input';
@@ -25,11 +25,20 @@ export default function LoginForm() {
         password: pw,
         redirect: false,
       });
-      if (result?.status == 401) {
+      if (result?.error) {
         setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
-      } else if (result?.status == 200) {
-        console.log(result?.status == 200);
-        router.push('/home');
+      } else {
+        const updatedSession = await getSession();
+        if (updatedSession) {
+          const role = updatedSession.user?.role;
+
+          // role에 따라 페이지 라우팅
+          if (role === 'MENTEE') {
+            router.push('/mentee');
+          } else if (role === 'MENTOR') {
+            router.push('/mentor');
+          }
+        }
       }
     } catch (error) {
       console.error(error);
