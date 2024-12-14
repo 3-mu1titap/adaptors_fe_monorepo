@@ -102,7 +102,9 @@ export function SearchDrawer({
                     className={`px-2 py-3 hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40  border-b-[1px] text-md ${item.name === '검색어를 입력해주세요' ? 'border-none text-center text-gray-400' : ''}`}
                     key={index}
                   >
-                    <Link href={`/search/${item.name}`}>{item.name}</Link>
+                    <Link href={`/search/${item.name}?isSuggestName=true`}>
+                      {item.name}
+                    </Link>
                   </li>
                 ))
               ) : (
