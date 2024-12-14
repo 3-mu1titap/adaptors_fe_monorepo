@@ -164,6 +164,7 @@ export async function GetMentoringNameSearch(
       }
     );
     const result = (await res.json()) as commonResType<ApiResponse>;
+    // console.log(result);
     return result.result;
   } catch (error) {
     console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
