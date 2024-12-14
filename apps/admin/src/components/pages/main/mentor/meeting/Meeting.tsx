@@ -34,6 +34,11 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
   const [currentVideoDevice, setCurrentVideoDevice] = useState<any>(undefined);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState<boolean>(false);
+  const [showParticipants, setShowParticipants] = useState(true);
+  const [showChat, setShowChat] = useState(true);
+
+  const toggleParticipants = () => setShowParticipants((prev) => !prev);
+  const toggleChat = () => setShowChat((prev) => !prev);
 
   const OV = useRef<OpenVidu>();
 
@@ -244,7 +249,9 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
       {session !== undefined ? (
         <>
           <div className="w-full h-full grid grid-cols-7 2xl:grid-cols-5">
-            <div className="w-full h-full col-span-5 2xl:col-span-4 bg-[#FAFAFE] overflow-y-auto">
+            <div
+              className={`w-full h-full ${showParticipants || showChat ? 'col-span-5 2xl:col-span-4' : 'col-span-7 2xl:col-span-5'} bg-[#FAFAFE] overflow-y-auto`}
+            >
               <OvTracks
                 mentoringName={mentoringName}
                 sessionUuid={sessionUuid}
@@ -256,24 +263,39 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
                 toggleAudio={toggleAudio}
                 toggleVideo={toggleVideo}
                 shareScreen={shareScreen}
+                isScreenSharing={isScreenSharing}
+                showParticipants={showParticipants}
+                showChat={showChat}
+                toggleParticipants={toggleParticipants}
+                toggleChat={toggleChat}
               />
             </div>
-            <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
-              <div className="h-[25vh]">
-                <OpenviduParticipants
-                  subscribers={subscribers}
-                  publisher={publisher}
-                  handleMainVideoStream={handleMainVideoStream}
-                  toggleAudio={toggleAudio}
-                  toggleVideo={toggleVideo}
-                  participantToggleAudio={participantToggleAudio}
-                  participantToggleVideo={participantToggleVideo}
-                />
+            {(showParticipants || showChat) && (
+              <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
+                {showParticipants && (
+                  <div className={showChat ? 'h-[25vh]' : 'h-[79vh]'}>
+                    <OpenviduParticipants
+                      subscribers={subscribers}
+                      publisher={publisher}
+                      handleMainVideoStream={handleMainVideoStream}
+                      toggleAudio={toggleAudio}
+                      toggleVideo={toggleVideo}
+                      participantToggleAudio={participantToggleAudio}
+                      participantToggleVideo={participantToggleVideo}
+                    />
+                  </div>
+                )}
+                {showChat && (
+                  <div
+                    className={
+                      showParticipants ? 'h-[54vh] border-t' : 'h-[79vh]'
+                    }
+                  >
+                    <Chatting user={user} mentoringSessionUuid={sessionUuid} />
+                  </div>
+                )}
               </div>
-              <div className="h-[54vh] border-t">
-                <Chatting user={user} mentoringSessionUuid={sessionUuid} />
-              </div>
-            </div>
+            )}
           </div>
         </>
       ) : null}

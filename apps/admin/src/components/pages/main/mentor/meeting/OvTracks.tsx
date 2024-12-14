@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Mic,
   MicOff,
@@ -10,12 +10,13 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Users,
+  MessageSquareText,
 } from 'lucide-react';
 import { Button } from '@repo/ui/components/ui/button';
 import { StreamManager } from 'openvidu-browser';
 import UserVideo from './UserVideoComponent';
-import VideoOnIcon from '@repo/admin/components/assets/icons/VideoOn';
-import VideoOffIcon from '@repo/admin/components/assets/icons/VideoOff';
+import CustomToolTip from '@repo/ui/components/ui/custom/CustomToolTip';
 
 export interface OvTracksProps {
   mentoringName: string;
@@ -28,6 +29,11 @@ export interface OvTracksProps {
   toggleAudio: (connection: any) => void;
   toggleVideo: (connection: any) => void;
   shareScreen: () => Promise<void>;
+  isScreenSharing: boolean;
+  showParticipants: boolean;
+  showChat: boolean;
+  toggleParticipants: () => void;
+  toggleChat: () => void;
 }
 
 export interface UserVideoProps {
@@ -45,17 +51,49 @@ export default function OvTracks({
   toggleAudio,
   toggleVideo,
   shareScreen,
+  isScreenSharing,
+  showParticipants,
+  showChat,
+  toggleParticipants,
+  toggleChat,
 }: OvTracksProps) {
   const [isAudioOn, setIsAudioOn] = useState(true);
   const [isVideoOn, setIsVideoOn] = useState(true);
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleParticipants, setVisibleParticipants] = useState(4);
 
   const allParticipants = [publisher, ...subscribers];
   const sideParticipants = allParticipants.filter(
     (p) => p !== mainStreamManager
   );
   const totalParticipants = allParticipants.length;
+
+  useEffect(() => {
+    const updateVisibleParticipants = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const participantWidth = 240; // Approximate width of each participant video
+        const newVisibleParticipants = Math.floor(
+          containerWidth / participantWidth
+        );
+        setVisibleParticipants(Math.max(1, newVisibleParticipants));
+      }
+    };
+
+    updateVisibleParticipants();
+    window.addEventListener('resize', updateVisibleParticipants);
+
+    return () => {
+      window.removeEventListener('resize', updateVisibleParticipants);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (slideIndex > sideParticipants.length - visibleParticipants) {
+      setSlideIndex(Math.max(0, sideParticipants.length - visibleParticipants));
+    }
+  }, [sideParticipants.length, slideIndex, visibleParticipants]);
 
   const handleAudioToggle = () => {
     setIsAudioOn((prev) => !prev);
@@ -69,8 +107,7 @@ export default function OvTracks({
 
   const handleScreenShare = async () => {
     try {
-      await shareScreen();
-      setIsScreenSharing((prev) => !prev);
+      const sceenShare = await shareScreen();
     } catch (error) {
       console.error('Error sharing screen:', error);
     }
@@ -83,133 +120,167 @@ export default function OvTracks({
   };
 
   const getVisibleSideParticipants = () => {
-    if (totalParticipants <= 5) return sideParticipants;
-    return sideParticipants.slice(slideIndex, slideIndex + 4);
+    return sideParticipants.slice(slideIndex, slideIndex + visibleParticipants);
   };
-
-  useEffect(() => {
-    if (slideIndex > sideParticipants.length - 4) {
-      setSlideIndex(Math.max(0, sideParticipants.length - 4));
-    }
-  }, [sideParticipants.length, slideIndex]);
 
   const renderSideParticipants = () => {
     const visibleParticipants = getVisibleSideParticipants();
-    if (visibleParticipants.length === 1) {
-      return visibleParticipants.map((participant: StreamManager) => (
-        <div
-          className={`"bg-black" ${totalParticipants === 2 ? `w-full h-full` : 'w-[40rem] h-[20rem] rounded-lg'}`}
-        >
-          <UserVideo streamManager={participant} />
-        </div>
-      ));
-    } else {
-      return (
-        <div className="flex gap-2 overflow-hidden">
-          {visibleParticipants.map((participant: StreamManager) => (
-            <div
-              key={participant.id}
-              className="flex-1 w-full h-full rounded-lg aspect-video cursor-pointer"
-              onClick={() => handleMainVideoStream(participant)}
-            >
-              <UserVideo streamManager={participant} />
-            </div>
-          ))}
-        </div>
-      );
-    }
+    return (
+      <div className="flex gap-2 h-full">
+        {visibleParticipants.map((participant: StreamManager) => (
+          <div
+            key={participant.id}
+            onClick={() => handleMainVideoStream(participant)}
+            className="w-60 h-full cursor-pointer"
+          >
+            <UserVideo streamManager={participant} />
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <div className="flex flex-col w-full h-full bg-gray-100">
+    <div className="flex flex-col w-full h-full bg-white">
       {/* Video Grid */}
-      <div
-        className={`flex-1 p-4 ${totalParticipants === 2 ? `grid grid-cols-2` : 'flex flex-col gap-y-4'}`}
-      >
+      <div className="flex flex-col h-full p-4 gap-4">
         {/* Main Video */}
-        <div className="flex-1 relative mx-auto">
+        <div className="flex-grow">
           {mainStreamManager && (
             <div
-              className={`"bg-black" ${totalParticipants === 2 ? `w-full h-full` : 'w-[50rem] h-[25rem] rounded-lg'}`}
+              className={`w-full rounded-lg overflow-hidden ${sideParticipants.length > 0 ? 'h-[56vh]' : 'h-[74vh]'}`}
             >
               <UserVideo streamManager={mainStreamManager} />
             </div>
           )}
         </div>
         {/* Side Participants */}
-        <div
-          className={`${totalParticipants <= 2 ? `flex-2 relative mx-auto` : 'h-1/4 flex items-center'}`}
-        >
-          {totalParticipants > 5 && (
-            <Button
-              onClick={() => setSlideIndex(Math.max(0, slideIndex - 1))}
-              variant="outline"
-              size="icon"
-              className="mr-2"
-              disabled={slideIndex === 0}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-          )}
-          <div
-            className={`${totalParticipants === 2 ? `flex-1 relative mx-auto` : '"flex-1 overflow-hidden"'}`}
-          >
-            {renderSideParticipants()}
+        {sideParticipants.length > 0 && (
+          <div className="h-32 flex items-center" ref={containerRef}>
+            {sideParticipants.length > visibleParticipants && (
+              <Button
+                onClick={() => setSlideIndex(Math.max(0, slideIndex - 1))}
+                variant="outline"
+                size="icon"
+                className="mr-2 bg-gray-800 text-white hover:bg-gray-700"
+                disabled={slideIndex === 0}
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+            )}
+            <div className="flex-grow h-full overflow-hidden">
+              {renderSideParticipants()}
+            </div>
+            {sideParticipants.length > visibleParticipants && (
+              <Button
+                onClick={() =>
+                  setSlideIndex(
+                    Math.min(
+                      sideParticipants.length - visibleParticipants,
+                      slideIndex + 1
+                    )
+                  )
+                }
+                variant="outline"
+                size="icon"
+                className="ml-2 bg-gray-800 text-white hover:bg-gray-700"
+                disabled={
+                  slideIndex >= sideParticipants.length - visibleParticipants
+                }
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
+            )}
           </div>
-          {totalParticipants > 5 && (
-            <Button
-              onClick={() =>
-                setSlideIndex(
-                  Math.min(sideParticipants.length - 4, slideIndex + 1)
-                )
-              }
-              variant="outline"
-              size="icon"
-              className="ml-2"
-              disabled={slideIndex >= sideParticipants.length - 4}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          )}
-        </div>
+        )}
       </div>
       {/* Footer */}
-      <div className="absolute w-full -bottom-[5rem] flex justify-between items-center p-4 bg-white border-t">
-        <Button
-          onClick={handleScreenShare}
-          size="icon"
-          className="w-10 h-10 bg-adaptorsYellow hover:bg-black !px-8"
-        >
-          {isScreenSharing ? '공유 중지' : '영상 공유'}
-        </Button>
+      <div className="flex justify-between items-center p-3 bg-[#F5F5F5] border-gray-700">
+        <CustomToolTip text={isScreenSharing ? 'Stop sharing' : 'Share screen'}>
+          <Button
+            onClick={handleScreenShare}
+            size="icon"
+            className={`w-10 h-10 ${
+              isScreenSharing
+                ? 'bg-gray-700 hover:bg-gray-600'
+                : 'bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white'
+            }`}
+          >
+            <Monitor className="h-6 w-6" />
+          </Button>
+        </CustomToolTip>
         <div className="flex items-center gap-2">
-          <Button
-            onClick={handleAudioToggle}
-            variant="outline"
-            size="icon"
-            className="w-10 h-10"
-          >
-            {isAudioOn ? (
-              <Mic className="h-5 w-5" />
-            ) : (
-              <MicOff className="h-5 w-5" />
-            )}
-          </Button>
-          <Button
-            onClick={handleVideoToggle}
-            variant="outline"
-            size="icon"
-            className="w-10 h-10"
-          >
-            {isVideoOn ? (
-              <Video className="h-5 w-5" />
-            ) : (
-              <VideoOff className="h-5 w-5" />
-            )}
-          </Button>
+          <CustomToolTip text={isAudioOn ? 'Mute' : 'Unmute'}>
+            <Button
+              onClick={handleAudioToggle}
+              variant="outline"
+              size="icon"
+              className={`w-10 h-10 ${
+                isAudioOn
+                  ? 'bg-adaptorsYellow text-white hover:bg-black hover:text-white'
+                  : 'bg-red-300 hover:bg-red-500'
+              }`}
+            >
+              {isAudioOn ? (
+                <Mic className="h-6 w-6" />
+              ) : (
+                <MicOff className="h-6 w-6" />
+              )}
+            </Button>
+          </CustomToolTip>
+          <CustomToolTip text={isVideoOn ? 'Stop video' : 'Start video'}>
+            <Button
+              onClick={handleVideoToggle}
+              variant="outline"
+              size="icon"
+              className={`w-10 h-10 ${
+                isVideoOn
+                  ? 'bg-adaptorsYellow text-white hover:bg-black hover:text-white'
+                  : 'bg-red-300 hover:bg-red-500'
+              }`}
+            >
+              {isVideoOn ? (
+                <Video className="h-6 w-6" />
+              ) : (
+                <VideoOff className="h-6 w-6" />
+              )}
+            </Button>
+          </CustomToolTip>
+          <CustomToolTip text={`Participants (${totalParticipants})`}>
+            <Button
+              onClick={toggleParticipants}
+              variant="outline"
+              size="icon"
+              className={`w-10 h-10 ${
+                showParticipants
+                  ? 'bg-adaptorsYellow text-white hover:bg-black hover:text-white'
+                  : 'bg-red-300 hover:bg-red-500'
+              }`}
+            >
+              <Users className="h-6 w-6" />
+            </Button>
+          </CustomToolTip>
+          <CustomToolTip text="Chat">
+            <Button
+              onClick={toggleChat}
+              variant="outline"
+              size="icon"
+              className={`w-10 h-10 ${
+                showChat
+                  ? 'bg-adaptorsYellow text-white hover:bg-black hover:text-white'
+                  : 'bg-red-300 hover:bg-red-500'
+              }`}
+            >
+              <MessageSquareText className="h-6 w-6" />
+            </Button>
+          </CustomToolTip>
         </div>
-        <Button onClick={handleLeaveSession} variant="destructive">
-          <LogOut className="h-5 w-5 mr-2" />
+        <Button
+          onClick={handleLeaveSession}
+          variant="destructive"
+          className="bg-transparent border-2 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white"
+        >
+          <LogOut className="h-6 w-6 mr-2" />
           Leave Mentoring
         </Button>
       </div>
