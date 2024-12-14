@@ -1,5 +1,5 @@
-import AdaptorsLogoIcon from '../../assets/icons/AdaptorsLogo';
-import AdaptorcConcentImage from '../../assets/images/AdaptorcConcentImage';
+import AdaptorsLogoIcon from '../assets/AdaptorsLogo';
+import AdaptorcConcentImage from './AdaptorcConcentImage';
 
 export default function IntroCard({ className = '' }: { className?: string }) {
   return (
