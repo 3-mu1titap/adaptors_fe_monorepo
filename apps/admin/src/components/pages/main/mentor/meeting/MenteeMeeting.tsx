@@ -269,7 +269,7 @@ const MenteeMeeting: React.FC<MeetingProps> = ({
               />
             </div>
             {(showParticipants || showChat) && (
-              <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
+              <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full ring-1 ring-slate-200">
                 {showParticipants && (
                   <div className={showChat ? 'h-[30vh]' : 'h-[100vh]'}>
                     <OpenviduParticipants

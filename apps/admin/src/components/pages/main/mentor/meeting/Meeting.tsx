@@ -273,7 +273,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
             {(showParticipants || showChat) && (
               <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
                 {showParticipants && (
-                  <div className={showChat ? 'h-[25vh]' : 'h-[79vh]'}>
+                  <div className={showChat ? 'h-[29vh]' : 'h-[89vh]'}>
                     <OpenviduParticipants
                       subscribers={subscribers}
                       publisher={publisher}
@@ -288,7 +288,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
                 {showChat && (
                   <div
                     className={
-                      showParticipants ? 'h-[54vh] border-t' : 'h-[79vh]'
+                      showParticipants ? 'h-[60vh] border-t' : 'h-[89vh]'
                     }
                   >
                     <Chatting user={user} mentoringSessionUuid={sessionUuid} />
