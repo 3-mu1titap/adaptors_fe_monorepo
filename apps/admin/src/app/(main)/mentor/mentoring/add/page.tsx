@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 export default async function Page() {
   const topCategories = await GetTopCategoryList();
   const hashtags = await GetHashTagsList();
-  console.log(hashtags);
   return (
     <>
       {topCategories && hashtags && (

@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from '@repo/ui/components/ui/dialog';
 import MentoringFeedbackForm from '@repo/admin/components/form/MentoringFeedbackForm';
-import OvTracks from './OvTracks';
+import MenteeOvTracks from './MenteeOvTracks';
 import OpenviduParticipants from './participants/OpenviduParticipants';
 import Chatting from '../../chatting/Chatting';
 
@@ -21,12 +21,12 @@ interface MeetingProps {
   user: any;
 }
 
-const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
+const MenteeMeeting: React.FC<MeetingProps> = ({
+  mentoringSessionList,
+  user,
+}) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
   const [mentoringName, setMentoringName] = useState<string>('');
-  const [myUserName, setMyUserName] = useState<string>(
-    'Participant' + Math.floor(Math.random() * 100)
-  );
   const [session, setSession] = useState<any>(undefined);
   const [mainStreamManager, setMainStreamManager] = useState<any>(undefined);
   const [publisher, setPublisher] = useState<any>(undefined);
@@ -89,7 +89,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
 
     try {
       const token = await getToken(session.sessionUuid);
-      await newSession.connect(token, { clientData: myUserName });
+      await newSession.connect(token, { clientData: user.uuid });
 
       const publisher = await OV.current.initPublisherAsync(undefined, {
         audioSource: undefined,
@@ -130,10 +130,10 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
       session.disconnect();
     }
 
+    setShowFeedbackModal(true);
     setSession(undefined);
     setSubscribers([]);
     setSessionUuid('');
-    setMyUserName('Participant' + Math.floor(Math.random() * 100));
     setMainStreamManager(undefined);
     setPublisher(undefined);
     setCurrentVideoDevice(undefined);
@@ -205,9 +205,8 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
     if (publisher && OV.current) {
       try {
         if (isScreenSharing) {
-          // 화면 공유를 종료하는 경우
-          const videoDeviceId = currentVideoDevice?.deviceId; // 기존 비디오 장치 ID 저장
-          const videoSource = videoDeviceId ? videoDeviceId : undefined; // 비디오 장치가 있을 경우 사용
+          const videoDeviceId = currentVideoDevice?.deviceId;
+          const videoSource = videoDeviceId ? videoDeviceId : undefined;
 
           await session.unpublish(publisher);
           const newPublisher = await OV.current.initPublisherAsync(undefined, {
@@ -217,7 +216,6 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
           setPublisher(newPublisher);
           setMainStreamManager(newPublisher);
         } else {
-          // 화면 공유를 시작하는 경우
           const screenPublisher = await OV.current.initPublisherAsync(
             undefined,
             {
@@ -230,7 +228,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
           setMainStreamManager(screenPublisher);
         }
 
-        setIsScreenSharing((prev) => !prev); // 화면 공유 상태 토글
+        setIsScreenSharing((prev) => !prev);
       } catch (error) {
         console.error('Error sharing screen:', error);
       }
@@ -252,7 +250,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
             <div
               className={`w-full h-full ${showParticipants || showChat ? 'col-span-5 2xl:col-span-4' : 'col-span-7 2xl:col-span-5'} bg-[#FAFAFE] overflow-y-auto`}
             >
-              <OvTracks
+              <MenteeOvTracks
                 mentoringName={mentoringName}
                 sessionUuid={sessionUuid}
                 leaveSession={leaveSession}
@@ -271,9 +269,9 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
               />
             </div>
             {(showParticipants || showChat) && (
-              <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full">
+              <div className="w-full flex flex-col col-span-2 2xl:col-span-1 h-full ring-1 ring-slate-200">
                 {showParticipants && (
-                  <div className={showChat ? 'h-[29vh]' : 'h-[89vh]'}>
+                  <div className={showChat ? 'h-[30vh]' : 'h-[100vh]'}>
                     <OpenviduParticipants
                       subscribers={subscribers}
                       publisher={publisher}
@@ -288,7 +286,7 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
                 {showChat && (
                   <div
                     className={
-                      showParticipants ? 'h-[60vh] border-t' : 'h-[89vh]'
+                      showParticipants ? 'h-[70vh] border-t' : 'h-[100vh]'
                     }
                   >
                     <Chatting user={user} mentoringSessionUuid={sessionUuid} />
@@ -301,8 +299,8 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
       ) : null}
       <Dialog open={showFeedbackModal} onOpenChange={setShowFeedbackModal}>
         <DialogHeader className="hidden">
-          <DialogTitle>멘토링 피드백</DialogTitle>
-          <DialogDescription>멘티의 수준 평가</DialogDescription>
+          <DialogTitle>리뷰</DialogTitle>
+          <DialogDescription>멘토링에 대한 리뷰</DialogDescription>
         </DialogHeader>
         <DialogContent onInteractOutside={(e) => e.preventDefault()}>
           <MentoringFeedbackForm sessionUuid={sessionUuid} />
@@ -312,4 +310,4 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
   );
 };
 
-export default Meeting;
+export default MenteeMeeting;

@@ -40,7 +40,7 @@ export interface UserVideoProps {
   streamManager: StreamManager;
 }
 
-export default function OvTracks({
+export default function MenteeOvTracks({
   mentoringName,
   sessionUuid,
   leaveSession,
@@ -148,7 +148,7 @@ export default function OvTracks({
         <div className="flex-grow">
           {mainStreamManager && (
             <div
-              className={`w-full rounded-lg overflow-hidden ${sideParticipants.length > 0 ? 'h-[56vh]' : 'h-[74vh]'}`}
+              className={`w-full rounded-lg overflow-hidden ${sideParticipants.length > 0 ? 'h-[67vh]' : 'h-[85vh]'}`}
             >
               <UserVideo streamManager={mainStreamManager} />
             </div>

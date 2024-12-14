@@ -13,7 +13,7 @@ export default function SettleList({
   filteredData: exchangeDataType[];
 }) {
   return (
-    <Card>
+    <Card className="mb-6">
       <CardHeader>
         <CardTitle>환전 내역</CardTitle>
       </CardHeader>

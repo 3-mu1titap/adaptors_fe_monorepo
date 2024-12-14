@@ -1,4 +1,3 @@
-import VoltHeader from '@repo/admin/components/header/VoltHeader';
 import { Metadata } from 'next';
 import React from 'react';
 
@@ -11,7 +10,6 @@ export default function layout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="max-w-7xl mx-auto min-h-screen w-full bg-gray-100">
-      <VoltHeader />
       <main className=" mx-auto p-4">{children}</main>
     </div>
   );
