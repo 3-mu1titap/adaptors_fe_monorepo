@@ -1,3 +1,8 @@
+import { commonResType } from '@repo/web/components/types/ResponseTypes';
+
+interface refreshAcessType {
+  accessToken: string;
+}
 export const refreshToken = async (refreshToken: string) => {
   console.log(refreshToken);
   const response = await fetch(
@@ -17,8 +22,7 @@ export const refreshToken = async (refreshToken: string) => {
     throw new Error('Failed to refresh token');
   }
 
-  const data = await response.json();
-  console.log('refreshtoken 다시요청햇다', data);
+  const data = (await response.json()) as commonResType<refreshAcessType>;
 
-  return data; // 갱신된 토큰 데이터를 반환
+  return data.result; // 갱신된 토큰 데이터를 반환
 };

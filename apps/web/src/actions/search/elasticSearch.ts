@@ -11,7 +11,7 @@ export interface SuggestedNames {
 export const getSuggestedName = async (inputWord: string): Promise<any> => {
   try {
     const response = await fetch(
-      `http://10.10.10.20:9001/api/v1/mentoring-query-service/elastic/${inputWord}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/elastic/${inputWord}`,
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
