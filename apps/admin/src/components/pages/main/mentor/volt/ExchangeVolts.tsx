@@ -11,7 +11,7 @@ import {
 } from '@repo/admin/components/types/main/mypage/myPageTypes';
 import { DateRange } from 'react-day-picker'; // 동일한 모듈에서 가져오기
 import { formatDate } from '@repo/admin/components/utils/dateUtil';
-import Exchange from './exchange/exchange';
+import Exchange from './exchange/Exchange';
 
 export default function ExchangeHistory({
   mentorVoltList,
