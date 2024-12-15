@@ -3,14 +3,13 @@
 import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
-interface userProfileType {
+
+export interface userProfileType {
   nickName: string;
   profileImageUrl: string;
 }
 
-export const getProfileImage = async (
-  uuid: string
-): Promise<userProfileType> => {
+export const getProfileImage = async (): Promise<userProfileType> => {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;

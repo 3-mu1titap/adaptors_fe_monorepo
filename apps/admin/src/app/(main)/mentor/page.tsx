@@ -53,6 +53,7 @@ export default async function Page() {
           initialUserData={initialUserData}
           mentoringSessionList={mentoringSessionList}
           MentoringInfoData={MentoringInfoData}
+          mentoringUuid={mentoringListData[0].mentoringUuid}
         />
       )}
     </>

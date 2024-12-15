@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckSquare2, ImageIcon, X } from 'lucide-react';
+import { AlertTriangle, CheckSquare2, ImageIcon, X } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // import 'react-datepicker/dist/react-datepicker.css';
 // import { Editor } from '@toast-ui/react-editor';
@@ -21,6 +21,7 @@ import {
 
 import FitImage from '../ui/image/fit-image';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 const formats = [
   'font',
@@ -195,6 +196,21 @@ export default function MentoringAddForm({
       } catch (error) {
         console.error('Error uploading image:', error);
       }
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: 'info',
+        title: `썸네일을 넣어주세요.`,
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        customClass: {
+          title: 'text-lg font-semibold text-gray-800 text-center',
+          confirmButton:
+            'col-span-3 bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500 !text-md',
+          actions: '!grid !grid-cols-4 !justify-center',
+        },
+      });
     }
   };
 

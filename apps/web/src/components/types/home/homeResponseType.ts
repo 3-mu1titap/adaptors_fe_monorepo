@@ -13,6 +13,11 @@ export interface mainIntroDataType {
   updatedAt: string;
   categoryList: Category[];
   hashTagList: HashTag[];
+  mainImageList: ImageList[];
+}
+
+export interface ImageList {
+  url: string;
 }
 export interface HashTag {
   hashtagId: string;

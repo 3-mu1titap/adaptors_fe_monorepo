@@ -8,9 +8,11 @@ import CustomSessionFigure from './CustomSessionFigure';
 function CustomSessionList({
   filteredList,
   mentoringName,
+  type,
 }: {
   filteredList: MentoringResult[];
   mentoringName: MentoringDataType | null;
+  type?: string;
 }) {
   return (
     <div className="space-y-6">
@@ -22,6 +24,7 @@ function CustomSessionList({
               <CustomSessionFigure
                 session={session}
                 mentoringName={mentoringName?.name}
+                type={type}
                 key={session.sessionUuid}
               />
             ))}

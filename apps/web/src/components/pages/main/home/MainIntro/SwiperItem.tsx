@@ -57,13 +57,13 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
       {/* 이미지 */}
       <div className="flex justify-center relative py-10 order-1 md:order-2 mb-8 md:mb-0">
         <div className="w-[30%] max-w-[180px] aspect-square overflow-hidden rounded-2xl absolute top-0 right-0 md:right-5 ring-8 md:ring-[1rem] ring-white">
-          <FitImage src={item.thumbnailUrl} alt={''} />
+          <FitImage src={item.mainImageList[1].url} alt={''} />
         </div>
         <div className="w-[90%] md:w-[80%] md:max-h-[400px] aspect-square overflow-hidden rounded-2xl">
-          <FitImage src={item.thumbnailUrl} alt={''} />
+          <FitImage src={item.mainImageList[0].url} alt={''} />
         </div>
         <div className="w-[25%] max-w-[150px] aspect-square overflow-hidden rounded-2xl absolute bottom-3 left-0 md:left-3 ring-8 md:ring-[1rem] ring-white">
-          <FitImage src={item.thumbnailUrl} alt={''} />
+          <FitImage src={item.mainImageList[2].url} alt={''} />
         </div>
       </div>
     </article>

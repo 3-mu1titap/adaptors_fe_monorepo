@@ -40,7 +40,6 @@ const CalendarContent = ({
         borderColor: '#F6D84C',
         textColor: 'white',
       }));
-      console.log(newEvents);
       setEvents(newEvents);
     }
   }, [scheduleList]);
@@ -74,9 +73,7 @@ const CalendarContent = ({
   };
 
   const editEvent = (data: any = null) => {
-    console.log('111111111', data);
     if (data.event.id) {
-      console.log(data.event);
       const obj = data.event;
       const newParams = {
         mentoringSessionUuid: obj.id || 0,
