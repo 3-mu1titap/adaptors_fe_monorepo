@@ -70,7 +70,7 @@ export async function PaymentApproval(pg_token: string) {
   const session = await getServerSession(options);
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/approve?pg_token=${pg_token}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/v1/payment/approve?pg_token=${pg_token}`,
       {
         cache: 'no-cache',
         method: 'POST',
@@ -82,6 +82,7 @@ export async function PaymentApproval(pg_token: string) {
     );
 
     const result = (await res.json()) as commonResType<PaymentApprovalResType>;
+    // console.log(result, 'ggggggggggggggggggggggggggggggg');
     return result.result;
   } catch (error) {
     // console.log('결제 준비 중', error);
@@ -110,7 +111,7 @@ export async function GetMemberPoint() {
     );
 
     const result: commonRes = await res.json();
-    console.log(result, '포인트 조회 완료');
+    // console.log(result, '포인트 조회 완료');
     return result;
   } catch (error) {
     console.log('회원 포인트 조회', error);
@@ -141,10 +142,10 @@ export async function GetPointList() {
     const result = (await res.json()) as commonResType<
       GetMemberPointListResType[]
     >;
-    console.log(result.result, '포인트 리스트 조회');
+    // console.log(result.result, '포인트 리스트 조회');
     return result.result;
   } catch (error) {
-    console.log('포인트 리스트 조회', error);
+    // console.log('포인트 리스트 조회', error);
     return null;
   }
 }

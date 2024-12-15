@@ -23,7 +23,7 @@ async function page({
     isDirect
   );
 
-  console.log(searchMentoringlistData, 'fffffffffff');
+  // console.log(searchMentoringlistData, 'fffffffffff');
   return (
     <>
       <section className="container mx-auto max-w-[64rem] mt-32">

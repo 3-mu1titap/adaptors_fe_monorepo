@@ -203,7 +203,7 @@ export async function getMainMentoringList() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/main/list`,
+      `${process.env.MEMBER_TEST_URL}/api/v1/mentoring-query-service/main/list`,
       {
         cache: 'no-cache',
         method: 'GET',
