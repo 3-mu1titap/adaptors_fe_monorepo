@@ -25,10 +25,7 @@ function MentorLeftSidebar({ userUuid }: { userUuid: string }) {
 
   return (
     <div className="mx-5">
-      <CustomMentorProfilePhoto
-        profileImgUrl={UserInfo?.profileImageUrl}
-        mentorUuid={userUuid}
-      />
+      <CustomMentorProfilePhoto profileImgUrl={UserInfo?.profileImageUrl} />
       <h1 className="text-xl font-bold my-3 md:text-wrap">
         @ {UserInfo?.nickName}
       </h1>
