@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BestMentorType } from '@repo/web/components/types/mentor/mentorType';
 import RateViewer from '@repo/web/components/common/RateViwer';
 import Link from 'next/link';
@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { HeartIcon } from 'lucide-react';
 import { ShoppingCartIcon } from 'lucide-react';
 import FitImage from '@repo/web/components/ui/image/fit-image';
-import { postLikeReaction } from '@repo/web/actions/Like/like';
+import { getIsLiked, postLikeReaction } from '@repo/web/actions/Like/like';
 import { useState } from 'react';
 
 function BestMentorCard({
@@ -19,16 +19,29 @@ function BestMentorCard({
   isRole: any;
   index: number;
 }) {
+  //좋아요 토글 이벤트
   const [like, setLike] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const islike = async () => {
+  useEffect(() => {
+    const fetchIsLike = async () => {
+      try {
+        const res = await getIsLiked(item.mentorUuid);
+        setLike(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchIsLike();
+  }, [item, like]);
+
+  const handleLikeToggle = async () => {
+    if (isLoading) return; // 로딩 중 중복 요청 방지
+
     setIsLoading(true);
     try {
-      const res = await postLikeReaction(item.mentorUuid); // API 호출
-      if (res) {
-        setLike((prev) => !prev); // 좋아요 상태 토글
-      }
+      await postLikeReaction(item.mentorUuid); // API 호출
+      setLike(true);
     } catch (error) {
       console.error('Failed to update like reaction:', error);
     } finally {
@@ -54,7 +67,7 @@ function BestMentorCard({
               } ${isLoading && 'opacity-50 cursor-not-allowed'}`}
               onClick={(e) => {
                 e.preventDefault(); // Link 기본 동작 방지
-                islike();
+                handleLikeToggle();
               }}
             />
           </div>
@@ -80,7 +93,7 @@ function BestMentorCard({
         <div className="flex mt-5 items-center gap-x-7 justify-center">
           <div className="flex flex-col mb-2 justify-start gap-y-1">
             <RateViewer
-              rateData={item.reviewStarAvg}
+              rateData={item?.reviewStarAvg}
               size="1.0rem"
               color={'#ffd84d'}
             />

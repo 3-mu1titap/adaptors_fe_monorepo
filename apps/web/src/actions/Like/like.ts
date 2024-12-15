@@ -97,7 +97,7 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
 export async function getIsLiked(targetUuid: string): Promise<boolean> {
   'use server';
   const session = await getServerSession(options);
-  const uuid = session?.user.uuid;
+  const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
       `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/like`,
@@ -107,7 +107,7 @@ export async function getIsLiked(targetUuid: string): Promise<boolean> {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${session?.user.accessToken}`,
-          'userUuid': uuid,
+          'userUuid': userUuid,
         },
         next: {
           tags: ['likeStatus'],

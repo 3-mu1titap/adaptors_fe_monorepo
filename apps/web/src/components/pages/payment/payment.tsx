@@ -64,8 +64,8 @@ function Payment() {
   const totalAmount = totalMoney || 0;
   const taxFreeAmount = 0;
   const approvalUrl = 'http://localhost:3003/payment/payment-confirm';
-  const failUrl = 'http://localhost:3003/mypage/volt/payment-fail';
-  const cancelUrl = 'http://localhost:3003/mypage/volt/payment-cancel';
+  const failUrl = 'http://localhost:3003/mypage/payment/payment-fail';
+  const cancelUrl = 'http://localhost:3003/mypage/payment/payment-cancel';
 
   const Paymenthandle = async () => {
     try {
