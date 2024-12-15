@@ -104,6 +104,11 @@ const validateSession = (session: MentoringSession): string[] => {
         `시간 범위 ${index + 1}: 종료 시간은 시작 시간보다 최소 30분 뒤여야 합니다.`
       );
     }
+
+    // 가격 검증 추가
+    if (range.price <= 0) {
+      errors.push(`시간 범위 ${index + 1}: 가격은 0보다 커야 합니다.`);
+    }
   });
 
   return errors;
