@@ -10,14 +10,19 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
     <article className="grid grid-cols-1 md:grid-cols-2 px-4 justify-between items-center">
       <div className="flex flex-col items-center md:items-start order-2 md:order-1">
         <div className="flex gap-x-1">
-          {item.categoryList.map((category, index) => (
-            <span
-              key={index}
-              className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5 cursor-default"
-            >
-              {category.topCategoryName}
-            </span>
-          ))}
+          {(item.categoryList && (
+            <>
+              {item?.categoryList?.map((category, index) => (
+                <span
+                  key={index}
+                  className="max-w-[20rem] rounded-md text-md text-white bg-slate-400 px-3 py-1 overflow-hidden text-ellipsis whitespace-nowrap mb-5 cursor-default"
+                >
+                  {category.topCategoryName}
+                </span>
+              ))}
+            </>
+          )) ||
+            null}
         </div>
         {/* 제목 */}
         <h2 className="text-center md:text-start text-ellipsis whitespace-pre-line text-[2rem] md:text-[3rem] font-extrabold leading-none max-w-[16ch]">
@@ -39,14 +44,14 @@ function SwiperItemLayout({ item }: { item: mainIntroDataType }) {
         </div>
 
         <div className="flex w-full gap-x-1 justify-center md:justify-start">
-          {item.hashTagList.map((tag, index) => (
+          {item?.hashTagList?.map((tag, index) => (
             <button
               key={index}
-              className="md:px-2  py-1 rounded-full text-sm md:text-md text-gray-600 bg-slate-100 cursor-default"
+              className="md:px-2 py-1 rounded-full text-sm md:text-md text-gray-600 bg-slate-100 cursor-default"
             >
-              #{tag.hashtagName}
+              {tag.hashtagName}
             </button>
-          ))}
+          )) || null}
         </div>
       </div>
       {/* 이미지 */}
