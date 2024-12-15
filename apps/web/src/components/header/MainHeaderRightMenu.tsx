@@ -1,3 +1,4 @@
+'use client';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
 import {
   DropdownMenu,

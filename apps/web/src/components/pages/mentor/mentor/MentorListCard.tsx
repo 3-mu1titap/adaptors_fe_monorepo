@@ -1,10 +1,8 @@
-import Link from 'next/link';
-import React from 'react';
-import Image from 'next/image';
-import { userProfileType } from '@repo/web/components/types/profile/RequestType';
-import { MentorInfoType } from '@repo/web/components/types/profile/RequestType';
 import RateViewer from '@repo/web/components/common/RateViwer';
+import { MentorInfoType } from '@repo/web/components/types/profile/RequestType';
 import { HeartIcon } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function MentorListCard({ item }: { item: MentorInfoType }) {
   return (
@@ -21,13 +19,7 @@ function MentorListCard({ item }: { item: MentorInfoType }) {
 
           <div className="flex items-center gap-2">
             <Image
-              className={`w-[55px] h-[65px] rounded-full py-4 ${
-                item.profileImageUrl === 'none' ||
-                item.profileImageUrl === 'www.naver.com' ||
-                !item.profileImageUrl
-                  ? 'bg-gray-200'
-                  : ''
-              }`}
+              className={`w-[55px] rounded-full py-4`}
               src={
                 item.profileImageUrl === 'none' ||
                 item.profileImageUrl === 'www.naver.com' ||

@@ -13,7 +13,7 @@ export default function MentoringItem({
   isLoading,
 }: {
   item: Mentoring;
-  isLoading: boolean;
+  isLoading?: boolean;
 }) {
   const SessionInfo: SessionInfo[] = [
     {
