@@ -1,41 +1,35 @@
 'use client';
+import NextButton from '@repo/web/components/ui/Button/NextButton';
+import { Input } from '@repo/web/components/ui/input/CommonInput';
 import { useState } from 'react';
 import { findId } from '../../actions/auth/auth';
-import JoinInput from '../ui/input/JoinInput';
-
 export default function FindIdForm() {
-  const [email, setId] = useState('');
-  const [success, setSuccess] = useState(false);
-  const clearId = () => setId('');
-  const verifyEmail = async () => {
+  const [success, setSuccess] = useState('');
+
+  const verifyEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
     const data = await findId(email);
     if (data) {
-      setSuccess(true);
+      setSuccess(data);
     }
   };
 
   return (
-    <div className=" max-w-[400px] mx-auto  mt-5">
-      <JoinInput
-        signInInput={{
-          text: '이메일',
-          value: email,
-          name: 'email',
-          setValue: setId,
-          clearValue: clearId,
-        }}
+    <form className=" max-w-[400px] mx-auto  mt-5" onSubmit={verifyEmail}>
+      <Input placeholder="email" type={'text'} name="email" />
+      <NextButton
+        text="아이디 찾기"
+        colorType="primary"
+        textColor="text-white"
+        type="submit"
       />
-      <button
-        onClick={verifyEmail}
-        className="w-full bg-adaptorsYellow text-black font-semibold py-2.5 rounded-lg hover:bg-[#ffc635] transition-colors"
+      <p
+        className={`text-center pt-3 text-black ${success ? 'block' : 'invisible'}`}
       >
-        아이디 찾기
-      </button>
-      {success && (
-        <p className="text-center pt-3 text-black">
-          📮 등록된 이메일로 아이디를 발송했습니다
-        </p>
-      )}
-    </div>
+        📮 {success}
+      </p>
+    </form>
   );
 }

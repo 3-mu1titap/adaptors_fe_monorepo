@@ -41,7 +41,7 @@ export async function postUserData(userData: {
     return 'error';
   }
 }
-export async function findId(email: string): Promise<any> {
+export async function findId(email: string): Promise<string> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/find-id`,
@@ -56,15 +56,16 @@ export async function findId(email: string): Promise<any> {
         }),
       }
     );
-    const result = (await res.json()) as commonResType<any[]>;
-    return result.result;
+    const result = (await res.json()) as commonResType<any>;
+    console.log(result);
+    return result.message;
   } catch (error) {
     console.error('아이디 찾기: ', error);
-    return [];
+    return '아이디 찾기에 실패했습니다';
   }
 }
 
-export async function resetPassword(accountId: string): Promise<any> {
+export async function resetPassword(accountId: string): Promise<string> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_AUTH}/api/v1/auth/reset-password`,
@@ -79,11 +80,11 @@ export async function resetPassword(accountId: string): Promise<any> {
         }),
       }
     );
-    const result = (await res.json()) as commonResType<any[]>;
-    return result.result;
+    const result = (await res.json()) as commonResType<any>;
+    return result.message;
   } catch (error) {
     console.error('비밀번호 찾기: ', error);
-    return [];
+    return '비밀번호 찾기 실패';
   }
 }
 export async function checkAccountId(accountId: string): Promise<number> {
