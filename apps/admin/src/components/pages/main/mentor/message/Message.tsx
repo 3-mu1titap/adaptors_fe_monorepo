@@ -18,7 +18,7 @@ export default function Message({
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
   return (
-    <div className="flex h-[90vh] bg-background">
+    <div className="flex h-[79vh] bg-background">
       {/* Left Sidebar */}
       <ChatSidebar
         selectedChat={selectedChat}
