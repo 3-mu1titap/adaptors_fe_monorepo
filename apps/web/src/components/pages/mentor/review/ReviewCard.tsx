@@ -1,10 +1,9 @@
-import React from 'react';
 import RateViewer from '@repo/web/components/common/RateViwer';
-import Image from 'next/image';
 import {
-  reviewRequestDto,
   memberRequestDto,
+  reviewRequestDto,
 } from '@repo/web/components/types/Review/ReviewType';
+import Image from 'next/image';
 function ReviewCard({
   review,
   memberInfo,
@@ -26,7 +25,7 @@ function ReviewCard({
     deleted: false,
     nickName: '취준생재현',
     profileImageUrl:
-      'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732686722991-userDefaultImage.png',
+      'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1734245082473-Frame-3.png',
   };
 
   const formatDate = (dateString: string): string => {
