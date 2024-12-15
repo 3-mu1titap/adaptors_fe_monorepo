@@ -20,9 +20,11 @@ import { useDebouncedCallback } from 'use-debounce';
 export function SearchDialog({
   isOpen,
   openCloser,
+  name,
 }: {
   isOpen: boolean;
   openCloser: () => void;
+  name?: string;
 }) {
   const [key, setKey] = useState(0);
   const [value, setValue] = useState('');
@@ -49,7 +51,7 @@ export function SearchDialog({
   const routeToSearchPage = () => {
     if (value) {
       setKey((prevKey) => prevKey + 1);
-      router.push(`/search/${value}?isAutocomplete=true`);
+      router.push(`/mentoring?name=${value}&isAutocomplete=true`);
       router.refresh();
     }
   };
@@ -59,11 +61,11 @@ export function SearchDialog({
       if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {
         setValue(suggestedName[focusedIndex].name);
         router.push(
-          `/search/${suggestedName[focusedIndex].name}?isAutocomplete=false`
+          `/mentoring?name=${suggestedName[focusedIndex].name}&isAutocomplete=false` //자동완성으로 추천받음
         );
         router.refresh();
       } else {
-        router.push(`/search/${value}?isAutocomplete=true`);
+        router.push(`/mentoring?name=${value}&isAutocomplete=true`);
         router.refresh();
       }
     } else if (e.key === 'ArrowDown') {
@@ -119,7 +121,7 @@ export function SearchDialog({
             <Input
               id="Search"
               type="text"
-              placeholder="Search here...."
+              placeholder={name ? name : 'Search here....'}
               onKeyDown={handleKeyDown}
               onChange={(e) => {
                 handleSearch(e.target.value);
@@ -157,7 +159,9 @@ export function SearchDialog({
                     onMouseEnter={() => setFocusedIndex(index)}
                     onClick={() => {
                       setValue(item.name);
-                      router.push(`/search/${item.name}?isAutocomplete=false`);
+                      router.push(
+                        `/mentoring?name=${value}&isAutocomplete=true`
+                      );
                       router.refresh();
                     }}
                   >

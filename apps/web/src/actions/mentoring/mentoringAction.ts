@@ -143,7 +143,7 @@ export async function SessionCancel(
 //멘토링 이름으로 멘토링 검색API
 export async function GetMentoringNameSearch(
   name: string,
-  page: number,
+  page: string,
   isDirect: boolean
 ): Promise<{
   spellingCorrection: string;
