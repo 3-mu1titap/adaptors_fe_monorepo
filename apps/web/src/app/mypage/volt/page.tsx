@@ -7,7 +7,7 @@ import {
 import VoltCharge from '@repo/web/components/pages/main/mypage/volt/Charge/VoltCharge';
 import VoltUsageList from '@repo/web/components/pages/main/mypage/volt/VoltUsageList';
 import MentorTitleSection from '@repo/web/components/pages/mentor/compoent/MentorTitleSection';
-import MenteeProfile from '@repo/web/components/pages/profile/MenteeProfile';
+
 import {
   GetMemberPoint,
   GetPointList,
@@ -24,7 +24,12 @@ async function page() {
     <>
       <div className="container mx-auto lg:max-w-full md:max-w-[50rem] moblie:max-w-[400px] max-w-[300px] bg-gray-100 h-full">
         <div className="flex flex-col py-8 mt-7 mx-auto lg:max-w-full">
-          <MentorTitleSection title="My Volt " subtitle="My Volt" />
+          <span
+            className="ml-14 text-black font-bold text-3xl mb-10"
+            title="My Volt"
+          >
+            My Volt
+          </span>
           <Tabs defaultValue="Charge">
             <TabsList className="shadow-2xl">
               <TabsTrigger className="hover:bg-black" value="Charge">
@@ -35,13 +40,13 @@ async function page() {
 
             <TabsContent value="Charge">
               {/* 볼츠 충전 컴포넌트 */}
-              <span className="text-black text-3xl ml-14 mt-11 font-bold text-center">
+              <span className="text-black text-xl ml-14 mt-11 font-bold text-center">
                 볼트 충전
               </span>
               <VoltCharge points={res?.result || undefined} />
             </TabsContent>
             <TabsContent value="ChargeList">
-              <span className="text-black text-3xl ml-14 font-bold text-center">
+              <span className="text-black text-xl ml-14 font-bold text-center">
                 볼트 내역
               </span>
               <ul className="flex flex-col underline-offset-1 gap-y-4 just h-auto">
