@@ -23,6 +23,7 @@ import { MentoringSession, SessionAddModal } from './SessionAddModal';
 import { useState } from 'react';
 import { PostMentoringSession } from '@repo/admin/actions/mentoring/mentoringAction';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
@@ -56,11 +57,37 @@ function HomeDashboard({
     };
     const res: number | false = await PostMentoringSession({ payload });
     if (res) {
-      alert(`총 ${res}개의 세션이 생성되었습니다.`);
+      Swal.fire({
+        toast: true,
+        icon: 'info',
+        title: `총 ${res}개의 세션이 생성되었습니다.`,
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        customClass: {
+          title: 'text-lg font-semibold text-gray-800 text-center',
+          confirmButton:
+            'col-span-3 bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500 !text-md',
+          actions: '!grid !grid-cols-4 !justify-center',
+        },
+      });
       setIsModalOpen(false);
       router.refresh();
     } else {
-      alert('세션 생성 실패');
+      Swal.fire({
+        toast: true,
+        icon: 'warning',
+        title: '세션 생성 실패',
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: '확인',
+        customClass: {
+          title: 'text-lg font-semibold text-gray-800 text-center',
+          confirmButton:
+            'col-span-3 bg-adaptorsYellow text-white py-2 px-4 rounded hover:bg-amber-500 !text-md',
+          actions: '!grid !grid-cols-4 !justify-center',
+        },
+      });
     }
   };
 
@@ -105,6 +132,7 @@ function HomeDashboard({
         <CustomSessionList
           filteredList={mentoringSessionList}
           mentoringName={MentoringInfoData}
+          type="admin"
         />
       </SeparateContainer.RightSide>
     </>

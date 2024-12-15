@@ -29,7 +29,7 @@ function CustomMentorDescription({
           {mentoringInfoData.description}
         </p>
       )}
-      <CustomMentorDescriptionHtml detail={mentoringInfoData.detail} />
+      <CustomMentorDescriptionHtml content={mentoringInfoData.detail} />
       <CustomMentorDescriptionHashtag
         hashtags={mentoringInfoData.hashTagList}
       />

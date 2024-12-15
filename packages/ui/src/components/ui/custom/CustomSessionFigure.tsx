@@ -7,9 +7,11 @@ import CustomValueUnit from './CustomValueUnit';
 export default function CustomSessionFigure({
   session,
   mentoringName = 'mentoring Name',
+  type,
 }: {
   session: MentoringSession;
   mentoringName?: string;
+  type?: string;
 }) {
   const formatTime = (time: SessionTime | string) => {
     if (typeof time === 'string') {
@@ -47,7 +49,11 @@ export default function CustomSessionFigure({
         <div className="w-full flex justify-between md:justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20">
           <CustomReviewerItem initialUserData={session.sessionUserList} />
           <CustomValueUnit value={session.price} unit="Volt" />
-          <Button className="bg-adaptorsYellow hover:bg-black">참가하기</Button>
+          <Button
+            className={`bg-adaptorsYellow hover:bg-black ${type === 'admin' && 'hidden'}`}
+          >
+            참가하기
+          </Button>
         </div>
       </figure>
     </>
