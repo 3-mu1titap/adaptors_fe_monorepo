@@ -151,6 +151,7 @@ export async function PostMentoringSession({
   }
 
   const result = (await res.json()) as commonResType<number>;
+  console.log(result);
   revalidateTag('createMentoringSession');
   return result.result;
 }
