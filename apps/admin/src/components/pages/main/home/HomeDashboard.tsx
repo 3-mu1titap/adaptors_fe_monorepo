@@ -105,6 +105,7 @@ function HomeDashboard({
         <CustomSessionList
           filteredList={mentoringSessionList}
           mentoringName={MentoringInfoData}
+          type="admin"
         />
       </SeparateContainer.RightSide>
     </>
