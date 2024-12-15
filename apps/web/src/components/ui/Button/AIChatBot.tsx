@@ -38,7 +38,7 @@ function AIChatBot() {
           </CustomToolTip>
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
           <DialogTitle className="text-[1.15rem]">AI 피드백</DialogTitle>
           <DialogDescription>

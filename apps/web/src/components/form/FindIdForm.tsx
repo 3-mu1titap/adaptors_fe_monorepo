@@ -25,7 +25,11 @@ export default function FindIdForm() {
         textColor="text-white"
         type="submit"
       />
-      {success && <p className="text-center pt-3 text-black">📮 {success}</p>}
+      <p
+        className={`text-center pt-3 text-black ${success ? 'block' : 'invisible'}`}
+      >
+        📮 {success}
+      </p>
     </form>
   );
 }
