@@ -1,6 +1,13 @@
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@repo/ui/components/ui/tabs';
 import VoltCharge from '@repo/web/components/pages/main/mypage/volt/Charge/VoltCharge';
 import VoltUsageList from '@repo/web/components/pages/main/mypage/volt/VoltUsageList';
 import MentorTitleSection from '@repo/web/components/pages/mentor/compoent/MentorTitleSection';
+import MenteeProfile from '@repo/web/components/pages/profile/MenteeProfile';
 import {
   GetMemberPoint,
   GetPointList,
@@ -10,26 +17,44 @@ async function page() {
   const res = await GetMemberPoint();
   // console.log(res, '회원 포인트 조회 성공');
 
-  const data = await GetPointList();
+  const data = await GetPointList(0);
   // console.log(data, '포인트 리스트 조회 성공');
 
   return (
     <>
-      <div className="container mx-auto max-w-[80rem] bg-gray-100 h-full">
-        <div className="flex flex-col  mt-16 mx-auto max-w-[64rem]">
-          {/* 볼츠 충전 컴포넌트 */}
-          <VoltCharge points={res?.result || undefined} />
+      <div className="container mx-auto lg:max-w-full md:max-w-[50rem] moblie:max-w-[400px] max-w-[300px] bg-gray-100 h-full">
+        <div className="flex flex-col py-8 mt-7 mx-auto lg:max-w-full">
+          <MentorTitleSection title="My Volt " subtitle="My Volt" />
+          <Tabs defaultValue="Charge">
+            <TabsList className="shadow-2xl">
+              <TabsTrigger className="hover:bg-black" value="Charge">
+                Charge
+              </TabsTrigger>
+              <TabsTrigger value="ChargeList">Charge List</TabsTrigger>
+            </TabsList>
 
-          <div className="flex flex-col mt-4 max-w-[64rem] rounded-2xl bg-white border-2 border-gray-200 p-10">
-            <MentorTitleSection title="충전내역" subtitle="충전내역" />
-
-            <ul className="flex flex-col underline-offset-1 gap-y-4 just max-w-[40rem] h-auto">
-              {data &&
-                data.map((item, id) =>
-                  item ? <VoltUsageList key={id} item={item} /> : null
-                )}
-            </ul>
-          </div>
+            <TabsContent value="Charge">
+              {/* 볼츠 충전 컴포넌트 */}
+              <span className="text-black text-3xl ml-14 mt-11 font-bold text-center">
+                볼트 충전
+              </span>
+              <VoltCharge points={res?.result || undefined} />
+            </TabsContent>
+            <TabsContent value="ChargeList">
+              <span className="text-black text-3xl ml-14 font-bold text-center">
+                볼트 내역
+              </span>
+              <ul className="flex flex-col underline-offset-1 gap-y-4 just h-auto">
+                {(data && (
+                  <VoltUsageList
+                    total={data?.result.totalPage}
+                    item={data.result.paymentResponseDtoList}
+                  />
+                )) ||
+                  null}
+              </ul>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </>

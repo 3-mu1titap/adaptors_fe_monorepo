@@ -63,9 +63,9 @@ function Payment() {
   const quantity = totalCount || 0;
   const totalAmount = totalMoney || 0;
   const taxFreeAmount = 0;
-  const approvalUrl = 'http://localhost:3003/payment/payment-confirm';
-  const failUrl = 'http://localhost:3003/mypage/payment/payment-fail';
-  const cancelUrl = 'http://localhost:3003/mypage/payment/payment-cancel';
+  const approvalUrl = 'https://www.adaptors.site/payment/payment-confirm';
+  const failUrl = 'https://www.adaptors.site/mypage/payment/payment-fail';
+  const cancelUrl = 'https://www.adaptors.site/mypage/payment/payment-cancel';
 
   const Paymenthandle = async () => {
     try {

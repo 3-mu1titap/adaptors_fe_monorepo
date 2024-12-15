@@ -10,6 +10,7 @@ import {
 } from '@repo/web/components/types/payment/paymentType';
 import { getServerSession } from 'next-auth';
 import { options } from '../../app/api/auth/[...nextauth]/options';
+import { PaymentResponseDto } from '@repo/web/components/types/payment/paymentType';
 
 //결제준비요청
 export async function PaymentReq(
@@ -120,7 +121,7 @@ export async function GetMemberPoint() {
 }
 
 //결제 리스트 조회
-export async function GetPointList() {
+export async function GetPointList(page: number) {
   'use server';
 
   const session = await getServerSession(options);
@@ -128,7 +129,7 @@ export async function GetPointList() {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/payment-service/api/v1/payment/points/history?menteeUuid=${menteeUuid}&page=${0}`,
+      `${process.env.NEXT_PUBLIC_PAYMENT_URL}/api/v1/payment/points/history?menteeUuid=${menteeUuid}&page=${page}&size=${10}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -139,11 +140,9 @@ export async function GetPointList() {
       }
     );
 
-    const result = (await res.json()) as commonResType<
-      GetMemberPointListResType[]
-    >;
-    // console.log(result.result, '포인트 리스트 조회');
-    return result.result;
+    const result =
+      (await res.json()) as commonResType<GetMemberPointListResType>;
+    return result;
   } catch (error) {
     // console.log('포인트 리스트 조회', error);
     return null;

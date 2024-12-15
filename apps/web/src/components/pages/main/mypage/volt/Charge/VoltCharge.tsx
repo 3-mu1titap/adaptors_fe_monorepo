@@ -1,9 +1,8 @@
 import { Button } from '@repo/ui/components/ui/button';
 import Link from 'next/link';
-
 function VoltCharge({ points }: { points: any }) {
   return (
-    <div className="flex  space-x-10 bg-white rounded-2xl mt-16 justify-between border-2 border-gray-200">
+    <div className="flex  max-w-[64rem] mx-auto space-x-10 bg-white rounded-2xl mt-10 justify-between border-2 border-gray-200">
       <div className="flex flex-col items-start p-10 gap-y-3 ">
         <span className="text-2xl font-bold text-black">남은 볼트</span>
 
