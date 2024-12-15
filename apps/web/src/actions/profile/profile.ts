@@ -20,13 +20,12 @@ export const postMentorProfile = async ({
         'Content-Type': 'application/json',
         'userUuid': uuid,
       },
-      body: JSON.stringify(profile), // profile을 JSON 형식으로 변환해서 보냄
+      body: JSON.stringify(profile),
     }
   );
 
   // 서버 응답 처리
   if (!response.ok) {
-    console.log('백엔드 Url', process.env.NEXT_PUBLIC_BACKEND_URL);
     const errorData = await response.json();
     throw new Error(errorData.message || 'Failed to post mentor profile');
   }
@@ -73,16 +72,16 @@ export const uploadProfileIamge = async ({
   profileImage: string;
   uuid: string;
 }): Promise<any> => {
-  console.log('uuid', uuid);
+  console.log('여기', JSON.stringify({ profileImageUrl: profileImage }));
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_PROFILE_URL}/api/v1/memberInfo/profileImage`,
+    `${process.env.MEMBER_URL}/api/v1/member/profile-image`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'userUuid': uuid,
+        'userUuid': '39a00bf5-c7fd-412d-8b70-933cfbfdb7fc',
       },
-      body: JSON.stringify(profileImage),
+      body: JSON.stringify({ profileImageUrl: profileImage }),
     }
   );
 
