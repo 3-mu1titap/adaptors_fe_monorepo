@@ -15,7 +15,7 @@ export default async function page({
     category: string;
     page: string;
     name: string;
-    isAutocomplete: boolean;
+    isDirect: boolean;
   };
 }) {
   const name = searchParams.name ? decodeURIComponent(searchParams.name) : '';
@@ -32,7 +32,7 @@ export default async function page({
   const data = await GetMentoringNameSearch(
     name,
     searchParams.page,
-    searchParams.isAutocomplete
+    searchParams.isDirect
   );
   const mentoringListData = !name
     ? await GetMentoringByCategory({
@@ -44,10 +44,9 @@ export default async function page({
 
   return (
     <main className="mt-[9.5rem] pb-3 px-10 md:px-3  xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] max-w-[90%] container mx-auto">
-      {/* <SearchInput name={name} /> */}
       <MainSearchTag name={name} />
       {data?.spellingCorrection && (
-        <div className="flex flex-row items-center mx-4 rounded-xl bg-slate-100 py-3 mt-4 tracking-wider lg:mx-10 lg:w-full">
+        <div className="flex flex-row items-center mb-4 rounded-xl bg-slate-100 py-3 mt-4 tracking-wider lg:mx-10 lg:w-full">
           <span className="text-sm text-gray-400 font-bold flex items-center gap-2 ml-4 cursor-default lg:text-md lg:flex-nowrap lg:text-center">
             <span className="text-lg text-black">제안</span>
             <MessageCircleQuestion className="w-[22px] h-[22px]" />

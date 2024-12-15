@@ -25,7 +25,7 @@ function SearchInput({ name }: { name: string }) {
     setValue(name);
     console.log('Selected name:', name); // 디버깅용 로그
 
-    router.push(`/mentoring?name=${name}&isAutocomplete=false`);
+    router.push(`/mentoring?name=${name}&isDirect=false`);
     router.refresh();
     setIsFocused(false);
   };
@@ -46,7 +46,7 @@ function SearchInput({ name }: { name: string }) {
   const routeToSearchPage = () => {
     if (value) {
       setKey((prevKey) => prevKey + 1);
-      router.push(`/mentoring?name=${value}&isAutocomplete=true`);
+      router.push(`/mentoring?name=${value}&isDirect=true`);
       router.refresh();
     }
   };
@@ -56,11 +56,11 @@ function SearchInput({ name }: { name: string }) {
       if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {
         setValue(suggestedName[focusedIndex].name);
         router.push(
-          `/mentoring?name=${suggestedName[focusedIndex].name}&isAutocomplete=false`
+          `/mentoring?name=${suggestedName[focusedIndex].name}&isDirect=false`
         );
         router.refresh();
       } else {
-        router.push(`/mentoring?name=${value}&isAutocomplete=true`);
+        router.push(`/mentoring?name=${value}&isDirect=true`);
         router.refresh();
       }
       setIsFocused(false); // Focus 해제
@@ -104,7 +104,7 @@ function SearchInput({ name }: { name: string }) {
   const handleClickSuggestion = (name: string) => {
     setValue(name);
     console.log('실행됨', name);
-    router.push(`/mentoring?name=${name}&isAutocomplete=false`); // router.push 사용
+    router.push(`/mentoring?name=${name}&isDirect=false`); // router.push 사용
     router.refresh();
     setIsFocused(false); // 클릭 시 focus 해제
   };

@@ -26,7 +26,6 @@ export function SearchDialog({
   openCloser: () => void;
   name?: string;
 }) {
-  const [key, setKey] = useState(0);
   const [value, setValue] = useState('');
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
@@ -34,7 +33,6 @@ export function SearchDialog({
   ]);
   const suggestionContainerRef = useRef<HTMLUListElement | null>(null); // Ref for suggestion list container
   const router = useRouter();
-
   const handleSearch = useDebouncedCallback((term) => {
     if (!term) {
       setSuggestedName([{ name: '검색어를 입력해주세요' }]);
@@ -48,35 +46,28 @@ export function SearchDialog({
     fetchData();
   }, 300);
 
-  const routeToSearchPage = () => {
-    if (value) {
-      setKey((prevKey) => prevKey + 1);
-      router.push(`/mentoring?name=${value}&isAutocomplete=true`);
+  const routeToSearchPage = async (searchValue: string, isDirect: boolean) => {
+    if (searchValue) {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
+      router.push(`/mentoring?name=${searchValue}&isDirect=${isDirect}`);
       router.refresh();
+      openCloser();
     }
   };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {
-        setValue(suggestedName[focusedIndex].name);
-        router.push(
-          `/mentoring?name=${suggestedName[focusedIndex].name}&isAutocomplete=false` //자동완성으로 추천받음
-        );
-        router.refresh();
+        await routeToSearchPage(suggestedName[focusedIndex].name, false); // 추천 검색
       } else {
-        router.push(`/mentoring?name=${value}&isAutocomplete=true`);
-        router.refresh();
+        await routeToSearchPage(value, true); // 직접 입력
       }
     } else if (e.key === 'ArrowDown') {
-      // Move focus down
       setFocusedIndex((prevIndex) =>
         prevIndex === null
-          ? -1
+          ? 0
           : Math.min(prevIndex + 1, suggestedName.length - 1)
       );
     } else if (e.key === 'ArrowUp') {
-      // Move focus up
       setFocusedIndex((prevIndex) =>
         prevIndex === null
           ? suggestedName.length - 1
@@ -95,7 +86,6 @@ export function SearchDialog({
         focusedIndex
       ] as HTMLElement;
 
-      // Adjust scrolling to keep the focused item visible
       const container = suggestionContainerRef.current;
       const containerRect = container.getBoundingClientRect();
       const focusedRect = focusedItem.getBoundingClientRect();
@@ -135,7 +125,7 @@ export function SearchDialog({
               color="#A09F9F"
               size={20}
               strokeWidth={1}
-              onClick={routeToSearchPage}
+              onClick={() => routeToSearchPage(value, true)}
             />
           </div>
           {suggestedName && (
@@ -157,12 +147,13 @@ export function SearchDialog({
                     } text-md`}
                     key={index}
                     onMouseEnter={() => setFocusedIndex(index)}
-                    onClick={() => {
-                      setValue(item.name);
+                    onClick={async () => {
+                      setValue(item.name); // 상태 업데이트
                       router.push(
-                        `/mentoring?name=${value}&isAutocomplete=true`
-                      );
+                        `/mentoring?name=${item.name}&isDirect=false`
+                      ); // name 직접 사용
                       router.refresh();
+                      openCloser();
                     }}
                   >
                     {item.name}
