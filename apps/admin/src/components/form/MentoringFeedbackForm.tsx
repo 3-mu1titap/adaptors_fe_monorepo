@@ -1,7 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { postFeedback } from '@repo/admin/actions/meeting/meetingAction';
+import {
+  CategoryCodeType,
+  CategoryElementsType,
+  MentoringFeedbackType,
+} from '@repo/admin/components/types/main/meeting/meetingTypes';
 import { Button } from '@repo/ui/components/ui/button';
 import {
   Select,
@@ -12,12 +16,9 @@ import {
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
 import { Textarea } from '@repo/ui/components/ui/textarea';
-import {
-  CategoryCodeType,
-  CategoryElementsType,
-  MentoringFeedbackType,
-} from '@repo/admin/components/types/main/meeting/meetingTypes';
-import { postFeedback } from '@repo/admin/actions/meeting/meetingAction';
+import { CircleAlert, NotebookPen } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 const categoryElements: CategoryElementsType = {
   면접: [
@@ -78,7 +79,7 @@ export default function MentoringFeedbackForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(feedback);
-    // await postFeedback(feedback);
+    await postFeedback(feedback);
   };
 
   const handleScoreChange = (element: string, value: number[]) => {
@@ -107,14 +108,18 @@ export default function MentoringFeedbackForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-1 p-8 bg-gradient-to-r from-yellow-300/60 via-yellow-300/80 to-yellow-300/100 rounded-lg shadow-2xl"
+      className=" p-6 my-2 rounded-lg max-h-[80vh] overflow-y-auto scrollable"
     >
-      <div className="space-y-1">
-        <h2 className="text-4xl font-extrabold text-yellow-700">
-          멘토링 피드백
-        </h2>
-        <p className="text-xl text-yellow-600">
+      <div className="">
+        <h2 className="text-3xl font-extrabold">🖋️ 멘토링 피드백</h2>
+        <p className="text-lg text-gray-600 mb-4">
           멘티의 성장을 위한 소중한 피드백을 남겨주세요.
+          <span className="text-sm text-gray-400">
+            <br />
+            남겨주신 피드백은 수치화되어 멘티에게 전송됩니다.
+            <br /> 자세히 작성할 수록 멘티에게 정확한 분석이 전달되니, 애정을
+            담아 상세히 작성해주세요🫶
+          </span>
         </p>
       </div>
 
@@ -124,10 +129,13 @@ export default function MentoringFeedbackForm({
           setFeedback({ ...feedback, categoryCode: value, elements: {} })
         }
       >
-        <SelectTrigger className="bg-yellow-50 text-yellow-800 border-yellow-300 text-lg">
-          <SelectValue placeholder="카테고리 선택" />
+        <SelectTrigger className="bg-yellow-50 text-black font-semibold border-yellow-300 text-lg mb-4 focus:outline-none px-4">
+          <SelectValue
+            placeholder="카테고리 선택"
+            className="focus:outline-none focus:ring-0 focus:border-none "
+          />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="mb-3">
           {Object.keys(categoryElements).map((category) => (
             <SelectItem key={category} value={category}>
               {category}
@@ -137,17 +145,18 @@ export default function MentoringFeedbackForm({
       </Select>
 
       <div className="space-y-1">
-        <label className="text-2xl font-semibold text-yellow-700">
+        <label className="text-xl gap-2 font-semibold flex items-center">
+          <CircleAlert size={16} />
           평가 요소
         </label>
         {categoryElements[
           feedback.categoryCode as keyof CategoryElementsType
         ].map((element) => (
-          <div key={element} className="space-y-1">
-            <label htmlFor={element} className="text-yellow-600">
+          <div key={element} className="space-y-2">
+            <label htmlFor={element} className="text-gray-500 text-md">
               {element}
             </label>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 mb-2">
               <Slider
                 id={element}
                 min={0}
@@ -155,9 +164,9 @@ export default function MentoringFeedbackForm({
                 step={1}
                 value={[feedback.elements[element] || 0]}
                 onValueChange={(value) => handleScoreChange(element, value)}
-                className="flex-grow cursor-pointer "
+                className="flex-grow cursor-pointer bg-gray-100 rounded-xl w-full"
               />
-              <span className="text-yellow-700 font-semibold">
+              <span className=" font-semibold">
                 {feedback.elements[element] || 0}
               </span>
             </div>
@@ -165,16 +174,20 @@ export default function MentoringFeedbackForm({
         ))}
       </div>
 
-      <div className="space-y-1">
+      <div className="my-3">
+        <label className="text-xl gap-2 font-semibold flex items-center mt-8">
+          <NotebookPen size={16} />
+          Feedback
+        </label>
         <Textarea
           ref={textareaRef}
           placeholder="피드백 내용"
           value={feedback.content}
           onChange={handleContentChange}
-          className="bg-yellow-50 text-yellow-800 placeholder-adaptorsYellow border-yellow-300 min-h-[100px] resize-none"
+          className="bg-yellow-50  placeholder-adaptorsYellow border-yellow-300 min-h-[100px] resize-none mt-2"
           rows={4}
         />
-        <div className="text-right text-yellow-600">
+        <div className="text-right text-md mt-2 text-gray-400">
           {charCount}/{MAX_CONTENT_LENGTH}
         </div>
       </div>

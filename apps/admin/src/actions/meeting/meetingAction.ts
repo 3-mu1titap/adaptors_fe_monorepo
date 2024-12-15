@@ -130,18 +130,18 @@ export async function postFeedback(payload: MentoringFeedbackType) {
 
   // API 완성되면 주석 해제
   console.log(payload);
-  // const res = await fetch(`${process.env}/api/v1/`, {
-  //   cache: 'no-cache',
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${accessToken}`,
-  //     'userUuid': userUuid,
-  //   },
-  //   body: JSON.stringify({
-  //     payload,
-  //   }),
-  // });
+  const res = await fetch(`${process.env}/api/v1/`, {
+    cache: 'no-cache',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+      'userUuid': userUuid,
+    },
+    body: JSON.stringify({
+      payload,
+    }),
+  });
 
   return true; // API가 완성되면 이 부분을 수정해야 함
 }
