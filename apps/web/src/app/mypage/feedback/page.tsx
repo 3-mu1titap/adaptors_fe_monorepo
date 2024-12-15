@@ -74,7 +74,11 @@ export default async function Page({
         </>
       ) : (
         <section className="flex mt-10 items-center">
-          <FitImage src={volpang} className="w-[35%] transform scale-x-[-1]" />
+          <FitImage
+            src={volpang.src}
+            alt="볼팡이 - adaptors의 마스코트"
+            className="w-[35%] transform scale-x-[-1]"
+          />
           <div className="">
             <p className="text-2xl font- bold">
               멘토링 진행내역이 없습니다. 멘토링을 진행하고 리포트를 확인하세요!
