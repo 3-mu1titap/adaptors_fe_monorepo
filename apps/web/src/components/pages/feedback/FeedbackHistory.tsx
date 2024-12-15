@@ -3,49 +3,49 @@
 import { Button } from '@repo/ui/components/ui/button';
 import { FeedbackElements } from '@repo/ui/types/Feedback.ts';
 import { format, parseISO } from 'date-fns';
-import { ChevronLeft, ChevronRight, Circle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, NotebookPen } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { MentoringFeedback } from '../../types/feedback/feedbackResType';
+import Score from '../../ui/Score/Score';
+import IconByCategoryAndName from './IconByCategoryAndName';
 import Progress from './Progress';
 
-export interface ScoreType {
-  element1: number;
-  element2: number;
-  element3: number;
-  element4: number;
-  element5: number;
-  mentoringDate: string;
-}
-
-export interface FeedbackFirstLastScoreDto {
-  id: string;
-  firstScore: ScoreType;
-  lastScore: ScoreType;
-}
-
-export interface FeedbackDto {
-  feedbackFirstLastScoreDto: FeedbackFirstLastScoreDto;
-  feedbackContent: string;
-}
-
-export interface MentoringFeedback {
-  mentorNickName: string;
-  mentoringSessionUuid: string;
-  mentoringDate: string;
-  categoryCode: string;
-  element1: number;
-  element2: number;
-  element3: number;
-  element4: number;
-  element5: number;
+interface FeedbackItemProps {
+  title: string;
+  score: number;
+  num: number;
+  iconColor?: string;
   content: string;
 }
+
+const FeedbackItem = ({ title, score, content, num }: FeedbackItemProps) => {
+  return (
+    <div className="flex flex-col gap-2 py-3">
+      <div className="flex items-center gap-2">
+        <IconByCategoryAndName num={num} />
+        <div>
+          <h3 className="text-lg font-medium text-gray-900">{title}</h3>
+          <h4 className="text-[0.66rem] font-medium text-gray-400">
+            {content}
+          </h4>
+        </div>
+      </div>
+      <Progress value={score} max={5} className="mb-1 bg-[#FFF3BE]" />
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-gray-500">{score}/5점</span>
+      </div>
+    </div>
+  );
+};
 
 export default function FeedbackHistory({
   feedbackData,
   element,
+  categoryCode,
 }: {
   feedbackData: MentoringFeedback[];
   element: FeedbackElements[];
+  categoryCode: string;
 }) {
   const sortedFeedbackData = useMemo(() => {
     return [...feedbackData].sort(
@@ -57,6 +57,7 @@ export default function FeedbackHistory({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentFeedback = sortedFeedbackData[currentIndex];
+  console.log('currentFeedback: ', currentFeedback);
 
   const handlePrevDay = () => {
     if (currentIndex < sortedFeedbackData.length - 1) {
@@ -71,24 +72,56 @@ export default function FeedbackHistory({
   };
 
   const metrics = [
-    { name: element[0].elementName, score: currentFeedback.element1 },
-    { name: element[1].elementName, score: currentFeedback.element2 },
-    { name: element[2].elementName, score: currentFeedback.element3 },
-    { name: element[3].elementName, score: currentFeedback.element4 },
-    { name: element[4].elementName, score: currentFeedback.element5 },
+    {
+      name: element[0].elementName,
+      content: element[0].elementContent,
+      score: currentFeedback.element1,
+      icon: 'user' as const,
+    },
+    {
+      name: element[1].elementName,
+      content: element[1].elementContent,
+      score: currentFeedback.element2,
+      icon: 'circle' as const,
+    },
+    {
+      name: element[2].elementName,
+      content: element[2].elementContent,
+      score: currentFeedback.element3,
+      icon: 'circle' as const,
+    },
+    {
+      name: element[3].elementName,
+      content: element[3].elementContent,
+      score: currentFeedback.element4,
+      icon: 'circle' as const,
+    },
+    {
+      name: element[4].elementName,
+      content: element[4].elementContent,
+      score: currentFeedback.element5,
+      icon: 'circle' as const,
+    },
   ];
+  const averageScore =
+    (currentFeedback.element1 +
+      currentFeedback.element2 +
+      currentFeedback.element3 +
+      currentFeedback.element4 +
+      currentFeedback.element5) /
+    5;
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      {/* Date Navigation */}
-      <div className="flex items-center justify-center gap-4 mb-6">
+    <section className="mb-20">
+      <div className="flex items-center justify-center gap-4 mt-8 mb-3">
         <Button
           variant="ghost"
           size="icon"
           onClick={handlePrevDay}
           disabled={currentIndex >= sortedFeedbackData.length - 1}
+          className="bg-adaptorsYellow/70 rounded-md hover:bg-adaptorsYellow"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4" strokeWidth="4" />
         </Button>
         <span className="text-xl font-medium">
           {format(parseISO(currentFeedback.mentoringDate), 'yyyy-MM-dd')}
@@ -98,60 +131,44 @@ export default function FeedbackHistory({
           size="icon"
           onClick={handleNextDay}
           disabled={currentIndex <= 0}
+          className="bg-adaptorsYellow/70 rounded-md hover:bg-adaptorsYellow"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4" strokeWidth="4" />
         </Button>
       </div>
-
-      {/* Metrics Table */}
-      <div className="border rounded-lg">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b">
-              <th className="text-left p-4 font-medium text-gray-600">
-                카테고리
-              </th>
-              <th className="text-center p-4 font-medium text-gray-600">
-                평가요소
-              </th>
-              <th className="text-center p-4 font-medium text-gray-600">
-                점수
-              </th>
-              <th className="p-4 font-medium text-gray-600">그래프</th>
-            </tr>
-          </thead>
-          <tbody>
-            {metrics.map((metric, index) => {
-              return (
-                <tr key={metric.name} className="border-b last:border-b-0">
-                  {index === 0 && (
-                    <td
-                      rowSpan={metrics.length}
-                      className="p-4 align-top font-medium border-r text-center mt-10"
-                    >
-                      {currentFeedback.categoryCode}
-                    </td>
-                  )}
-                  <td className="p-4 border-r text-center">{metric.name}</td>
-                  <td className="p-4 border-r">
-                    <Progress value={metric.score} max={5} />
-                  </td>
-                  <td className="text-center text-blue-600">{metric.score}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="flex items-center px-8 gap-5">
+        <div>
+          <Score
+            score={averageScore}
+            maxScore={5}
+            fillColor="#FFD700"
+            strokeColor="black"
+            size={200}
+          />
+          <p className="text-center w-full">{averageScore}/5.0</p>
+        </div>
+        <div className="w-full max-w-4xl mx-auto p-4 flex-3 px-10">
+          <div className="space-y-2">
+            {metrics.map((metric, index) => (
+              <FeedbackItem
+                num={index}
+                key={metric.name}
+                title={metric.name}
+                score={metric.score}
+                content={metric.content}
+                iconColor={index === 0 ? 'text-gray-400' : 'text-pink-500'}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* Feedback Content */}
-      <div className="mt-6 p-4 border rounded-lg">
-        <h3 className="font-medium mb-2 flex items-center gap-2">
-          <Circle size={10} />
-          {currentFeedback.mentorNickName}멘토의 Comment
+      <div className="m-6 border rounded-lg ">
+        <h3 className="font-medium mb-2 flex items-center gap-2 bg-gray-100 p-4">
+          <NotebookPen size={20} />
+          {currentFeedback.mentorNickName} 멘토의 Comment
         </h3>
-        <p>{currentFeedback.content}</p>
+        <p className="p-4">{currentFeedback.content}</p>
       </div>
-    </div>
+    </section>
   );
 }
