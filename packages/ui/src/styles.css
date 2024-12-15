@@ -116,6 +116,26 @@ ul.scrollable::-webkit-scrollbar-thumb {
 ul.scrollable::-webkit-scrollbar-track {
   background-color: lightgray; /* Track color */
 }
+form.scrollable {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: gray lightgray;
+}
+
+form.scrollable::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+  border-radius: 1rem;
+}
+
+form.scrollable::-webkit-scrollbar-thumb {
+  background-color: rgb(203, 203, 203); /* Thumb color */
+  border-radius: 1rem; /* Rounded edges */
+}
+
+form.scrollable::-webkit-scrollbar-track {
+  background-color: lightgray; /* Track color */
+  border-radius: 1rem;
+  margin: 0; /* Remove margin to allow full border-radius effect */
+}
 
 /* scrollbtn */
 .scroll-btn {
