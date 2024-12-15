@@ -20,7 +20,7 @@ export const getProfileImage = async (
         'userUuid': uuid,
       },
       next: { tags: ['profileUpdate'] },
-      cache: 'force-cache',
+      // cache: 'no-cache',
     }
   );
 
