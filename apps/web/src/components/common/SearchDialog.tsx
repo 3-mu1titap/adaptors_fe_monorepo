@@ -108,7 +108,7 @@ export function SearchDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={openCloser}>
-      <DialogContent className="md:max-w-[600px] md:h-[400px] flex flex-col gap-0 ring-yellow-300 ring-[4px]">
+      <DialogContent className="md:max-w-[600px] md:h-[400px] flex flex-col gap-0 ring-gray-300 ring-[4px]">
         <DialogHeader>
           <DialogTitle>Search Mentoring</DialogTitle>
           <DialogDescription>Search Mentoring here!</DialogDescription>
@@ -125,7 +125,7 @@ export function SearchDialog({
                 handleSearch(e.target.value);
                 setFocusedIndex(null); // Reset focus on input change
               }}
-              className="text-2xl"
+              className="text-2xl ring-yellow-200 outline-none ring-2 focus:ring-yellow-200 focus:ring-4"
               autoFocus
             />
             <Search
@@ -139,7 +139,7 @@ export function SearchDialog({
           {suggestedName && (
             <ul
               ref={suggestionContainerRef}
-              className="mt-2 max-h-[250px] overflow-y-scroll scrollable py-5 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+              className="mt-2 max-h-[250px] overflow-y-auto scrollable py-5 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
             >
               {Array.isArray(suggestedName) ? (
                 suggestedName.map((item, index) => (
@@ -150,7 +150,7 @@ export function SearchDialog({
                         : ''
                     } ${
                       item.name === '검색어를 입력해주세요'
-                        ? 'text-center text-gray-400 hover:bg-transparent cursor-default'
+                        ? 'text-center text-gray-400 hover:bg-yellow-100 cursor-default'
                         : ' cursor-pointer hover:bg-yellow-100 border-b-[1px]'
                     } text-md`}
                     key={index}
