@@ -28,7 +28,7 @@ export default function AIFeedbackFunnel() {
   return (
     <Funnel step={step}>
       <Funnel.Step name={`jobAndCategory`}>
-        <section className=" ">
+        <section className="px-4">
           <RadioFieldset
             job={job}
             handleRadioChange={handleJobChange}
@@ -51,7 +51,7 @@ export default function AIFeedbackFunnel() {
         <Button
           onClick={onNextStep}
           disabled={!job || !selectedCateogory}
-          className="bg-adaptorsYellow text-md font-semibold text-black hover:bg-black hover:text-white"
+          className="bg-adaptorsYellow text-md font-semibold text-black hover:bg-black hover:text-white mx-4"
         >
           다음
         </Button>
