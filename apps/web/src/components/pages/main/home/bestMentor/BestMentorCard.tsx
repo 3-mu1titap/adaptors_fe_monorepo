@@ -1,14 +1,11 @@
 'use client';
-import React, { useEffect } from 'react';
-import { BestMentorType } from '@repo/web/components/types/mentor/mentorType';
-import RateViewer from '@repo/web/components/common/RateViwer';
-import Link from 'next/link';
-import Image from 'next/image';
-import { HeartIcon } from 'lucide-react';
-import { ShoppingCartIcon } from 'lucide-react';
-import FitImage from '@repo/web/components/ui/image/fit-image';
 import { getIsLiked, postLikeReaction } from '@repo/web/actions/Like/like';
-import { useState } from 'react';
+import RateViewer from '@repo/web/components/common/RateViwer';
+import { BestMentorType } from '@repo/web/components/types/mentor/mentorType';
+import FitImage from '@repo/web/components/ui/image/fit-image';
+import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 function BestMentorCard({
   item,
@@ -79,7 +76,7 @@ function BestMentorCard({
               className={`object-contain`}
               src={
                 item.profileImageUrl === 'none'
-                  ? 'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732686722991-userDefaultImage.png'
+                  ? 'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1734245082473-Frame-3.png'
                   : item.profileImageUrl
               }
               alt=""

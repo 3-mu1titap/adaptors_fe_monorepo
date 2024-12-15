@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getMyProfileIamge } from 'src/actions/profile/getProfileData';
 function UserProfile({ size }: { size?: number }) {
   const [profileImageUrl, setProfileImageUrl] = useState(
-    'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732686722991-userDefaultImage.png'
+    'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1734245082473-Frame-3.png'
   );
   const defaultSize = size || 40;
   useEffect(() => {
