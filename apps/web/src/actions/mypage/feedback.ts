@@ -26,7 +26,7 @@ export async function getFeedbackScore(
       }
     );
     const result = (await res.json()) as commonResType<MentoringFeedback[]>;
-    console.log('피드백 히스토리 조회: ', result.result);
+    // console.log('피드백 히스토리 조회: ', result.result);
     return result.result;
   } catch (error) {
     console.error('멘티 마이페이지 피드백 조회: ', error);
@@ -55,7 +55,7 @@ export async function getFeedbackGraph(
       }
     );
     const result = (await res.json()) as commonResType<FeedbackDto>;
-    console.log('그래프 조회 result: ', result.result);
+    // console.log('그래프 조회 result: ', result.result);
     return result.result;
   } catch (error) {
     console.error('멘티 마이페이지 피드백 조회: ', error);
@@ -84,7 +84,7 @@ export async function getFeedbackElements(
       }
     );
     const result = (await res.json()) as commonResType<FeedbackElements[]>;
-    console.log('피드백 요소 조회: ', result.result);
+    // console.log('피드백 요소 조회: ', result.result);
     return result.result;
   } catch (error) {
     console.error('멘티 마이페이지 피드백 조회 볼팡이: ', error);

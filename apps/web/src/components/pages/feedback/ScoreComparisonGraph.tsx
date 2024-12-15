@@ -68,14 +68,14 @@ export default function ScoreComparisonGraph({
             name={graphData.firstScore.mentoringDate}
             dataKey="firstScore"
             stroke="#2563eb"
-            fill="#2563eb"
+            fill="#0496FF"
             fillOpacity={0.3}
           />
           <Radar
             name={graphData.lastScore.mentoringDate}
             dataKey="lastScore"
-            stroke="#f97316"
-            fill="#f97316"
+            stroke="#FACE00"
+            fill="#FFD94E"
             fillOpacity={0.3}
           />
           <Legend />

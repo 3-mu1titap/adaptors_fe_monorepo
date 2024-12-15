@@ -1,103 +1,174 @@
 'use client';
-import { MentoringFeedback } from '../../types/feedback/feedbackResType';
 
 import { Button } from '@repo/ui/components/ui/button';
-import { Progress } from '@repo/ui/components/ui/progress';
-import { addDays, format } from 'date-fns';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { FeedbackElements } from '@repo/ui/types/Feedback.ts';
+import { format, parseISO } from 'date-fns';
+import { ChevronLeft, ChevronRight, NotebookPen } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { MentoringFeedback } from '../../types/feedback/feedbackResType';
+import Score from '../../ui/Score/Score';
+import IconByCategoryAndName from './IconByCategoryAndName';
+import Progress from './Progress';
 
-const sampleData = [
-  {
-    category: '개인정량성',
-    metrics: [
-      { name: '성실성', score: 94, percentage: 29.37 },
-      { name: '지신감', score: 91, percentage: 23.69 },
-      { name: '인내/집중성', score: 103, percentage: 56.16 },
-      { name: '책임감', score: 101, percentage: 52.64 },
-      { name: '우전/공극성', score: 111, percentage: 78.27 },
-    ],
-  },
-];
+interface FeedbackItemProps {
+  title: string;
+  score: number;
+  num: number;
+  iconColor?: string;
+  content: string;
+}
+
+const FeedbackItem = ({ title, score, content, num }: FeedbackItemProps) => {
+  return (
+    <div className="flex flex-col gap-2 py-3">
+      <div className="flex items-center gap-2">
+        <IconByCategoryAndName num={num} />
+        <div>
+          <h3 className="text-lg font-medium text-gray-900">{title}</h3>
+          <h4 className="text-[0.66rem] font-medium text-gray-400">
+            {content}
+          </h4>
+        </div>
+      </div>
+      <Progress value={score} max={5} className="mb-1 bg-[#FFF3BE]" />
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-gray-500">{score}/5점</span>
+      </div>
+    </div>
+  );
+};
 
 export default function FeedbackHistory({
   feedbackData,
+  element,
+  categoryCode,
 }: {
   feedbackData: MentoringFeedback[];
+  element: FeedbackElements[];
+  categoryCode: string;
 }) {
-  const [currentDate, setCurrentDate] = useState(new Date('2024-11-13'));
+  const sortedFeedbackData = useMemo(() => {
+    return [...feedbackData].sort(
+      (a, b) =>
+        new Date(b.mentoringDate).getTime() -
+        new Date(a.mentoringDate).getTime()
+    );
+  }, [feedbackData]);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentFeedback = sortedFeedbackData[currentIndex];
+  console.log('currentFeedback: ', currentFeedback);
 
   const handlePrevDay = () => {
-    setCurrentDate((prev) => addDays(prev, -1));
+    if (currentIndex < sortedFeedbackData.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const handleNextDay = () => {
-    setCurrentDate((prev) => addDays(prev, 1));
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
   };
 
+  const metrics = [
+    {
+      name: element[0].elementName,
+      content: element[0].elementContent,
+      score: currentFeedback.element1,
+      icon: 'user' as const,
+    },
+    {
+      name: element[1].elementName,
+      content: element[1].elementContent,
+      score: currentFeedback.element2,
+      icon: 'circle' as const,
+    },
+    {
+      name: element[2].elementName,
+      content: element[2].elementContent,
+      score: currentFeedback.element3,
+      icon: 'circle' as const,
+    },
+    {
+      name: element[3].elementName,
+      content: element[3].elementContent,
+      score: currentFeedback.element4,
+      icon: 'circle' as const,
+    },
+    {
+      name: element[4].elementName,
+      content: element[4].elementContent,
+      score: currentFeedback.element5,
+      icon: 'circle' as const,
+    },
+  ];
+  const averageScore =
+    (currentFeedback.element1 +
+      currentFeedback.element2 +
+      currentFeedback.element3 +
+      currentFeedback.element4 +
+      currentFeedback.element5) /
+    5;
+
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      {/* Date Navigation */}
-      <div className="flex items-center justify-center gap-4 mb-6">
-        <Button variant="ghost" size="icon" onClick={handlePrevDay}>
-          <ChevronLeft className="h-4 w-4" />
+    <section className="mb-20">
+      <div className="flex items-center justify-center gap-4 mt-8 mb-3">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handlePrevDay}
+          disabled={currentIndex >= sortedFeedbackData.length - 1}
+          className="bg-adaptorsYellow/70 rounded-md hover:bg-adaptorsYellow"
+        >
+          <ChevronLeft className="h-4 w-4" strokeWidth="4" />
         </Button>
         <span className="text-xl font-medium">
-          {format(currentDate, 'yyyy-MM-dd')}
+          {format(parseISO(currentFeedback.mentoringDate), 'yyyy-MM-dd')}
         </span>
-        <Button variant="ghost" size="icon" onClick={handleNextDay}>
-          <ChevronRight className="h-4 w-4" />
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleNextDay}
+          disabled={currentIndex <= 0}
+          className="bg-adaptorsYellow/70 rounded-md hover:bg-adaptorsYellow"
+        >
+          <ChevronRight className="h-4 w-4" strokeWidth="4" />
         </Button>
       </div>
-
-      {/* Metrics Table */}
-      <div className="border rounded-lg">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b">
-              <th className="text-left p-4 font-medium text-gray-600">연성</th>
-              <th className="text-center p-4 font-medium text-gray-600">
-                표준점수
-              </th>
-              <th className="p-4 font-medium text-gray-600">백분위점수</th>
-              <th className="text-center p-4 font-medium text-gray-600">
-                수준
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {sampleData.map((category) =>
-              category.metrics.map((metric, index) => (
-                <tr key={metric.name} className="border-b last:border-b-0">
-                  {index === 0 && (
-                    <td
-                      rowSpan={category.metrics.length}
-                      className="p-4 align-top font-medium"
-                    >
-                      {category.category}
-                    </td>
-                  )}
-                  <td className="p-4">{metric.name}</td>
-                  <td className="text-center text-blue-600">{metric.score}</td>
-                  <td className="p-4">
-                    <div className="flex items-center gap-4">
-                      <Progress value={metric.percentage} className="h-2" />
-                      <span className="text-blue-600 w-16">
-                        {metric.percentage.toFixed(2)}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="text-center p-4">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600">
-                      중
-                    </span>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+      <div className="flex items-center px-8 gap-5">
+        <div>
+          <Score
+            score={averageScore}
+            maxScore={5}
+            fillColor="#FFD700"
+            strokeColor="black"
+            size={200}
+          />
+          <p className="text-center w-full">{averageScore}/5.0</p>
+        </div>
+        <div className="w-full max-w-4xl mx-auto p-4 flex-3 px-10">
+          <div className="space-y-2">
+            {metrics.map((metric, index) => (
+              <FeedbackItem
+                num={index}
+                key={metric.name}
+                title={metric.name}
+                score={metric.score}
+                content={metric.content}
+                iconColor={index === 0 ? 'text-gray-400' : 'text-pink-500'}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="m-6 border rounded-lg ">
+        <h3 className="font-medium mb-2 flex items-center gap-2 bg-gray-100 p-4">
+          <NotebookPen size={20} />
+          {currentFeedback.mentorNickName} 멘토의 Comment
+        </h3>
+        <p className="p-4">{currentFeedback.content}</p>
+      </div>
+    </section>
   );
 }

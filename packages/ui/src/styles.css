@@ -509,3 +509,40 @@ ul.flip.play li.active .down .shadow {
     opacity: 0;
   }
 }
+
+.bubble {
+  position: relative;
+  width: 80%;
+  padding: 20px;
+  background: #ffffff;
+  -webkit-border-radius: 71px;
+  -moz-border-radius: 71px;
+  border-radius: 71px;
+  border: #f6d84c solid 7px;
+}
+
+.bubble:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 42px 15px 0;
+  border-color: #ffffff transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  bottom: -42px;
+  left: 155px;
+}
+
+.bubble:before {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 48px 21px 0;
+  border-color: #f6d84c transparent;
+  display: block;
+  width: 0;
+  z-index: 0;
+  bottom: -55px;
+  left: 149px;
+}
