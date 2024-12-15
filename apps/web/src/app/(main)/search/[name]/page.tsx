@@ -1,10 +1,29 @@
 import MainSearchTag from '@repo/web/components/pages/main/home/MainSearchTag/MainSearchTag';
 import SearchMentoring from '@repo/web/components/pages/search/SearchMentoring';
 import { GetMentoringNameSearch } from 'src/actions/mentoring/mentoringAction';
-async function page({ params }: { params: { name: string } }) {
+async function page({
+  params,
+  searchParams,
+}: {
+  params: {
+    name: string;
+  };
+  searchParams: {
+    isAutocomplete: boolean;
+  };
+}) {
   const name = decodeURIComponent(params.name);
+  // console.log(name, 'fffffffffffffffffffffffff');
+  const isDirect = searchParams.isAutocomplete;
+  // console.log(isDirect, 'true? false?');
 
-  const searchMentoringlistData = await GetMentoringNameSearch(name, 0);
+  const searchMentoringlistData = await GetMentoringNameSearch(
+    name,
+    0,
+    isDirect
+  );
+
+  console.log(searchMentoringlistData, 'fffffffffff');
   return (
     <>
       <section className="container mx-auto max-w-[64rem] mt-32">
@@ -12,6 +31,7 @@ async function page({ params }: { params: { name: string } }) {
           <MainSearchTag />
           {searchMentoringlistData && (
             <SearchMentoring
+              isDirect={isDirect}
               spellingCorrection={searchMentoringlistData.spellingCorrection}
               SearchResults={searchMentoringlistData.searchResults}
               name={name}

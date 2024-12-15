@@ -87,26 +87,27 @@ export async function GetMentorList() {
 
 //멘토 집계 데이터 조회
 export async function getMentorBatchData(
-  mentorUuid: string
+  userUuid: string
 ): Promise<MentorBatchData | null> {
   'use server';
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/${mentorUuid}`,
+      `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/${userUuid}`,
       {
         cache: 'no-cache',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'userUuid': userUuid,
         },
       }
     );
     const result = (await res.json()) as commonResType<MentorBatchData>;
-    // console.log(result.result, '베스트 멘토 리스트 불러오기 성공');
+    // console.log(result, 'test 11111111');
     return result.result;
   } catch (error) {
-    console.error('멘토의 멘토링 리스트 조회 : ', error);
+    console.error('멘토의 집계 데이터 조회 : ', error);
     return null;
   }
 }

@@ -143,7 +143,8 @@ export async function SessionCancel(
 //멘토링 이름으로 멘토링 검색API
 export async function GetMentoringNameSearch(
   name: string,
-  page: number
+  page: number,
+  isDirect: boolean
 ): Promise<{
   spellingCorrection: string;
   searchResults: SearchResults;
@@ -152,7 +153,7 @@ export async function GetMentoringNameSearch(
   const word = name;
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/elasticsearch/${name}?word=${word}&page=${page}`,
+      `${process.env.NEXT_PUBLIC_METORING_QUERY}/api/v1/mentoring-query-service/mentoring-list-pagination/elasticsearch/${name}?word=${word}&isDirect=${isDirect}&page=${page}`,
       {
         cache: 'no-cache',
         method: 'GET',
@@ -162,10 +163,10 @@ export async function GetMentoringNameSearch(
       }
     );
     const result = (await res.json()) as commonResType<SearchResult>;
-
+    // console.log(result.result, 'fffffffffffffffffffffffffffff');
     return result.result;
   } catch (error) {
-    // console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
+    console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
     return null;
   }
 }
