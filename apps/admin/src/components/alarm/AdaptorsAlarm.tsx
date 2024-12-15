@@ -23,17 +23,9 @@ function AdaptorsAlarm({ user }: { user: any }) {
 
     source.onmessage = (event) => {
       console.log(event);
-      // const alarmData = JSON.parse(event.data);
-      // console.log('받은 알람 데이터:', alarmData);
-      // setNewAlarm(alarmData);
-      // setTimeout(() => {
-      //   setNewAlarm(null);
-      //   setRecentAlarm(alarmData);
-      // }, 3000);
     };
 
     source.onerror = (error) => {
-      console.error('EventSource 오류:', error);
       source.close();
       handleReconnect();
     };

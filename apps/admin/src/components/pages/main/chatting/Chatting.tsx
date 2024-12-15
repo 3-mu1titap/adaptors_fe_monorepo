@@ -9,6 +9,7 @@ import {
 import {
   getChattingData,
   postChat,
+  postEnterChat,
 } from '@repo/admin/actions/chatting/chattingAction';
 import {
   postExitMeeting,
@@ -91,9 +92,7 @@ function Chatting({
 
   const connectEventSource = () => {
     const chatServiceUrl = `${process.env.NEXT_PUBLIC_CHAT_URL}/api/v1/chat/real-time/${mentoringSessionUuid}`;
-    const newEventSource = new EventSourcePolyfill(chatServiceUrl, {
-      heartbeatTimeout: 86400000,
-    });
+    const newEventSource = new EventSourcePolyfill(chatServiceUrl);
 
     newEventSource.onopen = async () => {
       console.log('EventSource 연결됨');
@@ -106,13 +105,10 @@ function Chatting({
     };
 
     newEventSource.onerror = (error) => {
-      console.error('EventSource 오류:', error);
-      postExitMeeting(mentoringSessionUuid);
       newEventSource.close();
-      // 재연결 시도
       setTimeout(() => {
         connectEventSource();
-      }, 5000); // 5초 후에 재연결
+      }, 5000);
     };
 
     setEventSource(newEventSource);
