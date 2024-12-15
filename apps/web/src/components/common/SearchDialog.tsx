@@ -13,10 +13,10 @@ import {
 } from '@repo/web/actions/search/elasticSearch';
 import { Search } from 'lucide-react';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+
 export function SearchDialog({
   isOpen,
   openCloser,
@@ -24,11 +24,13 @@ export function SearchDialog({
   isOpen: boolean;
   openCloser: () => void;
 }) {
+  const [key, setKey] = useState(0);
   const [value, setValue] = useState('');
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
     { name: '검색어를 입력해주세요' },
   ]);
   const router = useRouter();
+
   const handleSearch = useDebouncedCallback((term) => {
     if (!term) {
       setSuggestedName([{ name: '검색어를 입력해주세요' }]);
@@ -36,8 +38,7 @@ export function SearchDialog({
     }
     setValue(term);
     const fetchData = async () => {
-      const data = await getSuggestedName(term); // term 전달
-      // console.log(data);
+      const data = await getSuggestedName(term);
       setSuggestedName(data);
     };
     fetchData();
@@ -45,17 +46,16 @@ export function SearchDialog({
 
   const routeToSearchPage = () => {
     if (value) {
-      router.push(`/search/${value}`);
+      setKey((prevKey) => prevKey + 1);
+      router.push(`/search/${value}?isAutocomplete=true`);
+      router.refresh(); // 동일한 URL에서도 페이지 강제 리렌더링
     }
   };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const term = (e.target as HTMLInputElement).value;
-      handleSearch(term);
-
-      if (term.trim()) {
-        router.push(`/search/${value}`);
-      }
+      router.push(`/search/${value}?isAutocomplete=true`);
+      router.refresh(); // 동일한 URL에서도 페이지 강제 리렌더링
     }
   };
 
@@ -99,18 +99,13 @@ export function SearchDialog({
                         : 'hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40 border-b-[1px]'
                     } text-md`}
                     key={index}
-                    onClick={(e) => {
-                      if (item.name === '검색어를 입력해주세요') {
-                        e.preventDefault();
-                        return;
-                      }
+                    onClick={() => {
+                      setValue(item.name);
+                      router.push(`/search/${item.name}?isAutocomplete=false`);
+                      router.refresh(); // 동일한 URL에서도 페이지 강제 리렌더링
                     }}
                   >
-                    {item.name === '검색어를 입력해주세요' ? (
-                      <> {item.name}</>
-                    ) : (
-                      <Link href={`/search/${item.name}`}>{item.name}</Link>
-                    )}
+                    {item.name}
                   </li>
                 ))
               ) : (
@@ -122,17 +117,4 @@ export function SearchDialog({
       </DialogContent>
     </Dialog>
   );
-}
-
-{
-  /* <DialogFooter>
-<Link href={`/search/${encodeURIComponent(name)}`}>
-  <Button
-    className="bg-yellow-200 hover:bg-black hover:text-white"
-    type="submit"
-  >
-    Save changes
-  </Button>
-</Link>
-</DialogFooter> */
 }

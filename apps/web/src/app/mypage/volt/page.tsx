@@ -8,10 +8,10 @@ import {
 async function page() {
   //회원의 남은 포인트 조회
   const res = await GetMemberPoint();
-  console.log(res, '회원 포인트 조회 성공');
+  // console.log(res, '회원 포인트 조회 성공');
 
   const data = await GetPointList();
-  console.log(data, '포인트 리스트 조회 성공');
+  // console.log(data, '포인트 리스트 조회 성공');
 
   return (
     <>
