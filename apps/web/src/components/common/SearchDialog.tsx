@@ -14,7 +14,7 @@ import {
 import { Search } from 'lucide-react';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 export function SearchDialog({
@@ -26,9 +26,11 @@ export function SearchDialog({
 }) {
   const [key, setKey] = useState(0);
   const [value, setValue] = useState('');
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
     { name: '검색어를 입력해주세요' },
   ]);
+  const suggestionContainerRef = useRef<HTMLUListElement | null>(null); // Ref for suggestion list container
   const router = useRouter();
 
   const handleSearch = useDebouncedCallback((term) => {
@@ -48,20 +50,65 @@ export function SearchDialog({
     if (value) {
       setKey((prevKey) => prevKey + 1);
       router.push(`/search/${value}?isAutocomplete=true`);
-      router.refresh(); // 동일한 URL에서도 페이지 강제 리렌더링
+      router.refresh();
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      router.push(`/search/${value}?isAutocomplete=true`);
-      router.refresh(); // 동일한 URL에서도 페이지 강제 리렌더링
+      if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {
+        setValue(suggestedName[focusedIndex].name);
+        router.push(
+          `/search/${suggestedName[focusedIndex].name}?isAutocomplete=false`
+        );
+        router.refresh();
+      } else {
+        router.push(`/search/${value}?isAutocomplete=true`);
+        router.refresh();
+      }
+    } else if (e.key === 'ArrowDown') {
+      // Move focus down
+      setFocusedIndex((prevIndex) =>
+        prevIndex === null
+          ? -1
+          : Math.min(prevIndex + 1, suggestedName.length - 1)
+      );
+    } else if (e.key === 'ArrowUp') {
+      // Move focus up
+      setFocusedIndex((prevIndex) =>
+        prevIndex === null
+          ? suggestedName.length - 1
+          : Math.max(prevIndex - 1, 0)
+      );
     }
   };
 
+  useEffect(() => {
+    if (
+      focusedIndex !== null &&
+      suggestionContainerRef.current &&
+      suggestionContainerRef.current.children[focusedIndex]
+    ) {
+      const focusedItem = suggestionContainerRef.current.children[
+        focusedIndex
+      ] as HTMLElement;
+
+      // Adjust scrolling to keep the focused item visible
+      const container = suggestionContainerRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const focusedRect = focusedItem.getBoundingClientRect();
+
+      if (focusedRect.top < containerRect.top) {
+        container.scrollTop -= containerRect.top - focusedRect.top;
+      } else if (focusedRect.bottom > containerRect.bottom) {
+        container.scrollTop += focusedRect.bottom - containerRect.bottom;
+      }
+    }
+  }, [focusedIndex]);
+
   return (
     <Dialog open={isOpen} onOpenChange={openCloser}>
-      <DialogContent className="md:max-w-[600px] md:h-[400px] flex flex-col gap-0">
+      <DialogContent className="md:max-w-[600px] md:h-[400px] flex flex-col gap-0 ring-yellow-300 ring-[4px]">
         <DialogHeader>
           <DialogTitle>Search Mentoring</DialogTitle>
           <DialogDescription>Search Mentoring here!</DialogDescription>
@@ -76,10 +123,11 @@ export function SearchDialog({
               onKeyDown={handleKeyDown}
               onChange={(e) => {
                 handleSearch(e.target.value);
+                setFocusedIndex(null); // Reset focus on input change
               }}
               className="text-2xl"
               autoFocus
-            ></Input>
+            />
             <Search
               className="absolute right-3 top-2"
               color="#A09F9F"
@@ -89,20 +137,28 @@ export function SearchDialog({
             />
           </div>
           {suggestedName && (
-            <ul className="mt-2 max-h-[250px] overflow-y-scroll py-5">
+            <ul
+              ref={suggestionContainerRef}
+              className="mt-2 max-h-[250px] overflow-y-scroll scrollable py-5 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+            >
               {Array.isArray(suggestedName) ? (
                 suggestedName.map((item, index) => (
                   <li
                     className={`px-2 py-3 ${
+                      focusedIndex === index
+                        ? 'bg-yellow-100' // Highlight focused suggestion
+                        : ''
+                    } ${
                       item.name === '검색어를 입력해주세요'
                         ? 'text-center text-gray-400 hover:bg-transparent cursor-default'
-                        : 'hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40 border-b-[1px]'
+                        : ' cursor-pointer hover:bg-yellow-100 border-b-[1px]'
                     } text-md`}
                     key={index}
+                    onMouseEnter={() => setFocusedIndex(index)}
                     onClick={() => {
                       setValue(item.name);
                       router.push(`/search/${item.name}?isAutocomplete=false`);
-                      router.refresh(); // 동일한 URL에서도 페이지 강제 리렌더링
+                      router.refresh();
                     }}
                   >
                     {item.name}
