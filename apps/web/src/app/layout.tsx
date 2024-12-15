@@ -41,7 +41,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <AuthContextProvider isAuth={isAuth} role={role}>
+        <AuthContextProvider
+          isAuth={isAuth}
+          role={role}
+          profileImageUrl={session?.user.profileImageUrl}
+        >
           {children}
         </AuthContextProvider>
       </body>

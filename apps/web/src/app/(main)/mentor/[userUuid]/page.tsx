@@ -1,5 +1,8 @@
 import { GetMentorMentoringList } from 'src/actions/mentor/mentorAction';
-import { getProfileImage } from 'src/actions/profile/getProfileData';
+import {
+  getMentorIntroduction,
+  getProfileImage,
+} from 'src/actions/profile/getProfileData';
 
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
 import { getMentorReview } from '@repo/web/actions/review/mentorReview';
@@ -29,7 +32,8 @@ async function page({
   // console.log(UserProfile, 'userProfile');
 
   //유저의 소개글 조회
-  // const userIntroduction = await getMentorIntroduction(userUuId);
+  const userIntroduction = await getMentorIntroduction(userUuId);
+  console.log(userIntroduction);
 
   //유저의 수강평 조회
   const review = await getMentorReview(userUuId);
@@ -46,13 +50,7 @@ async function page({
         </h2>
       </div>
       <p className="pb-10 text-md break-words">
-        ✨ 10년 이상의 웹개발 경력을 가진 풀스택 개발자이자, 새로운 길을 찾는
-        개발자분들을 돕고 싶은 멘토입니다. 웹개발은 단순히 코드를 작성하는 일이
-        아니라, 문제를 해결하고 창의력을 발휘해 사용자에게 가치를 제공하는
-        일이에요! 하지만, 시작하는 단계에서는 복잡한 기술과 빠르게 변화하는
-        트렌드에 압도될 수도 있죠. 걱정하지 마세요! 😊 제가 여러분의 가이드가
-        되어 쉽고 명확하게 방향을 제시하겠습니다. 🧭
-        {/* {userIntroduction.content} */}
+        {userIntroduction ? userIntroduction.content : ''}
       </p>
 
       <div className="h-[1px] bg-gray-200"></div>

@@ -113,7 +113,7 @@ export async function getMentorIntroduction(userUuid: string) {
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_MEMBER_URL}/api/v1/member/introduction`,
+    `${process.env.MEMBER_URL}/api/v1/member/introduction`,
     {
       method: 'GET',
       headers: {
@@ -124,12 +124,13 @@ export async function getMentorIntroduction(userUuid: string) {
     }
   );
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to post profile image');
-  }
+  // if (!response.ok) {
+  //   const errorData = await response.json();
+  //   throw new Error(errorData.message || 'Failed to post profile image');
+  // }
 
   const data = (await response.json()) as commonResType<userIntroductionType>;
+  if (data.code == 200) return data.result;
+  else return '';
   // console.log(data, '소개글 불러오기');
-  return data.result;
 }

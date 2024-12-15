@@ -13,6 +13,7 @@ import {
 import { ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
 import { postLikeReaction } from '@repo/web/actions/Like/like';
 import { userProfileType } from '@repo/web/components/types/profile/RequestType';
+import Link from 'next/link';
 import { useState } from 'react';
 import Calendar from './Calendar';
 export default function MentorSection({
@@ -44,10 +45,16 @@ export default function MentorSection({
         {!isMobile && (
           <>
             <CustomMentorProfilePhoto
+              mentorUuid={MentoringInfoData.mentorUuid}
               profileImgUrl={mentorData.profileImageUrl}
               mentorNickname={mentorData.nickName}
             />
-            <h1 className="text-xl font-bold my-3">@ {mentorData.nickName}</h1>
+            <Link
+              href={`/mentor/${MentoringInfoData.mentorUuid}`}
+              className="text-xl font-bold my-3"
+            >
+              @ {mentorData.nickName}
+            </Link>
             <div className="flex justify-between items-center w-full mb-3 gap-3">
               <CustomReviewerItem
                 initialUserData={ReviewerData}

@@ -99,6 +99,23 @@
     @apply bg-background text-foreground;
   }
 }
+ul.scrollable {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: gray lightgray;
+}
+
+ul.scrollable::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+ul.scrollable::-webkit-scrollbar-thumb {
+  background-color: rgb(174, 173, 173); /* Thumb color */
+  border-radius: 3px; /* Rounded edges */
+}
+
+ul.scrollable::-webkit-scrollbar-track {
+  background-color: lightgray; /* Track color */
+}
 
 /* scrollbtn */
 .scroll-btn {

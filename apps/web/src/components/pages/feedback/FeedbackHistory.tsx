@@ -30,7 +30,7 @@ const FeedbackItem = ({ title, score, content, num }: FeedbackItemProps) => {
           </h4>
         </div>
       </div>
-      <Progress value={score} max={5} className="mb-1 bg-[#FFF3BE]" />
+      <Progress value={score} max={10} className="mb-1 bg-[#FFF3BE]" />
       <div className="flex justify-between items-center">
         <span className="text-xs text-gray-500">{score}/5점</span>
       </div>
@@ -41,11 +41,9 @@ const FeedbackItem = ({ title, score, content, num }: FeedbackItemProps) => {
 export default function FeedbackHistory({
   feedbackData,
   element,
-  categoryCode,
 }: {
   feedbackData: MentoringFeedback[];
   element: FeedbackElements[];
-  categoryCode: string;
 }) {
   const sortedFeedbackData = useMemo(() => {
     return [...feedbackData].sort(
@@ -140,12 +138,14 @@ export default function FeedbackHistory({
         <div>
           <Score
             score={averageScore}
-            maxScore={5}
+            maxScore={10}
             fillColor="#FFD700"
             strokeColor="black"
             size={200}
           />
-          <p className="text-center w-full">{averageScore}/5.0</p>
+          <p className="text-center w-full text-gray-400">
+            <span className="text-gray-600">{averageScore}</span>/10.0
+          </p>
         </div>
         <div className="w-full max-w-4xl mx-auto p-4 flex-3 px-10">
           <div className="space-y-2">

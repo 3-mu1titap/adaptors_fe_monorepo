@@ -5,7 +5,7 @@ import { SearchDrawer } from '@repo/web/components/common/SearchDrawer';
 import { useEffect, useRef, useState } from 'react';
 import SearchIcon from '../../../../assets/icons/Search';
 
-function MainSearchTag() {
+function MainSearchTag({ name }: { name?: string }) {
   const [shortCutKey, setShortCutKey] = useState('⌘K');
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ function MainSearchTag() {
         <input
           ref={searchInputRef}
           type="text"
-          placeholder="Search everything here..."
+          placeholder={name ? name : 'Search everything here...'}
           className="w-full px-4 py-3 rounded-lg bg-[#FFF9E7] border text-sm text-gray-400 border-[#FFD84D] focus:outline-none focus:ring-2 focus:ring-[#FFD84D]"
         />
         <div className="absolute inset-5 flex items-center justify-end">
