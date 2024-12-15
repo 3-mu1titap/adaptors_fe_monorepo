@@ -26,8 +26,14 @@ async function page() {
   // console.log(MentorLikeData, 'fffffffffffffffffff');
   return (
     <>
-      <section className="mt-28 py-4 container mx-auto lg:max-w-[64rem] md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px]">
-        {MentorLikeData && <LikePage like={MentorLikeData} />}
+      <section className="mt-1 py-4 container mx-auto lg:max-w-[64rem] md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px]">
+        <span className="mt-4 ml-4 text-2xl text-black font-bold">
+          나의 관심목록
+        </span>
+
+        <div className="mt-8">
+          {MentorLikeData && <LikePage like={MentorLikeData} />}
+        </div>
       </section>
     </>
   );
