@@ -21,7 +21,7 @@ function SearchMentoring({
   const [Content, setContent] = useState<MentoringContent[]>(
     SearchResults.content
   );
-  console.log(isDirect, 'fffffffffffffff');
+  // console.log(isDirect, 'fffffffffffffff');
   const [page, setPage] = useState(0);
   const [totalPage, settotalPage] = useState(SearchResults.totalPages);
 

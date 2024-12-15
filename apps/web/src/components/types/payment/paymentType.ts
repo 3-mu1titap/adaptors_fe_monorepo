@@ -52,12 +52,14 @@ export interface PaymentApprovalResType {
 }
 
 //결제 후 포인트 리스트 조회
-export interface GetMemberPointListResType {
-  result: GetMemberPointListDataType[];
+export interface PaymentResponseDto {
+  point: number; // 포인트
+  date: string; // 날짜 (ISO 문자열)
+  source_table: string; // 소스 테이블
 }
 
-export interface GetMemberPointListDataType {
-  point: number;
-  date: Date;
-  isPayment: boolean;
+// 전체 결제 리스트 응답 타입
+export interface GetMemberPointListResType {
+  totalPage: number; // 전체 페이지 수
+  paymentResponseDtoList: PaymentResponseDto[]; // 결제 내역 배열
 }
