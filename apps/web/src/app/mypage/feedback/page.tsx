@@ -56,15 +56,12 @@ export default async function Page({
       <FeedbackNavbar />
       {feedbackData.length != 0 ? (
         <>
-          <FeedbackHistory
-            feedbackData={feedbackData}
-            element={element}
-            categoryCode={categoryCode}
-          />
+          <FeedbackHistory feedbackData={feedbackData} element={element} />
           <div className="flex">
             <AdaptorsComment
               feedbackContent={graphData?.feedbackContent ?? ''}
               nickname={user}
+              profileImageUrl={session?.user.profileImageUrl}
             />
             <ScoreComparisonGraph
               graphData={graphData?.feedbackFirstLastScoreDto ?? null}
@@ -84,7 +81,7 @@ export default async function Page({
               멘토링 진행내역이 없습니다. 멘토링을 진행하고 리포트를 확인하세요!
             </p>
             <Link href="/mentoring" className="text-blue-400 underline">
-              🔗 멘토링 신청하러 가기
+              <span className="underline-none">🔗</span> 멘토링 신청하러 가기
             </Link>
           </div>
         </section>

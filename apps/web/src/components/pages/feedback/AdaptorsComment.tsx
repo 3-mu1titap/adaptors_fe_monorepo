@@ -5,21 +5,26 @@ import FitImage from '../../ui/image/fit-image';
 export default function AdaptorsComment({
   feedbackContent,
   nickname,
+  profileImageUrl,
 }: {
   feedbackContent: string;
   nickname: string;
+  profileImageUrl: string;
 }) {
   return (
-    <section className="flex-1 relative mb-8">
-      <div className="flex items-center text-2xl gap-2 w-full py-2 px-4">
-        <UserProfile size={32} />
-        {nickname}님
+    <section className="flex-1 relative mb-8 px-4">
+      <h3 className="flex items-center text-2xl gap-2 w-full py-2 px-4 font-semibold">
+        <UserProfile size={32} profileImgUrl={profileImageUrl} />
+        {nickname}님!!
+      </h3>
+      <div className="py-2 px-4 text-xl text-gray-600">
+        📬 볼팡이의 쪽지가 도착했어요!
+        <p className="text-md text-gray-400 m-0">
+          <br /> 볼팡이가 {nickname}님의 멘토링 데이터를 기반으로 정성스럽게
+          분석한 내용입니다
+          <br /> 쪽지를 확인하고 효율적으로 멘토링을 계획해보세요!
+        </p>
       </div>
-      {/* <h2 className="py-2 px-4 text-2xl text-gray-400">
-        볼팡이가
-        <span className="text-[#4079be] font-semibold">{nickname}님</span>의
-        멘토링 진행을 분석했어요
-      </h2> */}
       <p className="leading-relaxed pt-2 pb-10 px-4 text-xl bg-gray-200/60 rounded-lg mx-4 mt-4 relative">
         {feedbackContent}
         <span className="absolute bottom-3 right-3 text-md text-gray-300">
