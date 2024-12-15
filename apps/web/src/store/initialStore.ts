@@ -12,10 +12,9 @@ export const CategoryData = [
 ];
 
 export const MypageData = [
-  { label: 'profile', href: '/mypage/profile' },
+  { label: 'profile', href: '/mypage/edit' },
   { label: 'history', href: '/mypage/' },
   { label: 'report', href: '/mypage/' },
-  { label: 'likes', href: '/mypage/' },
-  { label: 'blacklist', href: '/mypage/' },
-  { label: '이력서', href: '/mypage/' },
+  { label: 'likes', href: '/mypage/like' },
+  { label: 'Volt', href: '/mypage/volt' },
 ];
