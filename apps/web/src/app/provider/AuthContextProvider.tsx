@@ -6,13 +6,15 @@ export const AuthContextProvider = ({
   isAuth,
   children,
   role,
+  profileImageUrl,
 }: {
   isAuth: boolean;
   children: React.ReactNode;
   role: string;
+  profileImageUrl: string;
 }) => {
   return (
-    <SessionContext.Provider value={{ isAuth, role }}>
+    <SessionContext.Provider value={{ isAuth, role, profileImageUrl }}>
       {children}
     </SessionContext.Provider>
   );
