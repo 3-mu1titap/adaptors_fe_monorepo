@@ -12,11 +12,21 @@ export default function LoginForm({ id, pw }: { id?: string; pw?: string }) {
   if (id && pw) {
     useEffect(() => {
       const autoLogin = async () => {
-        await signIn('credentials', {
-          loginId: id,
-          password: pw,
-          redirect: false,
-        });
+        try {
+          const result = await signIn('credentials', {
+            loginId: id,
+            password: pw,
+            redirect: false,
+          });
+          if (result?.status == 401) {
+            setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
+          } else if (result?.status == 200) {
+            router.push('/home');
+          }
+        } catch (error) {
+          console.error(error);
+          setLoginError('로그인 요청 중 오류가 발생했습니다.');
+        }
       };
       autoLogin();
     }, []);
