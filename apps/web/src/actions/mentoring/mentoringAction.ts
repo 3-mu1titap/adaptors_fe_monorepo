@@ -1,5 +1,5 @@
 'use server';
-
+import { MentoringSession } from '../../components/types/mentoring/mentoringTypes';
 import {
   MentoringDataType,
   MentoringResult,
@@ -137,6 +137,34 @@ export async function SessionCancel(
   } catch (error) {
     console.error('멘토링 신청취소하기 에러: ', error);
     return 404;
+  }
+}
+
+//멘토링 세션 참여내역 조회
+export async function GetMentoringSessionHistoryList(page: number) {
+  'use server';
+
+  const session = await getServerSession(options);
+  const userUuid = session?.user.uuid;
+  try {
+    const res = await fetch(
+      `${process.env.SCHEDULE_URL}/api/v1/session-user-history-read/?page=${page}&size=${20}&includeCancelled=true`,
+      {
+        cache: 'no-cache',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.user.accessToken}`,
+          'userUuid': userUuid,
+        },
+      }
+    );
+    const result = (await res.json()) as commonResType<MentoringSession>;
+    console.log(result, 'ffffffff');
+    return result.result;
+  } catch (error) {
+    // console.error('멘토링에 대한 검색 결과 리스트 조회: ', error);
+    return null;
   }
 }
 
