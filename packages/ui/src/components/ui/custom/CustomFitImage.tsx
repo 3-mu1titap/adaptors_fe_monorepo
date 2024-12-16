@@ -13,7 +13,7 @@ function CustomFitImage({
     <figure className={`${className}`}>
       <Image
         alt={alt}
-        className="cover"
+        className="w-full h-full"
         height={800}
         priority
         src={src ? src : '/assets/images/imageDummy.jpg'}

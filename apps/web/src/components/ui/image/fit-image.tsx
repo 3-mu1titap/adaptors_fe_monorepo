@@ -11,10 +11,10 @@ function FitImage({
   className?: string;
 }): JSX.Element {
   return (
-    <figure className={`${className}`}>
+    <figure className={`${className} w-full h-full`}>
       <Image
         alt={alt}
-        className="object-fit"
+        className="object-cover w-full h-full"
         height={800}
         priority
         src={src}
