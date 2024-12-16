@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@repo/ui/components/ui/select';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -27,6 +28,7 @@ export default function Exchange({
 }: {
   mentorVoltList: mentorVoltListDataType;
 }) {
+  const router = useRouter();
   const [exchangeAmount, setExchangeAmount] = useState<string>('');
   const [verificationCode, setVerificationCode] = useState<string>('');
   const [isVerificationSent, setIsVerificationSent] = useState<boolean>(false);
@@ -149,17 +151,12 @@ export default function Exchange({
               title: '정산 완료',
               html: `${exchangeAmount}Volt 정산이 완료되었습니다.`,
               icon: 'success',
-              showCancelButton: true,
+              showCancelButton: false,
               confirmButtonText: '확인',
-              cancelButtonText: '취소',
               confirmButtonColor: '#F6D84C',
             });
+            setIsVerificationSent(false);
           }
-          setExchangeAmount('');
-          setAccount('');
-          setSelectedBank('');
-          setIsVerified(false);
-          setIsVerificationSent(false);
         }
       });
     } else if (parseInt(exchangeAmount) < 100) {

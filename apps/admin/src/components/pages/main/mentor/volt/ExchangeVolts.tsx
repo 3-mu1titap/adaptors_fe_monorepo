@@ -25,7 +25,7 @@ export default function ExchangeHistory({
   });
   const [totalExchange, setTotalExchange] = useState<number>(0);
   const [filteredData, setFilteredData] = useState<exchangeDataType[]>([]);
-
+  console.log(filteredData);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -89,10 +89,10 @@ export default function ExchangeHistory({
     };
 
     fetchData();
-  }, [period, dateRange.from, dateRange.to]);
+  }, [period, dateRange.from, dateRange.to, mentorVoltList]);
 
   const totalProcessing = filteredData.filter(
-    (record) => record.status === 'PROCEEDING'
+    (record) => record.status === 'PROCEEDING' || record.status === null
   ).length;
 
   const totalComplete = filteredData.filter(

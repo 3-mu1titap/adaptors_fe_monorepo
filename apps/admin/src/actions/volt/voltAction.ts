@@ -24,7 +24,7 @@ export async function GetSettleList(startDate: string, endDate: string) {
     {
       cache: 'no-cache',
       method: 'GET',
-      next: { tags: ['updateSettle'] },
+      next: { tags: ['updateSettleList'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
