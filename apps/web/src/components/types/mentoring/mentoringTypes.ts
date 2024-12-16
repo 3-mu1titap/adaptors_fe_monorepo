@@ -73,11 +73,11 @@ export interface Result {
 export interface MentoringSession {
   totalPages: 1;
   size: 10;
-  content: MentoringContent[];
+  content: MentoringSessionContent[];
   number: 1;
 }
 
-export interface MentoringContent {
+export interface MentoringSessionContent {
   mentoringName: string;
   sessionUuid: string;
   startDate: string;
@@ -85,23 +85,22 @@ export interface MentoringContent {
   startTime: startTime;
   endTime: endTime;
   price: number;
-  maxHeadCount: number;
-  minHeadCount: number;
-  nowHeadCount: number;
+  maxHeadCount: number | 0;
+  minHeadCount: number | 0;
+  nowHeadCount: number | 0;
   status: string;
   updatedAt: string;
 }
-
 export interface startTime {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
+  hour?: number; // undefined 허용
+  minute?: number;
+  second?: number;
+  nano?: number;
 }
 
 export interface endTime {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
+  hour?: number;
+  minute?: number;
+  second?: number;
+  nano?: number;
 }

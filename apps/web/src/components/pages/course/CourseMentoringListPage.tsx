@@ -1,6 +1,6 @@
 'use client';
 import { MentoringSession } from '@repo/ui/types/CommonType.js';
-import { MentoringContent } from '../../types/mentoring/mentoringTypes';
+import { MentoringSessionContent } from '../../types/mentoring/mentoringTypes';
 import MentoringCard from './MentoringCard';
 import { useEffect, useState } from 'react';
 import { GetMentoringSessionHistoryList } from '@repo/web/actions/mentoring/mentoringAction';
@@ -9,11 +9,11 @@ function CourseMentoringListPage({
   content,
 }: {
   totalPages: number;
-  content: MentoringContent[];
+  content: MentoringSessionContent[];
 }) {
   const [page, setPage] = useState(0);
   const [totalPage, settotalPage] = useState(totalPages);
-  const [Content, setContent] = useState<MentoringContent[]>(content);
+  const [Content, setContent] = useState<MentoringSessionContent[]>(content);
 
   const fetchMentoringData = async (page: number) => {
     try {
@@ -33,7 +33,7 @@ function CourseMentoringListPage({
       {content && content ? (
         <>
           <div className="flex flex-col">
-            <ul className="grid lg:grid-col-3 md:grid-cols-2 mobile:grid-cols-1">
+            <ul className="grid lg:grid-col-2 md:grid-cols-2 mobile:gap-y-2 gap-y-3 mobile:grid-cols-1">
               {content.map((item, index) => (
                 <MentoringCard key={index} item={item} />
               ))}
@@ -55,8 +55,8 @@ function CourseMentoringListPage({
                       key={index}
                       className={`px-3 py-1 border-2 border-gray-100 rounded-lg ${
                         page === index
-                          ? 'bg-green-500 text-white'
-                          : 'bg-green-200 text-white'
+                          ? 'bg-adaptorsYellow text-white'
+                          : 'bg-white text-black'
                       }`}
                     >
                       {index + 1}

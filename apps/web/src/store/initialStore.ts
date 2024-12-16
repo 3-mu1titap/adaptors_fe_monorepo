@@ -13,8 +13,8 @@ export const CategoryData = [
 
 export const MypageData = [
   { label: 'profile', href: '/mypage/edit' },
-  { label: 'history', href: '/mypage/' },
-  { label: 'report', href: '/mypage/' },
+  { label: 'history', href: '/mypage/mycourse' },
+  { label: 'report', href: '/mypage/feedback' },
   { label: 'likes', href: '/mypage/like' },
   { label: 'Volt', href: '/mypage/volt' },
 ];
