@@ -1,7 +1,7 @@
-import { MentorMentoringListDataType } from '@repo/web/components/types/mentor/mentorType';
+import { Mentoring } from '@repo/web/components/types/mentoring/mentoringTypes';
+import MentoringItem from '../../main/mentoring/MentoringItem';
 import MentorTitleSection from '../compoent/MentorTitleSection';
-import CurrentMentoringCard from './CurrentMentoringCard';
-function CurrentMentoring({ item }: { item: MentorMentoringListDataType[] }) {
+function CurrentMentoring({ item }: { item: Mentoring[] }) {
   return (
     <div className="py-3 h-auto min-h-[8rem] bg-white p-4 rounded-xl mt-10">
       <MentorTitleSection
@@ -12,7 +12,7 @@ function CurrentMentoring({ item }: { item: MentorMentoringListDataType[] }) {
       {item && item.length > 0 ? (
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-4  gap-y-4">
           {item.map((item, index) => (
-            <CurrentMentoringCard key={index} item={item} />
+            <MentoringItem key={index} item={item} />
           ))}
         </ul>
       ) : (

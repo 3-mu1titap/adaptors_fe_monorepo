@@ -32,10 +32,10 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               className="flex items-center space-x-2 hover:bg-gray-100 rounded p-2 text-md"
             >
               <span className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                {publisher.stream.connection.data.split('"')[1].charAt(0)}
+                {publisher.stream.connection.data.split('"')[3].charAt(0)}
               </span>
               <span>
-                {publisher.stream.connection.data.split('"')[1]} (You)
+                {publisher.stream.connection.data.split('"')[3]} (You)
               </span>
             </button>
             <div className="flex space-x-2">
@@ -79,9 +79,9 @@ const OpenviduParticipants: React.FC<ParticipantManagerProps> = ({
               className="flex items-center space-x-2 hover:bg-gray-100 rounded p-2"
             >
               <span className="w-6 h-6 bg-gray-500 rounded-full flex items-center justify-center text-white text-md">
-                {sub.stream.connection.data.split('"')[1].charAt(0)}
+                {sub.stream.connection.data.split('"')[3].charAt(0)}
               </span>
-              <span>{sub.stream.connection.data.split('"')[1]}</span>
+              <span>{sub.stream.connection.data.split('"')[3]}</span>
             </button>
             <div className="flex space-x-2">
               <Button

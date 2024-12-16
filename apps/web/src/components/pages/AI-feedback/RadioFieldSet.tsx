@@ -14,14 +14,14 @@ export default function RadioFieldset({
   title: string;
 }) {
   return (
-    <fieldset className="">
+    <fieldset className="mr-0 mb-2">
       <ChevronText text={title} className="py-4 mb-4 sm:py-2 min-w-44" />
       <RadioButton
         name="gob"
         options={field}
         selectedValue={job}
         onChange={handleRadioChange}
-        classname="flex-wrap justify-center gap-x-7 gap-y-4"
+        classname="flex-wrap justify-start gap-x-4 gap-y-4"
       />
     </fieldset>
   );

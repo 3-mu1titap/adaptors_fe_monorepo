@@ -6,73 +6,21 @@ import { commonResType } from '@repo/admin/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-const nickName = '멘토';
-
-// 화상회의, 채팅 참가하기
-export async function postJoinMeeting(mentoringSessionUuid: string) {
-  'use server';
-  const session = await getServerSession(options);
-  const accessToken = session?.user.accessToken;
-  const userUuid = session?.user.uuid;
-
-  const res = await fetch(
-    `${process.env.CHATSERVICE_URL}/api/v1/chat/join/${mentoringSessionUuid}?nickName=${nickName}`,
-    {
-      cache: 'no-cache',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-        'userUuid': userUuid,
-      },
-    }
-  );
-
-  if (!res.ok) {
-    console.error('Failed to post join');
-    return redirect('/error?message=Failed to post join');
-  }
-
-  return true;
-}
-
-// 화상회의, 채팅 나가기
-export async function postExitMeeting(mentoringSessionUuid: string) {
-  'use server';
-  const session = await getServerSession(options);
-  const accessToken = session?.user.accessToken;
-  const userUuid = session?.user.uuid;
-
-  const res = await fetch(
-    `${process.env.CHATSERVICE_URL}/api/v1/chat/leave/${mentoringSessionUuid}?nickName=${nickName}`,
-    {
-      cache: 'no-cache',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-        'userUuid': userUuid,
-      },
-    }
-  );
-
-  if (!res.ok) {
-    console.error('Failed to post exit');
-    return redirect('/error?message=Failed to post exit');
-  }
-
-  return true;
-}
-
 // heartbeat 쏘기
-export async function postHeartbeat(mentoringSessionUuid: string) {
+export async function postHeartbeat({
+  nickname,
+  mentoringSessionUuid,
+}: {
+  nickname: string;
+  mentoringSessionUuid: string;
+}) {
   'use server';
   const session = await getServerSession(options);
   const accessToken = session?.user.accessToken;
   const userUuid = session?.user.uuid;
 
   const res = await fetch(
-    `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickName}`,
+    `${process.env.CHATSERVICE_URL}/api/v1/chat/heartbeat/${mentoringSessionUuid}?nickName=${nickname}`,
     {
       cache: 'no-cache',
       method: 'POST',
@@ -130,18 +78,18 @@ export async function postFeedback(payload: MentoringFeedbackType) {
 
   // API 완성되면 주석 해제
   console.log(payload);
-  // const res = await fetch(`${process.env}/api/v1/`, {
-  //   cache: 'no-cache',
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${accessToken}`,
-  //     'userUuid': userUuid,
-  //   },
-  //   body: JSON.stringify({
-  //     payload,
-  //   }),
-  // });
+  const res = await fetch(`${process.env}/api/v1/`, {
+    cache: 'no-cache',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+      'userUuid': userUuid,
+    },
+    body: JSON.stringify({
+      payload,
+    }),
+  });
 
   return true; // API가 완성되면 이 부분을 수정해야 함
 }

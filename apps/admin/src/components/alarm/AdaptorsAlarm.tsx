@@ -1,49 +1,31 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { EventSourcePolyfill } from 'event-source-polyfill';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlarmPaginationType, AlarmType } from '../types/alarm/alarmTypes';
-import {
-  getAlarmData,
-  getRecentAlarmData,
-} from '@repo/admin/actions/alram/alramAction';
+import { AlarmType } from '../types/alarm/alarmTypes';
+import { getRecentAlarmData } from '@repo/admin/actions/alram/alramAction';
 import { BellIcon } from 'lucide-react';
 
 function AdaptorsAlarm({ user }: { user: any }) {
   const [recentAlarm, setRecentAlarm] = useState<AlarmType | null>(null);
   const [newAlarm, setNewAlarm] = useState<AlarmType | null>(null);
-  const [eventSource, setEventSource] = useState<EventSourcePolyfill | null>(
-    null
-  );
-  const [reconnectAttempts, setReconnectAttempts] = useState<number>(0);
-
-  const alarmUrl = `${process.env.NEXT_PUBLIC_ALARM_URL}/api/v1/alarm-service/alarms/connect?userUuid=${user.uuid}`;
+  const [eventSource, setEventSource] = useState<EventSource | null>(null);
 
   const connectEventSource = () => {
-    const source = new EventSourcePolyfill(alarmUrl, {
-      heartbeatTimeout: 86400000,
-    });
+    const alarmUrl = `${process.env.NEXT_PUBLIC_ALARM_URL}/api/v1/alarm-service/alarms/connect?userUuid=${user.uuid}`;
+    const source = new EventSource(alarmUrl);
 
     source.onopen = () => {
       console.log('alarm 연결 완료');
-      setReconnectAttempts(0);
     };
 
     source.onmessage = (event) => {
-      const alarmData = JSON.parse(event.data);
-      console.log('1111', alarmData);
-      setNewAlarm(alarmData);
-      setTimeout(() => {
-        setNewAlarm(null);
-        setRecentAlarm(alarmData);
-      }, 3000);
+      console.log(event);
     };
 
     source.onerror = (error) => {
-      console.error('EventSource 오류:', error);
       source.close();
-      handleReconnect();
+      connectEventSource();
     };
 
     setEventSource(source);
@@ -57,21 +39,6 @@ function AdaptorsAlarm({ user }: { user: any }) {
     };
   }, [user.uuid]);
 
-  const handleReconnect = () => {
-    const maxAttempts = 5;
-    if (reconnectAttempts < maxAttempts) {
-      const timeout = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000); // 지수 백오프
-      console.log(`재연결 시도 ${reconnectAttempts + 1}...`);
-
-      setTimeout(() => {
-        setReconnectAttempts((prev) => prev + 1);
-        connectEventSource(); // 재연결 시도
-      }, timeout);
-    } else {
-      console.error('최대 재연결 시도 횟수 초과');
-    }
-  };
-
   const getAlramsData = async () => {
     try {
       const alarmMessage: AlarmType | null = await getRecentAlarmData();
@@ -79,7 +46,7 @@ function AdaptorsAlarm({ user }: { user: any }) {
         setRecentAlarm(alarmMessage);
       }
     } catch (error) {
-      console.error('Failed to fetch alarm data:', error);
+      console.error('알람 데이터를 가져오는 중 오류 발생:', error);
     }
   };
 

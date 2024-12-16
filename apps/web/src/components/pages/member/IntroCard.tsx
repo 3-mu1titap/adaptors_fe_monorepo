@@ -4,8 +4,8 @@ import AdaptorcConcentImage from '../../assets/images/AdaptorcConcentImage';
 export default function IntroCard({ className = '' }: { className?: string }) {
   return (
     <section className={`hidden lg:block lg:w-[400px] lg:px-8 ${className}`}>
-      <AdaptorsLogoIcon className="lg:w-[297px]" />
-      <div className="hidden lg:flex flex-col gap-3 mt-10 mb-10">
+      <AdaptorsLogoIcon className="max-w-[200px] mt-14" />
+      <div className="hidden lg:flex flex-col gap-3 mt-4 mb-10">
         <h1 className="text-5xl font-bold leading-[28px]">
           WELCOME BACK
           <br /> TO ADATORS

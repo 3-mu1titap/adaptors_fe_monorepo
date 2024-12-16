@@ -75,6 +75,7 @@ export default function FileUpload({
     if (file) {
       try {
         const imageUrl = await uploadFileToS3(file, 'profile');
+        // console.log(imageUrl);
         await uploadProfileIamge({
           uuid,
           profileImage: imageUrl,

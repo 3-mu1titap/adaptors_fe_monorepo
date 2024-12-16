@@ -4,8 +4,8 @@ import CustomSessionInfoTags, {
 import { Skeleton } from '@repo/ui/components/ui/skeleton';
 import { Mentoring } from '@repo/ui/types/MentoringListType.ts';
 import RateViewer from '@repo/web/components/common/RateViwer';
-import FitImage from '@repo/web/components/ui/image/fit-image';
 import { File, User } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function MentoringItem({
@@ -13,7 +13,7 @@ export default function MentoringItem({
   isLoading,
 }: {
   item: Mentoring;
-  isLoading: boolean;
+  isLoading?: boolean;
 }) {
   const SessionInfo: SessionInfo[] = [
     {
@@ -33,14 +33,16 @@ export default function MentoringItem({
   return (
     <Link href={`/mentoring/${item?.mentoringUuid || '#'}`} className="w-full">
       <div className="bg-white rounded-xl overflow-hidden mx-2 hover:shadow-md ring-1 hover:ring-4 ring-yellow-400 my-3 transition-all">
-        <div className="relative">
+        <div className="relative w-full overflow-hidden bg-gray-200 aspect-[228/170]">
           {!item ? (
             <Skeleton className="w-full h-48 bg-gray-200" />
           ) : (
-            <FitImage
+            <Image
               src={item?.thumbnailUrl || ''}
               alt={item?.name || 'Placeholder'}
-              className="h-[40%]"
+              className="w-full h-full object-cover aspect-[228/170]"
+              width={500}
+              height={500}
             />
           )}
         </div>

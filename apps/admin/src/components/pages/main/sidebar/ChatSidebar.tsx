@@ -24,10 +24,12 @@ export default function ChatSidebar({
   selectedChat,
   setSelectedChat,
   userMessageData,
+  userData,
 }: {
   selectedChat: string | null;
   setSelectedChat: Dispatch<SetStateAction<string | null>>;
   userMessageData: userMessageCustomDataType[] | null;
+  userData: any;
 }) {
   return (
     <div className="w-80 border-r flex flex-col">
@@ -37,16 +39,13 @@ export default function ChatSidebar({
           <div className="flex items-center gap-3">
             <Avatar>
               <AvatarImage
-                src="/placeholder.svg?height=40&width=40"
+                src={`${userData ? userData.profileImageUrl : '/placeholder.svg?height=40&width=40'}`}
                 alt="Profile"
               />
               <AvatarFallback>AS</AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="font-semibold">Alon Smith</h2>
-              <p className="text-sm text-muted-foreground">
-                Software Developer
-              </p>
+              <h2 className="font-semibold">{userData.nickName}</h2>
             </div>
           </div>
           <Button variant="ghost" size="icon">

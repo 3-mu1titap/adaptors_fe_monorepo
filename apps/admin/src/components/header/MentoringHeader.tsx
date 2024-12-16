@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui/components/ui/dropdown';
 import {
-  BellDot,
   CreditCard,
   Keyboard,
   Settings,
@@ -24,6 +23,7 @@ import {
 import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
 import AdaptorsAlarm from '../alarm/AdaptorsAlarm';
 import AdaptorsAlarmHeader from '../alarm/AdaptorsAlarmHeader';
+import { userProfileType } from '@repo/admin/actions/profile/getProfileData';
 
 const initialUserData = [
   {
@@ -44,12 +44,22 @@ const initialUserData = [
   },
 ];
 
-export default function MentoringHeader({ user }: { user: any }) {
+export default function MentoringHeader({
+  user,
+  mentorVolt,
+  profileImage,
+}: {
+  user: any;
+  mentorVolt: number;
+  profileImage: userProfileType;
+}) {
   return (
     <header className="fixed top-0 left-0 w-full py-6 px-4 lg:px-10 border-b-[1px] border-[#F3F3F3] bg-white z-[10]">
       <div className="flex justify-between items-center ">
         <AdaptorsLogoIcon className="w-[140px] mt-0 flex items-center gap-2" />
-        <div>{/* <AdaptorsAlarm user={user} /> */}</div>
+        <div>
+          <AdaptorsAlarm user={user} />
+        </div>
         <div className="flex justify-center items-center gap-2">
           <CustomReviewerItem
             initialUserData={initialUserData}
@@ -62,9 +72,11 @@ export default function MentoringHeader({ user }: { user: any }) {
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-adaptorsYellow z-10">
                 <Wallet2Icon className="w-5 h-5 text-black" />
               </div>
-              <p className="hidden md:!block text-sm pl-3 pr-8 py-1 bg-black text-white rounded-md absolute right-4">
-                400321
-              </p>
+              {mentorVolt && (
+                <p className="hidden md:!block text-sm pl-3 pr-8 py-1 bg-black text-white rounded-md absolute right-4">
+                  {mentorVolt}
+                </p>
+              )}
             </div>
           </CustomToolTip>
           <CustomToolTip text="Notifications">
@@ -72,7 +84,10 @@ export default function MentoringHeader({ user }: { user: any }) {
           </CustomToolTip>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <UserProfile size={40} />
+              <UserProfile
+                name={profileImage.nickName}
+                profileImgUrl={profileImage.profileImageUrl}
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>

@@ -15,18 +15,22 @@ import MentoringFeedbackForm from '@repo/admin/components/form/MentoringFeedback
 import OvTracks from './OvTracks';
 import OpenviduParticipants from './participants/OpenviduParticipants';
 import Chatting from '../../chatting/Chatting';
+import { chatMemberDataType } from '@repo/admin/components/types/main/chatting/chattingTypes';
 
 interface MeetingProps {
   mentoringSessionList: any[];
   user: any;
+  userData: chatMemberDataType;
 }
 
-const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
+const Meeting: React.FC<MeetingProps> = ({
+  mentoringSessionList,
+  user,
+  userData,
+}) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
   const [mentoringName, setMentoringName] = useState<string>('');
-  const [myUserName, setMyUserName] = useState<string>(
-    'Participant' + Math.floor(Math.random() * 100)
-  );
+  const [myUserName, setMyUserName] = useState<string>(userData.nickName);
   const [session, setSession] = useState<any>(undefined);
   const [mainStreamManager, setMainStreamManager] = useState<any>(undefined);
   const [publisher, setPublisher] = useState<any>(undefined);
@@ -133,7 +137,6 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
     setSession(undefined);
     setSubscribers([]);
     setSessionUuid('');
-    setMyUserName('Participant' + Math.floor(Math.random() * 100));
     setMainStreamManager(undefined);
     setPublisher(undefined);
     setCurrentVideoDevice(undefined);
@@ -291,7 +294,11 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
                       showParticipants ? 'h-[60vh] border-t' : 'h-[89vh]'
                     }
                   >
-                    <Chatting user={user} mentoringSessionUuid={sessionUuid} />
+                    <Chatting
+                      user={user}
+                      mentoringSessionUuid={sessionUuid}
+                      userData={userData}
+                    />
                   </div>
                 )}
               </div>

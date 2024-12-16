@@ -4,25 +4,27 @@ import { useEffect, useRef, useState } from 'react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import {
   chatDataType,
+  chatMemberDataType,
   prevChatResType,
 } from '@repo/admin/components/types/main/chatting/chattingTypes';
 import {
   getChattingData,
   postChat,
+  postEnterChat,
+  postOutChat,
 } from '@repo/admin/actions/chatting/chattingAction';
-import {
-  postExitMeeting,
-  postHeartbeat,
-} from '@repo/admin/actions/meeting/meetingAction';
+import { postHeartbeat } from '@repo/admin/actions/meeting/meetingAction';
 import ChatView from './ChatView';
 import ChatSender from './ChatSender';
 
 function Chatting({
   mentoringSessionUuid,
   user,
+  userData,
 }: {
   mentoringSessionUuid: string;
   user: string;
+  userData: chatMemberDataType;
 }) {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
@@ -33,6 +35,9 @@ function Chatting({
   const [getPrev, setGetPrev] = useState<boolean>(true);
   const [isNext, setIsNext] = useState<boolean>(true);
   const [prevMessagePage, setPrevMessagePage] = useState<number>(0);
+  const [eventSource, setEventSource] = useState<EventSourcePolyfill | null>(
+    null
+  );
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,39 +91,51 @@ function Chatting({
     }
   };
 
-  useEffect(() => {
+  const connectEventSource = () => {
     const chatServiceUrl = `${process.env.NEXT_PUBLIC_CHAT_URL}/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    const newEventSource = new EventSourcePolyfill(chatServiceUrl);
 
-    const EventSource = EventSourcePolyfill;
+    newEventSource.onopen = async () => {
+      console.log('EventSource 연결됨');
+    };
 
-    const eventSource = new EventSource(chatServiceUrl, {
-      heartbeatTimeout: 86400000,
-    });
-
-    const heartbeatInterval = setInterval(async () => {
-      await postHeartbeat(mentoringSessionUuid);
-    }, 30000);
-
-    eventSource.onopen = async () => {};
-
-    const handleNewMessage = (event: any) => {
+    newEventSource.onmessage = (event) => {
       setGetPrev(true);
       const newMessage: chatDataType = JSON.parse(event.data);
       setMessages((prevData) => [...prevData, newMessage]);
     };
 
-    eventSource.onmessage = handleNewMessage;
-
-    eventSource.onerror = (error) => {
-      console.error('EventSource 오류:', error);
-      // postExitMeeting(mentoringSessionUuid);
-      eventSource.close();
+    newEventSource.onerror = (error) => {
+      newEventSource.close();
+      setTimeout(() => {
+        connectEventSource();
+      }, 5000);
     };
+
+    setEventSource(newEventSource);
+  };
+
+  useEffect(() => {
+    connectEventSource();
+    postEnterChat({
+      nickname: userData.nickName,
+      mentoringSessionUuid: mentoringSessionUuid,
+    });
+
+    const heartbeatInterval = setInterval(async () => {
+      await postHeartbeat({
+        nickname: userData.nickName,
+        mentoringSessionUuid: mentoringSessionUuid,
+      });
+    }, 30000);
 
     return () => {
       clearInterval(heartbeatInterval);
-      // postExitMeeting(mentoringSessionUuid);
-      eventSource.close();
+      postOutChat({
+        nickname: userData.nickName,
+        mentoringSessionUuid: mentoringSessionUuid,
+      });
+      eventSource?.close();
     };
   }, [mentoringSessionUuid]);
 

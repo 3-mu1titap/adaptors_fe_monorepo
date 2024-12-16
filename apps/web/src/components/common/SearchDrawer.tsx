@@ -39,7 +39,6 @@ export function SearchDrawer({
     setValue(term);
     const fetchData = async () => {
       const data = await getSuggestedName(term); // term 전달
-      // console.log(data);
       setSuggestedName(data);
     };
     fetchData();
@@ -47,7 +46,7 @@ export function SearchDrawer({
 
   const routeToSearchPage = () => {
     if (value) {
-      router.push(`/search/${value}`);
+      router.push(`/mentoring?name=${value}&isDirect="true"`);
     }
   };
 
@@ -57,7 +56,7 @@ export function SearchDrawer({
       handleSearch(term);
 
       if (term.trim()) {
-        router.push(`/search/${value}`);
+        router.push(`/mentoring?name=${value}&isDirect="true"`);
       }
     }
   };
@@ -102,7 +101,9 @@ export function SearchDrawer({
                     className={`px-2 py-3 hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40  border-b-[1px] text-md ${item.name === '검색어를 입력해주세요' ? 'border-none text-center text-gray-400' : ''}`}
                     key={index}
                   >
-                    <Link href={`/search/${item.name}?isSuggestName=true`}>
+                    <Link
+                      href={`/mentoring?name=${item.name}&isSuggestName=false`}
+                    >
                       {item.name}
                     </Link>
                   </li>

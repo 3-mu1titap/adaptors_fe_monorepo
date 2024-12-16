@@ -2,14 +2,14 @@ import { MentorBatchData } from '@repo/ui/types/batchDataType/MenterBatchData.ts
 import {
   BestMentorType,
   MentorListType,
-  MentorMentoringListDataType,
 } from '@repo/web/components/types/mentor/mentorType';
+import { Mentoring } from '@repo/web/components/types/mentoring/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
   isMentor: boolean
-) {
+): Promise<Mentoring[]> {
   'use server';
 
   try {
@@ -24,9 +24,7 @@ export async function GetMentorMentoringList(
         },
       }
     );
-    const result = (await res.json()) as commonResType<
-      MentorMentoringListDataType[]
-    >;
+    const result = (await res.json()) as commonResType<Mentoring[]>;
 
     return result.result;
   } catch (error) {
