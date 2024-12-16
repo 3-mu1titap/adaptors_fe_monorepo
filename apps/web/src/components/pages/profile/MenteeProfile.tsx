@@ -31,7 +31,7 @@ export default function MenteeProfile({
 }) {
   const [occupationStatus, setOccupationStatus] = useState('취준생');
   const [educationLevel, setEducationLevel] = useState('대졸');
-  const [age, setAge] = useState<number | ''>('');
+  const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState<'FEMALE' | 'MALE' | 'ATC'>('MALE');
   const [jobExperience, setJobExperience] = useState('');
   const [jobType, setJobType] = useState('');
@@ -45,7 +45,7 @@ export default function MenteeProfile({
     if (
       occupationStatus === '' ||
       educationLevel === '' ||
-      age === '' ||
+      birthDate === '' ||
       jobExperience === '' ||
       jobType === '' ||
       jobApplicationCount === ''
@@ -59,7 +59,7 @@ export default function MenteeProfile({
     const menteeProfile: MenteeProfileRequestType = {
       occupationStatus,
       educationLevel,
-      age: Number(age),
+      birthDate,
       gender,
       jobExperience,
       jobType,
@@ -122,15 +122,14 @@ export default function MenteeProfile({
           </fieldset>
           <fieldset className=" mt-2 space-y-2 flex-1">
             <label className="block text-sm font-medium text-gray-700">
-              출생년도
+              생년월일
             </label>
             <Input
-              name="age"
-              type="number"
-              value={age}
-              onChange={(e) => setAge(Number(e.target.value))}
-              placeholder="ex) 2000"
-              className="custom-div number"
+              name="birthDate"
+              type="date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              className="custom-div"
             />
           </fieldset>
         </div>

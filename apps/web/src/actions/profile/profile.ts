@@ -72,7 +72,6 @@ export const uploadProfileIamge = async ({
   profileImage: string;
   uuid: string;
 }): Promise<any> => {
-  console.log('여기', JSON.stringify({ profileImageUrl: profileImage }));
   const response = await fetch(
     `${process.env.MEMBER_URL}/api/v1/member/profile-image`,
     {
@@ -84,7 +83,7 @@ export const uploadProfileIamge = async ({
       body: JSON.stringify({ profileImageUrl: profileImage }),
     }
   );
-
+  console.log(response);
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.message || '서버로 프로필 등록');

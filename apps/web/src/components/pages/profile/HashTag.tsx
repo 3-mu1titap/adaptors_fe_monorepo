@@ -8,12 +8,10 @@ import useUserStore from '../../../store/uuidStore';
 
 import NextButton from '@repo/web/components/ui/Button/NextButton';
 import CheckboxButton from '../../ui/checkbox/CheckBox';
+import { useRouter } from 'next/navigation';
 
-export default function HashTag({
-  handleButton,
-}: {
-  handleButton: () => void;
-}) {
+export default function HashTag() {
+  const router = useRouter();
   const [tagData, setTagData] = useState<Tag[]>([]);
   const [selectedValues, setSelectedValues] = useState<number[]>([]);
   const { uuid } = useUserStore();
@@ -30,8 +28,10 @@ export default function HashTag({
       hashtagId,
     }));
 
-    await addTagList(uuid, selectedTags);
-    handleButton();
+    const addTag = await addTagList(uuid, selectedTags);
+    if (addTag) {
+      router.push('/login');
+    }
   };
 
   return (
