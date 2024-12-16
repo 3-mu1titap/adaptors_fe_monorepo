@@ -16,8 +16,8 @@ export default async function Page() {
   const session = await getServerSession(options);
   const user = session?.user;
   const userMessageData = await getChattingList();
-  console.log('232323', user.uuid);
   const userData = await getChatProfile({ userUuid: user.uuid });
+  console.log('2323232', userData);
   return (
     <main className="w-full">
       <Message

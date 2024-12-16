@@ -5,7 +5,10 @@ import { MessageCircle } from 'lucide-react';
 import Chatting from '../../chatting/Chatting';
 import ChatSidebar from '../../sidebar/ChatSidebar';
 import { participantType } from '@repo/admin/components/types/main/meeting/meetingTypes';
-import { userMessageCustomDataType } from '@repo/admin/components/types/main/chatting/chattingTypes';
+import {
+  chatMemberDataType,
+  userMessageCustomDataType,
+} from '@repo/admin/components/types/main/chatting/chattingTypes';
 
 export default function Message({
   userMessageData,
@@ -14,7 +17,7 @@ export default function Message({
 }: {
   userMessageData: userMessageCustomDataType[] | null;
   user: any;
-  userData: any;
+  userData: chatMemberDataType;
 }) {
   const [participants, setParticipants] = useState<participantType[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
@@ -49,6 +52,7 @@ export default function Message({
                   key={chatData.id}
                   user={user}
                   mentoringSessionUuid={chatData.id}
+                  userData={userData}
                 />
               );
             }

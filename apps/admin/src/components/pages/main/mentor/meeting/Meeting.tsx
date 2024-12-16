@@ -15,11 +15,12 @@ import MentoringFeedbackForm from '@repo/admin/components/form/MentoringFeedback
 import OvTracks from './OvTracks';
 import OpenviduParticipants from './participants/OpenviduParticipants';
 import Chatting from '../../chatting/Chatting';
+import { chatMemberDataType } from '@repo/admin/components/types/main/chatting/chattingTypes';
 
 interface MeetingProps {
   mentoringSessionList: any[];
   user: any;
-  userData: any;
+  userData: chatMemberDataType;
 }
 
 const Meeting: React.FC<MeetingProps> = ({
@@ -293,7 +294,11 @@ const Meeting: React.FC<MeetingProps> = ({
                       showParticipants ? 'h-[60vh] border-t' : 'h-[89vh]'
                     }
                   >
-                    <Chatting user={user} mentoringSessionUuid={sessionUuid} />
+                    <Chatting
+                      user={user}
+                      mentoringSessionUuid={sessionUuid}
+                      userData={userData}
+                    />
                   </div>
                 )}
               </div>

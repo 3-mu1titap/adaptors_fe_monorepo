@@ -4,26 +4,27 @@ import { useEffect, useRef, useState } from 'react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import {
   chatDataType,
+  chatMemberDataType,
   prevChatResType,
 } from '@repo/admin/components/types/main/chatting/chattingTypes';
 import {
   getChattingData,
   postChat,
   postEnterChat,
+  postOutChat,
 } from '@repo/admin/actions/chatting/chattingAction';
-import {
-  postExitMeeting,
-  postHeartbeat,
-} from '@repo/admin/actions/meeting/meetingAction';
+import { postHeartbeat } from '@repo/admin/actions/meeting/meetingAction';
 import ChatView from './ChatView';
 import ChatSender from './ChatSender';
 
 function Chatting({
   mentoringSessionUuid,
   user,
+  userData,
 }: {
   mentoringSessionUuid: string;
   user: string;
+  userData: chatMemberDataType;
 }) {
   const [messages, setMessages] = useState<chatDataType[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
@@ -116,14 +117,24 @@ function Chatting({
 
   useEffect(() => {
     connectEventSource();
+    postEnterChat({
+      nickname: userData.nickName,
+      mentoringSessionUuid: mentoringSessionUuid,
+    });
 
     const heartbeatInterval = setInterval(async () => {
-      await postHeartbeat(mentoringSessionUuid);
+      await postHeartbeat({
+        nickname: userData.nickName,
+        mentoringSessionUuid: mentoringSessionUuid,
+      });
     }, 30000);
 
     return () => {
       clearInterval(heartbeatInterval);
-      postExitMeeting(mentoringSessionUuid);
+      postOutChat({
+        nickname: userData.nickName,
+        mentoringSessionUuid: mentoringSessionUuid,
+      });
       eventSource?.close();
     };
   }, [mentoringSessionUuid]);

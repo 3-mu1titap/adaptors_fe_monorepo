@@ -198,7 +198,7 @@ export async function getChattingList() {
       },
     }
   );
-
+  console.log('채팅방리스트--------------------------', res);
   if (!res.ok) {
     console.error('세션의 채팅 리스트 조회 실패');
   }

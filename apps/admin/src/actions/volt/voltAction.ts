@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 import { getChatProfile } from '../chatting/chattingAction';
 import { getServerSession } from 'next-auth';
 import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
+import { revalidateTag } from 'next/cache';
 
 // 기간 별 정산 내역 API
 export async function GetSettleList(startDate: string, endDate: string) {
@@ -23,6 +24,7 @@ export async function GetSettleList(startDate: string, endDate: string) {
     {
       cache: 'no-cache',
       method: 'GET',
+      next: { tags: ['updateSettle'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
@@ -53,6 +55,7 @@ export async function GetMentorVolts() {
     {
       cache: 'no-cache',
       method: 'GET',
+      next: { tags: ['updateSettle'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
@@ -99,6 +102,7 @@ export async function PostSettle({ payload }: { payload: settleDataType }) {
     console.error('2차 인증번호 발송 실패');
     return res.ok;
   }
+  revalidateTag('updateSettle');
 
   return res.ok;
 }
