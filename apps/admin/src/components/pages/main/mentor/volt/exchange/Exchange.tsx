@@ -135,7 +135,7 @@ export default function Exchange({
         confirmButtonText: '확인',
         cancelButtonText: '취소',
         confirmButtonColor: '#F6D84C',
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           const payload = {
             mentorUuid: '',
@@ -143,7 +143,18 @@ export default function Exchange({
             account,
             bankCode: selectedBank,
           };
-          const request = PostSettle({ payload });
+          const request = await PostSettle({ payload });
+          if (request) {
+            Swal.fire({
+              title: '정산 완료',
+              html: `${exchangeAmount}Volt 정산이 완료되었습니다.`,
+              icon: 'success',
+              showCancelButton: true,
+              confirmButtonText: '확인',
+              cancelButtonText: '취소',
+              confirmButtonColor: '#F6D84C',
+            });
+          }
           setExchangeAmount('');
           setAccount('');
           setSelectedBank('');
