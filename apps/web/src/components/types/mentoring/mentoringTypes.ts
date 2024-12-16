@@ -68,3 +68,40 @@ export interface Mentoring {
 export interface Result {
   content: Mentoring[];
 }
+
+//세션 참가 resType
+export interface MentoringSession {
+  totalPages: 1;
+  size: 10;
+  content: MentoringContent[];
+  number: 1;
+}
+
+export interface MentoringContent {
+  mentoringName: string;
+  sessionUuid: string;
+  startDate: string;
+  endDate: string;
+  startTime: startTime;
+  endTime: endTime;
+  price: number;
+  maxHeadCount: number;
+  minHeadCount: number;
+  nowHeadCount: number;
+  status: string;
+  updatedAt: string;
+}
+
+export interface startTime {
+  hour: number;
+  minute: number;
+  second: number;
+  nano: number;
+}
+
+export interface endTime {
+  hour: number;
+  minute: number;
+  second: number;
+  nano: number;
+}

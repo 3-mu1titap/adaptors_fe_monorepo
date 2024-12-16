@@ -86,7 +86,6 @@ export async function PaymentApproval(pg_token: string) {
     // console.log(result, 'ggggggggggggggggggggggggggggggg');
     return result.result;
   } catch (error) {
-    // console.log('결제 준비 중', error);
     return null;
   }
 }
