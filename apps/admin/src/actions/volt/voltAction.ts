@@ -24,7 +24,7 @@ export async function GetSettleList(startDate: string, endDate: string) {
     {
       cache: 'no-cache',
       method: 'GET',
-      next: { tags: ['updateSettle'] },
+      next: { tags: ['updateSettleList'] },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
@@ -99,7 +99,7 @@ export async function PostSettle({ payload }: { payload: settleDataType }) {
   });
   console.log(res);
   if (!res.ok) {
-    console.error('2차 인증번호 발송 실패');
+    console.error('정산요청 발송 실패');
     return res.ok;
   }
   revalidateTag('updateSettle');

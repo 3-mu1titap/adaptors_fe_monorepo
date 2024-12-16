@@ -24,7 +24,6 @@ export async function getRecentAlarmData() {
       },
     }
   );
-  console.log(res);
   if (!res.ok) {
     console.error('최신 알람 조회 실패');
     return null;
