@@ -23,7 +23,7 @@ export default function MentorProfileEdit({
     nickName: mentee?.memberRequestDto?.nickName ?? '',
     phoneNumber: mentee?.memberRequestDto?.phoneNumber ?? '',
     gender: mentee?.menteeProfileRequestDto?.gender ?? '',
-    age: mentee?.menteeProfileRequestDto.age ?? 0,
+    age: mentee?.menteeProfileRequestDto?.age ?? 0, // 수정: age 앞에도 ?. 추가
     occupationStatus: mentee?.menteeProfileRequestDto?.occupationStatus ?? '',
     educationLevel: mentee?.menteeProfileRequestDto?.educationLevel ?? '',
     jobExperience: mentee?.menteeProfileRequestDto?.jobExperience ?? '',
@@ -31,6 +31,7 @@ export default function MentorProfileEdit({
     jobApplicationCount:
       mentee?.menteeProfileRequestDto?.jobApplicationCount ?? 0,
   });
+
   const [file, setFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
