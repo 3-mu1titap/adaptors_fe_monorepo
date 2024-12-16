@@ -28,8 +28,8 @@ export interface MenteeProfileEditFormType {
   profileImageUrl: string;
   nickName: string;
   phoneNumber: string;
-  age: number;
   gender: string;
+  age: number;
   occupationStatus: string;
   educationLevel: string;
   jobExperience: string;

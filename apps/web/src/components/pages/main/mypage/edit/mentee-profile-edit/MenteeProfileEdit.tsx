@@ -19,16 +19,17 @@ export default function MentorProfileEdit({
   onUpdate,
 }: MenteeProfileEditProps) {
   const [formData, setFormData] = useState<MenteeProfileEditFormType>({
-    profileImageUrl: mentee.profileImageUrl,
-    nickName: mentee.memberRequestDto.nickName,
-    phoneNumber: mentee.memberRequestDto.phoneNumber,
-    age: mentee.menteeProfileRequestDto.age,
-    gender: mentee.menteeProfileRequestDto.gender,
-    occupationStatus: mentee.menteeProfileRequestDto.occupationStatus,
-    educationLevel: mentee.menteeProfileRequestDto.educationLevel,
-    jobExperience: mentee.menteeProfileRequestDto.jobExperience,
-    jobType: mentee.menteeProfileRequestDto.jobType,
-    jobApplicationCount: mentee.menteeProfileRequestDto.jobApplicationCount,
+    profileImageUrl: mentee?.profileImageUrl ?? '',
+    nickName: mentee?.memberRequestDto?.nickName ?? '',
+    phoneNumber: mentee?.memberRequestDto?.phoneNumber ?? '',
+    gender: mentee?.menteeProfileRequestDto?.gender ?? '',
+    age: mentee?.menteeProfileRequestDto.age ?? 0,
+    occupationStatus: mentee?.menteeProfileRequestDto?.occupationStatus ?? '',
+    educationLevel: mentee?.menteeProfileRequestDto?.educationLevel ?? '',
+    jobExperience: mentee?.menteeProfileRequestDto?.jobExperience ?? '',
+    jobType: mentee?.menteeProfileRequestDto?.jobType ?? '',
+    jobApplicationCount:
+      mentee?.menteeProfileRequestDto?.jobApplicationCount ?? 0,
   });
   const [file, setFile] = useState<File | null>(null);
 
