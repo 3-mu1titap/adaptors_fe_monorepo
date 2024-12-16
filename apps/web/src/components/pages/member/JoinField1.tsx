@@ -43,9 +43,6 @@ export default function Account({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'accountId') {
-      setConfirmButton(false);
-    }
     // 업데이트된 입력값을 반영하고 confirmId를 false로 설정
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -53,7 +50,7 @@ export default function Account({
     validateField(name as keyof accountFormData, value);
 
     // accountId가 변경될 경우 confirmId와 오류 메시지를 관리
-    if (name === 'accountId' && formData.accountId.length >= 5) {
+    if (name === 'accountId') {
       setConfirmId(false);
       setErrors((prevErrors) => ({
         ...prevErrors,

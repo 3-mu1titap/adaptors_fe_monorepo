@@ -26,7 +26,7 @@ export default function JoinFunnel({
   email: string;
 }) {
   const steps = [
-    `account&name=${name}&email=${email}`,
+    `account`,
     'information',
     'profileImage',
     'profile',
@@ -39,11 +39,11 @@ export default function JoinFunnel({
   const [account, serAccountData] = useState<accountFormData>({
     accountId: '',
     password: '',
-    email: email ? email : '',
+    email: email && email !== 'undefined' ? email : '',
     role: 'MENTEE',
   });
   const [information, serinformationData] = useState<informationFormData>({
-    name: name ? name : '',
+    name: name && name !== 'undefined' ? name : '',
     nickName: '',
     phoneNumber: '',
   });
@@ -59,9 +59,13 @@ export default function JoinFunnel({
       ...account,
       ...information,
     };
-    const data = await postUserData(combinedFormData);
-    setUuid(data);
-    onNextStep();
+    const result = await postUserData(combinedFormData);
+    if (result.httpStatus === 'CONFLICT') {
+      alert(`이미 등록된 이메일입니다. 다른 이메일을 등록해주세요.`);
+    } else {
+      setUuid(result.result.uuid);
+      onNextStep();
+    }
   };
 
   const onClickNext = () => {
@@ -79,7 +83,7 @@ export default function JoinFunnel({
       <FunnelLevel level={level} />
       <section className="">
         <Funnel step={step}>
-          <Funnel.Step name={`account&name=${name}&email=${email}`}>
+          <Funnel.Step name={`account`}>
             <Account
               formData={account}
               setFormData={serAccountData}
@@ -88,7 +92,7 @@ export default function JoinFunnel({
               setConfirmId={setConfirmId}
               setConfirmPassword={setConfirmPassword}
               confirmPassword={confirmPassword}
-              handleButtton={onClickNext} //onClickNext
+              handleButtton={onClickNext}
             />
           </Funnel.Step>
           <Funnel.Step name={`information`}>
@@ -97,7 +101,7 @@ export default function JoinFunnel({
               setFormData={serinformationData}
               errors={errors}
               setErrors={setErrors}
-              handleButtton={handleSubmit} //handleSubmit
+              handleButtton={handleSubmit}
             />
           </Funnel.Step>
           <Funnel.Step name="profileImage">

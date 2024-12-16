@@ -38,3 +38,25 @@ export interface BestMentorType {
 export interface MentorListType {
   mentorUuid: string[];
 }
+
+//모든 멘토 조회
+export interface AllMentorPaginationType {
+  content: BestMentorType[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: [];
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: [];
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
