@@ -1,3 +1,4 @@
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 import { GetTodayMentoringSessionList } from '@repo/admin/actions/schedule/scheduleAction';
 import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import Meeting from '@repo/admin/components/pages/main/mentor/meeting/Meeting';
@@ -54,5 +55,12 @@ export default async function Page() {
   // );
   const session = await getServerSession(options);
   const user = session?.user;
-  return <Meeting mentoringSessionList={mentoringSessionList} user={user} />;
+  const userData = await getChatProfile({ userUuid: user.uuid });
+  return (
+    <Meeting
+      mentoringSessionList={mentoringSessionList}
+      user={user}
+      userData={userData}
+    />
+  );
 }

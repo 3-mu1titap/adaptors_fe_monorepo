@@ -1,4 +1,7 @@
-import { getChattingList } from '@repo/admin/actions/chatting/chattingAction';
+import {
+  getChatProfile,
+  getChattingList,
+} from '@repo/admin/actions/chatting/chattingAction';
 import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import Message from '@repo/admin/components/pages/main/mentor/message/Message';
 import { Metadata } from 'next';
@@ -13,9 +16,15 @@ export default async function Page() {
   const session = await getServerSession(options);
   const user = session?.user;
   const userMessageData = await getChattingList();
+  console.log('232323', user.uuid);
+  const userData = await getChatProfile({ userUuid: user.uuid });
   return (
     <main className="w-full">
-      <Message userMessageData={userMessageData} user={user} />
+      <Message
+        userMessageData={userMessageData}
+        user={user}
+        userData={userData}
+      />
     </main>
   );
 }

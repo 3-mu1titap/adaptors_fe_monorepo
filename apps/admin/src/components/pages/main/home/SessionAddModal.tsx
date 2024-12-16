@@ -326,6 +326,7 @@ export function SessionAddModal({
                       handleTimeRangeChange(index, 'price', parseInt(value))
                     }
                     value={range.price.toString()}
+                    required
                   >
                     <SelectTrigger className="col-span-4">
                       <SelectValue placeholder="Select price" />

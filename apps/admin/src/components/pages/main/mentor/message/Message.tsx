@@ -10,9 +10,11 @@ import { userMessageCustomDataType } from '@repo/admin/components/types/main/cha
 export default function Message({
   userMessageData,
   user,
+  userData,
 }: {
   userMessageData: userMessageCustomDataType[] | null;
   user: any;
+  userData: any;
 }) {
   const [participants, setParticipants] = useState<participantType[]>([]);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
@@ -24,6 +26,7 @@ export default function Message({
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}
         userMessageData={userMessageData}
+        userData={userData}
       />
 
       {/* Right Content */}

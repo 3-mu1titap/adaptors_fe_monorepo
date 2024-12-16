@@ -104,7 +104,6 @@ export async function getChatProfile({ userUuid }: { userUuid: string }) {
       },
     }
   );
-
   if (!res.ok) {
     console.error('채팅 상대 프로필 조회 실패');
     return { nickName: '', profileImageUrl: '' };

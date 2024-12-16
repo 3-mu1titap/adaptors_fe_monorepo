@@ -17,7 +17,7 @@ export default async function layout({
   const session = await getServerSession(options);
   const user = session?.user;
   const mentorVoltList: mentorVoltListDataType = await GetMentorVolts();
-  const profileImage = await getChatProfile(user.uuid);
+  const profileImage = await getChatProfile({ userUuid: user.uuid });
   return (
     <SidebarProvider className="overflow-hidden">
       <CommonSidebar />

@@ -19,14 +19,17 @@ import Chatting from '../../chatting/Chatting';
 interface MeetingProps {
   mentoringSessionList: any[];
   user: any;
+  userData: any;
 }
 
-const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
+const Meeting: React.FC<MeetingProps> = ({
+  mentoringSessionList,
+  user,
+  userData,
+}) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
   const [mentoringName, setMentoringName] = useState<string>('');
-  const [myUserName, setMyUserName] = useState<string>(
-    'Participant' + Math.floor(Math.random() * 100)
-  );
+  const [myUserName, setMyUserName] = useState<string>(userData.nickName);
   const [session, setSession] = useState<any>(undefined);
   const [mainStreamManager, setMainStreamManager] = useState<any>(undefined);
   const [publisher, setPublisher] = useState<any>(undefined);
@@ -133,7 +136,6 @@ const Meeting: React.FC<MeetingProps> = ({ mentoringSessionList, user }) => {
     setSession(undefined);
     setSubscribers([]);
     setSessionUuid('');
-    setMyUserName('Participant' + Math.floor(Math.random() * 100));
     setMainStreamManager(undefined);
     setPublisher(undefined);
     setCurrentVideoDevice(undefined);
