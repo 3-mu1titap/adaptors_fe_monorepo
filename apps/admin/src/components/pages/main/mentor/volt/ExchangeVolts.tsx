@@ -100,7 +100,7 @@ export default function ExchangeHistory({
   ).length;
 
   const totalMoney = filteredData.reduce(
-    (sum, record) => sum + record.money,
+    (sum, record) => sum + (record.volt * 100 - record.money),
     0
   );
 
