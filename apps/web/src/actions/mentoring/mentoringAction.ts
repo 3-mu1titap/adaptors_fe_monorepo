@@ -225,7 +225,7 @@ export async function GetPopularMentoringList(
 }
 
 //메인 멘토링 리스트 조회
-export async function getMainMentoringList() {
+export async function getMainMentoringList(): Promise<mainIntroDataType[]> {
   'use server';
   const session = getServerSession(options);
 
@@ -245,6 +245,6 @@ export async function getMainMentoringList() {
     return result.result;
   } catch (error) {
     console.error('error: ', error);
-    return null;
+    return [];
   }
 }

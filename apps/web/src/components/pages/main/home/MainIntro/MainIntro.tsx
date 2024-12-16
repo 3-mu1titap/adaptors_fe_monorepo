@@ -1,5 +1,6 @@
 'use client';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 import { useRef, useState } from 'react';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules'; // Autoplay 모듈 가져오기
@@ -7,7 +8,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper/types';
 import SwiperIndex from './SwiperIndex';
 import SwiperItemLayout from './SwiperItem';
-import { mainIntroDataType } from '@repo/web/components/types/home/homeResponseType';
 export default function MainIntro({
   mainIntroDatas,
 }: {
@@ -25,7 +25,6 @@ export default function MainIntro({
       swiperRef.current.slideToLoop(index);
     }
   };
-
   return (
     <CommonLayout
       type="section"
