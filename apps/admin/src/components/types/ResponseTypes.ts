@@ -1,5 +1,5 @@
 export interface commonResType<T> {
-  HttpStatus: string;
+  httpStatus: string;
   isSuccess: boolean;
   code: number;
   message: string;

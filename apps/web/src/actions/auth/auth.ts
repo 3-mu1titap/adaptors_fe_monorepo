@@ -13,34 +13,30 @@ export async function postUserData(userData: {
   password: string;
   phoneNumber: string;
   role: string;
-}): Promise<string> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_AUTH}api/v1/auth/sign-up`,
-      {
-        cache: 'no-cache',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: userData.name,
-          nickName: userData.nickName,
-          email: userData.email,
-          accountId: userData.accountId,
-          password: userData.password,
-          phoneNumber: userData.phoneNumber,
-          role: userData.role,
-        }),
-      }
-    );
-    const result = (await res.json()) as commonResType<any>;
-    return result.result.uuid;
-  } catch (error) {
-    // console.error('회원가입 에러: ', error);
-    return 'error';
-  }
+}): Promise<commonResType<any>> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_AUTH}api/v1/auth/sign-up`,
+    {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: userData.name,
+        nickName: userData.nickName,
+        email: userData.email,
+        accountId: userData.accountId,
+        password: userData.password,
+        phoneNumber: userData.phoneNumber,
+        role: userData.role,
+      }),
+    }
+  );
+  const result = (await res.json()) as commonResType<any>;
+  return result;
 }
+
 export async function findId(email: string): Promise<string> {
   try {
     const res = await fetch(
