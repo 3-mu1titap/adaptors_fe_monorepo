@@ -20,55 +20,27 @@ async function page() {
 
   return (
     <>
-      <div className="container mx-auto lg:max-w-full md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px] bg-gray-100 h-full relative">
+      <div className="container mx-auto lg:max-w-full md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px] bg-gray-100 h-full">
         <div className="flex flex-col py-8 mt-7 mx-auto lg:max-w-full">
           {/* 볼트 페이지 헤더 */}
           <div className="flex items-center justify-between mb-6">
             <span
-              className="ml-20 text-black font-bold text-4xl"
+              className="ml-10 text-black font-bold text-5xl"
               title="My Volt"
             >
               My Volt
             </span>
           </div>
-
-          <Tabs defaultValue="Charge">
-            {/* Tabs List Positioned in Top-Right */}
-            <div className="absolute top-5 right-8 max-w-[250px] items-center">
-              <TabsList className="shadow-lg bg-gray-300 rounded-md flex space-y-2">
-                <TabsTrigger
-                  className="px-3 py-2 text-lg hover:bg-black hover:text-white rounded-md"
-                  value="Charge"
-                >
-                  Charge
-                </TabsTrigger>
-                <TabsTrigger
-                  className="px-3 py-2 text-lg hover:bg-black hover:text-white rounded-md"
-                  value="ChargeList"
-                >
-                  Charge List
-                </TabsTrigger>
-              </TabsList>
-            </div>
-
-            {/* Tabs Content */}
-            <div className="mt-10 w-full">
-              <TabsContent value="Charge">
-                <VoltCharge points={res?.result || undefined} />
-              </TabsContent>
-              <TabsContent value="ChargeList">
-                <ul className="flex flex-col underline-offset-1 gap-y-4 h-auto">
-                  {(data && (
-                    <VoltUsageList
-                      total={data?.result.totalPage}
-                      item={data.result.paymentResponseDtoList}
-                    />
-                  )) ||
-                    null}
-                </ul>
-              </TabsContent>
-            </div>
-          </Tabs>
+          <VoltCharge points={res?.result || 0} />
+          <ul className="flex flex-col underline-offset-1 gap-y-4 h-auto">
+            {(data && (
+              <VoltUsageList
+                total={data?.result.totalPage}
+                item={data.result.paymentResponseDtoList}
+              />
+            )) ||
+              null}
+          </ul>
         </div>
       </div>
     </>

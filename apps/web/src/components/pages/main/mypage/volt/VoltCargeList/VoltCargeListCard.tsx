@@ -12,11 +12,20 @@ function VoltCargeListCard({ item }: { item: any }) {
   };
 
   return (
-    <li className="flex w-full py-5 ml-3 gap-x-4 text-black border-b-2 border-gray-200">
-      <span className="text-black font-bold text-xl">
+    <li className="flex items-center justify-between w-full py-4 px-6 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+      <div className="flex flex-col">
+        <span className="text-sm text-gray-500">날짜</span>
         {formatDate(item.date)}
-      </span>
-      <span className="text-black font-bold text-xl">{item.point}</span>
+      </div>
+      <div className="flex flex-col items-end">
+        <span className="text-sm text-gray-500">볼트</span>
+        <span
+          className={`text-lg font-bold ${item.point >= 0 ? 'text-green-600' : 'text-red-600'}`}
+        >
+          {item.point >= 0 ? '+' : ''}
+          {item.point.toLocaleString()}
+        </span>
+      </div>
     </li>
   );
 }

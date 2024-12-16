@@ -30,7 +30,7 @@ function VoltUsageList({
 
   return (
     <>
-      <div className="flex flex-col min-w-[64rem] mx-auto mt-10">
+      <div className="flex flex-col mt-10 mx-4">
         {PaymentList && PaymentList ? (
           <>
             <ul className="flex flex-col bg-white gap-y-3 rounded-xl">
