@@ -41,7 +41,6 @@ export const options: NextAuthOptions = {
             }
           );
           const data = await res.json();
-          console.log('전체응답', data);
 
           // 백엔드 응답 구조에 맞게 조건 수정
           if (data.isSuccess && data.result) {
