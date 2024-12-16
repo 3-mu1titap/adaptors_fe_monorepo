@@ -43,7 +43,9 @@ export default function Account({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
+    if (name === 'accountId') {
+      setConfirmButton(false);
+    }
     // 업데이트된 입력값을 반영하고 confirmId를 false로 설정
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -70,20 +72,23 @@ export default function Account({
   const checkDuplicate = async (field: 'accountId' | 'email') => {
     if (
       errors.accountId === '아이디 중복 검사가 필요합니다' ||
-      errors.accountId === ''
+      errors.accountId === '' ||
+      errors.accountId === undefined
     ) {
       try {
-        const data = await checkAccountId(formData.accountId);
-        if (data === 2011) {
-          setErrors((prev) => ({
-            ...prev,
-            [field]: `해당 아이디가 이미 사용중입니다.`,
-          }));
-        } else if (data === 200) {
-          setConfirmId(true);
-          setConfirmButton(true);
-          // toast.success('사용 가능한 아이디입니다.');
-          setErrors((prev) => ({ ...prev, accountId: '' }));
+        if (formData.accountId) {
+          const data = await checkAccountId(formData.accountId);
+          if (data === 2011) {
+            setErrors((prev) => ({
+              ...prev,
+              [field]: `해당 아이디가 이미 사용중입니다.`,
+            }));
+          } else if (data === 200) {
+            setConfirmId(true);
+            setConfirmButton(true);
+            // toast.success('사용 가능한 아이디입니다.');
+            setErrors((prev) => ({ ...prev, accountId: '' }));
+          }
         }
       } catch (error) {
         console.error('중복 검사 오류:', error);
