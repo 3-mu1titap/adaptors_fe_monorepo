@@ -111,7 +111,7 @@ export default function JoinFunnel({
             )}
           </Funnel.Step>
           <Funnel.Step name="hashTag">
-            <HashTag handleButton={onNextStep} />
+            <HashTag />
           </Funnel.Step>
         </Funnel>
       </section>

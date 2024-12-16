@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AlarmType } from '../types/alarm/alarmTypes';
 import { getRecentAlarmData } from '@repo/admin/actions/alram/alramAction';
 import { BellIcon } from 'lucide-react';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 function AdaptorsAlarm({ user }: { user: any }) {
   const [recentAlarm, setRecentAlarm] = useState<AlarmType | null>(null);
@@ -13,22 +14,25 @@ function AdaptorsAlarm({ user }: { user: any }) {
 
   const connectEventSource = () => {
     const alarmUrl = `${process.env.NEXT_PUBLIC_ALARM_URL}/api/v1/alarm-service/alarms/connect?userUuid=${user.uuid}`;
-    const source = new EventSource(alarmUrl);
+    const EventSource = EventSourcePolyfill || NativeEventSource;
+    const eventSource = new EventSource(alarmUrl, {
+      heartbeatTimeout: 86400000,
+    });
 
-    source.onopen = () => {
+    eventSource.onopen = () => {
       console.log('alarm 연결 완료');
     };
 
-    source.onmessage = (event) => {
-      console.log(event);
+    eventSource.onmessage = (event) => {
+      console.log(event.data);
     };
 
-    source.onerror = (error) => {
-      source.close();
+    eventSource.onerror = (error) => {
+      eventSource.close();
       connectEventSource();
     };
 
-    setEventSource(source);
+    setEventSource(eventSource);
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 export interface MenteeProfileRequestType {
   occupationStatus: string;
   educationLevel: string;
-  age: number;
+  birthDate: string;
   gender: 'FEMALE' | 'MALE' | 'ATC';
   jobExperience: string;
   jobType: string;
