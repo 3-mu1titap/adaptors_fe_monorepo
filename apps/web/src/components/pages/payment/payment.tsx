@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { PaymentReq } from 'src/actions/payment/paymentActions';
 import TextTitleSection from '../main/mypage/compoent/TextTitleSection';
+
 function Payment() {
   const BoltItem = [
     { id: 0, itemName: 'Volt', count: 10, price: 1000 },
@@ -35,27 +36,35 @@ function Payment() {
 
   const handleItemSelect = (item: BoltItem) => {
     if (selectedItem?.id !== item.id) {
-      setQuantity(0);
-      setTotalCount(0);
-      setTotalMoney(0);
+      setQuantity(0); // 선택 시 개수 초기화
+      setTotalCount(0); // 총 수량 초기화
+      setTotalMoney(0); // 총 금액 초기화
     }
     setSelectedItem(item);
   };
 
   const decreaseCount = () => {
-    if (Quantity > 0) {
-      setQuantity(Quantity - 10);
+    if (selectedItem && Quantity > 0) {
+      setQuantity(Quantity - 1); // 1씩 감소
+      setTotalCount(totalCount - (selectedItem?.count || 0)); // 총 수량은 아이템 카운터 개수만큼 감소
     }
   };
 
   const IncreaseCount = () => {
-    setQuantity(Quantity + 10);
+    if (selectedItem) {
+      setQuantity(Quantity + 1); // 1씩 증가
+      setTotalCount(totalCount + selectedItem.count); // 총 수량은 아이템 카운터 개수만큼 증가
+    }
   };
 
   useEffect(() => {
-    setTotalCount(Quantity + (selectedItem?.count || 0));
-    setTotalMoney(totalCount * 100);
-  }, [Quantity, selectedItem, totalCount, pgToken]);
+    if (selectedItem) {
+      setTotalMoney(totalCount * selectedItem.price); // 총 금액 계산
+    } else {
+      setTotalCount(0);
+      setTotalMoney(0);
+    }
+  }, [Quantity, selectedItem, totalCount]);
 
   const cid = 'TC0ONETIME';
   const partnerOrderId = 'string';
@@ -131,6 +140,7 @@ function Payment() {
         <CardFooter className="flex flex-col ">
           <div className="flex justify-between items-center space-x-10 mb-6">
             <span className="text-lg font-semibold">총 결제 금액:</span>
+
             <span className="text-2xl font-bold text-green-600">
               {selectedItem ? totalMoney.toLocaleString() : '0'}원
             </span>

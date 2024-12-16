@@ -31,7 +31,7 @@ async function page() {
             My Volt
           </span>
           <Tabs defaultValue="Charge">
-            <TabsList className="shadow-2xl">
+            <TabsList className="shadow-2xl bg-gray-300">
               <TabsTrigger className="hover:bg-black" value="Charge">
                 Charge
               </TabsTrigger>
