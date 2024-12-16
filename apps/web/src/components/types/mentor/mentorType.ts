@@ -1,11 +1,13 @@
 export interface MentorMentoringListDataType {
-  length: number;
   mentoringUuid: string;
+  reviewCount: number | null;
+  averageStar: number | null;
+  totalSaleCount: number | null;
   name: string;
   description: string;
   thumbnailUrl: string;
-  inAvailable: boolean;
-  nowSessionCount: number;
+  isAvailable: boolean;
+  nowSessionCount: number | null;
 }
 
 export interface ContentOnlyResType {
