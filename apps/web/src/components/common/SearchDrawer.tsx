@@ -26,6 +26,7 @@ export function SearchDrawer({
   openCloser: () => void;
 }) {
   const [value, setValue] = useState('');
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
     { name: '검색어를 입력해주세요' },
   ]);
@@ -44,20 +45,33 @@ export function SearchDrawer({
     fetchData();
   }, 300);
 
-  const routeToSearchPage = () => {
-    if (value) {
-      router.push(`/mentoring?name=${value}&isDirect="true"`);
+  const routeToSearchPage = async (searchValue: string, isDirect: boolean) => {
+    if (searchValue) {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
+      router.push(`/mentoring?name=${searchValue}&isDirect=${isDirect}`);
+      openCloser();
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const term = (e.target as HTMLInputElement).value;
-      handleSearch(term);
-
-      if (term.trim()) {
-        router.push(`/mentoring?name=${value}&isDirect="true"`);
+      if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {
+        await routeToSearchPage(suggestedName[focusedIndex].name, false); // 추천 검색
+      } else {
+        await routeToSearchPage(value, true); // 직접 입력
       }
+    } else if (e.key === 'ArrowDown') {
+      setFocusedIndex((prevIndex) =>
+        prevIndex === null
+          ? 0
+          : Math.min(prevIndex + 1, suggestedName.length - 1)
+      );
+    } else if (e.key === 'ArrowUp') {
+      setFocusedIndex((prevIndex) =>
+        prevIndex === null
+          ? suggestedName.length - 1
+          : Math.max(prevIndex - 1, 0)
+      );
     }
   };
 
@@ -90,7 +104,7 @@ export function SearchDrawer({
               color="#A09F9F"
               size={18}
               strokeWidth={1}
-              onClick={routeToSearchPage}
+              onClick={() => routeToSearchPage(value, true)}
             />
           </div>
           {suggestedName && (
@@ -98,18 +112,31 @@ export function SearchDrawer({
               {Array.isArray(suggestedName) ? (
                 suggestedName.map((item, index) => (
                   <li
-                    className={`px-2 py-3 hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40  border-b-[1px] text-md ${item.name === '검색어를 입력해주세요' ? 'border-none text-center text-gray-400' : ''}`}
+                    className={`px-2 py-3 ${
+                      focusedIndex === index
+                        ? 'bg-yellow-100' // Highlight focused suggestion
+                        : ''
+                    } ${
+                      item.name === '검색어를 입력해주세요'
+                        ? 'text-center text-gray-400 hover:bg-yellow-100 cursor-default'
+                        : ' cursor-pointer hover:bg-yellow-100 border-b-[1px]'
+                    } text-md`}
                     key={index}
+                    onMouseEnter={() => setFocusedIndex(index)}
+                    onClick={async () => {
+                      setValue(item.name); // 상태 업데이트
+                      router.push(
+                        `/mentoring?name=${item.name}&isDirect=false`
+                      ); // name 직접 사용
+                      router.refresh();
+                      openCloser();
+                    }}
                   >
-                    <Link
-                      href={`/mentoring?name=${item.name}&isSuggestName=false`}
-                    >
-                      {item.name}
-                    </Link>
+                    {item.name}
                   </li>
                 ))
               ) : (
-                <li></li>
+                <li className="text-center text-gray-400 hover:bg-transparent cursor-default"></li>
               )}
             </ul>
           )}
