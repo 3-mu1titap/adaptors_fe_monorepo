@@ -26,13 +26,23 @@ async function page() {
   // console.log(MentorLikeData, 'fffffffffffffffffff');
   return (
     <>
-      <section className="mt-1 py-4 container mx-auto lg:max-w-[64rem] md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px]">
-        <span className="mt-4 ml-4 text-2xl text-black font-bold">
+      <section className="mt-1 py-4 h-screen overflow-y-auto container mx-auto lg:max-w-[64rem] md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px]">
+        <span className="block mt-36 sm:mt-32 md:mt-16 ml-4 text-2xl text-black font-bold">
           나의 관심목록
         </span>
 
         <div className="mt-8">
-          {MentorLikeData && <LikePage like={MentorLikeData} />}
+          {MentorLikeData && MentorLikeData ? (
+            <>
+              <LikePage like={MentorLikeData} />
+            </>
+          ) : (
+            <div className="flex flex-col">
+              <span className="text-gray-200 text-md">
+                등록된 관심멘토가 없습니다..
+              </span>
+            </div>
+          )}
         </div>
       </section>
     </>

@@ -6,7 +6,7 @@ import { useSession } from 'src/app/context/SessionContext';
 function LikePage({ like }: { like: BestMentorType[] }) {
   const session = useSession();
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-10">
       <ul className="grid lg:grid-cols-4 md:grid-cols-2 mobile:grid-col-1">
         {like && like ? (
           like.map((item, index) => (
