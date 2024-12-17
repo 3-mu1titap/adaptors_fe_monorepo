@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const mentoringSessionList = [
   {
     mentoringName: '프로그래밍 기초 멘토링',
-    sessionUuid: 'fbf87538-8a38-4535-8442-a2bd62a9bc86',
+    sessionUuid: '5aca9a86-8838-48f1-9960-ffabdec746b9',
     startDate: '2024-12-04',
     endDate: '2024-12-04',
     startTime: {
@@ -31,7 +31,7 @@ const mentoringSessionList = [
   },
   {
     mentoringName: '파이썬 기초 멘토링',
-    sessionUuid: 'f8be5e98-e4c6-4900-a901-3123711b9c83',
+    sessionUuid: '9a694242-d00b-43b6-bf90-61007f601ac5',
     startDate: '2024-12-04',
     endDate: '2024-12-04',
     startTime: {
