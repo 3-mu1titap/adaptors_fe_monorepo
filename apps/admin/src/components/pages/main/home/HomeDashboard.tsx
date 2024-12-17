@@ -1,13 +1,13 @@
 'use client';
 
+import { PostMentoringSession } from '@repo/admin/actions/mentoring/mentoringAction';
+import { userProfileType } from '@repo/admin/actions/profile/getProfileData';
 import { SeparateContainer } from '@repo/admin/components/common/layouts/SeperateContainer';
 import { Button } from '@repo/ui/components/ui/button';
 import {
-  CustomButton,
   CustomLikeButton,
   CustomMentorDescription,
   CustomMentorProfilePhoto,
-  CustomNowDate,
   CustomReviewerItem,
   CustomSessionInfoTags,
   CustomSessionList,
@@ -18,18 +18,17 @@ import type {
   MentoringResult,
   SessionUser,
 } from '@repo/ui/types/CommonType.ts';
-import Link from 'next/link';
-import { MentoringSession, SessionAddModal } from './SessionAddModal';
-import { useState } from 'react';
-import { PostMentoringSession } from '@repo/admin/actions/mentoring/mentoringAction';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { MentoringSession, SessionAddModal } from './SessionAddModal';
 
 interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
   initialUserData: SessionUser[];
   mentoringUuid?: string;
+  user: userProfileType;
 }
 
 function HomeDashboard({
@@ -37,6 +36,7 @@ function HomeDashboard({
   MentoringInfoData,
   initialUserData,
   mentoringUuid,
+  user,
 }: HomeDashboardProps) {
   const router = useRouter();
 
@@ -90,19 +90,40 @@ function HomeDashboard({
       });
     }
   };
-
+  const review = [
+    {
+      nickName: '389d459sssc8f21',
+      menteeImageUrl:
+        'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732604594876-mentor1.png',
+    },
+    {
+      nickName: '389d45sd9c8f21',
+      menteeImageUrl:
+        'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732604612614-mentor2.png',
+    },
+    {
+      nickName: '389d459c8f21',
+      menteeImageUrl:
+        'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732600873312-image.png',
+    },
+    {
+      nickName: '389d459dsc8f21',
+      menteeImageUrl:
+        'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1732604552880-mentee2.png',
+    },
+  ];
   return (
     <>
       <SeparateContainer.LeftSide>
-        <CustomMentorProfilePhoto profileImgUrl="https://i.pinimg.com/736x/6d/98/bd/6d98bd0a456e85177d8fbd65a54be284.jpg" />
-        <h1 className="text-xl font-bold my-3">@ Mentor</h1>
+        <CustomMentorProfilePhoto profileImgUrl={user.profileImageUrl} />
+        <h1 className="text-xl font-bold my-3">@ {user.nickName}</h1>
         <div className="flex justify-between items-center w-full mb-3 gap-3">
           <CustomReviewerItem
-            initialUserData={initialUserData}
+            initialUserData={review}
             userCount={10}
             reviewCount={293938}
           />
-          <CustomLikeButton count={200823} />
+          <CustomLikeButton count={2823} className="mr-12" />
         </div>
         <CustomShareButton />
         {/* <CustomNowDate /> */}

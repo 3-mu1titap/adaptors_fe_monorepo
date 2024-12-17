@@ -10,12 +10,13 @@ function CustomReviewerItem({
   reviewCount = 0,
   text = 'Reviews',
 }: {
-  initialUserData?: SessionUser[];
+  initialUserData: SessionUser[];
   className?: string;
   userCount?: number;
   reviewCount?: number;
   text?: string;
 }) {
+  console.log(initialUserData);
   // if (!initialUserData||!initialUserData[0].userImageUrl) return;
   return (
     <div className={`flex justify-start items-center ${className}`}>
