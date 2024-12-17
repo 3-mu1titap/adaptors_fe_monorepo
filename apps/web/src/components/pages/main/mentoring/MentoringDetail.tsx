@@ -3,6 +3,7 @@ import { MentorBatchData } from '@repo/ui/types/batchDataType/MenterBatchData.ts
 import {
   MentoringDataType,
   MentoringResult,
+  SessionUser,
 } from '@repo/ui/types/CommonType.ts';
 import { Review, ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
@@ -31,22 +32,22 @@ export default function MentoringDetail({
   isCheck: boolean;
   MentorBatchData: MentorBatchData | null;
 }) {
-  const userData: ReviewerProfileType[] = [
+  const userData: SessionUser[] = [
     {
-      nickname: '389d459sssc8f21',
-      userImageUrl: 'https://picsum.photos/200/200?random=14',
+      nickName: 'asd',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=14',
     },
     {
-      nickname: '389d45sd9c8f21',
-      userImageUrl: 'https://picsum.photos/200/200?random=23',
+      nickName: '389d45sd9c8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=23',
     },
     {
-      nickname: '389d459c8f21',
-      userImageUrl: 'https://picsum.photos/200/200?random=56',
+      nickName: '389d459c8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=56',
     },
     {
-      nickname: '389d459dsc8f21',
-      userImageUrl: 'https://picsum.photos/200/200?random=78',
+      nickName: '389d459dsc8f21',
+      menteeImageUrl: 'https://picsum.photos/200/200?random=78',
     },
   ];
   const filteredList: MentoringResult[] = mentoringDate
@@ -64,7 +65,7 @@ export default function MentoringDetail({
         MentoringInfoData={MentoringInfoData}
         mentoringSessionList={mentoringSessionList}
         mentorData={mentorData}
-        ReviewerData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
+        ReviewerData={userData}
         totalLikeCount={MentorBatchData?.totalLikeCount}
         totalReviewCount={MentorBatchData?.totalReviewCount}
       />
@@ -73,7 +74,7 @@ export default function MentoringDetail({
         {MentoringInfoData && (
           <MentoringOverview
             MentoringInfoData={MentoringInfoData}
-            userData={ReviewerData[0]?.userImageUrl ? ReviewerData : userData}
+            userData={userData}
           />
         )}
         <MentoringContents content={MentoringInfoData.detail} />

@@ -9,8 +9,8 @@ import useIsMobile from '@repo/ui/hooks/use-mobile.tsx';
 import {
   MentoringDataType,
   MentoringResult,
+  SessionUser,
 } from '@repo/ui/types/CommonType.ts';
-import { ReviewerProfileType } from '@repo/ui/types/ReviewType.js';
 import { postLikeReaction } from '@repo/web/actions/Like/like';
 import { userProfileType } from '@repo/web/components/types/profile/RequestType';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ export default function MentorSection({
   MentoringInfoData: MentoringDataType;
   mentoringSessionList: MentoringResult[];
   mentorData: userProfileType;
-  ReviewerData: ReviewerProfileType[];
+  ReviewerData: SessionUser[];
   isCheck: boolean;
   totalLikeCount?: number;
   totalReviewCount?: number;
@@ -55,7 +55,7 @@ export default function MentorSection({
             >
               @ {mentorData.nickName}
             </Link>
-            <div className="flex justify-between items-center w-full mb-3 gap-3">
+            <div className="flex mt-2 justify-between items-center w-full mb-3 gap-3">
               <CustomReviewerItem
                 initialUserData={ReviewerData}
                 userCount={MentoringInfoData?.totalReviewCount ?? null}
