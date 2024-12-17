@@ -28,7 +28,7 @@ function CustomReviewerItem({
             <UserProfile
               profileImgUrl={initialUserData[idx].menteeImageUrl}
               size={40}
-              name={user.nick ? user.nick : ''}
+              name={user.nickName ? user.nickName : ''}
               className={`mr-[-1.2rem] border-[2px] border-white ring-none`}
             />
           </li>

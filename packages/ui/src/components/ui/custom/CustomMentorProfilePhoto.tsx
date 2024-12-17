@@ -17,7 +17,7 @@ function CustomMentorProfilePhoto({
       {mentorUuid ? (
         <Link
           href={`/mentor/${mentorUuid}`}
-          className="aspect-square overflow-hidden rounded-xl w-[80%] sm:w-full mx-auto"
+          className="aspect-square overflow-hidden rounded-xl w-[80%] sm:w-full mx-auto mb-3"
         >
           <CustomFitImage
             src={profileImgUrl}

@@ -1,7 +1,6 @@
 import CustomReviewerItem from '@repo/ui/components/ui/custom/CustomReviewerItem';
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
-import { MentoringDataType } from '@repo/ui/types/CommonType.ts';
-import { ReviewerProfileType } from '@repo/ui/types/ReviewType.ts';
+import { MentoringDataType, SessionUser } from '@repo/ui/types/CommonType.ts';
 import FitImage from '@repo/web/components/ui/image/fit-image';
 import { BadgeDollarSign, MessageSquareCode } from 'lucide-react';
 
@@ -10,7 +9,7 @@ export default function MentoringOverview({
   userData,
 }: {
   MentoringInfoData: MentoringDataType;
-  userData: ReviewerProfileType[];
+  userData: SessionUser[];
 }) {
   const SessionInfo = [
     {

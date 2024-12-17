@@ -1,3 +1,4 @@
+import { userProfileType } from '@repo/admin/actions/profile/getProfileData';
 import {
   CustomReviewerItem,
   CustomToolTip,
@@ -13,6 +14,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@repo/ui/components/ui/dropdown';
+import { SessionUser } from '@repo/ui/types/CommonType.js';
 import {
   CreditCard,
   Keyboard,
@@ -20,27 +22,26 @@ import {
   User,
   Wallet2Icon,
 } from 'lucide-react';
-import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
 import AdaptorsAlarm from '../alarm/AdaptorsAlarm';
 import AdaptorsAlarmHeader from '../alarm/AdaptorsAlarmHeader';
-import { userProfileType } from '@repo/admin/actions/profile/getProfileData';
+import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
 
-const initialUserData = [
+const initialUserData: SessionUser[] = [
   {
-    nick: '389d459sssc8f21',
-    userImageUrl: 'https://picsum.photos/200/200?random=14',
+    nickName: '389d459sssc8f21',
+    menteeImageUrl: 'https://picsum.photos/200/200?random=14',
   },
   {
-    nick: '389d45sd9c8f21',
-    userImageUrl: 'https://picsum.photos/200/200?random=23',
+    nickName: '389d45sd9c8f21',
+    menteeImageUrl: 'https://picsum.photos/200/200?random=23',
   },
   {
-    nick: '389d459c8f21',
-    userImageUrl: 'https://picsum.photos/200/200?random=56',
+    nickName: '389d459c8f21',
+    menteeImageUrl: 'https://picsum.photos/200/200?random=56',
   },
   {
-    nick: '389d459dsc8f21',
-    userImageUrl: 'https://picsum.photos/200/200?random=78',
+    nickName: '389d459dsc8f21',
+    menteeImageUrl: 'https://picsum.photos/200/200?random=78',
   },
 ];
 
