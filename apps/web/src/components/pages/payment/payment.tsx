@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { PaymentReq } from 'src/actions/payment/paymentActions';
 import TextTitleSection from '../main/mypage/compoent/TextTitleSection';
+
 function Payment() {
   const BoltItem = [
     { id: 0, itemName: 'Volt', count: 10, price: 1000 },
@@ -30,32 +31,35 @@ function Payment() {
   const [Quantity, setQuantity] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
-  const [Res, setRes] = useState<PaymentReadyResType | undefined>();
-  const [pgToken, setPgToken] = useState('');
 
   const handleItemSelect = (item: BoltItem) => {
-    if (selectedItem?.id !== item.id) {
-      setQuantity(0);
-      setTotalCount(0);
-      setTotalMoney(0);
-    }
     setSelectedItem(item);
+    setQuantity(1); // 기본 수량을 1로 설정
+    setTotalCount(item.count); // 기본 총수량 설정
+    setTotalMoney(item.price); // 기본 결제 금액 설정
   };
 
   const decreaseCount = () => {
-    if (Quantity > 0) {
-      setQuantity(Quantity - 10);
+    if (Quantity > 1 && selectedItem) {
+      setQuantity(Quantity - 1); // 수량 감소
+      setTotalCount(totalCount - selectedItem.count); // 총 수량 감소
     }
   };
 
   const IncreaseCount = () => {
-    setQuantity(Quantity + 10);
+    if (selectedItem) {
+      setQuantity(Quantity + 1); // 수량 증가
+      setTotalCount(totalCount + selectedItem.count); // 총 수량 증가
+    }
   };
 
   useEffect(() => {
-    setTotalCount(Quantity + (selectedItem?.count || 0));
-    setTotalMoney(totalCount * 100);
-  }, [Quantity, selectedItem, totalCount, pgToken]);
+    if (selectedItem) {
+      setTotalMoney(Quantity * selectedItem.price); // 총 결제 금액 업데이트
+    } else {
+      setTotalMoney(0);
+    }
+  }, [Quantity, selectedItem]);
 
   const cid = 'TC0ONETIME';
   const partnerOrderId = 'string';
@@ -63,8 +67,8 @@ function Payment() {
   const quantity = totalCount || 0;
   const totalAmount = totalMoney || 0;
   const taxFreeAmount = 0;
-  const approvalUrl = 'https://www.adaptors.site/payment/payment-confirm';
-  const failUrl = 'https://www.adaptors.site/mypage/payment/payment-fail';
+  const approvalUrl = 'https://www.adaptors.site//payment/payment-confirm';
+  const failUrl = 'https://www.adaptors.site/payment-fail';
   const cancelUrl = 'https://www.adaptors.site/mypage/payment/payment-cancel';
 
   const Paymenthandle = async () => {
@@ -104,35 +108,52 @@ function Payment() {
                 key={item.id}
                 onClick={() => handleItemSelect(item)}
                 variant={selectedItem?.id === item.id ? 'default' : 'outline'}
-                className={`w-full hover:bg-blue-500 ${selectedItem?.id === item.id ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
+                className={`w-full hover:bg-blue-500 ${
+                  selectedItem?.id === item.id
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-black'
+                }`}
               >
                 {item.count}개 ({item.price.toLocaleString()}원)
               </Button>
             ))}
           </div>
           {selectedItem && (
-            <div className="flex justify-between mt-6 items-center">
-              <div className="flex items-center p-4 justify-start space-x-1">
-                <button onClick={decreaseCount} className="border border-black">
-                  {'<'}
-                </button>
-                <span className="text-black text-2xl">{Quantity}</span>
-                <button onClick={IncreaseCount} className="border border-black">
-                  {'>'}
-                </button>
+            <>
+              <span className="text-sm text-black">
+                * 수량이 증가 할때마다 선택한 볼트의 개수만큼 결제금액이
+                늘어납니다.!
+              </span>
+              <div className="flex justify-between mt-6 items-center">
+                <div className="flex items-center p-4 justify-start space-x-1">
+                  <button
+                    onClick={decreaseCount}
+                    className="border border-black"
+                  >
+                    {'<'}
+                  </button>
+                  <span className="text-black text-2xl">{Quantity}</span>
+                  <button
+                    onClick={IncreaseCount}
+                    className="border border-black"
+                  >
+                    {'>'}
+                  </button>
+                </div>
+                <div className="flex justify-end">
+                  <span className="font-bold text-black">총 수량</span>
+                  <span>: {totalCount}</span>
+                </div>
               </div>
-              <div className="flex justify-end">
-                <span className="font bold text-black">총 개수</span>
-                <span>: {totalCount}</span>
-              </div>
-            </div>
+            </>
           )}
         </CardContent>
         <CardFooter className="flex flex-col ">
           <div className="flex justify-between items-center space-x-10 mb-6">
             <span className="text-lg font-semibold">총 결제 금액:</span>
+
             <span className="text-2xl font-bold text-green-600">
-              {selectedItem ? totalMoney.toLocaleString() : '0'}원
+              {totalMoney.toLocaleString()}원
             </span>
           </div>
           <div>

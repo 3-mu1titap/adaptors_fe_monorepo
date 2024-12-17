@@ -1,11 +1,13 @@
 export interface MentorMentoringListDataType {
-  length: number;
   mentoringUuid: string;
+  reviewCount: number | null;
+  averageStar: number | null;
+  totalSaleCount: number | null;
   name: string;
   description: string;
   thumbnailUrl: string;
-  inAvailable: boolean;
-  nowSessionCount: number;
+  isAvailable: boolean;
+  nowSessionCount: number | null;
 }
 
 export interface ContentOnlyResType {
@@ -35,4 +37,26 @@ export interface BestMentorType {
 //모든 멘토 조회 res
 export interface MentorListType {
   mentorUuid: string[];
+}
+
+//모든 멘토 조회
+export interface AllMentorPaginationType {
+  content: BestMentorType[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: [];
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: [];
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
 }

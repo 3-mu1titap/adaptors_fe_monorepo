@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { options } from '../../api/auth/[...nextauth]/options';
 import MenteeMeeting from '@repo/admin/components/pages/main/mentor/meeting/MenteeMeeting';
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 
 export const metadata: Metadata = {
   title: `Mentoring Meeting`,
@@ -50,9 +51,14 @@ const mentoringSessionList = [
 export default async function page() {
   const session = await getServerSession(options);
   const user = session?.user;
+  const userData = await getChatProfile({ userUuid: user.uuid });
   return (
     <main className="w-[100vw] h=[100vh] mx-auto">
-      <MenteeMeeting mentoringSessionList={mentoringSessionList} user={user} />
+      <MenteeMeeting
+        mentoringSessionList={mentoringSessionList}
+        user={user}
+        userData={userData}
+      />
     </main>
   );
 }

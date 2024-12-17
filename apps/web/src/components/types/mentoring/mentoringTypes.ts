@@ -68,3 +68,39 @@ export interface Mentoring {
 export interface Result {
   content: Mentoring[];
 }
+
+//세션 참가 resType
+export interface MentoringSession {
+  totalPages: 1;
+  size: 10;
+  content: MentoringSessionContent[];
+  number: 1;
+}
+
+export interface MentoringSessionContent {
+  mentoringName: string;
+  sessionUuid: string;
+  startDate: string;
+  endDate: string;
+  startTime: startTime;
+  endTime: endTime;
+  price: number;
+  maxHeadCount: number | 0;
+  minHeadCount: number | 0;
+  nowHeadCount: number | 0;
+  status: string;
+  updatedAt: string;
+}
+export interface startTime {
+  hour?: number; // undefined 허용
+  minute?: number;
+  second?: number;
+  nano?: number;
+}
+
+export interface endTime {
+  hour?: number;
+  minute?: number;
+  second?: number;
+  nano?: number;
+}

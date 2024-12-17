@@ -1,7 +1,7 @@
 'use server';
 
 export interface Tag {
-  name: string;
+  hashtagName: string;
   hashtagId: number;
 }
 
@@ -32,7 +32,6 @@ export const getTagList = async (): Promise<any> => {
       },
     }
   );
-
   // 서버 응답 처리
   if (!response.ok) {
     const errorData = await response.json();
@@ -41,7 +40,7 @@ export const getTagList = async (): Promise<any> => {
 
   // 서버에서 받은 데이터 반환
   const data = await response.json();
-  return data;
+  return data.result;
 };
 
 export const addTagList = async (
@@ -50,7 +49,7 @@ export const addTagList = async (
 ): Promise<any> => {
   'use server';
   const response = await fetch(
-    `${process.env.HASHTAG_URL}/api/v1/admin/hashtag`,
+    `${process.env.MEMBER_URL}/api/v1/member/hashtag`,
     {
       method: 'POST',
       headers: {
@@ -61,8 +60,6 @@ export const addTagList = async (
     }
   );
 
-  // console.log(JSON.stringify(hashtags));
-
   // 서버 응답 처리
   if (!response.ok) {
     const errorData = await response.json();
@@ -71,5 +68,5 @@ export const addTagList = async (
 
   // 서버에서 받은 데이터 반환
   const data = await response.json();
-  return data;
+  return data.isSuccess;
 };

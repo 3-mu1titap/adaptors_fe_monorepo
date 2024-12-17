@@ -36,7 +36,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-2 justify-start">
       {options?.map((option) => (
         <label
           key={option?.hashtagId} // hashtagId를 key로 사용
@@ -44,7 +44,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
         >
           <input
             type="checkbox"
-            name={name}
+            name={option.hashtagName}
             value={option.hashtagId} // value를 hashtagId로 설정
             checked={selectedValues.includes(option.hashtagId)} // selectedValues 배열에서 해당 값이 있는지 확인
             onChange={() => handleCheckboxChange(option.hashtagId)} // checkbox 클릭 시 처리
@@ -60,7 +60,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
               }}
             />
             <span className="text-[#898989] font-semibold text-md">
-              {option.name} {/* name을 label로 표시 */}
+              {option.hashtagName} {/* name을 label로 표시 */}
             </span>
           </div>
         </label>

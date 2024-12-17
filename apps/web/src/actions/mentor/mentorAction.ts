@@ -1,10 +1,14 @@
+'use server';
+
 import { MentorBatchData } from '@repo/ui/types/batchDataType/MenterBatchData.ts';
 import {
+  AllMentorPaginationType,
   BestMentorType,
   MentorListType,
 } from '@repo/web/components/types/mentor/mentorType';
 import { Mentoring } from '@repo/web/components/types/mentoring/mentoringTypes';
 import { commonResType } from '../../components/types/ResponseTypes';
+import { redirect } from 'next/navigation';
 //멘토의 멘토링 리스트 조회
 export async function GetMentorMentoringList(
   userUuid: string,
@@ -59,6 +63,30 @@ export async function GetBestMentorList() {
   }
 }
 
+export async function GetAllMentorListPagination(page: number) {
+  'use server';
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/best-mentor-list-pagination?page=${page}&size=20`,
+    {
+      cache: 'no-cache',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  console.log(res);
+
+  const result = (await res.json()) as commonResType<AllMentorPaginationType>;
+
+  if (res.ok) {
+    return result.result;
+  }
+  return null;
+}
+
 //모든 멘토 리스트 조회
 export async function GetMentorList() {
   'use server';
@@ -88,7 +116,6 @@ export async function getMentorBatchData(
   userUuid: string
 ): Promise<MentorBatchData | null> {
   'use server';
-
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BATCH_URL}/api/v1/adaptors-batch-service/mentor-overview/${userUuid}`,

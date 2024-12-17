@@ -1,3 +1,4 @@
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 import { GetTodayMentoringSessionList } from '@repo/admin/actions/schedule/scheduleAction';
 import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import Meeting from '@repo/admin/components/pages/main/mentor/meeting/Meeting';
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 const mentoringSessionList = [
   {
     mentoringName: '프로그래밍 기초 멘토링',
-    sessionUuid: 'ac419217-cb98-4334-8b78-8126aa0e57aa',
+    sessionUuid: 'fbf87538-8a38-4535-8442-a2bd62a9bc86',
     startDate: '2024-12-04',
     endDate: '2024-12-04',
     startTime: {
@@ -30,7 +31,7 @@ const mentoringSessionList = [
   },
   {
     mentoringName: '파이썬 기초 멘토링',
-    sessionUuid: 'ac419217-cb98-4334-8b78-8126aa0e57aa',
+    sessionUuid: 'f8be5e98-e4c6-4900-a901-3123711b9c83',
     startDate: '2024-12-04',
     endDate: '2024-12-04',
     startTime: {
@@ -52,7 +53,17 @@ export default async function Page() {
   // const mentoringSessionList = await GetTodayMentoringSessionList(
   //   getDate({ type: false })
   // );
+  // console.log(mentoringSessionList);
   const session = await getServerSession(options);
   const user = session?.user;
-  return <Meeting mentoringSessionList={mentoringSessionList} user={user} />;
+  const userData = await getChatProfile({ userUuid: user.uuid });
+  return (
+    <>
+      <Meeting
+        mentoringSessionList={mentoringSessionList}
+        user={user}
+        userData={userData}
+      />
+    </>
+  );
 }

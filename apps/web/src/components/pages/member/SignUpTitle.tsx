@@ -1,10 +1,18 @@
+'use client';
+
 import XIcon from '@repo/web/components/assets/icons/X';
+import { ChevronLeftIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpTitle() {
+  const router = useRouter();
   return (
     <div className="space-y-2">
       <header className="w-full fixed top-7">
-        <button className="fixed right-7">
+        <button onClick={() => router.back()} className="fixed left-7">
+          <ChevronLeftIcon />
+        </button>
+        <button onClick={() => router.push('/login')} className="fixed right-7">
           <XIcon />
         </button>
       </header>

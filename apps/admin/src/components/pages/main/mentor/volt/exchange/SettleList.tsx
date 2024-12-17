@@ -28,8 +28,11 @@ export default function SettleList({
                 <p className="font-semibold">{record.volt} 볼트</p>
                 <p className="text-sm text-gray-500">{record.date}</p>
               </div>
-              <div className="text-right">
-                <p>{record.money.toLocaleString()}원</p>
+              <div className="text-right items-center">
+                <p>{(record.volt * 100 - record.money).toLocaleString()}원</p>
+                <p className="text-xs">
+                  수수료 {record.money.toLocaleString()}원
+                </p>
                 <p
                   className={`text-sm ${record.status === 'COMPLETED' ? 'text-green-500' : 'text-yellow-500'}`}
                 >

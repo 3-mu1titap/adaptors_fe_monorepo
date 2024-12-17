@@ -19,11 +19,13 @@ import Chatting from '../../chatting/Chatting';
 interface MeetingProps {
   mentoringSessionList: any[];
   user: any;
+  userData: any;
 }
 
 const MenteeMeeting: React.FC<MeetingProps> = ({
   mentoringSessionList,
   user,
+  userData,
 }) => {
   const [sessionUuid, setSessionUuid] = useState<string>('');
   const [mentoringName, setMentoringName] = useState<string>('');
@@ -289,7 +291,11 @@ const MenteeMeeting: React.FC<MeetingProps> = ({
                       showParticipants ? 'h-[70vh] border-t' : 'h-[100vh]'
                     }
                   >
-                    <Chatting user={user} mentoringSessionUuid={sessionUuid} />
+                    <Chatting
+                      user={user}
+                      mentoringSessionUuid={sessionUuid}
+                      userData={userData}
+                    />
                   </div>
                 )}
               </div>

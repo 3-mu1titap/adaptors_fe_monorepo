@@ -5,32 +5,34 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AlarmType } from '../types/alarm/alarmTypes';
 import { getRecentAlarmData } from '@repo/admin/actions/alram/alramAction';
 import { BellIcon } from 'lucide-react';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 function AdaptorsAlarm({ user }: { user: any }) {
   const [recentAlarm, setRecentAlarm] = useState<AlarmType | null>(null);
   const [newAlarm, setNewAlarm] = useState<AlarmType | null>(null);
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
-  const [reconnectAttempts, setReconnectAttempts] = useState<number>(0);
 
   const connectEventSource = () => {
     const alarmUrl = `${process.env.NEXT_PUBLIC_ALARM_URL}/api/v1/alarm-service/alarms/connect?userUuid=${user.uuid}`;
-    const source = new EventSource(alarmUrl);
+    const EventSource = EventSourcePolyfill || NativeEventSource;
+    const eventSource = new EventSource(alarmUrl, {
+      heartbeatTimeout: 86400000,
+    });
 
-    source.onopen = () => {
+    eventSource.onopen = () => {
       console.log('alarm 연결 완료');
-      setReconnectAttempts(0);
     };
 
-    source.onmessage = (event) => {
-      console.log(event);
+    eventSource.onmessage = (event) => {
+      console.log(event.data);
     };
 
-    source.onerror = (error) => {
-      source.close();
-      handleReconnect();
+    eventSource.onerror = (error) => {
+      eventSource.close();
+      connectEventSource();
     };
 
-    setEventSource(source);
+    setEventSource(eventSource);
   };
 
   useEffect(() => {
@@ -40,21 +42,6 @@ function AdaptorsAlarm({ user }: { user: any }) {
       eventSource?.close();
     };
   }, [user.uuid]);
-
-  const handleReconnect = () => {
-    const maxAttempts = 5;
-    if (reconnectAttempts < maxAttempts) {
-      const timeout = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000); // 지수 백오프
-      console.log(`재연결 시도 ${reconnectAttempts + 1}...`);
-
-      setTimeout(() => {
-        setReconnectAttempts((prev) => prev + 1);
-        connectEventSource(); // 재연결 시도
-      }, timeout);
-    } else {
-      console.error('최대 재연결 시도 횟수 초과');
-    }
-  };
 
   const getAlramsData = async () => {
     try {
