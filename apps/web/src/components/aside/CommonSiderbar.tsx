@@ -19,7 +19,6 @@ import {
   History,
   Power,
   UserRoundPen,
-  UserX,
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
@@ -65,7 +64,7 @@ function CommonSidebar() {
           ),
           label: 'Report',
           isActive: pathname.startsWith(`/mypage/feedback`),
-          href: `/mypage/feedback`,
+          href: `/mypage/feedback?category=TC-CD7877C0`,
         },
         {
           icon: (
