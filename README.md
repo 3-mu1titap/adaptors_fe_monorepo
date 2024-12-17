@@ -364,254 +364,253 @@ AI피드백, 화상•채팅 서비스, 간편한 멘토링 생성 기능 <br>
     DevOps
   </summary>
 
+```
 📦DevOps
-
-```bash
-├── 📔Back
-│   ├── 📔aifeedback-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔auth-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yml
-│   │   │   ├── deployment.yml
-│   │   │   ├── secrets.yml
-│   │   │   └── svc.yml
-│   │   └── values.yaml
-│   ├── 📔batch-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔category-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔feedback-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔hashtag-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔member-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔mentoring-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret-values.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔mongo
-│   │   ├── 📔alarm-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔chat-query-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔chat-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔feedback-query-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔member-query-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔mentoring-query-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔prompt-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   ├── 📔review-query-service
-│   │   │   ├── Chart.yaml
-│   │   │   ├── sealed-secret.yaml
-│   │   │   ├── secret.yaml
-│   │   │   ├── templates
-│   │   │   │   ├── _helpers.tpl
-│   │   │   │   ├── configmap.yaml
-│   │   │   │   ├── deployment.yaml
-│   │   │   │   ├── secrets.yaml
-│   │   │   │   └── svc.yaml
-│   │   │   └── values.yaml
-│   │   └── 📔session-request-query-service
-│   │       ├── Chart.yaml
-│   │       ├── sealed-secret.yaml
-│   │       ├── secret.yaml
-│   │       ├── templates
-│   │       │   ├── _helpers.tpl
-│   │       │   ├── configmap.yaml
-│   │       │   ├── deployment.yaml
-│   │       │   ├── secrets.yaml
-│   │       │   └── svc.yaml
-│   │       └── values.yaml
-│   ├── 📔openvidu-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔payment-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   ├── 📔review-service
-│   │   ├── Chart.yaml
-│   │   ├── sealed-secret.yaml
-│   │   ├── secret.yaml
-│   │   ├── templates
-│   │   │   ├── _helpers.tpl
-│   │   │   ├── configmap.yaml
-│   │   │   ├── deployment.yaml
-│   │   │   ├── secrets.yaml
-│   │   │   └── svc.yaml
-│   │   └── values.yaml
-│   └── 📔session-request-service
-│       ├── Chart.yaml
-│       ├── sealed-secret.yaml
-│       ├── secret.yaml
-│       ├── templates
-│       │   ├── _helpers.tpl
-│       │   ├── configmap.yaml
-│       │   ├── deployment.yaml
-│       │   ├── secrets.yaml
-│       │   └── svc.yaml
-│       └── values.yaml
-├── 📔front-server
-│   ├── Chart.yaml
-│   ├── sealed-secret.yaml
-│   ├── secret.yaml
-│   ├── templates
-│   │   ├── _helpers.tpl
-│   │   ├── alb-ingress.yaml
-│   │   ├── deployment.yaml
-│   │   ├── secrets.yaml
-│   │   └── svc.yaml
-│   └── values.yaml
+┣ 📔Back
+┃  ┣ 📔aifeedback-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔auth-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yml
+┃  ┃  ┃  ┣ deployment.yml
+┃  ┃  ┃  ┣ secrets.yml
+┃  ┃  ┃  ┗ svc.yml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔batch-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔category-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔feedback-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔hashtag-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔member-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔mentoring-service
+┃  ┃  ┣ Chart.yaml
+┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┣ secret-values.yaml
+┃  ┃  ┣ secret.yaml
+┃  ┃  ┣ templates
+┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┗ values.yaml
+┃  ┣ 📔mongo
+┃  ┃  ┣ 📔alarm-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃  ┣ _helpers.tpl
+┃  ┃  ┃  ┃  ┣ configmap.yaml
+┃  ┃  ┃  ┃  ┣ deployment.yaml
+┃  ┃  ┃  ┃  ┣ secrets.yaml
+┃  ┃  ┃  ┃  ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔chat-query-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔chat-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔feedback-query-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔member-query-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔mentoring-query-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔prompt-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┣ 📔review-query-service
+┃  ┃  ┃  ┣ Chart.yaml
+┃  ┃  ┃  ┣ sealed-secret.yaml
+┃  ┃  ┃  ┣ secret.yaml
+┃  ┃  ┃  ┣ templates
+┃  ┃  ┃  ┃   ┣ _helpers.tpl
+┃  ┃  ┃  ┃   ┣ configmap.yaml
+┃  ┃  ┃  ┃   ┣ deployment.yaml
+┃  ┃  ┃  ┃   ┣ secrets.yaml
+┃  ┃  ┃  ┃   ┗ svc.yaml
+┃  ┃  ┃  ┗ values.yaml
+┃  ┃  ┗ 📔session-request-query-service
+┃  ┃      ┣ Chart.yaml
+┃  ┃      ┣ sealed-secret.yaml
+┃  ┃      ┣ secret.yaml
+┃  ┃      ┣ templates
+┃  ┃      ┃  ┣ _helpers.tpl
+┃  ┃      ┃  ┣ configmap.yaml
+┃  ┃      ┃  ┣ deployment.yaml
+┃  ┃      ┃  ┣ secrets.yaml
+┃  ┃      ┃  ┗ svc.yaml
+┃  ┃      ┗ values.yaml
+┃  ┣ 📔openvidu-service
+┃  ┃   ┣ Chart.yaml
+┃  ┃   ┣ sealed-secret.yaml
+┃  ┃   ┣ secret.yaml
+┃  ┃   ┣ templates
+┃  ┃   ┃  ┣ _helpers.tpl
+┃  ┃   ┃  ┣ configmap.yaml
+┃  ┃   ┃  ┣ deployment.yaml
+┃  ┃   ┃  ┣ secrets.yaml
+┃  ┃   ┃  ┗ svc.yaml
+┃  ┃   ┗ values.yaml
+┃  ┣ 📔payment-service
+┃  ┃   ┣ Chart.yaml
+┃  ┃   ┣ sealed-secret.yaml
+┃  ┃   ┣ secret.yaml
+┃  ┃   ┣ templates
+┃  ┃   ┃  ┣ _helpers.tpl
+┃  ┃   ┃  ┣ configmap.yaml
+┃  ┃   ┃  ┣ deployment.yaml
+┃  ┃   ┃  ┣ secrets.yaml
+┃  ┃   ┃  ┗ svc.yaml
+┃  ┃   ┗ values.yaml
+┃  ┣ 📔review-service
+┃  ┃   ┣ Chart.yaml
+┃  ┃   ┣ sealed-secret.yaml
+┃  ┃   ┣ secret.yaml
+┃  ┃   ┣ templates
+┃  ┃   ┃  ┣ _helpers.tpl
+┃  ┃   ┃  ┣ configmap.yaml
+┃  ┃   ┃  ┣ deployment.yaml
+┃  ┃   ┃  ┣ secrets.yaml
+┃  ┃   ┃  ┗ svc.yaml
+┃  ┃   ┗ values.yaml
+┃   ┗ 📔session-request-service
+┃       ┣ Chart.yaml
+┃       ┣ sealed-secret.yaml
+┃       ┣ secret.yaml
+┃       ┣ templates
+┃       ┃  ┣ _helpers.tpl
+┃       ┃  ┣ configmap.yaml
+┃       ┃  ┣ deployment.yaml
+┃       ┃  ┣ secrets.yaml
+┃       ┃  ┗ svc.yaml
+┃       ┗ values.yaml
+┣ 📔front-server
+┃  ┣ Chart.yaml
+┃  ┣ sealed-secret.yaml
+┃  ┣ secret.yaml
+┃  ┣ templates
+┃  ┃   ┣ _helpers.tpl
+┃  ┃   ┣ alb-ingress.yaml
+┃  ┃   ┣ deployment.yaml
+┃  ┃   ┣ secrets.yaml
+┃  ┃   ┗ svc.yaml
+┃  ┗ values.yaml
 ```
 
 </details>

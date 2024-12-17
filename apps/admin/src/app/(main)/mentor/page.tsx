@@ -10,6 +10,8 @@ import { getMyProfileIamge } from '@repo/admin/actions/profile/getProfileData';
 import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
 import type { MentoringDataType } from '@repo/ui/types/CommonType.ts';
 import { redirect } from 'next/navigation';
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
+import { getServerSession } from 'next-auth';
 
 export const metadata: Metadata = {
   title: `Home`,
@@ -39,6 +41,7 @@ const initialUserData = [
 ];
 
 export default async function Page() {
+  const session = await getServerSession();
   const mentoringListData = await GetMentoringListByMentor();
   if (mentoringListData.length === 0) return redirect('/mentor/mentoring');
   const mentoringSessionList = await GetMentoringSessionList(
@@ -47,7 +50,7 @@ export default async function Page() {
   const MentoringInfoData: MentoringDataType = await GetMentoringInfo(
     mentoringListData[0].mentoringUuid
   );
-  const user = await getMyProfileIamge();
+  const user = await getChatProfile(session?.user.uuid);
   return (
     <>
       {mentoringSessionList && MentoringInfoData && (
