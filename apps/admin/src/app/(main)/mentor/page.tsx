@@ -50,7 +50,7 @@ export default async function Page() {
   const MentoringInfoData: MentoringDataType = await GetMentoringInfo(
     mentoringListData[0].mentoringUuid
   );
-  const user = await getChatProfile(session?.user.uuid);
+  const user = await getChatProfile({ userUuid: session?.user.uuid });
   return (
     <>
       {mentoringSessionList && MentoringInfoData && (
