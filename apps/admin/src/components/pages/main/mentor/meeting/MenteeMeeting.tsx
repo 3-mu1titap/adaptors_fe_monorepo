@@ -91,7 +91,7 @@ const MenteeMeeting: React.FC<MeetingProps> = ({
 
     try {
       const token = await getToken(session.sessionUuid);
-      await newSession.connect(token, { clientData: user.uuid });
+      await newSession.connect(token, { clientData: userData.nickName });
 
       const publisher = await OV.current.initPublisherAsync(undefined, {
         audioSource: undefined,

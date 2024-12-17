@@ -36,6 +36,7 @@ export async function getChattingData({
       },
     }
   );
+  console.log(res);
   if (!res.ok) {
     console.error('세션의 채팅 리스트 조회 실패');
     return redirect('/error?message=Failed to fetch session chatting');
