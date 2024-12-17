@@ -1,7 +1,6 @@
 import { AlertCircle, CheckCircle } from 'lucide-react';
 
 export default function Status({ uploadStatus }: { uploadStatus: string }) {
-  console.log(uploadStatus);
   if (uploadStatus === 'idle') return;
   return uploadStatus === 'success' ? (
     <div className="mt-4 p-4 bg-green-100 text-green-700 rounded-lg flex items-center justify-center">

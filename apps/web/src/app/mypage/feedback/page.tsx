@@ -28,7 +28,6 @@ async function fetchMentoringData({ categoryCode }: { categoryCode: string }) {
   const categoryName = getCategoryName(categoryCode); // 매핑된 카테고리 이름
   const element = await getFeedbackElements(categoryCode);
 
-  console.log(categoryName);
   const feedbackData = await getFeedbackScore(categoryName); // 멘토의 피드백
   const graphData = await getFeedbackGraph(categoryName); // 볼팡이 + 그래프
   return {

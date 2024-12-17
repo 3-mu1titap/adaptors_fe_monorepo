@@ -9,7 +9,6 @@ async function page({ searchParams }: { searchParams: { pg_token: string } }) {
   if (pg_token) {
     try {
       const approvalRes = await PaymentApproval(pg_token);
-      console.log('결제 승인 성공:', approvalRes);
     } catch (error) {
       console.error('결제 승인 실패:', error);
     }

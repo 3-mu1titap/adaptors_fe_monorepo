@@ -33,7 +33,6 @@ async function page({
 
   //유저의 소개글 조회
   const userIntroduction = await getMentorIntroduction(userUuId);
-  console.log(userIntroduction);
 
   //유저의 수강평 조회
   const review = await getMentorReview(userUuId);

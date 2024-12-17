@@ -12,6 +12,7 @@ import type { MentoringDataType } from '@repo/ui/types/CommonType.ts';
 import { redirect } from 'next/navigation';
 import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 import { getServerSession } from 'next-auth';
+import { options } from '../../api/auth/[...nextauth]/options';
 
 export const metadata: Metadata = {
   title: `Home`,
@@ -41,7 +42,7 @@ const initialUserData = [
 ];
 
 export default async function Page() {
-  const session = await getServerSession();
+  const session = await getServerSession(options);
   const mentoringListData = await GetMentoringListByMentor();
   if (mentoringListData.length === 0) return redirect('/mentor/mentoring');
   const mentoringSessionList = await GetMentoringSessionList(

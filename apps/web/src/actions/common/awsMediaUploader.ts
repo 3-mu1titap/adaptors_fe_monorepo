@@ -37,7 +37,6 @@ async function uploadFileToS3(file: File, folder: string): Promise<string> {
 }
 
 async function deleteFileFromS3(fileUrl: string) {
-  console.log('fileUrl', fileUrl);
   const res = await fetch('/api/s3/client', {
     method: 'DELETE',
     body: JSON.stringify({
