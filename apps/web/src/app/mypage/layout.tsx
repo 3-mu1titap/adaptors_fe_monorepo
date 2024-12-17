@@ -4,6 +4,7 @@ import {
 } from '@repo/ui/components/ui/sidebar';
 import CommonSidebar from '@repo/web/components/aside/CommonSiderbar';
 import MyPageHeader from '@repo/web/components/header/MyPageHeader';
+import ScrollToTopButton from '@repo/web/components/util/ScrollToTopButton';
 import { getServerSession } from 'next-auth';
 import React from 'react';
 import { options } from '../api/auth/[...nextauth]/options';
@@ -20,6 +21,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </SidebarProvider>
+      <ScrollToTopButton />
     </div>
   );
 }
