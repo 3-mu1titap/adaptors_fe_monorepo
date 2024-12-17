@@ -71,55 +71,56 @@ AI피드백, 화상•채팅 서비스, 간편한 멘토링 생성 기능 <br>
 <div align="center">
 <table align="center" width="100%" border="1">
   <tbody>
-    <!-- 첫 번째 행 -->
     <tr>
-      <td height="320px" align="center" colspan="2"> 
-        <a href="">
+      <td height="240px" align="center" > 
+        <a href="https://github.com/AndreaStudy">
           <img src="" width="160px" /> <br> 정훈석 <br>(Frontend)
         </a>
       </td>
-      <td height="320px" align="center" colspan="2">
+      <td height="240px" align="center">
         <a href="">
           <img src="" width="160px" /> <br> 설찬우 <br>(Frontend)
         </a>
       </td>
-      <td height="320px" align="center" colspan="2">
+      <td height="240px" align="center">
         <a href="">
           <img src="" width="160px" /> <br> 김예진 <br>(Frontend)
         </a>
-      </td>
+      </td> 
     </tr>
     <tr>
-      <td height="320px" align="center">
-        <a href="">
-          <img src="" width="160px" /> <br> 김대희 <br>(Backend)
-        </a>
-      </td>
-      <td height="320px" align="center">
-        <a href="">
-          <img src="" width="160px" /> <br> 김성태 <br>(Backend)
-        </a>
-      </td>
-      <td height="320px" align="center">
-        <a href="">
-          <img src="" width="160px" /> <br> 강수빈 <br>(Backend)
-        </a>
-      </td>
-      <td height="320px" align="center">
-        <a href="">
-          <img src="" width="160px" /> <br> 허정현 <br>(Backend)
-        </a>
-      </td>
-      <td height="320px" align="center">
+      <td height="240px" align="center">
         <a href="">
           <img src="" width="160px" /> <br> 백승엽 <br>(Backend<br>&DevOps)
         </a>
       </td>
-      <td height="320px" align="center">
+      <td height="240px" align="center">
         <a href="">
           <img src="" width="160px" /> <br> 오대관 <br>(DevOps)
         </a>
-      </td>      
+      </td>
+      <td height="240px" align="center">
+        <a href="">
+          <img src="" width="160px" /> <br> 허정현 <br>(Backend)
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td height="240px" align="center">
+        <a href="">
+          <img src="" width="160px" /> <br> 김대희 <br>(Backend)
+        </a>
+      </td>
+      <td height="240px" align="center">
+        <a href="">
+          <img src="" width="160px" /> <br> 김성태 <br>(Backend)
+        </a>
+      </td>
+      <td height="240px" align="center">
+        <a href="">
+          <img src="" width="160px" /> <br> 강수빈 <br>(Backend)
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -148,12 +149,18 @@ AI피드백, 화상•채팅 서비스, 간편한 멘토링 생성 기능 <br>
 
 </div>
 
-- **Language |** TypeScript ^5.3.3
-- **Runtime Environment |** Node.js >=18
-- **Framework |** Next.js 14.2.6
-- **Library |** React.js 19.0.0 ,Shadcn UI, Tailwind CSS ^3.4.1, fullcalendar ^6.1.4, turbo ^2.1.3, framer-motion ^11.11.10, openvidu-browser ^2.30.1, recharts ^2.14.1, sweetalert2 ^11.4.8, swiper ^11.1.14, zod ^3.23.8
-- **IDE |** Visual Studio Code 1.93.1
-- **Deploy |** k8s
+- **Language**
+  - TypeScript ^5.3.3
+- **Runtime Environment**
+  - Node.js >=18
+- **Framework**
+  - Next.js 14.2.6
+- **Library**
+  - React.js 19.0.0 ,Shadcn UI, Tailwind CSS ^3.4.1, fullcalendar ^6.1.4, turbo ^2.1.3, framer-motion ^11.11.10, openvidu-browser ^2.30.1, recharts ^2.14.1, sweetalert2 ^11.4.8, swiper ^11.1.14, zod ^3.23.8
+- **IDE**
+  - Visual Studio Code 1.93.1
+- **Deploy**
+  - k8s
 
 ### Backend
 
@@ -179,11 +186,16 @@ AI피드백, 화상•채팅 서비스, 간편한 멘토링 생성 기능 <br>
 
 </div>
 
-- **Framework |** Spring Boot 3.3.5
-- **Library |** Spring Data JPA, Querydsl 5.0.0
-- **Database |** MySQL 8.0.38, Redis 7.2
-- **IDE |** IntelliJ IDEA 2024.2 (Ultimate Edition), Visual Studio Code 1.93.1
-- **Build Tool |** Gradle 8.8.0
+- **Framework**
+  - Spring Boot 3.3.5
+- **Library**
+  - Spring Data JPA, Querydsl 5.0.0
+- **Database**
+  - MySQL 8.0.38, Redis 7.2
+- **IDE**
+  - IntelliJ IDEA 2024.2 (Ultimate Edition), Visual Studio Code 1.93.1
+- **Build Tool**
+  - Gradle 8.8.0
 
 ### DevOps
 
@@ -241,41 +253,41 @@ AI피드백, 화상•채팅 서비스, 간편한 멘토링 생성 기능 <br>
 
 ## 📑 AI 피드백 페이지 & 마이페이지 (Web)
 
-| <img src="" width="200px">                                    | <img src="" width="200px"> |
-| ------------------------------------------------------------- | -------------------------- |
-| AI 피드백 페이지                                              | 마이페이지                 |
-| 바로 피드백을 받기를 원한다면 AI 피드백을 사용할 수 있습니다. |                            |
+| <img src="" width="200px">                                    | <img src="" width="200px">                  |
+| ------------------------------------------------------------- | ------------------------------------------- |
+| AI 피드백 페이지                                              | 마이페이지 - 피드백 결과보기                |
+| 바로 피드백을 받기를 원한다면 AI 피드백을 사용할 수 있습니다. | AI 피드백 진행한 결과를 확인할 수 있습니다. |
 
-| <img src="" width="200px"> | <img src="" width="200px"> |
-| -------------------------- | -------------------------- |
-| 머넣지                     | 머넣지                     |
-| 머넣지                     | 머넣지                     |
+| <img src="" width="200px">                              | <img src="" width="200px"> |
+| ------------------------------------------------------- | -------------------------- |
+| 충전페이지(카카오페이)                                  | 머넣지                     |
+| 카카오페이를 사용해 볼트(포인트)를 충전 할 수 있습니다. | 머넣지                     |
 
 ## 🕒메인 페이지(Electron)
 
-| <img src="" width="200px">     | <img src="" width="200px"> |
-| ------------------------------ | -------------------------- |
-| 멘토링리스트 & 상세보기 페이지 | 마이페이지                 |
-| 머넣지                         | 머넣지                     |
+| <img src="" width="200px">                        | <img src="" width="200px">                                                                  |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| 멘토링리스트 & 상세보기 페이지                    | 마이페이지                                                                                  |
+| 자신이 진행하고 있는 멘토링을 확인할 수 있습니다. | 개인정보수정, 멘토소개 글 등을 수정할 수 있고 진행한 멘토링 세션에 대해 확인할 수 있습니다. |
 
-| <img src="" width="200px"> | <img src="" width="200px"> |
-| -------------------------- | -------------------------- |
-| 채팅 페이지                | 머넣지                     |
-| 머넣지                     | 머넣지                     |
+| <img src="" width="200px">                           | <img src="" width="200px">                                             |
+| ---------------------------------------------------- | ---------------------------------------------------------------------- |
+| 채팅 페이지                                          | 알림 보기                                                              |
+| 멘토링 세션간에 대화했던 내용을 확인 할 수 있습니다. | 다가오는 일정, 멘토링에 대한 리뷰 작성에 대한 알림을 받을 수 있습니다. |
 
 ## 👨🏼‍🤝‍👨🏼 볼트 & 스케쥴 페이지 (Electron)
 
-| <img src="" width="200px"> | <img src="" width="200px"> |
-| -------------------------- | -------------------------- |
-| 볼트 페이지                | 스케쥴 페이지              |
-| 머넣지                     | 머넣지                     |
+| <img src="" width="200px">                            | <img src="" width="200px">                                               |
+| ----------------------------------------------------- | ------------------------------------------------------------------------ |
+| 볼트 페이지(정산)                                     | 스케쥴 페이지                                                            |
+| 멘토링을 통해 발생한 수익(볼트)을 정산할 수 있습니다. | 진행해야 하는 멘토링 세션들에 대해 달력으로 스케쥴을 확인할 수 있습니다. |
 
 ## 💭화상회의 페이지(멘토, 멘티)
 
-| <img src="" width="200px"> | <img src="" width="200px"> |
-| -------------------------- | -------------------------- |
-| 화상회의 페이지(멘토)      | 화상회의 페이지(멘티)      |
-| 머넣지                     | 머넣지                     |
+| <img src="" width="200px">                      | <img src="" width="200px">                      |
+| ----------------------------------------------- | ----------------------------------------------- |
+| 화상회의 페이지(멘토)                           | 화상회의 페이지(멘티)                           |
+| 멘토링을 진행할 화상회의 페이지(멘토용) 입니다. | 멘토링을 진행할 화상회의 페이지(멘티용) 입니다. |
 
 ## 📂 디렉터리 구조
 
