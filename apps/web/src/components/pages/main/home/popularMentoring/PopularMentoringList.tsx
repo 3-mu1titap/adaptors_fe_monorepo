@@ -127,63 +127,72 @@ function PopularMentoringList({
       >
         <ChevronRight className="h-6 w-6" color="white" />
       </div>
-      <Swiper
-        loop
-        onSlideChange={onSlideIndexChange}
-        spaceBetween={8}
-        slidesPerView={1.5}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }} // 네비게이션 버튼 연결
-        onBeforeInit={(swiper) => {
-          swiperRef.current = swiper; // Swiper 인스턴스 참조 설정
-        }}
-        onSwiper={(swiper) => {
-          if (swiperRef.current) {
-            swiperRef.current = swiper;
-          }
-        }}
-        modules={[Autoplay, Navigation]} // Autoplay와 Navigation 모듈 활성화
-        breakpoints={{
-          640: {
-            slidesPerView: 2.5,
-          },
-          768: {
-            slidesPerView: 2.5,
-          },
-          1024: {
-            slidesPerView: 3.5,
-          },
-          1140: {
-            slidesPerView: 4,
-          },
-        }}
-      >
-        {popularData.slice(0, 20).map((item, index) => (
-          <SwiperSlide key={index}>
-            <Suspense fallback={<Skeleton className="w-[200px] h-[500px]" />}>
-              <MentoringItem
-                item={item}
-                isLoading={popularData ? false : true}
-              />
-            </Suspense>
-          </SwiperSlide>
-        ))}
-      </Swiper>
 
-      <div className="flex my-10 justify-center">
-        {popularData.slice(0, 20).map((_, index) => (
-          <SwiperIndex
-            key={index}
-            slideIndex={SlideIndex}
-            index={index}
-            onClick={() => handleIndexClick(index)}
-          />
-        ))}
-      </div>
+      {popularData && popularData ? (
+        <>
+          <Swiper
+            loop
+            onSlideChange={onSlideIndexChange}
+            spaceBetween={8}
+            slidesPerView={1.5}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            navigation={{
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }} // 네비게이션 버튼 연결
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper; // Swiper 인스턴스 참조 설정
+            }}
+            onSwiper={(swiper) => {
+              if (swiperRef.current) {
+                swiperRef.current = swiper;
+              }
+            }}
+            modules={[Autoplay, Navigation]} // Autoplay와 Navigation 모듈 활성화
+            breakpoints={{
+              640: {
+                slidesPerView: 2.5,
+              },
+              768: {
+                slidesPerView: 2.5,
+              },
+              1024: {
+                slidesPerView: 3.5,
+              },
+              1140: {
+                slidesPerView: 4,
+              },
+            }}
+          >
+            {popularData.slice(0, 20).map((item, index) => (
+              <SwiperSlide key={index}>
+                <Suspense
+                  fallback={<Skeleton className="w-[200px] h-[500px]" />}
+                >
+                  <MentoringItem
+                    item={item}
+                    isLoading={popularData ? false : true}
+                  />
+                </Suspense>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <div className="flex my-10 justify-center">
+            {popularData.slice(0, 20).map((_, index) => (
+              <SwiperIndex
+                key={index}
+                slideIndex={SlideIndex}
+                index={index}
+                onClick={() => handleIndexClick(index)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center">등록된 멘토가 없습니다..!</div>
+      )}
     </CommonLayout>
   );
 }

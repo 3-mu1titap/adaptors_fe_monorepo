@@ -1,7 +1,6 @@
 import { Circle } from 'lucide-react';
 
 export default function IconByCategoryAndName({ num }: { num: number }) {
-  console.log(num);
   return (
     <div className="relative min-w-7">
       <Circle

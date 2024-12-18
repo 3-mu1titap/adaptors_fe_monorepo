@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function GlobalError({
@@ -9,6 +10,7 @@ export default function GlobalError({
   error: Error;
   reset: () => void;
 }) {
+  const router = useRouter();
   useEffect(() => {
     console.error('An unexpected error occurred:', error);
   }, [error]);
@@ -19,8 +21,11 @@ export default function GlobalError({
         <div style={{ textAlign: 'center', padding: '50px' }}>
           <h1>500 - 서버 에러가 발생했습니다.</h1>
           <p>문제가 지속되면 관리자에게 문의해주세요.</p>
-          <button onClick={reset} style={{ marginTop: '20px' }}>
-            다시 시도
+          <button
+            onClick={() => router.push('/login')}
+            style={{ marginTop: '20px' }}
+          >
+            홈으로
           </button>
         </div>
       </body>

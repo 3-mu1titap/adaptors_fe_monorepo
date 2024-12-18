@@ -91,14 +91,14 @@ function ChatSender({
       <input
         type="file"
         accept="image/*"
-        ref={fileInputRef}
+        ref={imageInputRef}
         onChange={handleImageSelect}
         className="hidden"
       />
       <input
         type="file"
         accept="*/*"
-        ref={imageInputRef}
+        ref={fileInputRef}
         onChange={handleFileSelect}
         className="hidden"
       />

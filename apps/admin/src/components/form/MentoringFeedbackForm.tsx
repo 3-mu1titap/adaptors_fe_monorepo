@@ -78,7 +78,6 @@ export default function MentoringFeedbackForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(feedback);
     await postFeedback(feedback);
   };
 

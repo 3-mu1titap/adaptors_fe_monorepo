@@ -3,6 +3,13 @@ import {
   MenteeProfileInfo,
 } from '@repo/web/components/types/mentee/MenteeType';
 import FitImage from '@repo/web/components/ui/image/fit-image';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/ui/card';
+import { Mail, Phone, User, Briefcase, Calendar, Users } from 'lucide-react';
 
 export default function MenteeProfileContent({
   profileImageUrl,
@@ -15,42 +22,93 @@ export default function MenteeProfileContent({
 }) {
   return (
     <>
-      <div className="flex items-center mb-4">
-        <div className="w-[10rem] h-[10rem] overflow-hidden">
-          <FitImage
-            className="w-full h-auto overflow-hidden rounded-full border-4 border-white"
-            src={profileImageUrl}
-            alt={memberRequestDto.name}
-          />
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold">{memberRequestDto.name}</h2>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-48 h-48 overflow-hidden">
+            <FitImage
+              className="w-full h-auto overflow-hidden rounded-full border-4 border-white"
+              src={profileImageUrl}
+              alt={memberRequestDto.name}
+            />
+          </div>
+
+          <h2 className="text-3xl font-bold">{memberRequestDto.name}</h2>
           <p className="text-gray-600">@{memberRequestDto.nickName}</p>
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <h3 className="font-semibold mb-2">Contact Information</h3>
-          <p>Email: {memberRequestDto.email}</p>
-          <p>Phone: {memberRequestDto.phoneNumber}</p>
-          <p>Account ID: {memberRequestDto.accountId}</p>
-        </div>
-        <div className="flex flex-col space-y-1">
-          <h3 className="font-semibold mb-2">Mentee Profile</h3>
-          {menteeProfileRequestDto ? (
-            <>
-              <p>Age: {menteeProfileRequestDto.age}</p>
-              <p>Gender: {menteeProfileRequestDto.gender}</p>
-              <p>Job Experience: {menteeProfileRequestDto.jobExperience}</p>
-              <p>jobType: {menteeProfileRequestDto.jobType}</p>
-              <p>
-                jobApplicationCount:{' '}
-                {menteeProfileRequestDto.jobApplicationCount}
-              </p>
-            </>
-          ) : (
-            <p>등록된 소개가 없습니다.</p>
-          )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl">연락처 정보</CardTitle>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              <div className="flex items-center">
+                <Mail className="w-5 h-5 mr-2 text-gray-500" />
+                <span className="">
+                  <span className="text-lg font-bold">Email:</span>{' '}
+                  {memberRequestDto.email}
+                </span>
+              </div>
+
+              <div className="flex items-center">
+                <Phone className="w-5 h-5 mr-2 text-gray-500" />
+                <span>
+                  <span className="text-lg font-bold">Phone:</span>{' '}
+                  {memberRequestDto.phoneNumber}
+                </span>
+              </div>
+
+              <div className="flex items-center">
+                <User className="w-5 h-5 mr-2 text-gray-500" />
+                <span>
+                  <span className="text-lg font-bold">Account ID:</span>{' '}
+                  {memberRequestDto.accountId}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="flex flex-col space-y-1">
+            <CardHeader className="font-semibold mb-2">
+              <CardTitle className="text-2xl">멘티 프로필</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              {menteeProfileRequestDto ? (
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <Calendar className="w-5 h-5 mr-2 text-gray-500" />
+                    <span>나이: {menteeProfileRequestDto.age}세</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Users className="w-5 h-5 mr-2 text-gray-500" />
+                    <span>성별: {menteeProfileRequestDto.gender}</span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <Briefcase className="w-5 h-5 mr-2 text-gray-500" />
+                    <span>학력: {menteeProfileRequestDto.educationLevel}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Briefcase className="w-5 h-5 mr-2 text-gray-500" />
+                    <span>직종: {menteeProfileRequestDto.jobType}</span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <Briefcase className="w-5 h-5 mr-2 text-gray-500" />
+                    <span>
+                      지원횟수: {menteeProfileRequestDto.jobApplicationCount}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <p>
+                  등록된 프로필 정보가 없습니다.. 회원정보 등록을 해주세요.!
+                </p>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>

@@ -7,7 +7,7 @@ function MainHeaderLogo() {
   return (
     <CustomToolTip text="Adaptors Logo">
       <Link href="/home">
-        <AdaptorsLogoIcon className="w-[120px] md:w-[130px] lg:w-[150px]" />
+        <AdaptorsLogoIcon className="w-[60px] md:w-[130px] lg:w-[150px]" />
         <h1 className="sr-only">Adaptors</h1>
       </Link>
     </CustomToolTip>

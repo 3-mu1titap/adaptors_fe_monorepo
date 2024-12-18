@@ -177,7 +177,6 @@ export default function MentoringAddForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(file);
     if (file) {
       try {
         const imageUrl = await uploadFileToS3(file, 'mentoring');

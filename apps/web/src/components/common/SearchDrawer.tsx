@@ -26,6 +26,7 @@ export function SearchDrawer({
 }) {
   //검색어 입력값
   const [value, setValue] = useState('');
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
     { name: '검색어를 입력해주세요' },
   ]);
@@ -114,7 +115,7 @@ export function SearchDrawer({
                   </li>
                 ))
               ) : (
-                <li></li>
+                <li className="text-center text-gray-400 hover:bg-transparent cursor-default"></li>
               )}
             </ul>
           )}

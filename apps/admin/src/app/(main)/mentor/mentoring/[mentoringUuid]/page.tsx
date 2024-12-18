@@ -1,11 +1,13 @@
+import { getChatProfile } from '@repo/admin/actions/chatting/chattingAction';
 import {
   GetMentoringInfo,
   GetMentoringSessionList,
 } from '@repo/admin/actions/mentoring/mentoringAction';
-import { getMyProfileIamge } from '@repo/admin/actions/profile/getProfileData';
+import { options } from '@repo/admin/app/api/auth/[...nextauth]/options';
 import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
 import { MentoringResult } from '@repo/ui/types/CommonType.js';
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 
 export const metadata: Metadata = {
   title: `Mentoring Detail`,
@@ -39,10 +41,11 @@ export default async function Page({
 }: {
   params: { mentoringUuid: string };
 }) {
+  const session = await getServerSession(options);
   const mentoringUuid = params.mentoringUuid;
   const mentoringSessionList: MentoringResult[] =
     await GetMentoringSessionList(mentoringUuid);
-  const user = await getMyProfileIamge();
+  const user = await getChatProfile({ userUuid: session?.user.uuid });
   const mentoringInfoData = await GetMentoringInfo(mentoringUuid);
   return (
     <>

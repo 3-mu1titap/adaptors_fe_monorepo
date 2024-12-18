@@ -46,7 +46,6 @@ export async function POST(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   try {
     const { fileUrl } = await req.json();
-    console.log('key', fileUrl);
 
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME!,

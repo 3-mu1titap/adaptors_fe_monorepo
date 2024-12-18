@@ -20,6 +20,7 @@ export default function MentoringReviewSection({
         {/* <Link
           href={`/mentoring/1/review?mentoring=${mentroingUuid}&mentor=${mentrUuid}`}
           className="text-lg border border-adaptorsGray py-2.5 px-6 rounded-md"
+          disabled={true}
         >
           Read more
         </Link> */}

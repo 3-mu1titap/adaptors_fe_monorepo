@@ -40,7 +40,10 @@ export default function MentorProfileEdit({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mx-auto max-w-3xl">
+    <form
+      onSubmit={handleSubmit}
+      className="overflow-hidden space-y-4 mx-auto max-w-3xl"
+    >
       <MenteeProfileEditForm
         formData={formData}
         file={file}

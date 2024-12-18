@@ -70,6 +70,9 @@ function Payment() {
   const approvalUrl = 'https://www.adaptors.site//payment/payment-confirm';
   const failUrl = 'https://www.adaptors.site/payment-fail';
   const cancelUrl = 'https://www.adaptors.site/mypage/payment/payment-cancel';
+  // const approvalUrl = 'http://localhost:3003/payment/payment-confirm';
+  // const failUrl = 'https://www.adaptors.site/payment-fail';
+  // const cancelUrl = 'https://www.adaptors.site/mypage/payment/payment-cancel';
 
   const Paymenthandle = async () => {
     try {
@@ -94,7 +97,7 @@ function Payment() {
   };
 
   return (
-    <div className="flex flex-col w-[30rem] h-[40rem] items-center justify-center">
+    <div className="flex flex-col lg:w-[30rem] lg:h-[40rem] max-w[300px] max-h-[400px] mt-28 items-center justify-center">
       <Card className="flex flex-col w-full max-w-[30rem] max-h-[40rem] mx-auto border-2">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
@@ -108,9 +111,9 @@ function Payment() {
                 key={item.id}
                 onClick={() => handleItemSelect(item)}
                 variant={selectedItem?.id === item.id ? 'default' : 'outline'}
-                className={`w-full hover:bg-blue-500 ${
+                className={`w-full hover:bg-ad ${
                   selectedItem?.id === item.id
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-adaptorsYellow text-white'
                     : 'bg-white text-black'
                 }`}
               >
@@ -128,14 +131,14 @@ function Payment() {
                 <div className="flex items-center p-4 justify-start space-x-1">
                   <button
                     onClick={decreaseCount}
-                    className="border border-black"
+                    className="border border-black px-1 py-1"
                   >
                     {'<'}
                   </button>
-                  <span className="text-black text-2xl">{Quantity}</span>
+                  <span className="text-black text-2xl ml-4">{Quantity}</span>
                   <button
                     onClick={IncreaseCount}
-                    className="border border-black"
+                    className="border border-black px-1 py-1"
                   >
                     {'>'}
                   </button>
@@ -158,7 +161,7 @@ function Payment() {
           </div>
           <div>
             <Button
-              className="bg-yellow-200 text-2xl text-black py-3 hover:bg-yellow-200"
+              className="bg-yellow-200 text-2xl text-black py-3 hover:bg-black hover:text-white"
               onClick={Paymenthandle}
             >
               결제

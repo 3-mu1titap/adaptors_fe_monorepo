@@ -28,7 +28,6 @@ async function fetchMentoringData({ categoryCode }: { categoryCode: string }) {
   const categoryName = getCategoryName(categoryCode); // 매핑된 카테고리 이름
   const element = await getFeedbackElements(categoryCode);
 
-  console.log(categoryName);
   const feedbackData = await getFeedbackScore(categoryName); // 멘토의 피드백
   const graphData = await getFeedbackGraph(categoryName); // 볼팡이 + 그래프
   return {
@@ -52,9 +51,9 @@ export default async function Page({
   });
 
   return (
-    <main className="mt-[1rem] sm:px-10 md:px-6 lg:px-20">
+    <main className="flex flex-col h-screen mt-[8rem] md:mt-[1rem] lg:max-w-[64rem] mx-auto md:max-w-[40rem] sm:max-w-[400px] max-[300px]">
       <FeedbackNavbar />
-      {feedbackData.length != 0 ? (
+      {Array.isArray(feedbackData) && feedbackData.length > 0 ? (
         <>
           <FeedbackHistory feedbackData={feedbackData} element={element} />
           <div className="md:flex">
@@ -74,7 +73,7 @@ export default async function Page({
           <FitImage
             src={volpang.src}
             alt="볼팡이 - adaptors의 마스코트"
-            className="w-[35%] max-w-[200px] transform scale-x-[-1]"
+            className="w-[80%] md:w-[50%] lg:w-[20%] transform scale-x-[-1]"
           />
           <div className="">
             <p className="text-2xl font- bold">
