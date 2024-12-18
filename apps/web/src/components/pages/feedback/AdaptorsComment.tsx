@@ -32,14 +32,16 @@ export default function AdaptorsComment({
           위 내용은 AI를 통해 분석된 내용으로 잘못된 응답일 수 있습니다
         </span>
       </p> */}
-      <div className="w-full ">
-        <Image
-          src={volpang.src}
-          alt="볼팡이 - adaptors의 마스코트"
-          width={500}
-          height={500}
-          className="max-w-[300px]"
-        />
+      <div className="w-full">
+        <div className="w-full justify-end flex">
+          <Image
+            src={volpang.src}
+            alt="볼팡이 - adaptors의 마스코트"
+            width={500}
+            height={500}
+            className="max-w-[300px] w-[50%]"
+          />
+        </div>
         <Bubble comment={feedbackContent}></Bubble>
       </div>
     </section>

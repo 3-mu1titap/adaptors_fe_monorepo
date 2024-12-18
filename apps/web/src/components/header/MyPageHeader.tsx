@@ -1,5 +1,5 @@
 'use client';
-import { useSidebar } from '@repo/ui/components/ui/sidebar';
+import { Sidebar, useSidebar } from '@repo/ui/components/ui/sidebar';
 import MainHeaderLogo from './MainHeaderLogo';
 import MainHeaderRightMenu from './MainHeaderRightMenu';
 import MypageHeaderGNB from './MypageHeaderGNB';
@@ -22,13 +22,14 @@ export default function MyPageHeader({
         className={` bg-white w-full sm:bg-transparent container mx-auto flex flex-row justify-between items-center py-5 ${!isMobile ? 'pr-4 pl-14 ' : 'justify-between px-6'} `}
       >
         {!open && !isMobile && <MainHeaderLogo />}
-        <MypageHeaderGNB />
+        {!isMobile && <MypageHeaderGNB />}
         {!isMobile && (
           <MainHeaderRightMenu
             isAuth={isAuth}
             profileImageUrl={profileImageUrl}
           />
         )}
+        {isMobile && <Sidebar />}
       </header>
       {
         <nav className="block md:block lg:hidden py-3 bg-white w-full">
