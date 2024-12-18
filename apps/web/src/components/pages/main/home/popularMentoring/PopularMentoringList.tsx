@@ -165,7 +165,7 @@ function PopularMentoringList({
               },
             }}
           >
-            {popularData.slice(0, 20).map((item, index) => (
+            {popularData.slice(0, 100).map((item, index) => (
               <SwiperSlide key={index}>
                 <Suspense
                   fallback={<Skeleton className="w-[200px] h-[500px]" />}

@@ -6,16 +6,13 @@ import {
   RecentReviewResType,
   reviewRequestDto,
 } from '@repo/web/components/types/Review/ReviewType';
-import { ResponseData } from '@repo/web/components/types/Review/ReviewType';
 import Link from 'next/link';
 function ReviewSection({
   review,
   userUuid,
-  reviewAll,
 }: {
   review: RecentReviewResType[];
   userUuid: string;
-  reviewAll: ResponseData;
 }) {
   return (
     <div className="py-3 h-auto min-h-[55rem] p-6 rounded-xl mt-10">
@@ -41,15 +38,6 @@ function ReviewSection({
             <div>수강평이 없습니다</div>
           )}
         </ul>
-
-        <div className="flex justify-center items-center mt-4">
-          <Link href={`/mentor/${userUuid}/review`}>
-            <button className="bg-yellow-200 py-3 px-4 rounded-lg">
-              전체보기
-            </button>
-          </Link>
-        </div>
-
         <div className="h-[1px] bg-gray-200 mt-10"></div>
       </div>
     </div>

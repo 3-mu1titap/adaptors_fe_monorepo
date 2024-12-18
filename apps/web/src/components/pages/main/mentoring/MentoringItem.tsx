@@ -85,7 +85,11 @@ export default function MentoringItem({
                   <Skeleton className="w-20 h-6 bg-gray-200" />
                 </>
               ) : (
-                <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
+                <CustomSessionInfoTags
+                  sessionCount={item.nowSessionCount}
+                  peopleCount={item.totalSaleCount}
+                  SessionInfoProps={SessionInfo}
+                />
               )}
             </div>
           </div>
