@@ -37,10 +37,8 @@ async function page() {
               <LikePage like={MentorLikeData} />
             </>
           ) : (
-            <div className="flex flex-col">
-              <span className="text-gray-200 text-md">
-                등록된 관심멘토가 없습니다..
-              </span>
+            <div className="flex justify-center text-md text-black">
+              등록된 관심멘토가 없습니다..!
             </div>
           )}
         </div>

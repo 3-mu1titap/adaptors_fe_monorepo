@@ -33,13 +33,16 @@ async function page() {
           </div>
           <VoltCharge points={res?.result || 0} />
           <ul className="flex flex-col underline-offset-1 gap-y-4 h-auto">
-            {(data && (
+            {data && res !== null && res !== undefined && res.result > 0 ? (
               <VoltUsageList
                 total={data?.result?.totalPage}
                 item={data?.result?.paymentResponseDtoList}
               />
-            )) ||
-              null}
+            ) : (
+              <div className="flex justify-center mt-8 text-lg text-black">
+                현재 충전한 결제 내역이 없습니다..
+              </div>
+            )}
           </ul>
         </div>
       </div>

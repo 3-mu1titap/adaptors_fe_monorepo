@@ -18,7 +18,9 @@ function LikePage({ like }: { like: BestMentorType[] }) {
             />
           ))
         ) : (
-          <div></div>
+          <div className="flex justify-center text-md text-black">
+            등록된 관심멘토가 없습니다..!
+          </div>
         )}
       </ul>
     </div>

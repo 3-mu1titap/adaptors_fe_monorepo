@@ -52,7 +52,7 @@ export default async function Page({
   });
 
   return (
-    <main className="mt-[1rem] px-28">
+    <main className="mt-[10rem]">
       <FeedbackNavbar />
       {feedbackData.length != 0 ? (
         <>
