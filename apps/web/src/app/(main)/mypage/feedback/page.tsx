@@ -49,7 +49,7 @@ export default async function Page({
   const { feedbackData, graphData, element } = await fetchMentoringData({
     categoryCode,
   });
-
+  //
   return (
     <main className="flex flex-col h-screen mt-[1rem] md:mt-[1rem] lg:max-w-[64rem] mx-auto md:max-w-[40rem] sm:max-w-[400px] max-[300px]">
       <FeedbackNavbar />

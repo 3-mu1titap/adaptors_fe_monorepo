@@ -4,7 +4,7 @@ import MainHeaderLogo from './MainHeaderLogo';
 import MainHeaderRightMenu from './MainHeaderRightMenu';
 import MypageHeaderGNB from './MypageHeaderGNB';
 import MypageNav from './MypageNav';
-
+//
 export default function MyPageHeader({
   isAuth,
   profileImageUrl,

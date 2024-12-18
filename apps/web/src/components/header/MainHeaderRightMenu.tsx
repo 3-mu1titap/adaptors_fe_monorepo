@@ -20,6 +20,7 @@ function MainHeaderRightMenu({
   isAuth: boolean;
   profileImageUrl: string | null;
 }) {
+  //
   return (
     <nav>
       <ul className="flex justify-end items-center gap-4 ">

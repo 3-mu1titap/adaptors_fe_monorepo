@@ -1,6 +1,6 @@
 import { MypageData } from 'src/store/initialStore';
 import MainHeaderGNBMenuItem from './MainGNBMenuItem';
-
+//
 export default function MypageNav() {
   return (
     <nav className={`flex w-full justify-center`}>
