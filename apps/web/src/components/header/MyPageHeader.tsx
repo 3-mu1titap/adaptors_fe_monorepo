@@ -24,10 +24,7 @@ export default function MyPageHeader({
         {!open && !isMobile && <MainHeaderLogo />}
         <MypageHeaderGNB />
         {!isMobile && (
-          <MainHeaderRightMenu
-            isAuth={isAuth}
-            profileImageUrl={profileImageUrl}
-          />
+          <MainHeaderRightMenu isAuth={isAuth} profileImage={profileImageUrl} />
         )}
       </header>
       {
