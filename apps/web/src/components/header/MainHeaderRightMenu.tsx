@@ -15,12 +15,10 @@ import { CreditCard, User } from 'lucide-react';
 import Link from 'next/link';
 function MainHeaderRightMenu({
   isAuth,
-  profileImage,
-  openSideBar,
+  profileImageUrl,
 }: {
   isAuth: boolean;
-  profileImage: string;
-  openSideBar?: () => void;
+  profileImageUrl: string | null;
 }) {
   return (
     <nav>
@@ -30,7 +28,7 @@ function MainHeaderRightMenu({
             {/* <UserProfile size={40} /> */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <UserProfile size={40} profileImgUrl={profileImage} />
+                <UserProfile size={40} profileImgUrl={profileImageUrl} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>

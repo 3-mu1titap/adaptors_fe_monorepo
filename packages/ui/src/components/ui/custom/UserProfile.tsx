@@ -6,7 +6,7 @@ function UserProfile({
   className,
   name,
 }: {
-  profileImgUrl?: string;
+  profileImgUrl?: string | null;
   size?: number;
   className?: string;
   name?: string;

@@ -25,7 +25,6 @@ export default function ExchangeHistory({
   });
   const [totalExchange, setTotalExchange] = useState<number>(0);
   const [filteredData, setFilteredData] = useState<exchangeDataType[]>([]);
-  console.log(filteredData);
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -241,7 +241,7 @@ export async function getMainMentoringList(): Promise<mainIntroDataType[]> {
       }
     );
     const result = (await res.json()) as commonResType<mainIntroDataType[]>;
-    // console.log(result);
+    console.log(result);
     return result.result;
   } catch (error) {
     console.error('error: ', error);

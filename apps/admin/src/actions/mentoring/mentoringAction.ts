@@ -145,14 +145,12 @@ export async function PostMentoringSession({
       body: JSON.stringify(payload),
     }
   );
-  console.log(res);
   if (!res.ok) {
     console.error('멘토링 세션 일괄 생성 실패');
     return res.ok;
   }
 
   const result = (await res.json()) as commonResType<number>;
-  console.log(result);
   revalidateTag('createMentoringSession');
   return result.result;
 }
