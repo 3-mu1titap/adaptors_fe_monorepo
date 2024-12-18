@@ -52,29 +52,29 @@ export default async function Page({
   });
 
   return (
-    <main className="mt-[1rem] px-28">
+    <main className="mt-[1rem] sm:px-10 md:px-6 lg:px-20">
       <FeedbackNavbar />
       {feedbackData.length != 0 ? (
         <>
           <FeedbackHistory feedbackData={feedbackData} element={element} />
-          <div className="flex">
+          <div className="md:flex">
+            <ScoreComparisonGraph
+              graphData={graphData?.feedbackFirstLastScoreDto ?? null}
+              elements={element}
+            />
             <AdaptorsComment
               feedbackContent={graphData?.feedbackContent ?? ''}
               nickname={user}
               profileImageUrl={session?.user.profileImageUrl}
             />
-            <ScoreComparisonGraph
-              graphData={graphData?.feedbackFirstLastScoreDto ?? null}
-              elements={element}
-            />
           </div>
         </>
       ) : (
-        <section className="flex mt-10 items-center">
+        <section className="mt-10 items-center">
           <FitImage
             src={volpang.src}
             alt="볼팡이 - adaptors의 마스코트"
-            className="w-[35%] transform scale-x-[-1]"
+            className="w-[35%] max-w-[200px] transform scale-x-[-1]"
           />
           <div className="">
             <p className="text-2xl font- bold">

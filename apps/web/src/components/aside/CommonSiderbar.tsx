@@ -47,7 +47,7 @@ function CommonSidebar() {
         {
           icon: (
             <History
-              color={pathname === `/mypage/mycourse` ? '#F6D84C' : '#ACACAC'}
+              color={pathname === `/mypage/history` ? '#F6D84C' : '#ACACAC'}
               size={20}
             />
           ),

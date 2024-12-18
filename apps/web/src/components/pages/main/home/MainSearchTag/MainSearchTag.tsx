@@ -52,7 +52,7 @@ function MainSearchTag({ name }: { name?: string }) {
           className="w-full px-4 py-3 rounded-lg bg-[#FFF9E7] border text-sm text-gray-400 border-[#FFD84D] focus:outline-none focus:ring-2 focus:ring-[#FFD84D]"
         />
         <div className="absolute inset-5 flex items-center justify-end">
-          <SearchIcon className="mr-5 h-5 w-5 text-[#969696]" />
+          <SearchIcon className="mr-0 h-5 w-5 text-[#969696]" />
           {/* <Button
             variant="outline"
             size="sm"

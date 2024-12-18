@@ -1,3 +1,5 @@
+'use client';
+
 async function uploadFileToS3(file: File, folder: string): Promise<string> {
   const formData = new FormData();
   formData.append('fileName', file.name);
@@ -29,10 +31,11 @@ async function uploadFileToS3(file: File, folder: string): Promise<string> {
   });
 
   if (!res.ok) {
+    console.log(res);
     throw new Error('Failed to upload file');
   }
-
   const data = await res.json();
+  console.log(data);
   return data.imageUrl; // S3에 업로드된 파일의 URL 반환
 }
 

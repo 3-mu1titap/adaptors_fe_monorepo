@@ -11,6 +11,7 @@ module.exports = {
       'd2v80xjmx68n4w.cloudfront.net',
       'www.sportschosun.com',
       'cdn.inflearn.com',
+      'image.tmdb.org',
     ],
   },
   experimental: {

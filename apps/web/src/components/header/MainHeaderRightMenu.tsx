@@ -17,9 +17,11 @@ import Link from 'next/link';
 function MainHeaderRightMenu({
   isAuth,
   profileImage,
+  openSideBar,
 }: {
   isAuth: boolean;
   profileImage: string;
+  openSideBar?: () => void;
 }) {
   return (
     <nav>
@@ -42,7 +44,7 @@ function MainHeaderRightMenu({
                       className="flex items-center gap-2"
                     >
                       <User />
-                      <span>Profile</span>
+                      <span>My page</span>
                     </Link>
                   </DropdownMenuItem>
                   {/* 마이페이지/볼트 */}

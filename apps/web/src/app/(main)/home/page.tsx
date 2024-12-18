@@ -17,7 +17,7 @@ async function Page() {
   const main_List = await getMainMentoringList();
   return (
     <>
-      <CommonLayout className="mt-[7rem]">
+      <CommonLayout className="mt-[5rem] md:mt-[7rem]">
         <MainSearchTag />
         {main_List && <MainIntro mainIntroDatas={mainIntroDatas} />}
         <PopularMentoringList categoryData={category_res} />
