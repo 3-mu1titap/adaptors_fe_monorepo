@@ -3,13 +3,12 @@ import {
   getMentorIntroduction,
   getProfileImage,
 } from 'src/actions/profile/getProfileData';
-
 import CustomSessionInfoTags from '@repo/ui/components/ui/custom/CustomSessionInfoTags';
 import { getMentorReview } from '@repo/web/actions/review/mentorReview';
 import { SeparateContainer } from '@repo/web/components/common/layout/SeperateContainer';
 import CurrentMentoring from '@repo/web/components/pages/mentor/current/CurrentMentoring';
 import ReviewSection from '@repo/web/components/pages/mentor/review/ReviewSection';
-import { getIsLiked } from '@repo/web/actions/Like/like';
+import { getMentorAllReview } from '@repo/web/actions/review/mentorReview';
 async function page({
   params,
 }: {
@@ -38,6 +37,8 @@ async function page({
   const review = await getMentorReview(userUuId);
   // console.log(review, '조회 성공');
 
+  const reviewAll = await getMentorAllReview(userUuId, 0);
+
   return (
     <SeparateContainer.RightSide className="flex flex-col justify-center border-l-0 border-gray-200">
       <CustomSessionInfoTags />
@@ -56,7 +57,13 @@ async function page({
       {/* 현재 진행중인 멘토링 섹션 */}
       <CurrentMentoring item={mentoringlistdata.slice(0, 5)} />
       {/* 리뷰 섹션 */}
-      {review && <ReviewSection review={review} userUuid={userUuId} />}
+      {review && reviewAll && (
+        <ReviewSection
+          review={review}
+          userUuid={userUuId}
+          reviewAll={reviewAll}
+        />
+      )}
     </SeparateContainer.RightSide>
   );
 }
