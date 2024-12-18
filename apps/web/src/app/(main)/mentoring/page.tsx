@@ -29,10 +29,11 @@ export default async function page({
       redirect(`/mentoring?category=${categories[0]?.topCategoryCode}&page=1`);
     }
   }
+
   const data = await GetMentoringNameSearch(
     name,
     searchParams.page,
-    searchParams.isDirect
+    searchParams.isDirect //isDirect
   );
   const mentoringListData = !name
     ? await GetMentoringByCategory({
@@ -43,7 +44,7 @@ export default async function page({
     : data?.searchResults;
 
   return (
-    <main className="mt-[9.5rem] pb-3 px-10 md:px-3  xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] max-w-[90%] container mx-auto">
+    <main className="mt-[5rem] sm:mt-[9.5rem] pb-3 sm:px-10 md:px-3  W-full xl:max-w-[1140px] lg:max-w-[1024px] md:max-w-[768px] max-w-[90%] container mx-auto">
       <MainSearchTag name={name} />
       {data?.spellingCorrection && (
         <div className="flex flex-row items-center mb-4 rounded-xl bg-slate-100 py-3 mt-4 tracking-wider lg:mx-10 lg:w-full">

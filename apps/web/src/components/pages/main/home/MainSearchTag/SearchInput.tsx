@@ -131,7 +131,7 @@ function SearchInput({ name }: { name: string }) {
           className="absolute inset-5 flex items-center justify-end"
           onClick={routeToSearchPage}
         >
-          <SearchIcon className="mr-5 h-5 w-5 text-[#969696]" />
+          <SearchIcon className="mr-0 h-5 w-5 text-[#969696]" />
         </div>
       </div>
       {isFocused && suggestedName.length > 0 && (

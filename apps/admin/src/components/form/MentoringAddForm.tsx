@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertTriangle, CheckSquare2, ImageIcon, X } from 'lucide-react';
+import { CheckSquare2, ImageIcon, X } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // import 'react-datepicker/dist/react-datepicker.css';
 // import { Editor } from '@toast-ui/react-editor';
@@ -10,7 +10,7 @@ import { uploadFileToS3 } from '@repo/admin/actions/common/awsMediaUploader';
 import { PostMentoring } from '@repo/admin/actions/mentoring/mentoringAction';
 // import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 // import 'tui-color-picker/dist/tui-color-picker.css';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {
   HashtagDataType,
@@ -19,9 +19,9 @@ import {
   TopCategoryDataType,
 } from '../types/main/mentor/mentoringTypes';
 
-import FitImage from '../ui/image/fit-image';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import FitImage from '../ui/image/fit-image';
 
 const formats = [
   'font',
@@ -241,7 +241,7 @@ export default function MentoringAddForm({
 
       <div className="flex flex-col space-y-3 mb-6">
         <label className="text-xl font-bold px-1">
-          받고 싶은 멘토링을 선택해주세요
+          멘토링 카테고리를 선택해주세요
         </label>
         <div className="flex flex-wrap gap-2">
           {topCategories

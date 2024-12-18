@@ -33,18 +33,17 @@ export function SearchDialog({
   ]);
   const suggestionContainerRef = useRef<HTMLUListElement | null>(null); // Ref for suggestion list container
   const router = useRouter();
-  const handleSearch = useDebouncedCallback((term) => {
-    if (!term) {
+  const handleSearch = useDebouncedCallback(() => {
+    if (!value) {
       setSuggestedName([{ name: '검색어를 입력해주세요' }]);
       return;
     }
-    setValue(term);
     const fetchData = async () => {
-      const data = await getSuggestedName(term);
+      const data = await getSuggestedName(value);
       setSuggestedName(data);
     };
     fetchData();
-  }, 300);
+  }, 100);
 
   const routeToSearchPage = async (searchValue: string, isDirect: boolean) => {
     if (searchValue) {
@@ -115,7 +114,8 @@ export function SearchDialog({
               placeholder={name ? name : 'Search here....'}
               onKeyDown={handleKeyDown}
               onChange={(e) => {
-                handleSearch(e.target.value);
+                setValue(e.target.value);
+                handleSearch();
                 setFocusedIndex(null); // Reset focus on input change
               }}
               className="text-2xl ring-yellow-200 outline-none ring-2 focus:ring-yellow-200 focus:ring-4"

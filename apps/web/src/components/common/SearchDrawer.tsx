@@ -13,7 +13,6 @@ import {
   SuggestedNames,
 } from '@repo/web/actions/search/elasticSearch';
 import { Search } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
@@ -25,6 +24,7 @@ export function SearchDrawer({
   isOpen: boolean;
   openCloser: () => void;
 }) {
+  //검색어 입력값
   const [value, setValue] = useState('');
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
@@ -32,12 +32,12 @@ export function SearchDrawer({
   ]);
   const router = useRouter();
 
+  //검색어 자동완성 fetch
   const handleSearch = useDebouncedCallback((term) => {
     if (!term) {
       setSuggestedName([{ name: '검색어를 입력해주세요' }]);
       return;
     }
-    setValue(term);
     const fetchData = async () => {
       const data = await getSuggestedName(term); // term 전달
       setSuggestedName(data);
@@ -45,33 +45,12 @@ export function SearchDrawer({
     fetchData();
   }, 300);
 
-  const routeToSearchPage = async (searchValue: string, isDirect: boolean) => {
-    if (searchValue) {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
-      router.push(`/mentoring?name=${searchValue}&isDirect=${isDirect}`);
-      openCloser();
-    }
-  };
-
-  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //엔터쳐서 검색
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log('handleKeyDown', e.currentTarget.value); // e.target 대신 e.currentTarget 사용
     if (e.key === 'Enter') {
-      if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {
-        await routeToSearchPage(suggestedName[focusedIndex].name, false); // 추천 검색
-      } else {
-        await routeToSearchPage(value, true); // 직접 입력
-      }
-    } else if (e.key === 'ArrowDown') {
-      setFocusedIndex((prevIndex) =>
-        prevIndex === null
-          ? 0
-          : Math.min(prevIndex + 1, suggestedName.length - 1)
-      );
-    } else if (e.key === 'ArrowUp') {
-      setFocusedIndex((prevIndex) =>
-        prevIndex === null
-          ? suggestedName.length - 1
-          : Math.max(prevIndex - 1, 0)
-      );
+      router.push(`/mentoring?name=${e.currentTarget.value}&isDirect=true`);
+      openCloser(); // 이 함수는 외부에서 정의되어 있어야 함
     }
   };
 
@@ -95,6 +74,7 @@ export function SearchDrawer({
               onKeyDown={handleKeyDown}
               onChange={(e) => {
                 handleSearch(e.target.value);
+                setValue(e.target.value);
               }}
               className="text-md"
               autoFocus
@@ -104,7 +84,11 @@ export function SearchDrawer({
               color="#A09F9F"
               size={18}
               strokeWidth={1}
-              onClick={() => routeToSearchPage(value, true)}
+              onClick={() => {
+                console.log(value);
+                router.push(`/mentoring?name=${value}&isDirect=true`);
+                openCloser();
+              }}
             />
           </div>
           {suggestedName && (
@@ -113,16 +97,11 @@ export function SearchDrawer({
                 suggestedName.map((item, index) => (
                   <li
                     className={`px-2 py-3 ${
-                      focusedIndex === index
-                        ? 'bg-yellow-100' // Highlight focused suggestion
-                        : ''
-                    } ${
                       item.name === '검색어를 입력해주세요'
                         ? 'text-center text-gray-400 hover:bg-yellow-100 cursor-default'
                         : ' cursor-pointer hover:bg-yellow-100 border-b-[1px]'
                     } text-md`}
                     key={index}
-                    onMouseEnter={() => setFocusedIndex(index)}
                     onClick={async () => {
                       setValue(item.name); // 상태 업데이트
                       router.push(

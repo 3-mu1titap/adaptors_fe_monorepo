@@ -33,7 +33,7 @@ export const getProfileImage = async (
   return data.result;
 };
 
-export const getMyProfileIamge = async (): Promise<userProfileType> => {
+export const getMyProfileImage = async (): Promise<userProfileType> => {
   const session = await getServerSession(options);
   const menteeUuid = session?.user.uuid;
   const response = await fetch(

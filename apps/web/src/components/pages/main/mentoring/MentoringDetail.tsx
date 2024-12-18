@@ -70,7 +70,7 @@ export default function MentoringDetail({
         totalReviewCount={MentorBatchData?.totalReviewCount}
       />
       {/* Ri Section */}
-      <SeparateContainer.RightSide className="w-full">
+      <SeparateContainer.RightSide className="w-full sm:max-w-[340px] md:max-w-full">
         {MentoringInfoData && (
           <MentoringOverview
             MentoringInfoData={MentoringInfoData}

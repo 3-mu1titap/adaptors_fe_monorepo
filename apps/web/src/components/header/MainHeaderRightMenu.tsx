@@ -23,7 +23,7 @@ function MainHeaderRightMenu({
 }) {
   return (
     <nav>
-      <ul className="flex justify-end items-center gap-4">
+      <ul className="flex justify-end items-center gap-4 ">
         {isAuth ? (
           <li>
             {/* <UserProfile size={40} /> */}
@@ -42,7 +42,7 @@ function MainHeaderRightMenu({
                       className="w-full flex items-center gap-2"
                     >
                       <User />
-                      <span>Profile</span>
+                      <span>My page</span>
                     </Link>
                   </DropdownMenuItem>
                   {/* 마이페이지/볼트 */}
