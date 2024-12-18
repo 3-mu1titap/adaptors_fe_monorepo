@@ -1,15 +1,15 @@
 import {
-  MenteeInfo,
-  MenteeProfileInfo,
-} from '@repo/web/components/types/mentee/MenteeType';
-import FitImage from '@repo/web/components/ui/image/fit-image';
-import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/ui/card';
-import { Mail, Phone, User, Briefcase, Calendar, Users } from 'lucide-react';
+import {
+  MenteeInfo,
+  MenteeProfileInfo,
+} from '@repo/web/components/types/mentee/MenteeType';
+import FitImage from '@repo/web/components/ui/image/fit-image';
+import { Briefcase, Calendar, Mail, Phone, User, Users } from 'lucide-react';
 
 export default function MenteeProfileContent({
   profileImageUrl,
@@ -39,7 +39,7 @@ export default function MenteeProfileContent({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">연락처 정보</CardTitle>
+              <CardTitle className="text-2xl">Information</CardTitle>
             </CardHeader>
 
             <CardContent className="space-y-4">
@@ -71,7 +71,7 @@ export default function MenteeProfileContent({
 
           <Card className="flex flex-col space-y-1">
             <CardHeader className="font-semibold mb-2">
-              <CardTitle className="text-2xl">멘티 프로필</CardTitle>
+              <CardTitle className="text-2xl">Profile</CardTitle>
             </CardHeader>
 
             <CardContent>
@@ -103,9 +103,7 @@ export default function MenteeProfileContent({
                   </div>
                 </div>
               ) : (
-                <p>
-                  등록된 프로필 정보가 없습니다.. 회원정보 등록을 해주세요.!
-                </p>
+                <p>현재 등록된 프로필 정보가 없습니다.</p>
               )}
             </CardContent>
           </Card>

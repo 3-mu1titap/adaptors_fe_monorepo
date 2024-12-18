@@ -1,5 +1,3 @@
-import React from 'react';
-
 function VoltCargeListCard({ item }: { item: any }) {
   const formatDate = (dateString: Date): string => {
     const date = new Date(dateString); // 문자열을 Date 객체로 변환
@@ -18,12 +16,15 @@ function VoltCargeListCard({ item }: { item: any }) {
         {formatDate(item.date)}
       </div>
       <div className="flex flex-col items-end">
-        <span className="text-sm text-gray-500">볼트</span>
+        <span className="text-sm text-gray-500">
+          {' '}
+          {item.point >= 0 ? '충전' : '사용'}
+        </span>
         <span
-          className={`text-lg font-bold ${item.point >= 0 ? 'text-green-600' : 'text-red-600'}`}
+          className={`text-lg font-bold ${item.point >= 0 ? 'text-black' : 'text-red-600'}`}
         >
           {item.point >= 0 ? '+' : ''}
-          {item.point.toLocaleString()}
+          {item.point.toLocaleString()}V
         </span>
       </div>
     </li>

@@ -17,7 +17,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
           <nav className="mt-[5rem] z-20 md:hidden py-3 backdrop-blur-lg w-full">
             <MypageNav />
           </nav>
-          {children}
+          <div className="mt-6">{children}</div>
         </main>
       </SidebarProvider>
       <ScrollToTopButton />
