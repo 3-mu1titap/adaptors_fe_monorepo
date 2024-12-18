@@ -9,7 +9,7 @@ import { getMentorReview } from '@repo/web/actions/review/mentorReview';
 import { SeparateContainer } from '@repo/web/components/common/layout/SeperateContainer';
 import CurrentMentoring from '@repo/web/components/pages/mentor/current/CurrentMentoring';
 import ReviewSection from '@repo/web/components/pages/mentor/review/ReviewSection';
-
+import { getIsLiked } from '@repo/web/actions/Like/like';
 async function page({
   params,
 }: {

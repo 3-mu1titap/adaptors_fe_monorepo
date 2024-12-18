@@ -59,7 +59,7 @@ function BestMentorCard({
 
           <div className="absolute top-6 right-7 flex flex-col mt-2 mb-2 justify-end gap-y-1 z-10">
             <HeartIcon
-              className={`w-[35px] h-[35px] cursor-pointer ${
+              className={`hover:block w-[35px] h-[35px] cursor-pointer ${
                 like ? 'fill-red-500' : 'text-gray-200'
               } ${isLoading && 'opacity-50 cursor-not-allowed'}`}
               onClick={(e) => {
