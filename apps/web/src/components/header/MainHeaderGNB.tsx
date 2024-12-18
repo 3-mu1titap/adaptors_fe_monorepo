@@ -3,7 +3,7 @@ import MainHeaderGNBMenuItem from './MainGNBMenuItem';
 
 function MainHeaderGNB() {
   return (
-    <nav className="hidden lg:flex w-full justify-center">
+    <nav className="block justify-center text-sm ml-2 md:flex sm:flex sm:justify-center md:justify-center lg:flex w-full">
       <ul className="text-base lg:text-lg flex gap-x-4 lg:gap-x-8">
         {headerGNBMenuData.map((item) => (
           <MainHeaderGNBMenuItem key={item.label} menuItem={item} />

@@ -13,7 +13,7 @@ async function PutUserMentorProfile(
 ) {
   'use server';
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_MEMBER_URL}/api/v1/member/mentee/profile`,
+    `${process.env.MEMBER_URL}/api/v1/member/mentee/profile`,
     {
       cache: 'no-cache',
       method: 'PUT',

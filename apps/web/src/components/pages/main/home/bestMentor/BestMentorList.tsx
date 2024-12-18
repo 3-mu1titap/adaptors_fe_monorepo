@@ -115,7 +115,7 @@ export default function BestMentoringList({
               },
             }}
           >
-            {data.map((category, index) => (
+            {data?.map((category, index) => (
               <SwiperSlide key={index}>
                 <BestMentorCard
                   item={category}
@@ -127,7 +127,7 @@ export default function BestMentoringList({
           </Swiper>
 
           <div className="flex my-10 justify-center">
-            {data.map((_, index) => (
+            {data?.map((_, index) => (
               <SwiperIndex
                 key={index}
                 slideIndex={SlideIndex}
@@ -138,7 +138,9 @@ export default function BestMentoringList({
           </div>
         </CommonLayout>
       ) : (
-        <div>현재 베스트 멘토가 없습니다</div>
+        <div className="flex justify-center">
+          현재 등록된 베스트 멘토가 없습니다...!
+        </div>
       )}
     </>
   );

@@ -81,7 +81,7 @@ function CourseMentoringListPage({
       ) : (
         <div className="justify-center ">
           <span className="text-md text-black ml-36">
-            참가한 멘토링이 없습니다...
+            참가한 멘토링이 없습니다.
           </span>
         </div>
       )}

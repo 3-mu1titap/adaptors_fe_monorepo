@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import { MentoringSessionContent } from '../../types/mentoring/mentoringTypes';
@@ -29,7 +28,10 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   };
 
   return (
-    <Badge variant="outline" className={`${color} border-0`}>
+    <Badge
+      variant="outline"
+      className={`${color} border-0 px-2 py-1 text-nowrap ml-4 sm:px-4 sm:py-2 text-xs sm:text-sm`}
+    >
       {label}
     </Badge>
   );
@@ -40,10 +42,9 @@ export default function MentoringCard({
 }: {
   item: MentoringSessionContent;
 }) {
-  // Format time utility
   const formatTime = (time: { hour?: number; minute?: number }) => {
-    const hour = time?.hour ?? 0; // undefined일 경우 기본값 0
-    const minute = time?.minute ?? 0; // undefined일 경우 기본값 0
+    const hour = time?.hour ?? 0; // hour가 undefined일 경우 0으로 기본값 설정
+    const minute = time?.minute ?? 0; // minute이 undefined일 경우 0으로 기본값 설정
     return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
   };
 
@@ -60,13 +61,16 @@ export default function MentoringCard({
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-2">
           <Calendar className="h-5 w-5 text-gray-500" />
-          <span>{format(parseISO(item.startDate), 'yyyy년 MM월 dd일')}</span>
+          <span>
+            {format(parseISO(item.startDate), 'yyyy년 MM월 dd일')} -{' '}
+            {format(parseISO(item.endDate), 'yyyy년 MM월 dd일')}
+          </span>
         </div>
         <div className="flex items-center space-x-2">
           <Clock className="h-5 w-5 text-gray-500" />
           <span>
             {item.startTime && formatTime(item.startTime)} -{' '}
-            {formatTime(item?.endTime)}
+            {item.endTime && formatTime(item.endTime)}
           </span>
         </div>
         <div className="flex items-center space-x-2">
@@ -88,7 +92,6 @@ export default function MentoringCard({
         <div className="text-sm text-gray-500">
           최종 수정: {format(parseISO(item.updatedAt), 'yyyy-MM-dd HH:mm')}
         </div>
-        <Button variant="outline">자세히 보기</Button>
       </CardFooter>
     </Card>
   );

@@ -110,17 +110,19 @@ export default function MentorProfileEditForm({
             />
           </label>
         ) : (
-          <span className="relative h-full flex items-center justify-center">
-            <div className="h-[100%] max-h-auto max-w-[400px] overflow-hidden py-auto">
-              <FitImage src={preview} alt="Preview" />
-            </div>
+          <div className="relative w-64 h-64">
+            <FitImage
+              src={preview}
+              alt="Preview"
+              className="rounded-lg object-cover"
+            />
             <button
               onClick={handleRemove}
               className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 p-2 bg-gray-900/80 rounded-full hover:bg-gray-900 transition-colors"
             >
               <X className="w-5 h-5 text-white" />
             </button>
-          </span>
+          </div>
         )}
       </fieldset>
       <fieldset className="space-y-1">

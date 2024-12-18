@@ -20,8 +20,8 @@ async function Page() {
       <CommonLayout className="mt-[7rem]">
         <MainSearchTag />
         {main_List && <MainIntro mainIntroDatas={mainIntroDatas} />}
-        <PopularMentoringList categoryData={category_res} />
-        <BestMentoringList item={res} />
+        {category_res && <PopularMentoringList categoryData={category_res} />}
+        {res && <BestMentoringList item={res} />}
         <ShareMentoring />
       </CommonLayout>
     </>

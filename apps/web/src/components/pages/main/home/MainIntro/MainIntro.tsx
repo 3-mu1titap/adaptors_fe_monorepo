@@ -44,7 +44,7 @@ export default function MainIntro({
           }
         }}
       >
-        {mainIntroDatas.map((item, index) => (
+        {mainIntroDatas?.map((item, index) => (
           <SwiperSlide key={index}>
             <SwiperItemLayout item={item} />
           </SwiperSlide>
@@ -52,7 +52,7 @@ export default function MainIntro({
       </Swiper>
 
       <div className="flex my-10 justify-center">
-        {mainIntroDatas.map((_, index) => (
+        {mainIntroDatas?.map((_, index) => (
           <SwiperIndex
             key={index}
             slideIndex={SlideIndex}

@@ -41,7 +41,10 @@ function ReviewSection({
 
         <div className="flex justify-center items-center mt-4">
           <Link href={`/mentor/${userUuid}/review`}>
-            <button className="bg-yellow-200 py-3 px-4 rounded-lg">
+            <button
+              className="bg-yellow-200 py-3 px-4 rounded-lg"
+              disabled={true}
+            >
               전체보기
             </button>
           </Link>
