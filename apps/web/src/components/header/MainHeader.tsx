@@ -1,24 +1,19 @@
-import { Sidebar } from '../common/Sidebar';
 import MainHeaderGNB from './MainHeaderGNB';
 import MainHeaderLogo from './MainHeaderLogo';
 import MainHeaderRightMenu from './MainHeaderRightMenu';
+import { getMyProfileImage } from '@repo/web/actions/profile/getProfileData';
 
-export default function MainHeader({
-  isAuth,
-  profileImage,
-}: {
-  isAuth: boolean;
-  profileImage: string;
-}) {
+export default async function MainHeader({ isAuth }: { isAuth: boolean }) {
+  const userProfile = await getMyProfileImage();
   return (
     <div className="w-full fixed top-0 backdrop-blur-lg z-20">
       <header className="container mx-auto flex flex-row justify-between items-center py-5 px-4">
         <MainHeaderLogo />
         <MainHeaderGNB />
-        <div className="flex items-center gap-2">
-          <MainHeaderRightMenu isAuth={isAuth} profileImage={profileImage} />
-          <Sidebar />
-        </div>
+        <MainHeaderRightMenu
+          isAuth={isAuth}
+          profileImageUrl={userProfile.profileImageUrl}
+        />
       </header>
     </div>
   );

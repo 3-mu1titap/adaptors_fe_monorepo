@@ -22,7 +22,8 @@ function ChatSender({
   handleFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleImageSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: any) => {
+    if (e.isComposing || e.keyCode === 229) return;
     if (e.key === 'Enter' && e.shiftKey) {
       e.preventDefault();
       setNewMessage((prev) => prev + '\n');

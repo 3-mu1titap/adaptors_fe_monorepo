@@ -11,8 +11,8 @@ import FitImage from '@repo/web/components/ui/image/fit-image';
 
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import volpang from '../../../components/assets/images/volpang.png';
-import { options } from '../../api/auth/[...nextauth]/options';
+import volpang from '../../../../components/assets/images/volpang.png';
+import { options } from '../../../api/auth/[...nextauth]/options';
 
 const categoryMapping: Record<string, string> = {
   'TC-CD7877C0': 'RESUME',

@@ -8,9 +8,10 @@ import ScrollToTopButton from '@repo/web/components/util/ScrollToTopButton';
 import { getServerSession } from 'next-auth';
 import React from 'react';
 import { options } from '../api/auth/[...nextauth]/options';
+import { getMyProfileImage } from '@repo/web/actions/profile/getProfileData';
 async function Layout({ children }: { children: React.ReactNode }) {
   const isAuth = await getServerSession(options);
-  const profileImageUrl = isAuth?.user.profileImageUrl;
+  const profileImage = await getMyProfileImage();
   return (
     <div className="flex h-auto w-full ">
       {/* <Sidebar /> */}
@@ -20,7 +21,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
           <SidebarTrigger className="z-[100000] hidden md:!block md:fixed" />
           <MyPageHeader
             isAuth={isAuth ? true : false}
-            profileImageUrl={profileImageUrl}
+            profileImageUrl={profileImage.profileImageUrl}
           />
           {children}
         </main>
