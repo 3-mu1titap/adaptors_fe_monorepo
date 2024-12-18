@@ -46,7 +46,7 @@ export function SearchDialog({
   }, 100);
 
   const routeToSearchPage = async (searchValue: string, isDirect: boolean) => {
-    if (searchValue) {
+    if (searchValue !== '검색어를 입력해주세요') {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
       router.push(`/mentoring?name=${searchValue}&isDirect=${isDirect}`);
       router.refresh();
@@ -149,12 +149,14 @@ export function SearchDialog({
                     key={index}
                     onMouseEnter={() => setFocusedIndex(index)}
                     onClick={async () => {
-                      setValue(item.name); // 상태 업데이트
-                      router.push(
-                        `/mentoring?name=${item.name}&isDirect=false`
-                      ); // name 직접 사용
-                      router.refresh();
-                      openCloser();
+                      if (item.name !== '검색어를 입력해주세요') {
+                        setValue(item.name); // 상태 업데이트
+                        router.push(
+                          `/mentoring?name=${item.name}&isDirect=false`
+                        ); // name 직접 사용
+                        router.refresh();
+                        openCloser();
+                      }
                     }}
                   >
                     {item.name}

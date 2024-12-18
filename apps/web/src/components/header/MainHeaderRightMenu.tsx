@@ -1,3 +1,4 @@
+// 'use client';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
 import {
   DropdownMenu,
@@ -10,16 +11,14 @@ import {
 } from '@repo/ui/components/ui/dropdown';
 import HeaderLogoutButton from '@repo/web/components/ui/Button/HeaderLogoutButton';
 import JoinFreeButton from '@repo/web/components/ui/Button/JoinFreeButton';
-import OpenAppButton from '@repo/web/components/ui/Button/OpenAppButton';
 import { CreditCard, User } from 'lucide-react';
 import Link from 'next/link';
-
 function MainHeaderRightMenu({
   isAuth,
   profileImageUrl,
 }: {
   isAuth: boolean;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
 }) {
   return (
     <nav>
@@ -39,7 +38,7 @@ function MainHeaderRightMenu({
                   <DropdownMenuItem>
                     <Link
                       href="/mypage/edit"
-                      className="w-full flex items-center gap-2"
+                      className="flex items-center gap-2"
                     >
                       <User />
                       <span>My page</span>
@@ -49,10 +48,10 @@ function MainHeaderRightMenu({
                   <DropdownMenuItem>
                     <Link
                       href="/mypage/volt"
-                      className="w-full flex items-center gap-2"
+                      className="flex items-center gap-2"
                     >
                       <CreditCard />
-                      <span>Volt</span>
+                      <span>Billing</span>
                     </Link>
                   </DropdownMenuItem>
                   {/* 일렉트론 이동 버튼 */}

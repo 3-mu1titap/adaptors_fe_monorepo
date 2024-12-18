@@ -82,8 +82,8 @@ export interface MentoringSessionContent {
   sessionUuid: string;
   startDate: string;
   endDate: string;
-  startTime: startTime;
-  endTime: endTime;
+  startTime: string;
+  endTime: string;
   price: number;
   maxHeadCount: number | 0;
   minHeadCount: number | 0;
@@ -91,6 +91,7 @@ export interface MentoringSessionContent {
   status: string;
   updatedAt: string;
 }
+
 export interface startTime {
   hour?: number; // undefined 허용
   minute?: number;

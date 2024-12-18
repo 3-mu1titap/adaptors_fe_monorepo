@@ -1,6 +1,5 @@
 import React from 'react';
 import { format, parseISO } from 'date-fns';
-import { MentoringSessionContent } from '../../types/mentoring/mentoringTypes';
 import {
   Card,
   CardContent,
@@ -9,8 +8,8 @@ import {
   CardTitle,
 } from '@repo/ui/components/ui/card';
 import { Badge } from '@repo/ui/components/ui/badge';
-import { Button } from '@repo/ui/components/ui/button';
 import { Calendar, Clock, Users, DollarSign } from 'lucide-react';
+import { MentoringSessionContent } from '../../types/mentoring/mentoringTypes';
 
 const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const statusConfig: {
@@ -42,11 +41,15 @@ export default function MentoringCard({
 }: {
   item: MentoringSessionContent;
 }) {
-  const formatTime = (time: { hour?: number; minute?: number }) => {
-    const hour = time?.hour ?? 0; // hour가 undefined일 경우 0으로 기본값 설정
-    const minute = time?.minute ?? 0; // minute이 undefined일 경우 0으로 기본값 설정
-    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+  const formatTime = (time: string) => {
+    const [hours, minutes] = time.split(':');
+    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   };
+
+  const price = item.price ?? 100;
+  const minHeadCount = item.minHeadCount ?? 3;
+  const nowHeadCount = item.nowHeadCount ?? 2;
+  const maxHeadCount = item.maxHeadCount ?? 5;
 
   return (
     <Card className="w-full max-w-md">
@@ -69,22 +72,20 @@ export default function MentoringCard({
         <div className="flex items-center space-x-2">
           <Clock className="h-5 w-5 text-gray-500" />
           <span>
-            {item.startTime && formatTime(item.startTime)} -{' '}
-            {item.endTime && formatTime(item.endTime)}
+            {formatTime(item.startTime)} - {formatTime(item.endTime)}
           </span>
         </div>
         <div className="flex items-center space-x-2">
           <Users className="h-5 w-5 text-gray-500" />
           <span>
-            현재 {item.nowHeadCount}명 (최소 {item.minHeadCount}명 ~ 최대{' '}
-            {item.maxHeadCount}명)
+            현재 {nowHeadCount}명 (최소 {minHeadCount}명 ~ 최대 {maxHeadCount}
+            명)
           </span>
         </div>
         <div className="flex items-center space-x-2">
           <DollarSign className="h-5 w-5 text-gray-500" />
           <span>
-            {item.price.toLocaleString('ko-kr')}{' '}
-            <span className="ml-1">Volt</span>
+            {price.toLocaleString('ko-kr')} <span className="ml-1">Volt</span>
           </span>
         </div>
       </CardContent>

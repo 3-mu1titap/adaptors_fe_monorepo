@@ -85,9 +85,11 @@ export function SearchDrawer({
               size={18}
               strokeWidth={1}
               onClick={() => {
-                console.log(value);
-                router.push(`/mentoring?name=${value}&isDirect=true`);
-                openCloser();
+                if (value !== '검색어를 입력해주세요') {
+                  console.log(value);
+                  router.push(`/mentoring?name=${value}&isDirect=true`);
+                  openCloser();
+                }
               }}
             />
           </div>
@@ -103,12 +105,14 @@ export function SearchDrawer({
                     } text-md`}
                     key={index}
                     onClick={async () => {
-                      setValue(item.name); // 상태 업데이트
-                      router.push(
-                        `/mentoring?name=${item.name}&isDirect=false`
-                      ); // name 직접 사용
-                      router.refresh();
-                      openCloser();
+                      if (item.name !== '검색어를 입력해주세요') {
+                        setValue(item.name); // 상태 업데이트
+                        router.push(
+                          `/mentoring?name=${item.name}&isDirect=false`
+                        ); // name 직접 사용
+                        router.refresh();
+                        openCloser();
+                      }
                     }}
                   >
                     {item.name}

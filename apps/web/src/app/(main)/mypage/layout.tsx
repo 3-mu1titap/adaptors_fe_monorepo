@@ -3,9 +3,9 @@ import {
   SidebarTrigger,
 } from '@repo/ui/components/ui/sidebar';
 import CommonSidebar from '@repo/web/components/aside/CommonSiderbar';
+import MypageNav from '@repo/web/components/header/MypageNav';
 import ScrollToTopButton from '@repo/web/components/util/ScrollToTopButton';
 import React from 'react';
-import MypageNav from '@repo/web/components/header/MypageNav';
 
 async function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +14,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
         <CommonSidebar />
         <SidebarTrigger className="z-[1000] hidden md:!block md:fixed" />
         <main className="w-full h-auto overflow-y-auto transition-all duration-300 md:mt-[5rem]">
-          <nav className="fixed mt-[5rem] md:hidden py-3 bg-white w-full">
+          <nav className="mt-[5rem] z-20 md:hidden py-3 backdrop-blur-lg w-full">
             <MypageNav />
           </nav>
           {children}
