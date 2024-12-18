@@ -4,18 +4,43 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlarmType } from '../types/alarm/alarmTypes';
 import { getRecentAlarmData } from '@repo/admin/actions/alram/alramAction';
-import { BellIcon } from 'lucide-react';
+import {
+  BellIcon,
+  BookOpenIcon,
+  CalendarIcon,
+  StarIcon,
+  CreditCardIcon,
+  CheckCircleIcon,
+} from 'lucide-react';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
-function AdaptorsAlarm({ user }: { user: { uuid: string } }) {
+const AlarmTypeName: Record<string, string> = {
+  MENTORING_REGISTER: '멘토링 등록',
+  SESSION_REGISTER: '세션 등록',
+  REVIEW_REGISTER: '리뷰 등록',
+  PAY_SESSION: '세션 결제',
+  SESSION_CONFIRM: '세션 확정',
+};
+
+const AlarmTypeIcon: Record<string, React.ElementType> = {
+  MENTORING_REGISTER: BookOpenIcon,
+  SESSION_REGISTER: CalendarIcon,
+  REVIEW_REGISTER: StarIcon,
+  PAY_SESSION: CreditCardIcon,
+  SESSION_CONFIRM: CheckCircleIcon,
+};
+
+interface User {
+  uuid: string;
+}
+
+function AdaptorsAlarm({ user }: { user: User }) {
   const [recentAlarm, setRecentAlarm] = useState<AlarmType | null>(null);
-  const [newAlarm, setNewAlarm] = useState<AlarmType | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const connectEventSource = useCallback(() => {
     if (eventSourceRef.current) {
-      console.log('EventSource already exists. Skipping connection.');
       return;
     }
 
@@ -26,18 +51,15 @@ function AdaptorsAlarm({ user }: { user: { uuid: string } }) {
     });
 
     newEventSource.onopen = () => {
-      console.log('Alarm connection established');
+      console.log('알람 서비스 연결');
     };
 
     newEventSource.onmessage = (event) => {
-      try {
-        console.log(event.data);
-        // const alarmData: AlarmType = JSON.parse(event.data);
-        // setNewAlarm(alarmData);
-        // setRecentAlarm(alarmData);
-      } catch (error) {
-        console.error('Error parsing alarm data:', error);
-      }
+      const newAlarm = event.data.split(':');
+      setRecentAlarm({
+        alarmType: newAlarm[0] as keyof typeof AlarmTypeName,
+        message: newAlarm[1],
+      });
     };
 
     newEventSource.onerror = (error) => {
@@ -45,7 +67,11 @@ function AdaptorsAlarm({ user }: { user: { uuid: string } }) {
       newEventSource.close();
       eventSourceRef.current = null;
 
-      setTimeout(() => {
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
+
+      reconnectTimeoutRef.current = setTimeout(() => {
         connectEventSource();
       }, 5000);
     };
@@ -82,74 +108,57 @@ function AdaptorsAlarm({ user }: { user: { uuid: string } }) {
     getAlarmsData();
   }, [getAlarmsData]);
 
-  const handleDismissNewAlarm = useCallback(() => {
-    setNewAlarm(null);
-  }, []);
+  const getAlarmIcon = (alarmType: keyof typeof AlarmTypeName) => {
+    const IconComponent = AlarmTypeIcon[alarmType] || BellIcon;
+    return <IconComponent className="h-8 w-8" />;
+  };
 
   return (
     <div className="w-full">
-      <div className="max-w-7xl mx-auto">
-        <AnimatePresence>
-          {newAlarm && (
+      <div className="max-w-7xl mx-auto bg-white rounded-lg overflow-hidden">
+        <AnimatePresence mode="wait">
+          {recentAlarm && (
             <motion.div
-              key="new-alarm"
-              initial={{ opacity: 0, y: -50 }}
+              key={recentAlarm.message}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4"
-              role="alert"
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+              className="p-4"
             >
-              <div className="flex justify-between items-start">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <BellIcon
-                      className="h-5 w-5 text-blue-500"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-bold">{newAlarm.alarmType}</p>
-                    <p>{newAlarm.message}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={handleDismissNewAlarm}
-                  className="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  aria-label="Dismiss notification"
-                >
-                  <span className="sr-only">Dismiss</span>
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
+                    {getAlarmIcon(recentAlarm.alarmType)}
+                  </motion.div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <motion.h3
+                    className="text-lg font-semibold text-gray-900"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {AlarmTypeName[recentAlarm.alarmType]
+                      ? AlarmTypeName[recentAlarm.alarmType]
+                      : recentAlarm.alarmType}
+                  </motion.h3>
+                  <motion.p
+                    className="text-sm text-gray-500 truncate"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    {recentAlarm.message}
+                  </motion.p>
+                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-        {recentAlarm && !newAlarm && (
-          <div className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-center">
-              <BellIcon
-                className="h-6 w-6 text-gray-500 mr-2"
-                aria-hidden="true"
-              />
-              <div>
-                <h3 className="text-sm font-medium text-gray-900">
-                  {recentAlarm.alarmType}
-                </h3>
-                <p className="text-sm text-gray-500">{recentAlarm.message}</p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
