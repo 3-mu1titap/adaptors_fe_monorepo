@@ -33,6 +33,7 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
   // 서버에서 받은 데이터 반환
   const data = await response.json();
   revalidateTag('likeStatus');
+  console.log(data, 'agffff');
   return data.code;
 };
 
