@@ -1,10 +1,9 @@
 'use server';
+import { likeResType } from '@repo/web/components/types/like/likeType';
 import { commonResType } from '@repo/web/components/types/ResponseTypes';
 import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
-import { likeResType } from '@repo/web/components/types/like/likeType';
 import { options } from 'src/app/api/auth/[...nextauth]/options';
-import { BlakcListTargetType } from './../../components/types/mypage/blacklistType';
 //좋아요
 export const postLikeReaction = async (targetUuid: string): Promise<number> => {
   'use server';
@@ -98,6 +97,7 @@ export const postLikeReaction = async (targetUuid: string): Promise<number> => {
 export async function getIsLiked(targetUuid: string): Promise<boolean> {
   'use server';
   const session = await getServerSession(options);
+  if (!session) return false;
   const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
