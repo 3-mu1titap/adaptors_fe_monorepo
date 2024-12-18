@@ -22,10 +22,11 @@ import {
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
 function CommonSidebar() {
+  const router = useRouter();
   const pathname = usePathname();
   const basePath = pathname.startsWith('/mypage') ? '/mypage' : '/home';
 

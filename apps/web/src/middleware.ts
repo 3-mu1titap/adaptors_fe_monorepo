@@ -42,7 +42,7 @@ export default async function middleware(request: NextRequest) {
   const callbackUrl = searchParams.get('callbackUrl');
   const { pathname } = request.nextUrl;
 
-  const isWithAuth = withAuthList.includes(pathname);
+  const isWithAuth = withAuthList.some((route) => pathname.startsWith(route));
   if (isWithAuth) {
     return withAuth(request, !!accessToken);
   } else {
