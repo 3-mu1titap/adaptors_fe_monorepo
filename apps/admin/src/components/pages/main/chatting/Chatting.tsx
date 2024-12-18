@@ -93,7 +93,6 @@ function Chatting({
 
   const connectEventSource = useCallback(() => {
     if (eventSource) {
-      console.log('EventSource already exists. Skipping connection.');
       return;
     }
 

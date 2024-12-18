@@ -36,19 +36,18 @@ interface User {
 
 function AdaptorsAlarm({ user }: { user: User }) {
   const [recentAlarm, setRecentAlarm] = useState<AlarmType | null>(null);
-  const eventSourceRef = useRef<EventSource | null>(null);
+  const [eventSource, setEventSource] = useState<EventSourcePolyfill | null>(
+    null
+  );
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const connectEventSource = useCallback(() => {
-    if (eventSourceRef.current) {
+    if (eventSource) {
       return;
     }
 
     const alarmUrl = `${process.env.NEXT_PUBLIC_ALARM_URL}/api/v1/alarm-service/alarms/connect?userUuid=${user.uuid}`;
-    const EventSource = EventSourcePolyfill || NativeEventSource;
-    const newEventSource = new EventSource(alarmUrl, {
-      heartbeatTimeout: 86400000,
-    });
+    const newEventSource = new EventSourcePolyfill(alarmUrl);
 
     newEventSource.onopen = () => {
       console.log('알람 서비스 연결');
@@ -65,30 +64,23 @@ function AdaptorsAlarm({ user }: { user: User }) {
     newEventSource.onerror = (error) => {
       console.error('EventSource error:', error);
       newEventSource.close();
-      eventSourceRef.current = null;
+      setEventSource(null);
 
-      if (reconnectTimeoutRef.current) {
-        clearTimeout(reconnectTimeoutRef.current);
-      }
-
-      reconnectTimeoutRef.current = setTimeout(() => {
+      setTimeout(() => {
         connectEventSource();
       }, 5000);
     };
 
-    eventSourceRef.current = newEventSource;
+    setEventSource(newEventSource);
   }, [user.uuid]);
 
   useEffect(() => {
     connectEventSource();
 
     return () => {
-      if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
-      }
-      if (reconnectTimeoutRef.current) {
-        clearTimeout(reconnectTimeoutRef.current);
+      if (eventSource) {
+        eventSource.close();
+        setEventSource(null);
       }
     };
   }, [connectEventSource]);
