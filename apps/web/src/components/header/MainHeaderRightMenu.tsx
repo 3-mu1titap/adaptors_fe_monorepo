@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import UserProfile from '@repo/ui/components/ui/custom/UserProfile';
 import {
   DropdownMenu,
@@ -9,24 +9,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/ui/dropdown';
-import { SessionContext } from '@repo/web/app/context/SessionContext';
 import HeaderLogoutButton from '@repo/web/components/ui/Button/HeaderLogoutButton';
 import JoinFreeButton from '@repo/web/components/ui/Button/JoinFreeButton';
 import OpenAppButton from '@repo/web/components/ui/Button/OpenAppButton';
 import { CreditCard, User } from 'lucide-react';
 import Link from 'next/link';
-import { useContext } from 'react';
-function MainHeaderRightMenu({ isAuth }: { isAuth: boolean }) {
-  const { profileImageUrl } = useContext(SessionContext);
+function MainHeaderRightMenu({
+  isAuth,
+  profileImage,
+  openSideBar,
+}: {
+  isAuth: boolean;
+  profileImage: string;
+  openSideBar?: () => void;
+}) {
   return (
     <nav>
-      <ul className="flex justify-end items-center gap-4">
+      <ul className="flex justify-end items-center gap-4 ">
         {isAuth ? (
           <li>
             {/* <UserProfile size={40} /> */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <UserProfile size={40} profileImgUrl={profileImageUrl} />
+                <UserProfile size={40} profileImgUrl={profileImage} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -39,7 +44,7 @@ function MainHeaderRightMenu({ isAuth }: { isAuth: boolean }) {
                       className="flex items-center gap-2"
                     >
                       <User />
-                      <span>Profile</span>
+                      <span>My page</span>
                     </Link>
                   </DropdownMenuItem>
                   {/* 마이페이지/볼트 */}

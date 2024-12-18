@@ -55,7 +55,7 @@ export default function ScoreComparisonGraph({
     },
   ];
   return (
-    <div className="h-[400px] p-4 flex-1">
+    <div className="w-full md:w-[30vw] max-h-[400px] p-4 flex-1">
       <h2 className="text-center text-xl font-semibold mb-4">세부 역량</h2>
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart cx="50%" cy="50%" outerRadius="80%" data={transformedData}>

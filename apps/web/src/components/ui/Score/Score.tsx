@@ -4,6 +4,7 @@ interface LightningScoreProps {
   fillColor?: string;
   strokeColor?: string;
   size?: number;
+  className?: string;
 }
 
 export default function Score({
@@ -12,14 +13,15 @@ export default function Score({
   fillColor = '#FFD700',
   strokeColor = 'black',
   size = 45,
+  className = '',
 }: LightningScoreProps) {
   const normalizedScore = Math.min(Math.max(score, 0), maxScore);
 
   return (
-    <div className="flex-2">
+    <div className={`flex-2 ${className} md:mx-auto`}>
       <svg
-        width={size}
-        height={size}
+        width={100}
+        height={100}
         viewBox="0 0 45 45"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

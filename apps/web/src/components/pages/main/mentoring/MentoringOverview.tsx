@@ -28,7 +28,7 @@ export default function MentoringOverview({
   return (
     <div>
       <CustomSessionInfoTags SessionInfoProps={SessionInfo} />
-      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5 pb-3 pt-5">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5 pb-3 pt-4">
         <div className="text-lg md:text-2xl lg:text-2xl xl:text-3xl font-bold leading-tight border-l-[5px] border-l-adaptorsYellow pl-5">
           {MentoringInfoData?.name}
           <br />
@@ -43,9 +43,10 @@ export default function MentoringOverview({
           reviewCount={MentoringInfoData.totalReviewCount}
         />
       </div>
-      <div className="relative sm:w-full mt-8 rounded-xl object-cover overflow-hidden bg-gray-200">
+      {/* //카테고리 */}
+      <div className="relative sm:w-full mt-5 rounded-xl object-cover overflow-hidden bg-gray-200">
         {MentoringInfoData.categoryList && (
-          <ul className="flex flex-wrap gap-3 absolute top-5 left-5 w-full">
+          <ul className="flex flex-wrap gap-3 absolute top-0 left-0 w-full text-adaptorsYellow">
             {MentoringInfoData.categoryList
               .filter(
                 (x) =>
@@ -55,7 +56,7 @@ export default function MentoringOverview({
               .map((item) => (
                 <li
                   key={item.id}
-                  className="bg-adaptorsYellow/70 py-1 px-3 rounded-2xl ring-2 ring-white min-w-fit"
+                  className="bg-black text-sm font-semibold py-1 px-3 r min-w-fit"
                 >
                   {item.topCategoryName}
                 </li>
@@ -64,7 +65,6 @@ export default function MentoringOverview({
         )}
         <FitImage src={`${MentoringInfoData?.thumbnailUrl}`} alt="Profile" />
       </div>
-
       <div className="bg-white p-4 rounded-lg shadow-sm">
         <ul className="flex flex-wrap gap-y-1 py-1">
           {MentoringInfoData?.hashTagList?.map((item) => (

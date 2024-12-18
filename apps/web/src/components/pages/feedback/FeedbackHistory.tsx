@@ -134,16 +134,16 @@ export default function FeedbackHistory({
           <ChevronRight className="h-4 w-4" strokeWidth="4" />
         </Button>
       </div>
-      <div className="flex items-center px-8 gap-5">
-        <div>
+      <div className="sm:flex items-center px-8 gap-5">
+        <div className="flex justify-center items-center md:block">
           <Score
             score={averageScore}
             maxScore={10}
             fillColor="#FFD700"
             strokeColor="black"
-            size={200}
+            className="lg:w-full"
           />
-          <p className="text-center w-full text-gray-400">
+          <p className="text-center text-gray-400">
             <span className="text-gray-600">{averageScore}</span>/10.0
           </p>
         </div>

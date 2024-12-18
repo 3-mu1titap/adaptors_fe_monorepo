@@ -5,23 +5,6 @@ export interface SessionTime {
   nano: number;
 }
 
-// export interface MentoringSessionData {
-//   sessionUuid: string;
-//   mentoringUuid: string;
-//   startDate: string;
-//   endDate: string;
-//   startTime: string; // "HH:mm:ss" 형식
-//   endTime: string; // "HH:mm:ss" 형식
-//   deadlineDate: string;
-//   minHeadCount: number;
-//   maxHeadCount: number;
-//   nowHeadCount: number;
-//   isParticipating: boolean;
-//   price: number;
-//   isClosed: boolean;
-// }
-// export type MentoringSessionList = Record<string, MentoringSessionData[]>;
-
 export interface MentoringResponse {
   result: MentoringResult[];
 }
@@ -55,19 +38,6 @@ export interface SessionUser {
   menteeImageUrl: string;
 }
 
-// export interface MentoringDataType {
-//   mentoringUuid: string;
-//   name: string;
-//   detail: string;
-//   description: string;
-//   mentorUuid: string;
-//   thumbnailUrl: string;
-//   isReusable: boolean;
-//   isDeleted: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-//   categoryList: Category[];
-// }
 export interface MentoringDataType {
   mentoringUuid: string; // 멘토링의 고유 식별자
   name: string; // 멘토링 이름

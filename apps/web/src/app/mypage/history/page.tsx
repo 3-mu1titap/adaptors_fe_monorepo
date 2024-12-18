@@ -1,9 +1,8 @@
-import CourseMentoringListPage from '@repo/web/components/pages/course/CourseMentoringListPage';
 import { GetMentoringSessionHistoryList } from '@repo/web/actions/mentoring/mentoringAction';
+import CourseMentoringListPage from '@repo/web/components/pages/course/CourseMentoringListPage';
 
 async function page() {
   const res = await GetMentoringSessionHistoryList(0);
-  // console.log(res, 'ggggggggg');
   return (
     <div className="container mt-32 mx-auto lg:max-w-[64rem] md:max-w-[40rem] mobile:max-w-[400px] max-w-[300px] ">
       {res && res.content.length > 0 ? (

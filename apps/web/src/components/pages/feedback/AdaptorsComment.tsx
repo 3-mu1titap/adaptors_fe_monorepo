@@ -1,6 +1,7 @@
 import { UserProfile } from '@repo/ui/components/ui/custom/index';
+import Image from 'next/image';
 import volpang from '../../assets/images/volpang.png';
-import FitImage from '../../ui/image/fit-image';
+import { Bubble } from './Bubble';
 
 export default function AdaptorsComment({
   feedbackContent,
@@ -25,17 +26,22 @@ export default function AdaptorsComment({
           <br /> 쪽지를 확인하고 효율적으로 멘토링을 계획해보세요!
         </p>
       </div>
-      <p className="leading-relaxed pt-2 pb-10 px-4 text-xl bg-gray-200/60 rounded-lg mx-4 mt-4 relative">
+      {/* <p className="leading-relaxed pt-2 pb-10 px-4 text-xl bg-gray-200/60 rounded-lg mx-4 mt-4 relative">
         {feedbackContent}
         <span className="absolute bottom-3 right-3 text-md text-gray-300">
           위 내용은 AI를 통해 분석된 내용으로 잘못된 응답일 수 있습니다
         </span>
-      </p>
-      <FitImage
-        src={volpang.src}
-        alt="볼팡이 - adaptors의 마스코트"
-        className="w-[45%] transform scale-x-[-1]"
-      />
+      </p> */}
+      <div className="w-full ">
+        <Image
+          src={volpang.src}
+          alt="볼팡이 - adaptors의 마스코트"
+          width={500}
+          height={500}
+          className="max-w-[300px]"
+        />
+        <Bubble comment={feedbackContent}></Bubble>
+      </div>
     </section>
   );
 }

@@ -41,7 +41,7 @@ export default function MentorSection({
   const isMobile = useIsMobile();
   return (
     <>
-      <SeparateContainer.LeftSide className="px-4 mb-10 w-full max-w-[340px] mobile:max-x-[500px] sm:max-w-[340px] mx-auto">
+      <SeparateContainer.LeftSide className="px-4 mb-10 w-full max-w-[340px] mobile:max-x-[500px] sm:max-w-[340px] md:max-w-[320px] mx-auto">
         {!isMobile && (
           <>
             <CustomMentorProfilePhoto

@@ -1,5 +1,4 @@
 'use client';
-import { Sidebar } from '@repo/web/components/common/Sidebar';
 import { MenuIcon } from 'lucide-react';
 import React from 'react';
 export default function SideBarButton() {
@@ -8,7 +7,7 @@ export default function SideBarButton() {
     <li className="block lg:hidden">
       <MenuIcon size={24} onClick={() => setSidebarOpen((prev) => !prev)} />
       <div className={`flex flex-1 ${sidebarOpen} ? : overflow-auto`}>
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        {/* <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} /> */}
       </div>
     </li>
   );

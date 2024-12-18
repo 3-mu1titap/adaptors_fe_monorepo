@@ -47,13 +47,13 @@ function CommonSidebar() {
         {
           icon: (
             <History
-              color={pathname === `/mypage/mycourse` ? '#F6D84C' : '#ACACAC'}
+              color={pathname === `/mypage/history` ? '#F6D84C' : '#ACACAC'}
               size={20}
             />
           ),
           label: 'History',
-          isActive: pathname.startsWith(`/mypage/mycourse`),
-          href: `/mypage/mycourse`,
+          isActive: pathname.startsWith(`/mypage/history`),
+          href: `/mypage/history`,
         },
         {
           icon: (

@@ -10,6 +10,7 @@ import React from 'react';
 import { options } from '../api/auth/[...nextauth]/options';
 async function Layout({ children }: { children: React.ReactNode }) {
   const isAuth = await getServerSession(options);
+  const profileImageUrl = isAuth?.user.profileImageUrl;
   return (
     <div className="flex h-auto w-full ">
       {/* <Sidebar /> */}
@@ -17,7 +18,10 @@ async function Layout({ children }: { children: React.ReactNode }) {
         <CommonSidebar />
         <main className="w-full h-auto overflow-y-auto transition-all duration-300 ml-[-5px] z-[1000000]">
           <SidebarTrigger className="z-[100000] hidden md:!block md:fixed" />
-          <MyPageHeader isAuth={isAuth ? true : false} />
+          <MyPageHeader
+            isAuth={isAuth ? true : false}
+            profileImageUrl={profileImageUrl}
+          />
           {children}
         </main>
       </SidebarProvider>

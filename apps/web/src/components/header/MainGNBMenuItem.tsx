@@ -8,7 +8,7 @@ function MainHeaderGNBMenuItem({ menuItem }: { menuItem: MenuType }) {
   return (
     <Link href={menuItem.href}>
       <li
-        className={`text-md lg:text-lg hover:underline underline-offset-4 ${menuItem.href === pathname ? 'text-black font-bold underline' : 'text-[#5C5C5C90]'}`}
+        className={`text-lg lg:text-lg hover:underline underline-offset-4 ${menuItem.href === pathname ? 'text-black font-bold underline' : 'text-[#5C5C5C90]'}`}
       >
         {menuItem.label}
       </li>
