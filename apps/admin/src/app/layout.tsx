@@ -8,7 +8,7 @@ import { getServerSession } from 'next-auth/next';
 import { Inter } from 'next/font/google';
 import CommonSidebar from '../components/aside/metting-room/CommonSidebar';
 import { options } from './api/auth/[...nextauth]/options';
-import AuthContextProvider from './provider/AuthContextProvider';
+import AuthContextProvider from './provider/AuthContextProvider'; //
 
 const inter = Inter({ subsets: ['latin'] });
 
