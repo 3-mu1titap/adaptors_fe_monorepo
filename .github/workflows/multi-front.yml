@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          #token: ${{ secrets.MY_GITHUB_TOKEN }}
           
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -66,7 +66,7 @@ jobs:
         if: success()
         env:
           REPO: "mu1titap/argocd-manifests"
-          PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          #PAT_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         run: |
           curl -X POST -H "Authorization: token $PAT_TOKEN" \
           -H "Accept: application/vnd.github.v3+json" \
