@@ -1,12 +1,13 @@
 'use client';
 import { MenuIcon, X } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { headerGNBMenuData } from 'src/store/initialStore';
 
 export function Sidebar() {
   const [open, setOpen] = useState(false); // 기본값 false로 변경
   const data = headerGNBMenuData;
+  const router = useRouter();
 
   useEffect(() => {
     if (open) {
@@ -15,6 +16,22 @@ export function Sidebar() {
       document.body.style.overflow = ''; // 스크롤 활성화
     }
   }, [open]);
+
+  // 라우트 이동 시 사이드바 닫기
+  // useEffect(() => {
+  //   const handleRouteChange = () => {
+  //     setOpen(false);
+  //   };
+
+  //   router.events.on('routeChangeComplete', handleRouteChange);
+  //   return () => {
+  //     router.events.off('routeChangeComplete', handleRouteChange);
+  //   };
+  // }, [router]);
+  const handleRoute = (link: string) => {
+    router.push(link);
+    setOpen(false);
+  };
 
   const handleNavButton = () => {
     setOpen((prev) => !prev);
@@ -48,9 +65,9 @@ export function Sidebar() {
             </div>
             <div className="flex flex-col gap-2 px-4 z-50">
               {data.map((menu) => (
-                <Link key={menu.label} href={menu.href}>
+                <div key={menu.label} onClick={() => handleRoute(menu.href)}>
                   <p className="text-sm font-bold">{menu.label}</p>
-                </Link>
+                </div>
               ))}
             </div>
           </aside>

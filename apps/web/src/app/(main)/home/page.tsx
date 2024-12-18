@@ -7,7 +7,6 @@ import MainIntro from '@repo/web/components/pages/main/home/MainIntro/MainIntro'
 import MainSearchTag from '@repo/web/components/pages/main/home/MainSearchTag/MainSearchTag';
 import PopularMentoringList from '@repo/web/components/pages/main/home/popularMentoring/PopularMentoringList';
 import ShareMentoring from '@repo/web/components/pages/main/home/ShareMentoring';
-import { mainIntroDatas } from '@repo/web/store/dummyStore';
 async function Page() {
   //베스트 멘토 조회
   const res = await GetBestMentorList();
@@ -19,7 +18,7 @@ async function Page() {
     <>
       <CommonLayout className="mt-[5rem] md:mt-[7rem]">
         <MainSearchTag />
-        {main_List && <MainIntro mainIntroDatas={mainIntroDatas} />}
+        {main_List && <MainIntro mainIntroDatas={main_List} />}
         {category_res && <PopularMentoringList categoryData={category_res} />}
         {res && <BestMentoringList item={res} />}
         <ShareMentoring />

@@ -20,7 +20,7 @@ export default function FeedbackNavbar() {
   const currentCategory = searchParams.get('category');
 
   return (
-    <div className="mt-[2.5em] sm:mt-10 w-[80%] max-w-[400px] h-[70px] mx-auto my-10">
+    <div className="sm:mt-10 w-[80%] max-w-[400px] h-[70px] mx-auto my-10">
       {/* Main Navigation Bar */}
       <nav className="relative w-full h-full rounded-[35px] flex items-center justify-center ">
         <ul className="relative flex items-center justify-between w-full px-8">

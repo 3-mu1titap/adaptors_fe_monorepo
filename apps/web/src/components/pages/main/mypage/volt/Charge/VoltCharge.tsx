@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@repo/ui/components/ui/button';
-import VoltChargeModal from '../Modal/VoltChargeModal';
 import Link from 'next/link';
 
 function VoltCharge({ points }: { points: number }) {
@@ -18,7 +16,7 @@ function VoltCharge({ points }: { points: number }) {
 
   return (
     <>
-      <div className="flex max-w-full lg:mx-16 py-4 pr-8 bg-white rounded-2xl mt-10 justify-between border-2 border-gray-200">
+      <div className="flex max-w-full lg:mx-16 py-4 px-3 mx-3 bg-white rounded-2xl justify-between border-2 border-gray-200">
         <div className="flex flex-col items-start ml-4 lg:gap-y-3">
           <span className="text-sm lg:text-xl  font-semibold text-black">
             사용 가능한 볼트 수
@@ -32,7 +30,7 @@ function VoltCharge({ points }: { points: number }) {
           {/* 충전 버튼 */}
           <Link href={'/payment'}>
             <Button
-              className="flex bg-yellow-200 hover:bg-black hover:text-white text-black py-4"
+              className="flex bg-adaptorsYellow font-semibold hover:bg-black hover:text-white text-black py-4"
               // onClick={handleDialogOpen}
             >
               충전

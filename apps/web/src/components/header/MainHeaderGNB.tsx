@@ -1,6 +1,6 @@
 import { headerGNBMenuData } from 'src/store/initialStore';
 import MainHeaderGNBMenuItem from './MainGNBMenuItem';
-
+//
 function MainHeaderGNB() {
   return (
     <nav className="hidden backdrop-blur-lg md:visible justify-center text-sm ml-2 md:flex sm:flex sm:justify-center md:justify-center lg:flex w-full">
