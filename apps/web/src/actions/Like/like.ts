@@ -101,7 +101,7 @@ export async function getIsLiked(targetUuid: string): Promise<boolean> {
   const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
-      `${process.env.MEMBER_URL}/api/v1/member/${targetUuid}/like`,
+      `${process.env.NEXT_PUBLIC_MEMBER_URL}/api/v1/member/${targetUuid}/like`,
       {
         cache: 'force-cache',
         method: 'GET',
