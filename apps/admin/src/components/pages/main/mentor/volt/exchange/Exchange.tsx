@@ -61,7 +61,6 @@ export default function Exchange({
 
   const verifyCode = async (code: string) => {
     const request = await PostCheckSecondAuthenticationCode(code);
-    console.log(request);
     if (request) {
       setIsVerified(true);
       Swal.fire({

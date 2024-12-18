@@ -77,7 +77,6 @@ export async function postFeedback(payload: MentoringFeedbackType) {
   const userUuid = session?.user.uuid;
 
   // API 완성되면 주석 해제
-  console.log(payload);
   const res = await fetch(`${process.env}/api/v1/`, {
     cache: 'no-cache',
     method: 'POST',
