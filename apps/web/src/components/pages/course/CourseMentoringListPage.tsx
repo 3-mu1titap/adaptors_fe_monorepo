@@ -33,7 +33,7 @@ function CourseMentoringListPage({
       {content && content ? (
         <>
           <div className="flex flex-col">
-            <ul className="grid lg:grid-col-2 md:grid-cols-2 mobile:gap-y-2 gap-y-3 mobile:grid-cols-1">
+            <ul className="grid lg:grid-col-2 md:grid-cols-2 gap-3 mobile:grid-cols-1">
               {content.map((item, index) => (
                 <MentoringCard key={index} item={item} />
               ))}
