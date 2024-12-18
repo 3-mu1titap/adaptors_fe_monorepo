@@ -5,31 +5,33 @@ export interface SessionInfo {
   infoValue?: number;
   icon: JSX.Element;
 }
-const DefaultSessionInfo = [
-  {
-    id: 1,
-    infoName: 'Session',
-    infoValue: 8,
-    icon: <File size={12} className="text-blue-500" />,
-  },
-  {
-    id: 2,
-    infoName: 'Students',
-    infoValue: 68,
-    icon: <User size={12} className="text-blue-500" />,
-  },
-  {
-    id: 3,
-    infoName: 'beginner',
-    infoValue: 0,
-    icon: <ChartColumn size={12} className="text-blue-500" />,
-  },
-];
+
 function CustomSessionInfoTags({
   SessionInfoProps,
 }: {
   SessionInfoProps?: SessionInfo[];
 }) {
+  const DefaultSessionInfo = [
+    {
+      id: 1,
+      infoName: 'Session',
+      infoValue: 8,
+      icon: <File size={12} className="text-blue-500" />,
+    },
+    {
+      id: 2,
+      infoName: 'Students',
+      infoValue: 68,
+      icon: <User size={12} className="text-blue-500" />,
+    },
+    {
+      id: 3,
+      infoName: 'beginner',
+      infoValue: 0,
+      icon: <ChartColumn size={12} className="text-blue-500" />,
+    },
+  ];
+
   const SessionInfo = SessionInfoProps ? SessionInfoProps : DefaultSessionInfo;
   return (
     <div className="flex items-center justify-start gap-2">

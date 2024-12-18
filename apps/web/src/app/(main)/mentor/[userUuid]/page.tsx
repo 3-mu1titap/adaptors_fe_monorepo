@@ -8,7 +8,6 @@ import { getMentorReview } from '@repo/web/actions/review/mentorReview';
 import { SeparateContainer } from '@repo/web/components/common/layout/SeperateContainer';
 import CurrentMentoring from '@repo/web/components/pages/mentor/current/CurrentMentoring';
 import ReviewSection from '@repo/web/components/pages/mentor/review/ReviewSection';
-import { getMentorAllReview } from '@repo/web/actions/review/mentorReview';
 async function page({
   params,
 }: {
@@ -37,11 +36,10 @@ async function page({
   const review = await getMentorReview(userUuId);
   // console.log(review, '조회 성공');
 
-  const reviewAll = await getMentorAllReview(userUuId, 0);
-
   return (
     <SeparateContainer.RightSide className="flex flex-col justify-center border-l-0 border-gray-200">
       <CustomSessionInfoTags />
+
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5 pb-3 pt-5">
         <h2 className="text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold leading-tight">
           안녕하세요! 👋 여러분의 웹개발 여정을 함께할
@@ -57,13 +55,7 @@ async function page({
       {/* 현재 진행중인 멘토링 섹션 */}
       <CurrentMentoring item={mentoringlistdata.slice(0, 5)} />
       {/* 리뷰 섹션 */}
-      {review && reviewAll && (
-        <ReviewSection
-          review={review}
-          userUuid={userUuId}
-          reviewAll={reviewAll}
-        />
-      )}
+      {review && <ReviewSection review={review} userUuid={userUuId} />}
     </SeparateContainer.RightSide>
   );
 }
