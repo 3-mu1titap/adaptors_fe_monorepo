@@ -52,13 +52,13 @@ export default function SessionFigure({
           className={`w-full flex justify-end md:gap-5 items-center mt-5 sm:mt-0 lg:gap-10 xl:gap-20`}
         >
           {session.nowHeadCount != 0 && (
-            <>
+            <div className="hidden sm:visible">
               <CustomReviewerItem
                 initialUserData={session.sessionUserList}
                 userCount={session.nowHeadCount}
                 text="now"
               />
-            </>
+            </div>
           )}
           <CustomValueUnit value={session.price} unit="Volt" />
           {session.isClosed ? (

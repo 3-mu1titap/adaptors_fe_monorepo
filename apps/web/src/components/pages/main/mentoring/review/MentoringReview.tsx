@@ -8,7 +8,7 @@ import RateViewer from '@repo/web/components/common/RateViwer';
 
 export default function MentoringReview({ comments }: { comments: Review[] }) {
   return (
-    <div className="px-4 py-2 bg-adaptorsYellow/10">
+    <div className="px-4 py-2 bg-adaptorsYellow/10 w-full">
       {comments?.map((comment) => (
         <div key={comment.id} className=" my-8 px-2 bg-[#FEFAEA]">
           <div className="flex flex-wrap justify-between gap-2 w-full">

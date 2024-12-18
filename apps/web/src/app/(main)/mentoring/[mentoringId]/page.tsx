@@ -56,7 +56,7 @@ async function Page({
     MentorBatchData,
   } = await fetchMentoringData(params.mentoringId);
   return (
-    <main className="pt-[7rem] py-2 px-4 sm:px-8 min-h-screen bg-gray-50">
+    <main className="pt-[7rem] py-2 px-0 sm:px-8 min-h-screen bg-gray-50">
       {MentoringInfoData && mentoringSessionList && (
         <MentoringDetail
           mentoringDate={selectedDate}

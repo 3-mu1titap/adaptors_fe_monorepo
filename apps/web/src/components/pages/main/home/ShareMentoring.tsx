@@ -1,5 +1,4 @@
 import { CommonLayout } from '@repo/web/components/common/commomLayout';
-import NextButton from '@repo/web/components/ui/Button/NextButton';
 import FitImage from '../../../ui/image/fit-image';
 
 export default function ShareMentoring() {
@@ -25,10 +24,10 @@ export default function ShareMentoring() {
 
         <div className="w-full max-w-[380px] md:w-3/6 relative mt-10">
           <FitImage src="/assets/images/footerImage.svg" alt="Footer Image" />
-          <NextButton
+          {/* <NextButton
             className="absolute bottom-10 left-1/2 translate-x-[-50%] rounded-full w-[200px]"
             text="Entry to Mentor"
-          />
+          /> */}
         </div>
       </div>
     </CommonLayout>
