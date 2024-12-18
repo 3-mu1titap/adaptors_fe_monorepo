@@ -13,7 +13,6 @@ import {
   SuggestedNames,
 } from '@repo/web/actions/search/elasticSearch';
 import { Search } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
@@ -25,18 +24,19 @@ export function SearchDrawer({
   isOpen: boolean;
   openCloser: () => void;
 }) {
+  //검색어 입력값
   const [value, setValue] = useState('');
   const [suggestedName, setSuggestedName] = useState<SuggestedNames[]>([
     { name: '검색어를 입력해주세요' },
   ]);
   const router = useRouter();
 
+  //검색어 자동완성 fetch
   const handleSearch = useDebouncedCallback((term) => {
     if (!term) {
       setSuggestedName([{ name: '검색어를 입력해주세요' }]);
       return;
     }
-    setValue(term);
     const fetchData = async () => {
       const data = await getSuggestedName(term); // term 전달
       setSuggestedName(data);
@@ -44,20 +44,12 @@ export function SearchDrawer({
     fetchData();
   }, 300);
 
-  const routeToSearchPage = () => {
-    if (value) {
-      router.push(`/mentoring?name=${value}&isDirect="true"`);
-    }
-  };
-
+  //엔터쳐서 검색
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log('handleKeyDown', e.currentTarget.value); // e.target 대신 e.currentTarget 사용
     if (e.key === 'Enter') {
-      const term = (e.target as HTMLInputElement).value;
-      handleSearch(term);
-
-      if (term.trim()) {
-        router.push(`/mentoring?name=${value}&isDirect="true"`);
-      }
+      router.push(`/mentoring?name=${e.currentTarget.value}&isDirect=true`);
+      openCloser(); // 이 함수는 외부에서 정의되어 있어야 함
     }
   };
 
@@ -81,6 +73,7 @@ export function SearchDrawer({
               onKeyDown={handleKeyDown}
               onChange={(e) => {
                 handleSearch(e.target.value);
+                setValue(e.target.value);
               }}
               className="text-md"
               autoFocus
@@ -90,7 +83,11 @@ export function SearchDrawer({
               color="#A09F9F"
               size={18}
               strokeWidth={1}
-              onClick={routeToSearchPage}
+              onClick={() => {
+                console.log(value);
+                router.push(`/mentoring?name=${value}&isDirect=true`);
+                openCloser();
+              }}
             />
           </div>
           {suggestedName && (
@@ -98,14 +95,22 @@ export function SearchDrawer({
               {Array.isArray(suggestedName) ? (
                 suggestedName.map((item, index) => (
                   <li
-                    className={`px-2 py-3 hover:bg-gray-200 cursor-pointer hover:bg-adaptorsYellow/40  border-b-[1px] text-md ${item.name === '검색어를 입력해주세요' ? 'border-none text-center text-gray-400' : ''}`}
+                    className={`px-2 py-3 ${
+                      item.name === '검색어를 입력해주세요'
+                        ? 'text-center text-gray-400 hover:bg-yellow-100 cursor-default'
+                        : ' cursor-pointer hover:bg-yellow-100 border-b-[1px]'
+                    } text-md`}
                     key={index}
+                    onClick={async () => {
+                      setValue(item.name); // 상태 업데이트
+                      router.push(
+                        `/mentoring?name=${item.name}&isDirect=false`
+                      ); // name 직접 사용
+                      router.refresh();
+                      openCloser();
+                    }}
                   >
-                    <Link
-                      href={`/mentoring?name=${item.name}&isSuggestName=false`}
-                    >
-                      {item.name}
-                    </Link>
+                    {item.name}
                   </li>
                 ))
               ) : (

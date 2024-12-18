@@ -14,7 +14,7 @@ function UserProfile({
   const defaultSize = size || 40;
   const defaultProfileImgUrl =
     profileImgUrl ||
-    'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1733832486599-thunderProfile.png';
+    'https://adaptors-bucket.s3.ap-northeast-2.amazonaws.com/mentoring/1734245095114-Frame.png';
   const defaultName = name || 'adaptor';
   return (
     <div

@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@repo/ui/components/ui/button';
 import { SearchDialog } from '@repo/web/components/common/SearchDialog';
 import { SearchDrawer } from '@repo/web/components/common/SearchDrawer';
 import { useEffect, useRef, useState } from 'react';
@@ -54,7 +53,7 @@ function MainSearchTag({ name }: { name?: string }) {
         />
         <div className="absolute inset-5 flex items-center justify-end">
           <SearchIcon className="mr-5 h-5 w-5 text-[#969696]" />
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
             className="bg-[#111111] text-white hover:bg-[#333333] hover:text-white h-[24px]"
@@ -65,12 +64,12 @@ function MainSearchTag({ name }: { name?: string }) {
             >
               {shortCutKey}
             </span>
-          </Button>
+          </Button> */}
         </div>
       </div>
 
       {isMobile ? (
-        <SearchDrawer isOpen={isOpen} openCloser={() => setIsOpen(false)} />
+        <SearchDrawer isOpen={isOpen} openCloser={() => setIsOpen(false)} /> //모바일
       ) : (
         <SearchDialog isOpen={isOpen} openCloser={() => setIsOpen(false)} />
       )}

@@ -52,8 +52,8 @@ function CommonSidebar() {
             />
           ),
           label: 'History',
-          isActive: pathname.startsWith(`/mypage/mycourse`),
-          href: `/mypage/mycourse`,
+          isActive: pathname.startsWith(`/mypage/history`),
+          href: `/mypage/history`,
         },
         {
           icon: (
