@@ -1,9 +1,9 @@
 export interface AlarmType {
-  uuid: string;
-  userUuid: string;
+  uuid?: string;
+  userUuid?: string;
   message: string;
   alarmType: string;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface AlarmPaginationType {

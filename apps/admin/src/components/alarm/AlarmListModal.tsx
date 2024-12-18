@@ -96,14 +96,15 @@ export function AlarmListModal({
                     <h4 className="text-sm font-medium">{alarm.alarmType}</h4>
                     <p className="text-sm text-gray-600">{alarm.message}</p>
                     <span className="text-xs text-gray-400">
-                      {new Date(alarm.updatedAt).toLocaleString()}
+                      {alarm.updatedAt &&
+                        new Date(alarm.updatedAt).toLocaleString()}
                     </span>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
                     className="opacity-0 group-hover:opacity-100 transition-opacity absolute top-2 right-2"
-                    onClick={() => onDeleteAlarm(alarm.uuid)}
+                    onClick={() => onDeleteAlarm(alarm.uuid ? alarm.uuid : '')}
                   >
                     <X className="h-4 w-4" />
                   </Button>

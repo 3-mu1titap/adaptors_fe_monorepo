@@ -39,7 +39,6 @@ function ChatViewMessage({
   };
 
   useEffect(() => {
-    // 상태에서 이미 존재하는 프로필 정보를 확인
     const existingProfile = userInfo.find(
       (user) => user.userUuid === message.memberUuid
     );
@@ -47,9 +46,9 @@ function ChatViewMessage({
       setProfileInfo({
         nickName: existingProfile.nickname,
         profileImageUrl: existingProfile.profileImageUrl,
-      }); // 이미 존재하면 상태에서 가져옴
+      });
     } else {
-      getProfileImage(); // 존재하지 않으면 API 호출
+      getProfileImage();
     }
   }, []);
 
@@ -73,7 +72,6 @@ function ChatViewMessage({
               <AvatarFallback>{profileInfo?.nickName[0]}</AvatarFallback>
             </Avatar>
           )}
-
           <div
             className={`flex flex-col ${message.memberUuid === user.uuid ? 'items-end' : 'items-start'}`}
           >
