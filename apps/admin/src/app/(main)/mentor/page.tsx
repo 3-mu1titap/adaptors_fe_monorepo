@@ -6,7 +6,6 @@ import {
   GetMentoringSessionList,
 } from '@repo/admin/actions/mentoring/mentoringAction';
 
-import { getMyProfileIamge } from '@repo/admin/actions/profile/getProfileData';
 import HomeDashboard from '@repo/admin/components/pages/main/home/HomeDashboard';
 import type { MentoringDataType } from '@repo/ui/types/CommonType.ts';
 import { redirect } from 'next/navigation';

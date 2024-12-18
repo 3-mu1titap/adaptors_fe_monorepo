@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import {
   chatDataType,
@@ -91,7 +91,12 @@ function Chatting({
     }
   };
 
-  const connectEventSource = () => {
+  const connectEventSource = useCallback(() => {
+    if (eventSource) {
+      console.log('EventSource already exists. Skipping connection.');
+      return;
+    }
+
     const chatServiceUrl = `${process.env.NEXT_PUBLIC_CHATSERVICE_URL}/api/v1/chat/real-time/${mentoringSessionUuid}`;
     const newEventSource = new EventSourcePolyfill(chatServiceUrl);
 
@@ -106,14 +111,16 @@ function Chatting({
     };
 
     newEventSource.onerror = (error) => {
+      console.error('EventSource error:', error);
       newEventSource.close();
+      setEventSource(null);
       setTimeout(() => {
         connectEventSource();
       }, 5000);
     };
 
     setEventSource(newEventSource);
-  };
+  }, [mentoringSessionUuid]);
 
   useEffect(() => {
     connectEventSource();
@@ -135,9 +142,12 @@ function Chatting({
         nickname: userData.nickName,
         mentoringSessionUuid: mentoringSessionUuid,
       });
-      eventSource?.close();
+      if (eventSource) {
+        eventSource.close();
+        setEventSource(null);
+      }
     };
-  }, [mentoringSessionUuid]);
+  }, [mentoringSessionUuid, connectEventSource, userData.nickName]);
 
   const getMessageData = async (page: number) => {
     try {
