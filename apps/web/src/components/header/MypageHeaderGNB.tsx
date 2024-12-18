@@ -1,6 +1,6 @@
-import { headerGNBMenuData } from 'src/store/initialStore';
+import { headerGNBMenuData } from '@repo/web/store/initialStore';
 import MainHeaderGNBMenuItem from './MainGNBMenuItem';
-//
+
 function MainHeaderGNB() {
   return (
     <nav className={`flex w-full justify-center `}>

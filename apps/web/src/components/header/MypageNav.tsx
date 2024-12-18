@@ -1,4 +1,4 @@
-import { MypageData } from 'src/store/initialStore';
+import { MypageData } from '@repo/web/store/initialStore';
 import MainHeaderGNBMenuItem from './MainGNBMenuItem';
 //
 export default function MypageNav() {

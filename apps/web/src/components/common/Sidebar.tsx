@@ -1,12 +1,32 @@
 'use client';
-import { MenuIcon, X } from 'lucide-react';
+import {
+  Home,
+  MenuIcon,
+  NotebookPen,
+  UserPen,
+  UserSearch,
+  X,
+} from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { headerGNBMenuData } from 'src/store/initialStore';
+import AdaptorsLogoIcon from '../assets/icons/AdaptorsLogo';
+import img3 from '../assets/images/volpang3.png';
 
 export function Sidebar() {
+  const MenuData = [
+    { label: 'Home', href: '/home', icon: <Home /> },
+    {
+      label: 'Mentoring',
+      href: '/mentoring',
+      icon: <NotebookPen />,
+    },
+    { label: 'Mentor', href: '/mentor', icon: <UserSearch /> },
+    { label: 'MyPage', href: '/mypage/edit', icon: <UserPen /> },
+  ];
+
   const [open, setOpen] = useState(false); // 기본값 false로 변경
-  const data = headerGNBMenuData;
+  const data = MenuData;
   const router = useRouter();
 
   useEffect(() => {
@@ -17,17 +37,6 @@ export function Sidebar() {
     }
   }, [open]);
 
-  // 라우트 이동 시 사이드바 닫기
-  // useEffect(() => {
-  //   const handleRouteChange = () => {
-  //     setOpen(false);
-  //   };
-
-  //   router.events.on('routeChangeComplete', handleRouteChange);
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange);
-  //   };
-  // }, [router]);
   const handleRoute = (link: string) => {
     router.push(link);
     setOpen(false);
@@ -58,18 +67,42 @@ export function Sidebar() {
             }}
           >
             <div className="flex items-center justify-between mb-4 p-4">
-              <h2 className="text-2xl font-bold text-white">Menus</h2>
+              {/* <h2 className="text-2xl font-bold text-white">Menus</h2> */}
+              <AdaptorsLogoIcon className="w-[50%]" />
               <div onClick={handleNavButton} className="z-[100]">
-                <X color="white" size={'1.5rem'} />
+                <X color="Black" size={'1.5rem'} />
               </div>
             </div>
-            <div className="flex flex-col gap-2 px-4 z-50">
+            <div className="flex flex-col gap-2 px-4 z-50 w-full ">
               {data.map((menu) => (
-                <div key={menu.label} onClick={() => handleRoute(menu.href)}>
-                  <p className="text-sm font-bold">{menu.label}</p>
+                <div
+                  key={menu.label}
+                  onClick={() => handleRoute(menu.href)}
+                  className="flex gap-3 items-center"
+                >
+                  <div className="rounded-full bg-adaptorsYellow/40 p-2">
+                    {menu.icon}
+                  </div>
+
+                  <p className="text-lg font-bold">{menu.label}</p>
                 </div>
               ))}
             </div>
+            {/* <Image src={img1.src} alt="adators" width={100} height={100} />
+            <Image
+              src={img2.src}
+              alt="adators"
+              width={130}
+              height={130}
+              className="transform -rotate-90 absolute right-[-30px] top-24"
+            /> */}
+            <Image
+              src={img3.src}
+              alt="adators"
+              width={80}
+              height={80}
+              className="transform scale-x-[-1] absolute bottom-0"
+            />
           </aside>
         </>
       )}
