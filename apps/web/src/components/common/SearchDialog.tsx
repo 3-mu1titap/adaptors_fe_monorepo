@@ -54,6 +54,7 @@ export function SearchDialog({
       openCloser();
     }
   };
+
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (focusedIndex !== null && suggestedName[focusedIndex]?.name) {

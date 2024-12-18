@@ -8,6 +8,7 @@ import {
   CustomLikeButton,
   CustomMentorDescription,
   CustomMentorProfilePhoto,
+  CustomNowDate,
   CustomReviewerItem,
   CustomSessionInfoTags,
   CustomSessionList,
@@ -22,13 +23,14 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { MentoringSession, SessionAddModal } from './SessionAddModal';
+import { chatMemberDataType } from '@repo/admin/components/types/main/chatting/chattingTypes';
 
 interface HomeDashboardProps {
   mentoringSessionList: MentoringResult[];
   MentoringInfoData: MentoringDataType;
   initialUserData: SessionUser[];
   mentoringUuid?: string;
-  user: userProfileType;
+  user: chatMemberDataType;
 }
 
 function HomeDashboard({
@@ -126,7 +128,7 @@ function HomeDashboard({
           <CustomLikeButton count={2823} className="mr-12" />
         </div>
         <CustomShareButton />
-        {/* <CustomNowDate /> */}
+        <CustomNowDate />
       </SeparateContainer.LeftSide>
       <SeparateContainer.RightSide>
         <CustomSessionInfoTags />

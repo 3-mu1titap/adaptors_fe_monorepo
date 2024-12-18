@@ -58,9 +58,7 @@ export default function MentoringHeader({
     <header className="fixed top-0 left-0 w-full py-6 px-4 lg:px-10 border-b-[1px] border-[#F3F3F3] bg-white z-[10]">
       <div className="flex justify-between items-center ">
         <AdaptorsLogoIcon className="w-[140px] mt-0 flex items-center gap-2" />
-        <div>
-          <AdaptorsAlarm user={user} />
-        </div>
+        <div>{/* <AdaptorsAlarm user={user} /> */}</div>
         <div className="flex justify-center items-center gap-2">
           <CustomReviewerItem
             initialUserData={initialUserData}

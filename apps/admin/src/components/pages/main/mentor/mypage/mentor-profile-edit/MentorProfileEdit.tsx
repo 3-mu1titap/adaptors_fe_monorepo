@@ -42,9 +42,6 @@ export default function MentorProfileEdit({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await PutUserTotalInfo({ formData, imageFile: file });
-
-    console.log(formData);
-    console.log(file);
   };
 
   return (

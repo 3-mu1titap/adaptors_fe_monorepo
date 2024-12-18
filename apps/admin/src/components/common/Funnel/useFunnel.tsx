@@ -13,7 +13,6 @@ const useFunnel = ({ steps }: UseFunnelProps) => {
 
   useEffect(() => {
     router.push(`${pathname}?path=${steps[level]}`);
-    console.log(pathname);
   }, [level]);
 
   useEffect(() => {

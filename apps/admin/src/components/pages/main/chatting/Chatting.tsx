@@ -92,7 +92,7 @@ function Chatting({
   };
 
   const connectEventSource = () => {
-    const chatServiceUrl = `${process.env.NEXT_PUBLIC_CHAT_URL}/api/v1/chat/real-time/${mentoringSessionUuid}`;
+    const chatServiceUrl = `${process.env.NEXT_PUBLIC_CHATSERVICE_URL}/api/v1/chat/real-time/${mentoringSessionUuid}`;
     const newEventSource = new EventSourcePolyfill(chatServiceUrl);
 
     newEventSource.onopen = async () => {

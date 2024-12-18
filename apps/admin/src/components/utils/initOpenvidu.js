@@ -54,7 +54,6 @@ export default async function initOpenVidu({
 
   const publisher = await OV.initPublisherAsync(undefined, publisherProperties);
   session.publish(publisher);
-  console.log('퍼블리셔:', publisher);
 
   setPublisher(publisher);
   setSession(session);
