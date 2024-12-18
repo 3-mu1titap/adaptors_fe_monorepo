@@ -18,7 +18,7 @@ export default function CustomLikeButton({
   className,
 }: SocialCounterProps) {
   return (
-    <div className={cn('flex flex-row items-center gap-1', className)}>
+    <div className={cn('flex flex-row items-center gap-3', className)}>
       <div
         className="flex h-9 w-9 items-center justify-center rounded-full bg-[#9F9D9D]/15 shadow-sm cursor-pointer"
         onClick={handler}

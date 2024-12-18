@@ -10,7 +10,10 @@ async function Layout({ children }: { children: React.ReactNode }) {
   const isAuth = await getServerSession(options);
   return (
     <>
-      <MainHeader isAuth={isAuth ? true : false} />
+      <MainHeader
+        isAuth={isAuth ? true : false}
+        userProfile={isAuth?.user.profileImageUrl}
+      />
       {children}
       <MainFooter />
       <AIChatBot />

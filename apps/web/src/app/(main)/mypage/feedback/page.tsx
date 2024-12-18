@@ -51,7 +51,7 @@ export default async function Page({
   });
 
   return (
-    <main className="flex flex-col h-screen mt-[8rem] md:mt-[1rem] lg:max-w-[64rem] mx-auto md:max-w-[40rem] sm:max-w-[400px] max-[300px]">
+    <main className="flex flex-col h-screen mt-[1rem] md:mt-[1rem] lg:max-w-[64rem] mx-auto md:max-w-[40rem] sm:max-w-[400px] max-[300px]">
       <FeedbackNavbar />
       {Array.isArray(feedbackData) && feedbackData.length > 0 ? (
         <>
@@ -73,7 +73,7 @@ export default async function Page({
           <FitImage
             src={volpang.src}
             alt="볼팡이 - adaptors의 마스코트"
-            className="w-[80%] md:w-[50%] lg:w-[20%] transform scale-x-[-1]"
+            className="w-[60%] md:w-[50%] lg:w-[20%] transform scale-x-[-1]"
           />
           <div className="">
             <p className="text-2xl font- bold">
