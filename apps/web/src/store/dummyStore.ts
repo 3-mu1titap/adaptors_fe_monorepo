@@ -150,7 +150,7 @@ export const mainIntroDatas = [
       { topCategoryCode: '3', topCategoryName: '이력서' },
     ],
     name: '삼성과 함께하는\n취업 전략',
-    mentoringUuid: '2',
+    mentoringUuid: 'd7643aa0-0e2a-4d92-a6a7-5c5ad8b73e70',
     description:
       '삼성 인사 담당자가 직접 알려주는 취업 비법! 이력서 작성부터 면접 준비까지, 삼성 취업을 목표로 하는 모든 분들께 실질적인 도움을 드립니다.',
     thumbnailUrl:
@@ -173,7 +173,7 @@ export const mainIntroDatas = [
       { topCategoryCode: '2', topCategoryName: '이력서' },
     ],
     name: '구글과 함께하는\n글로벌 취업 멘토링',
-    mentoringUuid: '3',
+    mentoringUuid: '2f9bbae0-5424-4a25-9ece-ca9f96b080bb',
     description:
       '구글 채용 담당자와 함께하는 취업 워크샵! 글로벌 기업 취업의 문을 여는 실질적인 노하우를 제공합니다.',
     thumbnailUrl:

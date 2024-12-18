@@ -9,9 +9,7 @@ export default function IconByCategoryAndName({ num }: { num: number }) {
         fill="#FACE00"
         size={28}
       ></Circle>
-      <p className="absolute top-1.5 left-2.5 text-black z-20 text-md ">
-        {num}
-      </p>
+      <p className="absolute top-1.5 left-2.5 text-black text-md ">{num}</p>
     </div>
   );
 }

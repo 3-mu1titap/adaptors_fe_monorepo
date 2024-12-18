@@ -65,6 +65,7 @@ export default function MentorSection({
                 count={totalLikeCount}
                 handler={handleLikeButton}
                 isCheck={isLiked}
+                className="px-3"
               />
             </div>
             <CustomShareButton />
