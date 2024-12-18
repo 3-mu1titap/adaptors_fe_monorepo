@@ -38,12 +38,7 @@ async function page({
 
   return (
     <SeparateContainer.RightSide className="flex flex-col justify-center border-l-0 border-gray-200">
-      {mentoringlistdata.map((item) => (
-        <CustomSessionInfoTags
-          sessionCount={item.nowSessionCount}
-          peopleCount={item.totalSaleCount}
-        />
-      ))}
+      <CustomSessionInfoTags />
 
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-5 pb-3 pt-5">
         <h2 className="text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold leading-tight">

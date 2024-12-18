@@ -46,7 +46,7 @@ function MentorLeftSidebar({ userUuid }: { userUuid: string }) {
     fetchData();
     fetchLiked();
     fetchMentorData();
-  }, [userUuid]);
+  }, [userUuid, like]);
 
   return (
     <>

@@ -9,8 +9,6 @@ export interface SessionInfo {
 function CustomSessionInfoTags({
   SessionInfoProps,
 }: {
-  sessionCount: any;
-  peopleCount: any;
   SessionInfoProps?: SessionInfo[];
 }) {
   const DefaultSessionInfo = [
