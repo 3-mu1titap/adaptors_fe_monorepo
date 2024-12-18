@@ -8,9 +8,10 @@ import { options } from '../api/auth/[...nextauth]/options';
 
 async function Layout({ children }: { children: React.ReactNode }) {
   const isAuth = await getServerSession(options);
+  const profileImage = isAuth?.user.profileImageUrl;
   return (
     <>
-      <MainHeader isAuth={isAuth ? true : false} />
+      <MainHeader isAuth={isAuth ? true : false} profileImage={profileImage} />
       {children}
       <MainFooter />
       <AIChatBot />
