@@ -115,6 +115,3 @@ function BestMentorCard({
 }
 
 export default BestMentorCard;
-function async() {
-  throw new Error('Function not implemented.');
-}

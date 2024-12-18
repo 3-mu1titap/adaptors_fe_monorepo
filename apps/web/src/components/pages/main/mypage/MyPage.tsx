@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@repo/ui/components/ui/tabs';
+import { useState } from 'react';
 
 import { Mentee } from '@repo/web/components/types/mentee/MenteeType';
 
@@ -21,10 +21,10 @@ export default function MyPage({ userInfo }: { userInfo: Mentee }) {
   };
 
   return (
-    <section className="w-full h-auto flex flex-col px-10 py-5 mt-[5rem]">
+    <section className="w-full h-auto flex flex-col px-4 sm:px-10 py-2">
       <h1 className="hidden">My Page</h1>
       <Tabs defaultValue="profile">
-        <TabsList className="mt-10">
+        <TabsList className="">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="edit">Edit Profile</TabsTrigger>
         </TabsList>

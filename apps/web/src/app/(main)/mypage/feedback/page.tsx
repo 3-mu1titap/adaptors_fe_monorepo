@@ -7,9 +7,9 @@ import AdaptorsComment from '@repo/web/components/pages/feedback/AdaptorsComment
 import FeedbackHistory from '@repo/web/components/pages/feedback/FeedbackHistory';
 import FeedbackNavbar from '@repo/web/components/pages/feedback/FeedbackNav';
 import ScoreComparisonGraph from '@repo/web/components/pages/feedback/ScoreComparisonGraph';
-import FitImage from '@repo/web/components/ui/image/fit-image';
 
 import { getServerSession } from 'next-auth';
+import Image from 'next/image';
 import Link from 'next/link';
 import volpang from '../../../../components/assets/images/volpang.png';
 import { options } from '../../../api/auth/[...nextauth]/options';
@@ -49,9 +49,9 @@ export default async function Page({
   const { feedbackData, graphData, element } = await fetchMentoringData({
     categoryCode,
   });
-
+  //
   return (
-    <main className="flex flex-col h-screen mt-[1rem] md:mt-[1rem] lg:max-w-[64rem] mx-auto md:max-w-[40rem] sm:max-w-[400px] max-[300px]">
+    <main className="flex flex-col h-screen md:mt-[1rem] lg:max-w-[64rem] mx-auto md:max-w-[40rem] sm:max-w-[400px] max-[300px]">
       <FeedbackNavbar />
       {Array.isArray(feedbackData) && feedbackData.length > 0 ? (
         <>
@@ -69,17 +69,23 @@ export default async function Page({
           </div>
         </>
       ) : (
-        <section className="mt-10 items-center">
-          <FitImage
-            src={volpang.src}
-            alt="볼팡이 - adaptors의 마스코트"
-            className="w-[60%] md:w-[50%] lg:w-[20%] transform scale-x-[-1]"
-          />
+        <section className=" items-center p-8">
+          <div className="w-[50%] mx-auto mb-6">
+            <Image
+              src={volpang.src}
+              alt="볼팡이 - adaptors의 마스코트"
+              width={500}
+              height={500}
+              priority
+              className="w-64 md:w-[50%] lg:w-[20%] transform scale-x-[-1]"
+            />
+          </div>
           <div className="">
-            <p className="text-2xl font- bold">
-              멘토링 진행내역이 없습니다. 멘토링을 진행하고 리포트를 확인하세요!
+            <p className="text-2xl font-bold">
+              멘토링 진행내역이 없습니다.
+              <br /> 멘토링을 진행하고 리포트를 확인하세요!
             </p>
-            <Link href="/mentoring" className="text-blue-400 underline">
+            <Link href="/mentoring" className="text-adaptorsYellow underline">
               <span className="underline-none">🔗</span> 멘토링 신청하러 가기
             </Link>
           </div>
