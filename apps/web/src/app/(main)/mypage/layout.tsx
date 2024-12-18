@@ -1,24 +1,23 @@
-import {
-  SidebarProvider,
-  SidebarTrigger,
-} from '@repo/ui/components/ui/sidebar';
+import { SidebarProvider } from '@repo/ui/components/ui/sidebar';
 import CommonSidebar from '@repo/web/components/aside/CommonSiderbar';
-import { CommonLayout } from '@repo/web/components/common/commomLayout';
+import ScrollToTopButton from '@repo/web/components/util/ScrollToTopButton';
 import React from 'react';
-function Layout({ children }: { children: React.ReactNode }) {
+import MypageNav from '@repo/web/components/header/MypageNav';
+
+async function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <CommonLayout className="h-full flex w-full container mx-auto">
-      <div className="flex mbmx-auto lg:max-w-[80rem] md:max-w-[50rem] mobile:max-w-[400px] max-w-[300px]">
-        {/* <Sidebar /> */}
-        <SidebarProvider className="">
-          <CommonSidebar />
-          <main className="w-full h-auto overflow-y-auto transition-all duration-300 ml-2 ">
-            <SidebarTrigger className="z-[1000] hidden md:!block md:fixed" />
-            {children}
-          </main>
-        </SidebarProvider>
-      </div>
-    </CommonLayout>
+    <div className="flex h-auto w-full ">
+      <SidebarProvider className="h-hull overflow-y-auto m-0 w-[100vw]">
+        <CommonSidebar />
+        <main className="w-full h-auto overflow-y-auto transition-all duration-300 ml-[-5px]">
+          <nav className="fixed mt-[5rem] md:hidden py-3 bg-white w-full">
+            <MypageNav />
+          </nav>
+          {children}
+        </main>
+      </SidebarProvider>
+      <ScrollToTopButton />
+    </div>
   );
 }
 
