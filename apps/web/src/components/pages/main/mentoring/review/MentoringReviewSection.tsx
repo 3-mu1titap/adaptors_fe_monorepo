@@ -16,12 +16,13 @@ export default function MentoringReviewSection({
     <Card className="w-full ">
       <div className="flex justify-between items-center px-7 py-4">
         <ChevronText text="수강후기" />
-        <Link
-          href={`/mentoring/1/review`}
+        <button
+          // href={`/mentoring/1/review`}
           className="text-lg border border-adaptorsGray py-2.5 px-6 rounded-md"
+          disabled={true}
         >
           Read more
-        </Link>
+        </button>
       </div>
       <MentoringReview comments={reviewList} />
     </Card>

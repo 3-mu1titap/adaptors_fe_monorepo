@@ -23,9 +23,9 @@ async function page() {
       <div className="container mx-auto lg:max-w-full mt-24 md:max-w-[50rem] max-w-full bg-gray-100 h-full">
         <div className="flex flex-col py-8 mt-7 mx-auto lg:max-w-full">
           {/* 볼트 페이지 헤더 */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="hide flex items-center justify-between mb-6">
             <span
-              className=" text-black font-bold text-5xl ml-10"
+              className="text-black font-bold text-5xl ml-10"
               title="My Volt"
             >
               My Volt

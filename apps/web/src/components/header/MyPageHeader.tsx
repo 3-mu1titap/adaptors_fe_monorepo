@@ -10,7 +10,7 @@ export default function MyPageHeader({ isAuth }: { isAuth: boolean }) {
 
   return (
     <div className="fixed sm:relative right-0 ml-1 w-full md:black top-0 backdrop-blur-lg z-20 sm:pr-4">
-      <header className=" bg-white w-full sm:bg-transparent container mx-auto flex flex-row justify-between items-center py-5 pr-4 pl-14 ">
+      <header className=" bg-white w-full sm:bg-transparent container mx-auto flex flex-row justify-between items-center py-5 pr-4 lg:pl-14 ">
         {!open && !isMobile && <MainHeaderLogo />}
         <MypageHeaderGNB />
         {!isMobile && <MainHeaderRightMenu isAuth={isAuth} />}

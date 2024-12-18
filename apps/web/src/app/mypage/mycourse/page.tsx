@@ -14,7 +14,7 @@ async function page() {
       ) : (
         <div className="flex flex-col mt-56 justify-center items-center">
           <span className="text-2xl text-black text-center">
-            참가한 멘토링 내역이 없습니다... 멘토링 신청 해주세요!
+            참가한 멘토링 내역이 없습니다. 멘토링 신청 해주세요!
           </span>
         </div>
       )}

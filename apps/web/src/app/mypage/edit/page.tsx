@@ -8,5 +8,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const userInfo = await GetUserInfo();
-  return <>{userInfo && <MyPage userInfo={userInfo} />}</>;
+  return (
+    <>
+      <div className="flex flex-col min-h-screen overflow-y-auto">
+        {userInfo && <MyPage userInfo={userInfo} />}
+      </div>
+    </>
+  );
 }
