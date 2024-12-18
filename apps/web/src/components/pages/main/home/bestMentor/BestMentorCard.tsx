@@ -57,15 +57,19 @@ function BestMentorCard({
             베스트 멘토
           </span>
 
-          <div className="absolute top-6 right-7 flex flex-col mt-2 mb-2 justify-end gap-y-1">
+          <div className="absolute top-6 right-7 flex flex-col mt-2 mb-2 justify-end gap-y-1 z-10">
             <HeartIcon
-              className={`w-[23px] h-[23px] cursor-pointer ${
+              className={`hover:block w-[35px] h-[35px] cursor-pointer ${
                 like ? 'fill-red-500' : 'text-gray-200'
               } ${isLoading && 'opacity-50 cursor-not-allowed'}`}
               onClick={(e) => {
                 e.preventDefault(); // Link 기본 동작 방지
                 handleLikeToggle();
               }}
+              // onTouchEnd={(e) => {
+              //   e.preventDefault();
+              //   handleLikeToggle();
+              // }}
             />
           </div>
         </div>
