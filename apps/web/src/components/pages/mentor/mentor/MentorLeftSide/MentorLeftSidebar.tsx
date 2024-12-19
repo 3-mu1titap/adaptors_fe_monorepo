@@ -29,7 +29,7 @@ function MentorLeftSidebar({ userUuid }: { userUuid: string }) {
     async function fetchLiked() {
       try {
         const res = await getIsLiked(userUuid);
-        setLike(res);
+        setLike(!res);
       } catch (error) {
         console.log('Failed to fetch user profile');
       }

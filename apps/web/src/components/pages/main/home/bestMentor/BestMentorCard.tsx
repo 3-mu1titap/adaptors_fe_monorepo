@@ -18,7 +18,7 @@ function BestMentorCard({
   //좋아요 토글 이벤트
   const [like, setLike] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(like, 'ggggggggggg');
   useEffect(() => {
     const fetchIsLike = async () => {
       try {
@@ -29,7 +29,7 @@ function BestMentorCard({
       }
     };
     fetchIsLike();
-  }, [item, like]);
+  }, [item]);
 
   const handleLikeToggle = async () => {
     if (isLoading) return; // 로딩 중 중복 요청 방지
@@ -37,7 +37,7 @@ function BestMentorCard({
     setIsLoading(true);
     try {
       await postLikeReaction(item.mentorUuid); // API 호출
-      setLike(true);
+      setLike(!like);
     } catch (error) {
       console.error('Failed to update like reaction:', error);
     } finally {
@@ -58,7 +58,7 @@ function BestMentorCard({
 
           <div className="absolute top-6 right-7 flex flex-col mt-2 mb-2 justify-end gap-y-1 z-10">
             <HeartIcon
-              className={`hover:block w-[35px] h-[35px] cursor-pointer ${
+              className={`hover:block w-[20px] h-[20px] md:w-[35px] md:h-[35px] cursor-pointer ${
                 like ? 'fill-red-500' : 'text-gray-200'
               } ${isLoading && 'opacity-50 cursor-not-allowed'}`}
               onClick={(e) => {

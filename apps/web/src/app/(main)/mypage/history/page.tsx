@@ -6,7 +6,7 @@ async function page() {
   const res = await GetMentoringSessionHistoryList(0);
   return (
     <div className="container mt-0 mx-auto lg:max-w-[64rem] md:max-w-[40rem] mobile:max-w-[400px] max-w-[300px] ">
-      {Array.isArray(res) && res.content.length > 0 ? (
+      {Array.isArray(res?.content) && res.content.length > 0 ? (
         <CourseMentoringListPage
           totalPages={res.totalPages}
           content={res.content}
