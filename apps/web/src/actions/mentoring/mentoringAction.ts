@@ -148,7 +148,7 @@ export async function GetMentoringSessionHistoryList(page: number) {
   const userUuid = session?.user.uuid;
   try {
     const res = await fetch(
-      `${process.env.SCHEDULE_URL}/api/v1/session-user-history-read/?page=${page}&size=${20}&includeCancelled=true`,
+      `${process.env.NEXT_PUBLIC_SCHEDULE_URL}/api/v1/session-user-history-read/?page=${page}&size=${20}&includeCancelled=true`,
       {
         cache: 'no-cache',
         method: 'GET',

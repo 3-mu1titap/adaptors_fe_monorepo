@@ -18,7 +18,7 @@ function BestMentorCard({
   //좋아요 토글 이벤트
   const [like, setLike] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(like, 'ggggggggggg');
   useEffect(() => {
     const fetchIsLike = async () => {
       try {
@@ -29,7 +29,7 @@ function BestMentorCard({
       }
     };
     fetchIsLike();
-  }, [item, like]);
+  }, [item]);
 
   const handleLikeToggle = async () => {
     if (isLoading) return; // 로딩 중 중복 요청 방지
